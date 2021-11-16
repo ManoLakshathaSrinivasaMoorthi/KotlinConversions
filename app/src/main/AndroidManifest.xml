@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.kotlinomnicure" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:permissionGroup="android.permission-group.COST_MONEY"
+        android:protectionLevel="dangerous"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.KotlinOmniCure"
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:exported="false" />
+        <activity android:name=".activity.RegistrationActivity" /> <!-- <activity android:name=".activity.ChatActivity" /> -->
+        <activity android:name=".activity.ActivityHospitalList" />
+        <activity android:name=".activity.TransferPatientActivity" />
+        <activity android:name=".activity.SignupActivity" />
+        <activity android:name=".activity.RemoteProviderSignUpSecond" />
+        <activity android:name=".activity.ActivityPatientCensusWard" />
+        <activity android:name=".activity.ActivityConsultChartRemote" />
+        <activity android:name=".activity.HandOffPatientsActivity" />
+        <activity android:name=".activity.PatientDetailActivity" />
+        <activity android:name=".activity.AppointmentSuccessActivity" />
+        <activity android:name=".activity.AddPatientVitalsActivity" />
+        <activity android:name=".activity.ActivityCensusConsultChart" />
+        <activity android:name=".activity.ActivityPatientCensusHospital" />
+        <activity android:name=".activity.SplashActivity" />
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.MyDashboardActivity" />
+        <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".activity.RegistrationSuccessActivity" />
+        <activity android:name=".activity.ActivityLocalCareProviderSignUpSecond" />
+        <activity android:name=".activity.OTPActivity" />
+        <activity android:name=".activity.EmailOTPActivity" />
+        <activity android:name=".activity.TermsAndConditionsActivity" />
+        <activity android:name=".activity.ActivityLocalCareProviderSignUpFirst" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.PatientAppointmentActivity" />
+        <activity android:name=".activity.ActivityConsultChart" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.ActivityPatientCensusPatient" />
+        <activity
+            android:name=".activity.AddPatientActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBarDark" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
