@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_ash"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_25">
+
+        <ImageView
+            android:layout_width="@dimen/margin_50"
+            android:layout_height="@dimen/margin_50"
+            android:layout_marginTop="@dimen/margin_20"
+            android:contentDescription="@string/forword_button_arrow"
+            app:srcCompat="@drawable/ic_checkmark" />
+
+        <TextView
+            android:id="@+id/id_welcome_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="top"
+            android:text="@string/success"
+            android:textAppearance="@style/text_title" />
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:text="@string/password_reset_success"
+            android:textAppearance="@style/textBody"
+            android:clickable="true"
+            android:autoLink="email"/>
+
+        <Button
+            android:id="@+id/signin_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_48"
+            android:layout_marginTop="@dimen/margin_48"
+            android:background="@drawable/signin_selector_btn_bg_new"
+            android:fontFamily="@string/font_family_medium"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/go_to_login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_text_size"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+</layout>

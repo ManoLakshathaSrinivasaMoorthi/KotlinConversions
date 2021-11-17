@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/black_border_drawable_bg.xml" value="0.20512820512820512" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/error_edittext_bg.xml" value="0.20833333333333334" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/ic_back_arrow.xml" value="0.20833333333333334" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/ic_step_1.xml" value="0.20833333333333334" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/ic_visibility.xml" value="0.20512820512820512" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_census_consult_chart.xml" value="0.18923076923076923" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_change_password.xml" value="0.1921875" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_consult_chart.xml" value="0.18923076923076923" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_local_care_provider_sign_up_first.xml" value="0.18923076923076923" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_local_care_provider_sign_up_second.xml" value="0.25" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_login.xml" value="0.15" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_otp.xml" value="0.1648148148148148" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_reset_success.xml" value="0.1921875" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_signup.xml" value="0.22" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_splash.xml" value="0.15755329008341057" />
+        <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/layout/activity_transfer_patient.xml" value="0.67" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
