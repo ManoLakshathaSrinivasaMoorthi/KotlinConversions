@@ -92,13 +92,13 @@ class ContactAdminActivity : BaseActivity() {
         viewModel?.contactAdminEmail(params)?.observe(this) { response ->
             Log.d(TAG, "contact_admin_response $response")
             dismissProgressBar()
-            if (response != null && response.getStatus() != null && response.getStatus()) {
+            if (response != null && response.getStatus() != null && response.getStatus()!!) {
                 onSuccess()
             } else {
                 binding?.btnSubmit?.setEnabled(true)
                 var errMsg: String? = ErrorMessages().getErrorMessage(
                     this@ContactAdminActivity,
-                    response.getErrorMessage(),
+                    response?.getErrorMessage(),
                     Constants.API.getDocBoxPatientList
                 )
                 if (errMsg.equals("exception", ignoreCase = true)) {

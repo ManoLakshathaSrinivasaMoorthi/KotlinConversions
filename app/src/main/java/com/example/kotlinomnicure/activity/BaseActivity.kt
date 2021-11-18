@@ -420,15 +420,17 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
                     )
                 }
                 //                UtilityMethods.showErrorSnackBar(container, errMsg, Snackbar.LENGTH_LONG);
-                CustomSnackBar.make(
-                    container,
-                    this,
-                    CustomSnackBar.WARNING,
-                    errMsg,
-                    CustomSnackBar.TOP,
-                    3000,
-                    0
-                )!!
+                errMsg?.let {
+                    CustomSnackBar.make(
+                        container,
+                        this,
+                        CustomSnackBar.WARNING,
+                        it,
+                        CustomSnackBar.TOP,
+                        3000,
+                        0
+                    )
+                }!!
                     .show()
             }
         }
@@ -488,12 +490,12 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
 //                }
 //                callScreen.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, mConsultProvider.getId()+chName);
                 callScreen.putExtra(
-                    ConstantApp.ACTION_KEY_CHANNEL_NAME,
+                    ConstantApp().ACTION_KEY_CHANNEL_NAME,
                     "" + mConsultProvider.getPatientsId()
                 )
-                callScreen.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, "")
+                callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_KEY, "")
                 callScreen.putExtra(
-                    ConstantApp.ACTION_KEY_ENCRYPTION_MODE,
+                    ConstantApp().ACTION_KEY_ENCRYPTION_MODE,
                     resources.getStringArray(R.array.encryption_mode_values)[0]
                 )
                 callScreen.putExtra("patientId", mConsultProvider.getPatientsId())
@@ -502,13 +504,13 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
                     commonResponse.getAuditId()
                 )
                 var receiverId = 0L
-                if (commonResponse.getProviderList().size() <= 2) {
-                    for (i in 0 until commonResponse.getProviderList().size()) {
-                        val pr: Provider = commonResponse.getProviderList().get(i)
-                        if (pr.getId() != null && !pr.getId()
-                                .equals(PrefUtility.getProviderId(context))
+                if (commonResponse.getProviderList()?.size!! <= 2) {
+                    for (i in 0 until commonResponse.getProviderList()?.size!!) {
+                        val pr: Provider? = commonResponse.getProviderList()!!.get(i)
+                        if (pr?.getId() != null && !pr?.getId()!!
+                                .equals(context?.let { PrefUtility().getProviderId(it) })
                         ) {
-                            receiverId = pr.getId()
+                            receiverId = pr.getId()!!
                             break
                         }
                     }
@@ -527,21 +529,25 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
                 callScreen.putExtra("providerList", gson.toJson(commonResponse.getProviderList()))
                 startActivity(callScreen)
             } else {
-                val errMsg: String = ErrorMessages.getErrorMessage(
-                    context,
-                    commonResponse.getErrorMessage(),
-                    Constants.API.startCall
-                )
+                val errMsg: String? = context?.let {
+                    ErrorMessages().getErrorMessage(
+                        it,
+                        commonResponse.getErrorMessage(),
+                        Constants.API.startCall
+                    )
+                }
                 //                UtilityMethods.showErrorSnackBar(container, errMsg, Snackbar.LENGTH_LONG);
-                CustomSnackBar.make(
-                    container,
-                    this,
-                    CustomSnackBar.WARNING,
-                    errMsg,
-                    CustomSnackBar.TOP,
-                    3000,
-                    0
-                )!!
+                errMsg?.let {
+                    CustomSnackBar.make(
+                        container,
+                        this,
+                        CustomSnackBar.WARNING,
+                        it,
+                        CustomSnackBar.TOP,
+                        3000,
+                        0
+                    )
+                }!!
                     .show()
             }
         }
@@ -592,11 +598,13 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
         // Saving flag to disable/stop showing push notification to the user, when session expired
         // If false - notification can be displayed
         // If true - Notification will not be displayed
-        PrefUtility.saveBooleanInPref(
-            activity,
-            Constants.SharedPrefConstants.DISABLE_NOTIFICATION,
-            false
-        )
+        activity?.let {
+            PrefUtility().saveBooleanInPref(
+                it,
+                Constants.SharedPrefConstants.DISABLE_NOTIFICATION,
+                false
+            )
+        }
     }
 
     /*@Override
@@ -778,13 +786,10 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
                             toast!!.cancel()
                             toast = null
                         }
-                        toast = Toast.makeText(
-                            this,
-                            resources.getString(R.string.no_internet_connectivity),
-                            Toast.LENGTH_SHORT
-                        )
+                        toast = Toast.makeText(this, resources.getString(R.string.no_internet_connectivity),
+                            Toast.LENGTH_SHORT)
                         toast.show()
-                        return@label
+                        return
                     }
                     if (toast != null) {
                         toast!!.cancel()
@@ -800,18 +805,9 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
             }
             val message = getString(R.string.no_internet_dialog_message)
             if ((internetDialog == null || !internetDialog!!.isShowing) && !isFinishing && !isDestroyed.get()) {
-                internetDialog = UtilityMethods().showDialog(
-                    this as ActivityConsultChart,
-                    getString(R.string.no_internet_dialog_title),
-                    message,
-                    false,
-                    R.string.try_again,
-                    positiveBtnListener,
-                    -1,
-                    null,
-                    -1,
-                    true
-                )
+                internetDialog = UtilityMethods().showDialog(this as ActivityConsultChart,
+                    getString(R.string.no_internet_dialog_title), message, false, R.string.try_again,
+                    positiveBtnListener, -1, null, -1, true)
                 internetDialog!!.setPositiveButtonDrawable(R.drawable.dialog_single_btn_drawable)
             }
         } catch (e: Exception) {

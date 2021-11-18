@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize">
+
+            <ImageView
+                android:id="@+id/id_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_back_arrow"
+                app:tint="@color/title_color"
+                tools:ignore="RtlSymmetry"
+                android:contentDescription="@string/todo" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/margin_20"
+                app:srcCompat="@drawable/ic_step_4"
+                android:contentDescription="@string/todo" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_25">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_your_account"
+                android:textColor="@color/base_text_color"
+                android:textStyle="bold"
+                android:textAppearance="@style/text_title"
+                />
+
+            <TextView
+                android:id="@+id/otpMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/otp_msg"
+                android:textColor="@color/base_text_color"
+                android:textSize="@dimen/text_size" />
+
+            <TextView
+                android:id="@+id/id_change_number_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:text="@string/change_number"
+                android:textAllCaps="false"
+                android:textColor="@color/base_text_color"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_40"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_10">
+
+                <com.example.kotlinomnicure.customview.PinEntryView
+                    android:id="@+id/pin_entry_border"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:accentType="character"
+                    app:digitBackground="@drawable/otp_edittext_bg"
+                    app:digitTextColor="@color/btn_bg"
+                    app:digitTextSize="@dimen/text_size_xlarge"
+                    app:strokeRadius="@dimen/margin_8"
+                    app:strokewidth="@dimen/margin_1"
+                    app:pinAccentColor="@color/title_color"
+                    app:mask=""
+                    app:pinInputType="number" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/id_resend_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:gravity="center"
+                    android:text="@string/didn_t_get_otp"
+                    android:textColor="@color/sub_title_color"
+                    android:textSize="@dimen/text_size_small" />
+
+                <Button
+                    android:id="@+id/id_resend_code"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:layout_height="@dimen/margin_35"
+                    android:layout_marginLeft="@dimen/margin_15"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginRight="@dimen/margin_15"
+                    android:background="@drawable/signin_selector_btn_bg"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:enabled="false"
+                    android:minHeight="@dimen/margin_25"
+                    android:text="@string/resent_code"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="gone"
+                    android:textSize="@dimen/text_size_small" />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+

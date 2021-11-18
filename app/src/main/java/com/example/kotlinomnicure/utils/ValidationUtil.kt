@@ -699,6 +699,10 @@ class ValidationUtil {
     private fun <T> Comparable<T>.matches(regex: T): Boolean {
       return true
     }
+
+    fun checkPassword(toString: String, binding: ActivityLoginBinding?): Any {
+
+    }
 }
 
 

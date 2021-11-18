@@ -48,8 +48,8 @@ class EncUtil {
                 )
             }
             keyStore = KeyStore.getInstance(ANDROIDKEYSTORE)
-            keyStore.load(null)
-            if (!keyStore.containsAlias(KEY_ALIAS)) {
+            keyStore?.load(null)
+            if (!keyStore!!.containsAlias(KEY_ALIAS)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     val keyGenerator =
                         KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROIDKEYSTORE)
