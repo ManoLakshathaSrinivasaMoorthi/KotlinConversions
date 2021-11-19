@@ -1,6 +1,7 @@
 package com.example.kotlinomnicure.apiRetrofit
 
 import android.util.Log
+import com.example.kotlinomnicure.OmnicureApp
 import com.example.kotlinomnicure.utils.BuildConfigConstants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
@@ -13,7 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApiClient {
-    private val BASE_URL: String = BuildConfigConstants().getBackendRootUrl()
+
+    private val BASE_URL: String? = BuildConfigConstants().getBackendRootUrl()
     private val TAG = "ApiClient"
     private val AUTHORIZATION = "Authorization"
     private val UID = "uid"
@@ -28,10 +30,10 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(EncryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
         }
         if (decrypt) {
-            builder.addInterceptor(DecryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
         }
         addInterceptors(builder)
         getRetrofit(builder)
@@ -43,7 +45,7 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(EncryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
         }
         if (decrypt) {
             builder.addInterceptor(DecryptionInterceptor(OmnicureApp.getAppContext()))
@@ -58,10 +60,10 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(EncryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
         }
         if (decrypt) {
-            builder.addInterceptor(DecryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
         }
         addInterceptors(builder)
         getRetrofit(builder)
@@ -71,12 +73,12 @@ class ApiClient {
     fun getApiProviderEndpoints(encrypt: Boolean, decrypt: Boolean): ProviderEndpoints? {
         getLoggingInterceptor()
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
-        builder.addNetworkInterceptor(loggingInterceptor)
+        loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(EncryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
         }
         if (decrypt) {
-            builder.addInterceptor(DecryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
         }
         addInterceptors(builder)
         getRetrofit(builder)
@@ -88,10 +90,10 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(EncryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
         }
         if (decrypt) {
-            builder.addInterceptor(DecryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
         }
         addInterceptors(builder)
         getRetrofit(builder)
@@ -118,14 +120,16 @@ class ApiClient {
         builder.addInterceptor(Interceptor { chain: Interceptor.Chain ->
             val request = chain.request()
             chain.proceed(
-                request.newBuilder()
-                    .addHeader(
-                        AUTHORIZATION,
-                        PrefUtility().getHeaderIdToken(OmnicureApp.getAppContext()).toString()
-                    )
-                    .addHeader(UID,
-                        PrefUtility().getFireBaseUid(OmnicureApp.getAppContext()).toString()
-                    )
+                OmnicureApp().getAppContext()?.let { PrefUtility().getFireBaseUid(it).toString() }?.let {
+                    request.newBuilder()
+                        .addHeader(
+                            AUTHORIZATION,
+                            OmnicureApp().getAppContext()?.let { PrefUtility().getHeaderIdToken(it) }!!
+                        )
+                        .addHeader(UID,
+                            it
+                        )
+                }!!
                     .build()
             )
         })
@@ -147,5 +151,8 @@ class ApiClient {
         Log.d(TAG, "getBaseUrl: $url")
         return url
     }
+}
+
+private fun OkHttpClient.Builder.addInterceptor(let: EncryptionInterceptor?) {
 
 }

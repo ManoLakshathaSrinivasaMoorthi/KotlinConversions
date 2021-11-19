@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -30,6 +31,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinOmniCure"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activity.ContactAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ViewUrgentMessagesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.WebviewActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.ResetSuccessActivity"
             android:exported="false" />
@@ -62,7 +72,7 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.PatientAppointmentActivity" />
         <activity android:name=".activity.ActivityConsultChart" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".OmnicureApp" />
         <activity android:name=".activity.ActivityPatientCensusPatient" />
         <activity
             android:name=".activity.AddPatientActivity"
