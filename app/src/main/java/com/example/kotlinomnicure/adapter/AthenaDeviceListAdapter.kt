@@ -23,7 +23,7 @@ class AthenaDeviceListAdapter(context: Context, resource: Int, objects: List<Ath
     @SuppressLint("SetTextI18n")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         var view = view
-        var holder: Holder?
+        val holder: Holder?
         if (view == null) {
             holder =Holder()
             view = inflater?.inflate(R.layout.doc_box_list_view, null, false)
@@ -35,12 +35,12 @@ class AthenaDeviceListAdapter(context: Context, resource: Int, objects: List<Ath
         }
         val athenaDeviceData = athenaDeviceDataList!![position]
         val context: Context?=null
-        holder.name?.setText((context?.getString(R.string.athena_hardware_id)) + " " + athenaDeviceData.getDeviceID1())
+        holder.name?.text = (context?.getString(R.string.athena_hardware_id)) + " " + athenaDeviceData.getDeviceID1()
         if (athenaDeviceData.getUpdateTime() != null) {
-            holder.dob?.setText((context?.getString(R.string.last_sync_time))
-                        + " " + ChatUtils().getStatusDateFormat(athenaDeviceData.getUpdateTime()!!))
+            holder.dob?.text = ((context?.getString(R.string.last_sync_time))
+                    + " " + ChatUtils().getStatusDateFormat(athenaDeviceData.getUpdateTime()!!))
         } else {
-            holder.dob?.setText(context?.getString(R.string.athena_empty_sync_time))
+            holder.dob?.text = context?.getString(R.string.athena_empty_sync_time)
         }
         return view
     }

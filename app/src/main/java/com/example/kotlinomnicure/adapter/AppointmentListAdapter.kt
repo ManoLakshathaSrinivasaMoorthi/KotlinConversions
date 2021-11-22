@@ -62,12 +62,8 @@ class AppointmentListAdapter(context: Context, objects: List<Appointment>, priva
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var name: TextView
-        var dob: TextView
+        var name: TextView = itemView.findViewById(R.id.doc_box_patient_name)
+        var dob: TextView = itemView.findViewById(R.id.doc_box_patient_dob)
 
-        init {
-            name = itemView.findViewById(R.id.doc_box_patient_name)
-            dob = itemView.findViewById(R.id.doc_box_patient_dob)
-        }
     }
 }

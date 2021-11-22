@@ -85,7 +85,7 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
         // True time initialization
         AsyncTask.execute { //TODO your background code
             try {
-                TrueTime.build().initialize()
+                TrueTime().build().initialize()
             } catch (e: IOException) {
                 Log.e(TAG, "Exception:", e.cause)
             }
@@ -104,7 +104,7 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
     open fun getTime(): Long {
         var time = 0L
         try {
-            time = TrueTime.now().getTime()
+            time = TrueTime().now().getTime()
             Log.i(TAG, "current time $time")
         } catch (e: IllegalStateException) {
             Log.e(TAG, "Error getting current time " + e.message)
