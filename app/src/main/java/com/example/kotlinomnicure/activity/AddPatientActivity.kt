@@ -49,7 +49,7 @@ class AddPatientActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Databinding and view model intialization
+        // Databinding and view model initialization
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_patient)
         viewModel = ViewModelProvider(this).get(AddPatientViewModel::class.java)
         // Setting the tool bar for the activity
@@ -107,10 +107,10 @@ class AddPatientActivity : BaseActivity() {
 
     private fun selectDOB() {
         binding?.idDob?.isEnabled = false
-        val mcurrentDate = Calendar.getInstance()
-        var mYear = mcurrentDate[Calendar.YEAR]
-        var mMonth = mcurrentDate[Calendar.MONTH]
-        var mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
+        val currentDate = Calendar.getInstance()
+        var mYear = currentDate[Calendar.YEAR]
+        var mMonth = currentDate[Calendar.MONTH]
+        var mDay = currentDate[Calendar.DAY_OF_MONTH]
         if (binding?.idDob?.tag != null && binding?.idDob?.tag.toString().isNotEmpty()) {
             val dob: String = binding?.idDob?.tag.toString()
             val dobArr = dob.split("/".toRegex()).toTypedArray()
@@ -125,8 +125,8 @@ class AddPatientActivity : BaseActivity() {
                 selectedDate[selectedyear, selectedmonth] = selectedday
                 binding?.idDob?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_calendar_blue, 0)
                 binding?.idDob?.setText((selectedmonth + 1).toString() + "/" + selectedday + "/" + selectedyear)
-                binding?.idDob?.setTag((selectedmonth + 1).toString() + "/" + selectedday + "/" + selectedyear)
-                binding?.idDob?.setEnabled(true)
+                binding?.idDob?.tag = (selectedmonth + 1).toString() + "/" + selectedday + "/" + selectedyear
+                binding?.idDob?.isEnabled = true
             }, mYear, mMonth, mDay
         )
         mDatePicker.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -159,7 +159,7 @@ class AddPatientActivity : BaseActivity() {
             Constants.SharedPrefConstants.TOKEN, "")
 
         // "getDocBoxPatientList" API call
-        viewModel?.getDocBoxPatientList(providerID, token)?.observe(this, {
+        viewModel?.getDocBoxPatientList(providerID, token)?.observe(this, { it ->
             val response=it.body()
             Log.d(TAG, "showDocBoxPatientList : " + Gson().toJson(response))
             dismissProgressBar()
@@ -192,11 +192,11 @@ class AddPatientActivity : BaseActivity() {
         val token: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.TOKEN, "")
         // "getAppointmentList" API call
         providerID?.let { token?.let { it1 -> viewModel?.getAppointmentList(it, it1, 0, 50) } }?.observe(this,
-            {
+            { it ->
                 val response=it.body()
                 dismissProgressBar()
                 binding?.idSave?.isEnabled = true
-                if (response != null && response.getStatus() != null && response.getStatus()!!) {
+                if (response?.getStatus() != null && response.getStatus()!!) {
                     showAppointmentList(response)
                 } else {
                     val errMsg: String? = ErrorMessages().getErrorMessage(this, response?.getErrorMessage(),
@@ -227,7 +227,7 @@ class AddPatientActivity : BaseActivity() {
         patientListView.adapter = docBoxPatientListAdapter
         dialog.show()
         patientListView.onItemClickListener =
-            OnItemClickListener { parent, view, position, id ->
+            OnItemClickListener { _, _, position, _ ->
                 val docBoxPatient = response.getDocBoxPatientList()!![position]
                 if (docBoxPatient != null) {
                     val firstName = response.getDocBoxPatientList()!![position]!!.getFname()
@@ -317,7 +317,7 @@ class AddPatientActivity : BaseActivity() {
         if (response == null || response.getCount()==0) {
 //            UtilityMethods.showErrorSnackBar(binding.getRoot(), getString(R.string.appointment_details_not_found), Snackbar.LENGTH_LONG);
             CustomSnackBar.make(
-                binding?.getRoot(), this@AddPatientActivity, CustomSnackBar.WARNING, getString(
+                binding?.root, this@AddPatientActivity, CustomSnackBar.WARNING, getString(
                     R.string.appointment_details_not_found
                 ), CustomSnackBar.TOP, 3000, 0
             )?.show()
@@ -369,7 +369,7 @@ class AddPatientActivity : BaseActivity() {
                     mAthenaDeviceId = null
                     dialog.dismiss()
                 } else {
-//                    UtilityMethods.showErrorSnackBar(binding.getRoot(), getString(R.string.appointment_details_not_found), Snackbar.LENGTH_LONG);
+//                    UtilityMethods.showErrorSnackBar(binding.getRoot(), getString(R.string.appointment_details_not_found), Snack.LENGTH_LONG);
                     CustomSnackBar.make(
                         binding?.root, this@AddPatientActivity, CustomSnackBar.WARNING, getString(
                             R.string.appointment_details_not_found
@@ -396,7 +396,7 @@ class AddPatientActivity : BaseActivity() {
             Constants.SharedPrefConstants.TOKEN,
             ""
         )
-        viewModel?.getAthenaDevicetList(providerID, token)?.observe(this, {
+        viewModel?.getAthenaDevicetList(providerID, token)?.observe(this, { it ->
             val response=it.body()
             dismissProgressBar()
             binding?.idSave?.isEnabled = true
@@ -408,7 +408,7 @@ class AddPatientActivity : BaseActivity() {
                     response?.getErrorMessage(),
                     Constants.API.getAthenaDeviceList
                 )
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snack.LENGTH_LONG);
                 errMsg?.let {
                     CustomSnackBar.make(
                         binding?.idContainerLayout,
@@ -461,7 +461,7 @@ class AddPatientActivity : BaseActivity() {
         val athenaDeviceListAdapter = AthenaDeviceListAdapter(this, R.layout.doc_box_patient_list, response.getAthenaDeviceDataList() as List<AthenaDeviceData>)
        patientListView.adapter = athenaDeviceListAdapter
         dialog.show()
-        patientListView.onItemClickListener = OnItemClickListener { parent, view, position, _ ->
+        patientListView.onItemClickListener = OnItemClickListener { _, _, position, _ ->
             val docBoxPatient = response.getAthenaDeviceDataList()!![position]
             if (docBoxPatient != null) {
                 mDocBoxManagerId = null
@@ -470,7 +470,7 @@ class AddPatientActivity : BaseActivity() {
                 //                    binding.athenaDeviceTv.setText("" + response.getAthenaDeviceDataList().get(position).getDeviceID1());
                 dialog.dismiss()
             } else {
-//                    UtilityMethods.showErrorSnackBar(binding.getRoot(), getString(R.string.device_details_not_found), Snackbar.LENGTH_LONG);
+//                    UtilityMethods.showErrorSnackBar(binding.getRoot(), getString(R.string.device_details_not_found), Snack.LENGTH_LONG);
                 CustomSnackBar.make(
                     binding!!.root, this@AddPatientActivity, CustomSnackBar.WARNING, getString(
                         R.string.device_details_not_found
@@ -504,8 +504,8 @@ class AddPatientActivity : BaseActivity() {
             Constants.SharedPrefConstants.NAME,
             ""
         )
-        patient.setLocation(binding?.idHospitalLocation?.getText().toString())
-        if (binding?.idSpinnerWard?.getSelectedItemPosition() !! > 0) {
+        patient.setLocation(binding?.idHospitalLocation?.text.toString())
+        if (binding?.idSpinnerWard?.selectedItemPosition!! > 0) {
             patient.setWardName(binding?.idSpinnerWard!!.selectedItem.toString())
         }
 
@@ -545,7 +545,7 @@ class AddPatientActivity : BaseActivity() {
             return
         }
         if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+//            UtilityMethods.showInternetError(binding.idContainerLayout, Snack.LENGTH_LONG);
             CustomSnackBar.make(
                 binding?.idContainerLayout, this, CustomSnackBar.WARNING, getString(
                     R.string.no_internet_connectivity
@@ -590,13 +590,13 @@ class AddPatientActivity : BaseActivity() {
     }
 
     /**
-     * Checking the error message and displaying the snackbar
+     * Checking the error message and displaying the snack
      * @return
      */
     private fun isValid(): Boolean {
         val errMsg: String? = binding?.let { ValidationUtil().isValidate(it) }
         if (!TextUtils.isEmpty(errMsg)) {
-//            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+//            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snack.LENGTH_LONG);
             errMsg?.let { CustomSnackBar.make(
                 binding?.idContainerLayout,
                 this,
@@ -635,11 +635,11 @@ class AddPatientActivity : BaseActivity() {
      * @param wards
      * @return
      */
-    private fun getWardNames(wards: List<AddNewPatientWard>): LinkedHashMap<String, String>? {
+    private fun getWardNames(wards: List<AddNewPatientWard>): LinkedHashMap<String, String> {
         val wardMap = LinkedHashMap<String, String>()
         for (i in wards.indices) {
             val patientWard: AddNewPatientWard = wards[i]
-            if (patientWard != null && patientWard.getWardName() != null) {
+            if (patientWard.getWardName() != null) {
                 wardMap[patientWard.getWardName()!!] = patientWard.getWardName()!!
             }
         }
@@ -669,12 +669,12 @@ class AddPatientActivity : BaseActivity() {
         val providerMap = LinkedHashMap<String, String>()
         remoteProvider.add(getString(R.string.select_ward))
         // "getWardsList" API call
-        viewModel?.getWardsList(hospitalId)?.observe(this, {
+        viewModel?.getWardsList(hospitalId)?.observe(this, { it ->
             val response=it.body()
             Log.d(TAG, "Wards data" + response?.getStatus())
-            if (response != null && response.getStatus() != null && response.getStatus()!!) {
-                if (response.getWards() != null && !response.getWards()!!.isEmpty()) {
-                    providerMap.putAll(getWardNames(response.getWards() as List<AddNewPatientWard>)!!)
+            if (response?.getStatus() != null && response.getStatus()!!) {
+                if (response.getWards() != null && response.getWards()!!.isNotEmpty()) {
+                    providerMap.putAll(getWardNames(response.getWards() as List<AddNewPatientWard>))
                     remoteProvider.addAll(providerMap.keys)
                 }
             } else if (response?.getErrorId() != null) {
@@ -716,32 +716,30 @@ class AddPatientActivity : BaseActivity() {
                     val spinnerText = view as TextView
                     val providerType = remoteProvider[position]
                     val remoteProvideId = providerMap[providerType]
-                    binding?.idSpinnerWard?.setTag(remoteProvideId)
-                    if (spinnerText != null) {
-                        spinnerText.maxLines = 1
-                        if (position != 0) {
-                            UtilityMethods().setTextViewColor(
-                                AddPatientActivity(),
-                                spinnerText,
-                                R.color.black
-                            )
-                            binding?.let { UtilityMethods().setDrawableBackground(
-                                this,
-                                it.idSpinnerWard,
-                                R.drawable.spinner_drawable_selected
-                            ) }
-                        } else {
-                            UtilityMethods().setTextViewColor(
-                                AddPatientActivity(),
-                                spinnerText,
-                                R.color.gray_500
-                            )
-                            binding?.let { UtilityMethods().setDrawableBackground(
-                                this,
-                                it.idSpinnerWard,
-                                R.drawable.spinner_drawable
-                            ) }
-                        }
+                    binding?.idSpinnerWard?.tag = remoteProvideId
+                    spinnerText.maxLines = 1
+                    if (position != 0) {
+                        UtilityMethods().setTextViewColor(
+                            AddPatientActivity(),
+                            spinnerText,
+                            R.color.black
+                        )
+                        binding?.let { UtilityMethods().setDrawableBackground(
+                            this,
+                            it.idSpinnerWard,
+                            R.drawable.spinner_drawable_selected
+                        ) }
+                    } else {
+                        UtilityMethods().setTextViewColor(
+                            AddPatientActivity(),
+                            spinnerText,
+                            R.color.gray_500
+                        )
+                        binding?.let { UtilityMethods().setDrawableBackground(
+                            this,
+                            it.idSpinnerWard,
+                            R.drawable.spinner_drawable
+                        ) }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()

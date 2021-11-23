@@ -42,6 +42,7 @@ class Provider {
     private var specialization: String? = null
     private var status: String? = null
     private var token: String? = null
+    private var userId: Double? = null
     private var voipToken: String? = null
     private var providerType: String? = null
     private var lcpType: String? = null
@@ -487,8 +488,17 @@ class Provider {
     fun setRemoteProviderId(remoteProviderId: Long?) {
         this.remoteProviderId = remoteProviderId
     }
+    fun getUserId(): Long? {
+        return userId?.toLong()
+    }
 
-
+    /**
+     * @param userId id or `null` for none
+     */
+    fun setUserId(userId: Long): Provider? {
+        this.userId = userId.toDouble()
+        return this
+    }
 
 
 }

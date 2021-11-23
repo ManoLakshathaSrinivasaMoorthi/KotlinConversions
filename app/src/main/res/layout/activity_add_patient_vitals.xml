@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.PopupOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:gravity="center"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_300"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/id_container_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_10"
+                android:paddingTop="@dimen/margin_15"
+                android:paddingRight="@dimen/margin_10"
+                android:paddingBottom="@dimen/margin_20">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_10"
+                    android:paddingEnd="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="@string/supplemental_oxygen"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGrp_oxygen"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioBtnNo"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:text="@string/no"
+                            android:textColor="@drawable/radio_btn_text_drawable_blue"
+                            android:textSize="@dimen/text_size_small"
+                            android:theme="@style/MyRadioButtonStylePurple" />
+
+                        <RadioButton
+                            android:id="@+id/radioBtnYes"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:text="@string/yes"
+                            android:textColor="@drawable/radio_btn_text_drawable_blue"
+                            android:textSize="@dimen/text_size_small"
+                            android:theme="@style/MyRadioButtonStylePurple" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/patient_apvu"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioGroup
+                            android:id="@+id/radioGrp_avpu1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/radioBtnAlert"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/margin_30"
+                                android:layout_weight="1"
+                                android:text="@string/alert"
+                                android:textColor="@drawable/radio_btn_text_drawable_blue"
+                                android:textSize="@dimen/text_size_small"
+                                android:theme="@style/MyRadioButtonStylePurple" />
+
+                            <RadioButton
+                                android:id="@+id/radioBtnPain"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/margin_30"
+                                android:layout_weight="1"
+                                android:text="@string/pain"
+                                android:textColor="@drawable/radio_btn_text_drawable_blue"
+                                android:textSize="@dimen/text_size_small"
+                                android:theme="@style/MyRadioButtonStylePurple" />
+                        </RadioGroup>
+
+                        <RadioGroup
+                            android:id="@+id/radioGrp_avpu2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/radioBtnVoice"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/margin_30"
+                                android:layout_weight="1"
+                                android:text="@string/voice"
+                                android:textColor="@drawable/radio_btn_text_drawable_blue"
+                                android:textSize="@dimen/text_size_small"
+                                android:theme="@style/MyRadioButtonStylePurple" />
+
+                            <RadioButton
+                                android:id="@+id/radioBtnUnresponsive"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/margin_30"
+                                android:layout_weight="1"
+                                android:text="@string/unresponsive"
+                                android:textColor="@drawable/radio_btn_text_drawable_blue"
+                                android:textSize="@dimen/text_size_small"
+                                android:theme="@style/MyRadioButtonStylePurple" />
+                        </RadioGroup>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/covid_positive"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioGroup
+                            android:id="@+id/covid_grp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:weightSum="3"
+                            tools:ignore="UselessParent">
+
+                            <RadioButton
+                                android:id="@+id/radioCovidNo"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/margin_30"
+                                android:layout_weight="1"
+                                android:text="@string/no"
+                                android:textColor="@drawable/radio_btn_text_drawable_blue"
+                                android:textSize="@dimen/text_size_small"
+                                android:theme="@style/MyRadioButtonStylePurple" />
+
+                            <RadioButton
+                                android:id="@+id/radioCovidYes"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/margin_30"
+                                android:layout_weight="1"
+                                android:text="@string/yes"
+                                android:textColor="@drawable/radio_btn_text_drawable_blue"
+                                android:textSize="@dimen/text_size_small"
+                                android:theme="@style/MyRadioButtonStylePurple" />
+
+                            <RadioButton
+                                android:id="@+id/radioCovidPending"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/margin_30"
+                                android:layout_weight="1"
+                                android:text="@string/pending"
+                                android:textColor="@drawable/radio_btn_text_drawable_blue"
+                                android:textSize="@dimen/text_size_small"
+                                android:theme="@style/MyRadioButtonStylePurple" />
+                        </RadioGroup>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:gravity="center|start"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5">
+
+                    <CheckBox
+                        android:id="@+id/addPatientVitalsCheckbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:text="@string/add_patient_vitals"
+                        android:textColor="@drawable/radio_btn_text_drawable_blue"
+                        android:textSize="@dimen/text_size_small"
+                        android:theme="@style/MyRadioButtonStyleViolet" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/addPatientVitalsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/id_heart_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="@string/heart_rate"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                    <EditText
+                        android:id="@+id/id_blood_pressure_systolic"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="@string/systolic_blood_pressure"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                    <EditText
+                        android:id="@+id/id_blood_pressure_diastolic"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="@string/diastolic_blood_pressure"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                    <EditText
+                        android:id="@+id/id_sp02"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="@string/txt_sp02"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                    <EditText
+                        android:id="@+id/id_fi02"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="@string/txt_fi02"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                    <EditText
+                        android:id="@+id/id_respitory_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="@string/respiratory_rate"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                    <EditText
+                        android:id="@+id/id_temperature"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="@string/temperature"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/connectToDeviceBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center|start"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_wifi"
+                        android:contentDescription="@string/todo" />
+
+                    <TextView
+                        android:id="@+id/athenaDeviceTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/connect_to_a_device"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:gravity="center|start"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5">
+
+                    <CheckBox
+                        android:id="@+id/urgentCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:text="@string/mark_consult_as_urgent"
+                        android:textColor="@drawable/radio_btn_text_drawable_blue"
+                        android:textSize="@dimen/text_size_small"
+                        android:theme="@style/MyRadioButtonStyleViolet" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/id_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_80"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:gravity="left"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                    android:padding="3dp"
+                    android:scrollbarSize="@dimen/margin_2"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray_500"
+                    android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
+                    android:textSize="@dimen/text_size_small"
+                    android:autofillHints=""
+                    tools:ignore="LabelFor,RtlHardcoded" />
+
+                <Button
+                    android:id="@+id/id_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@drawable/primary_color_btn_bg"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/txt_continue"
+                    android:textAllCaps="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -1,14 +1,24 @@
 package com.example.kotlinomnicure.utils
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.google.gson.JsonSyntaxException
+import com.google.gson.reflect.TypeToken
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 import java.io.*
+import java.lang.Exception
+import java.lang.IllegalStateException
 import java.util.*
 
 class PrefUtility {
+
     private val TAG = PrefUtility::class.java.simpleName
 
-    private fun removeFromPref(context: Context, key: String?) {
+    fun removeFromPref(context: Context, key: String?) {
         val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
         val editor = prefs.edit()
         editor.remove(key)
@@ -17,17 +27,20 @@ class PrefUtility {
 
     /**
      * This method save  a String in Application prefs
-
+     *
+     * @param context
+     * @param key
+     * @param value
      */
     fun saveStringInPref(context: Context, key: String?, value: String?) {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             val editor = prefs.edit()
             editor.putString(key, value)
-            editor.apply()
+            editor.commit()
             //saveEncryptedStringInPref(context,key,value);
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
     }
 
@@ -45,7 +58,7 @@ class PrefUtility {
             return prefs.getString(key, defaultValue)
             //return getEncryptedStringInPref(context,key,defaultValue);
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
         return ""
     }
@@ -64,7 +77,7 @@ class PrefUtility {
             editor.putStringSet(key, stringSet)
             editor.commit()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
     }
 
@@ -81,13 +94,13 @@ class PrefUtility {
         key: String?,
         defaultSetValue: Set<String?>?
     ): Set<String?>? {
-        var defaultSetValue = defaultSetValue
-        defaultSetValue = HashSet()
+//        defaultSetValue = new HashSet<>();
+        val defSetValue: Set<String> = HashSet()
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
-            return prefs.getStringSet(key, defaultSetValue)
+            return prefs.getStringSet(key, defSetValue)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
         return defaultSetValue
     }
@@ -106,7 +119,7 @@ class PrefUtility {
             editor.putInt(key, value)
             editor.commit()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
     }
 
@@ -137,7 +150,7 @@ class PrefUtility {
             editor.putLong(key, value)
             editor.commit()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
     }
 
@@ -153,7 +166,7 @@ class PrefUtility {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             return prefs.getLong(key, defaultValue)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
         return 0
     }
@@ -166,7 +179,7 @@ class PrefUtility {
             editor.putFloat(key, value)
             editor.commit()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
     }
 
@@ -189,7 +202,7 @@ class PrefUtility {
             editor.putLong(key, java.lang.Double.doubleToRawLongBits(value))
             editor.commit()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
     }
 
@@ -218,7 +231,7 @@ class PrefUtility {
             editor.putBoolean(key, value)
             editor.commit()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
     }
 
@@ -233,17 +246,31 @@ class PrefUtility {
         } catch (ex: Exception) {
             Log.i(TAG, "writeObject: exception$ex")
         } finally {
-            try {
-                if (os != null) {
+            if (os != null) {
+                try {
                     os.flush()
-                    os.close()
+                } catch (e: IOException) {
+                    Log.i(TAG, "writeObject: exception$e")
+                } finally {
+                    try {
+                        os.close()
+                    } catch (e: IOException) {
+                        Log.i(TAG, "writeObject: exception$e")
+                    }
                 }
-                if (fos != null) {
+            }
+            if (fos != null) {
+                try {
                     fos.flush()
-                    fos.close()
+                } catch (e: IOException) {
+                    Log.i(TAG, "writeObject: exception$e")
+                } finally {
+                    try {
+                        fos.close()
+                    } catch (e: IOException) {
+                        Log.i(TAG, "writeObject: exception$e")
+                    }
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
     }
@@ -257,12 +284,21 @@ class PrefUtility {
             `is` = ObjectInputStream(fis)
             obj = `is`.readObject()
         } catch (ex: Exception) {
+            Log.e(TAG, "Exception:", ex.cause)
         } finally {
-            try {
-                fis?.close()
-                `is`?.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
+            if (fis != null) {
+                try {
+                    fis.close()
+                } catch (e: IOException) {
+                    Log.e(TAG, "Exception:", e.cause)
+                }
+            }
+            if (`is` != null) {
+                try {
+                    `is`.close()
+                } catch (e: IOException) {
+                    Log.e(TAG, "Exception:", e.cause)
+                }
             }
         }
         return obj
@@ -277,7 +313,7 @@ class PrefUtility {
                     deleted = file.delete()
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e(TAG, "Exception:", e.cause)
             }
         }
         return deleted
@@ -302,6 +338,7 @@ class PrefUtility {
         removeFromPref(context, Constants.SharedPrefConstants.PROVIDER_OBJECT)
         removeFromPref(context, Constants.SharedPrefConstants.FIREBASE_IDTOKEN)
         removeFromPref(context, Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN)
+        removeFromPref(context, Constants.SharedPrefConstants.LOGIN_TIME)
     }
 
     fun clearRedirectValidation(context: Context) {
@@ -309,170 +346,190 @@ class PrefUtility {
         removeFromPref(context, Constants.redirectValidation.PASSWORD)
     }
 
-   /* fun saveUserData(context: Context, `object`: Any?) {
+    fun saveUserData(context: Context, `object`: Any?) {
         if (`object` != null) {
             if (`object` is Provider) {
                 val provider: Provider = `object` as Provider
-                PrefUtility.saveLongInPref(
-                    context,
-                    Constants.SharedPrefConstants.USER_ID,
-                    provider.getId()
-                )
-                PrefUtility.saveStringInPref(
+                Log.e(TAG, "saveUserData:provider--> " + Gson().toJson(provider))
+                provider.getId()?.let {
+                    PrefUtility().saveLongInPref(
+                        context,
+                        Constants.SharedPrefConstants.USER_ID,
+                        it
+                    )
+                }
+                provider.getUserId()?.let {
+                    PrefUtility().saveLongInPref(
+                        context,
+                        Constants.SharedPrefConstants.USER_ID_PRIMARY,
+                        it
+                    )
+                }
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.USER_MOBILE_NO,
                     provider.getPhone()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.TOKEN,
                     provider.getToken()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.NAME,
                     provider.getName()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.FIRST_NAME,
                     provider.getFname()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.LAST_NAME,
                     provider.getLname()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.HOSPITAL_NAME,
                     provider.getHospital()
                 )
                 if (provider.getPassword() != null) {
-                    PrefUtility.saveStringInPref(
+                    PrefUtility().saveStringInPref(
                         context,
                         Constants.SharedPrefConstants.PASSWORD,
                         provider.getPassword()
                     )
                 }
                 if (provider.getHospitalId() != null) {
-                    PrefUtility.saveLongInPref(
+                    PrefUtility().saveLongInPref(
                         context,
                         Constants.SharedPrefConstants.HOSPITAL_ID,
-                        provider.getHospitalId()
+                        provider.getHospitalId()!!
                     )
                 }
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.ROLE,
                     provider.getRole()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.LCP_TYPE,
                     provider.getLcpType()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.PROVIDER_STATUS,
                     provider.getStatus()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.PROFILE_IMG_URL,
                     provider.getProfilePicUrl()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.EMAIL,
                     provider.getEmail()
                 )
-            } else if (`object` is omnicure.mvp.com.loginEndpoints.model.Provider) {
-                val provider: omnicure.mvp.com.loginEndpoints.model.Provider =
-                    `object` as omnicure.mvp.com.loginEndpoints.model.Provider
-                PrefUtility.saveLongInPref(
-                    context,
-                    Constants.SharedPrefConstants.USER_ID,
-                    provider.getId()
-                )
-                PrefUtility.saveStringInPref(
+            } else if (`object` is Provider) {
+                val provider: Provider =
+                    `object` as Provider
+                Log.e(TAG, "saveUserData:provider 2--> " + Gson().toJson(provider))
+                provider.getId()?.let {
+                    PrefUtility().saveLongInPref(
+                        context,
+                        Constants.SharedPrefConstants.USER_ID,
+                        it
+                    )
+                }
+                provider.getUserId()?.let {
+                    PrefUtility().saveLongInPref(
+                        context,
+                        Constants.SharedPrefConstants.USER_ID_PRIMARY,
+                        it
+                    )
+                }
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.R_PROVIDER_TYPE,
                     provider.getRemoteProviderType()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.USER_MOBILE_NO,
                     provider.getPhone()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.TOKEN,
                     provider.getToken()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.NAME,
                     provider.getName()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.FIRST_NAME,
                     provider.getFname()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.LAST_NAME,
                     provider.getLname()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.HOSPITAL_NAME,
                     provider.getHospital()
                 )
                 if (provider.getHospitalId() != null) {
-                    PrefUtility.saveLongInPref(
+                    PrefUtility().saveLongInPref(
                         context,
                         Constants.SharedPrefConstants.HOSPITAL_ID,
-                        provider.getHospitalId()
+                        provider.getHospitalId()!!
                     )
                 }
                 if (provider.getPassword() != null) {
-                    PrefUtility.saveStringInPref(
+                    PrefUtility().saveStringInPref(
                         context,
                         Constants.SharedPrefConstants.PASSWORD,
                         provider.getPassword()
                     )
                 }
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.LCP_TYPE,
                     provider.getLcpType()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.ROLE,
                     provider.getRole()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.PROVIDER_STATUS,
                     provider.getStatus()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.PROFILE_IMG_URL,
                     provider.getProfilePicUrl()
                 )
-                PrefUtility.saveStringInPref(
+                PrefUtility().saveStringInPref(
                     context,
                     Constants.SharedPrefConstants.EMAIL,
                     provider.getEmail()
                 )
             }
-           // saveProviderObject(context, `object`)
+            saveProviderObject(context, `object`)
         }
-    }*/
+    }
 
     /**
      * Method to save provider object in preference
@@ -480,119 +537,136 @@ class PrefUtility {
      * @param context
      * @param object
      */
-   /* private fun saveProviderObject(context: Context, `object`: Any) {
+    private fun saveProviderObject(context: Context, `object`: Any) {
         try {
             //{"countryCode":"+1","email":"alok@clicbrics.com","fcmKey":"dX1ou2IlSoKz3SsqVuJ7pG:APA91bGrZjb3m7KHJsgKpjMFRls02ee8biSaLNdi-w2ytIk8-ubAbKQ2BugK2aWKr-p2oUGhIcy-mVPvhwxAaFQmToSI5tl20S1JpAoXhVdKnwrrU4cRO_vJGsz-hmJl_0fm5fMP2ZL1","healthMonitoringTime":"1589180350211","hospital":"VA New York Harbor Healthcare System","id":"1","joiningTime":"1588162910953","name":"Alok Soni","osType":"ANDROID","otp":"3248","password":"Y+Mh4DqMlwUC5rbx3MgOyMfht6+a8K8a","phone":"8377944971","profilePicUrl":"https://firebasestorage.googleapis.com/v0/b/omnicure-backend.appspot.com/o/xUOUCcGncSf9MZDuCCf33HO6hHj2%2F1%2FProfile%2Fimage_1588856832221?alt=media&token=59092c1d-282a-487a-9ad0-7066080c3f6b","role":"BD","screenName":"LoginActivity","status":"Active","token":"441898667215891803502110318992105"}
             Log.d(TAG, "saveProviderObject:$`object`")
-            val providerObj: String = JsonParser().parse(`object`.toString()).toString()
-            PrefUtility.saveStringInPref(
+            //            String providerObj = new JsonParser().parse(object.toString()).toString();
+            val providerObj = Gson().toJson(`object`)
+            PrefUtility().saveStringInPref(
                 context,
                 Constants.SharedPrefConstants.PROVIDER_OBJECT,
                 providerObj
             )
+            Log.d(TAG, "getProviderObject:" + getProviderObject(context))
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
     }
 
     fun getProviderObject(context: Context?): Provider? {
         try {
-            val providerStr: String = PrefUtility.getStringInPref(
-                context,
-                Constants.SharedPrefConstants.PROVIDER_OBJECT,
-                ""
-            )
-            val jsonObject: JsonObject = JsonParser().parse(providerStr).getAsJsonObject()
+            val providerStr: String? = context?.let {
+                PrefUtility().getStringInPref(
+                    it,
+                    Constants.SharedPrefConstants.PROVIDER_OBJECT,
+                    ""
+                )
+            }
+            val jsonObject = JsonParser().parse(providerStr).asJsonObject
             val provider = Provider()
-            if (jsonObject.get("countryCode") != null && jsonObject.get("countryCode")
-                    .getAsString() != null
-            ) {
-                provider.setCountryCode(jsonObject.get("countryCode").getAsString())
+            if (jsonObject["countryCode"] != null && jsonObject["countryCode"].asString != null) {
+                provider.setCountryCode(jsonObject["countryCode"].asString)
             }
-            if (jsonObject.get("email") != null && jsonObject.get("email").getAsString() != null) {
-                provider.setEmail(jsonObject.get("email").getAsString())
+            if (jsonObject["email"] != null && jsonObject["email"].asString != null) {
+                provider.setEmail(jsonObject["email"].asString)
             }
-            if (jsonObject.get("fcmKey") != null && jsonObject.get("fcmKey")
-                    .getAsString() != null
-            ) {
-                provider.setFcmKey(jsonObject.get("fcmKey").getAsString())
+            if (jsonObject["fcmKey"] != null && jsonObject["fcmKey"].asString != null) {
+                provider.setFcmKey(jsonObject["fcmKey"].asString)
             }
-            if (jsonObject.get("healthMonitoringTime") != null) {
-                provider.setHealthMonitoringTime(jsonObject.get("healthMonitoringTime").getAsLong())
+            if (jsonObject["healthMonitoringTime"] != null) {
+                provider.setHealthMonitoringTime(jsonObject["healthMonitoringTime"].asLong)
             }
-            if (jsonObject.get("hospital") != null && jsonObject.get("hospital")
-                    .getAsString() != null
-            ) {
-                provider.setHospital(jsonObject.get("hospital").getAsString())
+            if (jsonObject["hospital"] != null && jsonObject["hospital"].asString != null) {
+                provider.setHospital(jsonObject["hospital"].asString)
             }
-            if (jsonObject.get("hospitalId") != null && jsonObject.get("hospitalId")
-                    .getAsString() != null
-            ) {
-                provider.setHospitalId(jsonObject.get("hospitalId").getAsLong())
+            if (jsonObject["hospitalId"] != null && jsonObject["hospitalId"].asString != null) {
+                provider.setHospitalId(jsonObject["hospitalId"].asLong)
             }
-            if (jsonObject.get("id") != null) {
-                provider.setId(jsonObject.get("id").getAsLong())
+            if (jsonObject["id"] != null) {
+                provider.setId(jsonObject["id"].asLong)
             }
-            if (jsonObject.get("joiningTime") != null) {
-                provider.setJoiningTime(jsonObject.get("joiningTime").getAsLong())
+            if (jsonObject["joiningTime"] != null) {
+                provider.setJoiningTime(jsonObject["joiningTime"].asLong)
             }
-            if (jsonObject.get("name") != null && jsonObject.get("name").getAsString() != null) {
-                provider.setName(jsonObject.get("name").getAsString())
+            if (jsonObject["name"] != null && jsonObject["name"].asString != null) {
+                provider.setName(jsonObject["name"].asString)
             }
-            if (jsonObject.get("fname") != null && jsonObject.get("fname").getAsString() != null) {
-                provider.setFname(jsonObject.get("fname").getAsString())
+            if (jsonObject["fname"] != null && jsonObject["fname"].asString != null) {
+                provider.setFname(jsonObject["fname"].asString)
             }
-            if (jsonObject.get("lname") != null && jsonObject.get("lname").getAsString() != null) {
-                provider.setLname(jsonObject.get("lname").getAsString())
+            if (jsonObject["lname"] != null && jsonObject["lname"].asString != null) {
+                provider.setLname(jsonObject["lname"].asString)
             }
-            if (jsonObject.get("osType") != null && jsonObject.get("osType")
-                    .getAsString() != null
-            ) {
-                provider.setOsType(jsonObject.get("osType").getAsString())
+            if (jsonObject["osType"] != null && jsonObject["osType"].asString != null) {
+                provider.setOsType(jsonObject["osType"].asString)
             }
-            if (jsonObject.get("otp") != null && jsonObject.get("otp").getAsString() != null) {
-                provider.setOtp(jsonObject.get("otp").getAsString())
+            if (jsonObject["otp"] != null && jsonObject["otp"].asString != null) {
+                provider.setOtp(jsonObject["otp"].asString)
             }
-            if (jsonObject.get("phone") != null && jsonObject.get("phone").getAsString() != null) {
-                provider.setPhone(jsonObject.get("phone").getAsString())
+            if (jsonObject["phone"] != null && jsonObject["phone"].asString != null) {
+                provider.setPhone(jsonObject["phone"].asString)
             }
-            if (jsonObject.get("profilePicUrl") != null && jsonObject.get("profilePicUrl")
-                    .getAsString() != null
-            ) {
-                provider.setProfilePicUrl(jsonObject.get("profilePicUrl").getAsString())
+            if (jsonObject["profilePicUrl"] != null && jsonObject["profilePicUrl"].asString != null) {
+                provider.setProfilePicUrl(jsonObject["profilePicUrl"].asString)
             }
-            if (jsonObject.get("role") != null && jsonObject.get("role").getAsString() != null) {
-                provider.setRole(jsonObject.get("role").getAsString())
+            if (jsonObject["role"] != null && jsonObject["role"].asString != null) {
+                provider.setRole(jsonObject["role"].asString)
             }
-            if (jsonObject.get("status") != null && jsonObject.get("status")
-                    .getAsString() != null
-            ) {
-                provider.setStatus(jsonObject.get("status").getAsString())
+            if (jsonObject["status"] != null && jsonObject["status"].asString != null) {
+                provider.setStatus(jsonObject["status"].asString)
             }
-            if (jsonObject.get("token") != null && jsonObject.get("token").getAsString() != null) {
-                provider.setToken(jsonObject.get("token").getAsString())
+            if (jsonObject["token"] != null && jsonObject["token"].asString != null) {
+                provider.setToken(jsonObject["token"].asString)
             }
-            if (jsonObject.get("lcpType") != null && jsonObject.get("lcpType")
-                    .getAsString() != null
-            ) {
-                provider.setLcpType(jsonObject.get("lcpType").getAsString())
+            if (jsonObject["lcpType"] != null && jsonObject["lcpType"].asString != null) {
+                provider.setLcpType(jsonObject["lcpType"].asString)
             }
             return provider
         } catch (e: JsonSyntaxException) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         } catch (e: IllegalStateException) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
         return null
     }
-*/
+
+    fun getLoginTime(context: Context): Long {
+        return getLongInPref(context, Constants.SharedPrefConstants.LOGIN_TIME, 0)
+    }
+
+    fun setLoginTime(context: Context?, time: Long) {
+        context?.let { PrefUtility().saveLongInPref(it, Constants.SharedPrefConstants.LOGIN_TIME, time) }
+    }
+
     fun getProviderId(context: Context): Long? {
         return getLongInPref(context, Constants.SharedPrefConstants.USER_ID, -1)
+    }
+
+    fun getUserId(context: Context): Long? {
+        return getLongInPref(context, Constants.SharedPrefConstants.USER_ID_PRIMARY, -1)
     }
 
     fun getFireBaseUid(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.FIREBASE_UID, "")
     }
+
+    fun getAgoraAppId(context: Context): String? {
+        return getStringInPref(context, Constants.SharedPrefConstants.AGORA_APP_ID, "")
+    }
+
+    fun getAgoraCertificateId(context: Context): String? {
+        return getStringInPref(context, Constants.SharedPrefConstants.AGORA_CERTIFICATE, "")
+    }
+
+    fun getAESKey(context: Context): String? {
+        return getStringInPref(context, Constants.SharedPrefConstants.AES_KEY, "")
+    }
+
+    fun getAESAPIKey(context: Context): String? {
+        return getStringInPref(context, Constants.SharedPrefConstants.AES_API_KEY, "")
+    }
+
 
     fun getHeaderIdToken(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.FIREBASE_IDTOKEN, "")
@@ -613,28 +687,28 @@ class PrefUtility {
     fun getToken(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.TOKEN, "")
     }
-/*
 
     fun savePatientAcuityResetCounter(context: Context?, map: HashMap<Long?, Long?>?) {
-        val str: String = Gson().toJson(map)
-        PrefUtility.saveStringInPref(
-            context,
-            Constants.SharedPrefConstants.RESET_ACUITY_PATIENT_MAP,
-            str
-        )
+        val str = Gson().toJson(map)
+        context?.let {
+            PrefUtility().saveStringInPref(it,
+                Constants.SharedPrefConstants.RESET_ACUITY_PATIENT_MAP, str)
+        }
     }
 
-    fun getPatientAcuityResetCounter(context: Context): HashMap<Long?, Long?>? {
+    fun getPatientAcuityResetCounter(context: Context): HashMap<Long, Long>? {
         try {
-            val str =
-                getStringInPref(context, Constants.SharedPrefConstants.RESET_ACUITY_PATIENT_MAP, "")
-            return Gson().fromJson(str, object : TypeToken<HashMap<Long?, Long?>?>() {}.getType())
+            val str = getStringInPref(
+                context,
+                Constants.SharedPrefConstants.RESET_ACUITY_PATIENT_MAP,
+                ""
+            )
+            return Gson().fromJson(str, object : TypeToken<HashMap<Long?, Long?>?>() {}.type)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Exception:", e.cause)
         }
         return null
     }
-*/
 
     /*public static SharedPreferences getSharedPref(Context context) {
         try {
@@ -651,7 +725,7 @@ class PrefUtility {
                     );
             return sharedPreferences;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Exception:", e.getCause());
         }
         return null;
     }
@@ -663,25 +737,26 @@ class PrefUtility {
             editor.putString(key, value);
             editor.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Exception:", e.getCause());
         }
     }
 
     */
     /**
      * This method returns the string value stored in Application prefs against a key
-
+     *
+     * @param context
+     * @param key
+     * @param defaultValue
+     * @return
      *//*
     public static String getEncryptedStringInPref(Context context, String key, String defaultValue) {
         try {
             SharedPreferences prefs = getSharedPref(context);
             return prefs.getString(key, defaultValue);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Exception:", e.getCause());
         }
         return "";
     }*/
 }
-
-
-
