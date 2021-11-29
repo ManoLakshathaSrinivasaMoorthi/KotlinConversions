@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_30"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/hospitalName"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/margin_40"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_5"
+                android:layout_weight="1.7"
+                android:gravity="center|start"
+                android:textAppearance="@style/textSubTitle"
+                android:textStyle="normal" />
+
+            <ImageView
+                android:id="@+id/icSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_20"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_5"
+                android:layout_weight="0.3"
+                android:gravity="center|start"
+                android:textAppearance="@style/textSubTitle"
+                android:textStyle="normal"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_tick_mark"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

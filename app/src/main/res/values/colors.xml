@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#172B4D</color>
+    <color name="colorPrimaryDark">#172B4D</color>
+    <color name="colorPrimaryLight">#172B4D</color>
+    <color name="colorAccent">#BB86FC</color>
+    <color name="statusbar_color_light">#e2e2e2</color>
+    <color name="statusbar_color">#172B4D</color>
+    <color name="colorTrasparent">#00ffffff</color>
+    <color name="btn_disabled_color">#9E9E9E</color>
+    <color name="login_btn_color">#9B51E0</color>
+    <color name="login_purple_color">#50348D</color>
+    <!--<color name="white">#F6F3ED</color>-->
+    <color name="apple_white">#F6F3ED</color>
+    <color name="white">#FFFFFF</color>
+    <color name="color_ash">#F2F2F2</color>
+    <color name="title_black">#010353</color>
+    <color name="black">#222222</color>
+    <color name="red">#bb0606</color>
+    <color name="red_light">#f83618</color>
+    <color name="red_dark">#bb0606</color>
+    <color name="sos_red">#cc1e32</color>
+    <color name="orange">#ffff900d</color>
+    <color name="green_500">#8bc34a</color>
+    <color name="green_900">#1B5E20</color>
+    <color name="bg_gradient_1">#462b80</color>
+    <color name="bg_gradient_2">#6446a5</color>
+    <color name="bg_gradient_1_50_alpha">#77462b80</color>
+    <color name="gray_50_alpha">#77424242</color>
+
+    <color name="gray">#EBECF0</color>
+    <color name="gray_text">#8993A4</color>
+    <color name="gray_50">#fafafa</color>
+    <color name="gray_100">#f5f5f5</color>
+    <color name="gray_200">#eeeeee</color>
+    <color name="gray_250">#e8e8e8</color>
+    <color name="gray_300">#e0e0e0</color>
+    <color name="gray_400">#bdbdbd</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="agora_blue">#462B80</color>
+    <color name="overlay_color">#c0000000</color>
+    <color name="overlay_color1">#48000000</color>
+    <color name="overlay_color2">#64000000</color>
+    <color name="overlay_color3">#20000000</color>
+    <color name="overlay_color4">#10000000</color>
+    <color name="overlay_color5">#9d000000</color>
+    <color name="overlay_color6">#0b000000</color>
+    <color name="docbox_value_color">#287e7f</color>
+    <color name="green">#1eb7b7</color>
+    <color name="green_dark">#0D665E</color>
+    <color name="base_text_color">#010353</color>
+    <color name="title_color">#172B4D</color>
+    <color name="divider_color">#212121</color>
+    <color name="sub_title_color">#344563</color>
+    <color name="btn_bg">#9B51E0</color>
+    <color name="disabled_gray">#f5f6f8</color>
+
+    <!--    <color name="colorPrimary">@color/agora_blue</color>-->
+    <!--    <color name="colorPrimaryDark">@color/agora_blue</color>-->
+    <!--    <color name="colorAccent">@color/agora_blue</color>-->
+
+    <color name="lightColorAccent">#30FF4081</color>
+
+    <!--<color name="dark_black">#CC262626</color>-->
+
+    <color name="transparent_75_white">#ACFFFFFF</color>
+
+    <color name="black_light">#CC222222</color>
+
+    <color name="dark_black">#FF333333</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_25_BLACK">#44000000</color>
+    <color name="notification_img_boarder">#3E61A4</color>
+    <!--<color name="color_acuity_low">#87DC16</color>
+    <color name="color_acuity_medium">#FFE103</color>
+    <color name="color_acuity_high">#FF0000</color>-->
+    <color name="color_acuity_low">#87DC16</color>
+    <color name="color_acuity_medium">#FFE103</color>
+    <color name="color_acuity_high">#FF0000</color>
+    <color name="color_active_badge_count">#0074EA</color>
+    <color name="color_blue">#007AFF</color>
+    <color name="color_complete_consultation">#347C7C</color>
+
+    <color name="drawer_img_bg_color">#462B80</color>
+    <color name="drawer_img_txt_color">#FFFFFF</color>
+    <color name="drawer_header_txt_color">#333232</color>
+    <color name="chat_time_color">#858E99</color>
+    <color name="drawer_status_icon_color">#87DC16</color>
+    <color name="drawer_menu_bg">#ECECEC</color>
+    <color name="parrot_green">#65C466</color>
+
+    <color name="login_bg_color_start">#6446A5</color>
+    <color name="login_bg_color_end">#462B80</color>
+    <color name="login_edittext_bg_color">#6446A5</color>
+    <color name="login_singin_btn_txt_color">#6446A5</color>
+    <color name="patient_name_txt_color">#462B80</color>
+    <color name="patient_chat_txt_color">#5F6367</color>
+    <color name="home_cardview_stroke_color">#D9D5D5</color>
+    <color name="edittext_stroke_color">#E8ECEF</color>
+    <color name="forgot_color">#9B51E0</color>
+    <color name="login_hint_color">#8993A4</color>
+    <color name="textcolor_title">#5E6C84</color>
+    <color name="error_color">#E52727</color>
+    <color name="btn_disable">#EBECF0</color>
+
+    <color name="bg_blue">#172B4D</color>
+    <color name="text_gray">#B3BAC5</color>
+    <color name="bg_gray">#EFF1F5</color>
+    <color name="text_ash">#5E6C84</color>
+    <color name="bg_ash">#E5E5E5</color>
+    <color name="line_color">#D1D6DD</color>
+    <color name="disabled_bg">#33D1D6DD</color>
+    <color name="successBar">#56C596</color>
+
+    <color name="acuity_high_bg">#FBDDDD</color>
+    <color name="acuity_high_border">#E52727</color>
+    <color name="acuity_low_bg">#D8F9EE</color>
+    <color name="acuity_low_border">#56c596</color>
+    <color name="acuity_med_bg">#FCF4DB</color>
+    <color name="acuity_med_border">#F2994A</color>
+    <color name="urgent_sub_provider">#5E6C84</color>
+    <color name="black_tiltle">#172B4D</color>
+    <color name="text_color_light">#8993A4</color>
+
+</resources>

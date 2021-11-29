@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_ash"
+        android:fillViewport="true"
+        android:padding="@dimen/margin_25"
+        android:scrollbarSize="0dp">
+
+        <LinearLayout
+            android:id="@+id/id_login_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".activity.SignupActivity">
+
+
+            <LinearLayout
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:context=".activity.SignupActivity"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/id_logo_img"
+                    android:layout_width="@dimen/margin_40"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_gravity="center|start"
+                    android:contentDescription="@string/app_logo"
+                    app:srcCompat="@drawable/ic_logo" />
+
+                <TextView
+                    android:id="@+id/id_welcome_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:gravity="top"
+                    android:text="@string/welcome_to_omnicurenow"
+                    android:textAppearance="@style/text_title"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:text="@string/select_account"
+                android:textAppearance="@style/text_body"
+                android:textFontWeight="600"
+                android:textSize="@dimen/text_size_xlarge"
+                android:textStyle="normal" />
+
+            <LinearLayout
+                android:id="@+id/remoteProviderContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/signup_box_margin"
+                android:background="@drawable/black_border_drawable_bg"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_4"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_4"
+                    android:layout_weight="2.0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/providerSignUpTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/remote_provider"
+                        android:textAppearance="@style/textTitle"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/idRemoteDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:gravity="center_vertical"
+                        android:text="@string/remote_desc"
+                        android:textAppearance="@style/textSubTitle" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center|end"
+                    android:layout_margin="@dimen/margin_5"
+                    android:background="@drawable/ic_frwd_arrow"
+                    android:contentDescription="@string/todo" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/margin_10"
+                    android:background="@color/btn_bg"
+                    android:foregroundGravity="center"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/btn_bg"
+                    app:cardCornerRadius="75dp"
+                    app:cardElevation="@dimen/margin_12">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/ic_forword_arrow"
+                            android:contentDescription="@string/todo" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/localCareProviderContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/black_border_drawable_bg"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_4"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_4"
+                    android:layout_weight="2.0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/localCareProvider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/local_care_provider"
+                        android:textAppearance="@style/textTitle"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/idLcpDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:gravity="center_vertical"
+                        android:text="@string/lcp_desc"
+                        android:textAppearance="@style/textSubTitle" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center|end"
+                    android:layout_margin="@dimen/margin_5"
+                    android:background="@drawable/ic_frwd_arrow"
+                    android:contentDescription="@string/todo" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/margin_10"
+                    android:background="@color/btn_bg"
+                    android:foregroundGravity="center"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/btn_bg"
+                    app:cardCornerRadius="75dp"
+                    app:cardElevation="@dimen/margin_12">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/ic_forword_arrow"
+                            android:contentDescription="@string/todo" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/patientContainer"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/black_border_drawable_bg"
+                android:gravity="center"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_4"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_4"
+                    android:layout_weight="2.0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/patientProvider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/patient"
+                        android:textAppearance="@style/textTitle"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/idPatientDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:gravity="center_vertical"
+                        android:text="@string/patient_desc"
+                        android:textAppearance="@style/textSubTitle" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center|end"
+                    android:layout_margin="@dimen/margin_5"
+                    android:background="@drawable/ic_frwd_arrow"
+                    android:contentDescription="@string/todo" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/margin_10"
+                    android:background="@color/btn_bg"
+                    android:foregroundGravity="center"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/btn_bg"
+                    app:cardCornerRadius="75dp"
+                    app:cardElevation="@dimen/margin_12">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/ic_forword_arrow"
+                            android:contentDescription="@string/todo" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/alreadySigninText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_16"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="@dimen/margin_8"
+                android:text="@string/already_have_an_account_log_in"
+                android:textAppearance="@style/text_body" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

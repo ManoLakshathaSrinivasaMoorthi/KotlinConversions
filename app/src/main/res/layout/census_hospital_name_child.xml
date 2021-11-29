@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_4"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/txtHospitalName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:textColor="@color/bg_blue"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="normal" />
+
+        <CheckBox
+            android:id="@+id/icSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/margin_3"
+            android:background="@drawable/checkbox_bg"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center|start" />
+    </LinearLayout>
+</layout>

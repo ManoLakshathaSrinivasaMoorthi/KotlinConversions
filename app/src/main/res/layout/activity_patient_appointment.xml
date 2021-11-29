@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/login_bg_gradient"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/id_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_back_arrow"
+                android:contentDescription="@string/todo" />
+
+            <TextView
+                android:id="@+id/id_create_profile_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:gravity="center"
+                android:text="@string/start_your_patient_consultation"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".activity.RegistrationActivity">
+
+            <LinearLayout
+                android:id="@+id/id_container_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_25"
+                android:paddingRight="@dimen/margin_25"
+                android:paddingBottom="@dimen/margin_25">
+
+                <EditText
+                    android:id="@+id/id_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_edittext_bg"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:ems="10"
+                    android:hint="@string/first_name"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords|textPersonName"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_500"
+                    android:textCursorDrawable="@drawable/edittext_cursor_color"
+                    android:textSize="@dimen/text_size_small"
+                    android:autofillHints="" />
+
+                <EditText
+                    android:id="@+id/id_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_edittext_bg"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:ems="10"
+                    android:hint="@string/last_name"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords|textPersonName"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_500"
+                    android:textCursorDrawable="@drawable/edittext_cursor_color"
+                    android:textSize="@dimen/text_size_small"
+                    android:autofillHints="" />
+
+                <EditText
+                    android:id="@+id/id_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_edittext_bg"
+                    android:drawableEnd="@drawable/ic_calendar_light_gray"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="@string/dob_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="none"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_500"
+                    android:textSize="@dimen/text_size_small"
+                    android:autofillHints="" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@drawable/login_edittext_bg"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/gender"
+                        android:textColor="@color/gray_500"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGrp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RadioButton
+                            android:id="@+id/radioBtnMale"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:layout_gravity="center|start"
+                            android:gravity="center|start"
+                            android:text="@string/male"
+                            android:textColor="@drawable/radio_btn_drawable"
+                            android:textSize="@dimen/text_size_small"
+                            android:theme="@style/MyRadioButtonStyle" />
+
+                        <RadioButton
+                            android:id="@+id/radioBtnFemale"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="@string/female"
+                            android:textColor="@drawable/radio_btn_drawable"
+                            android:textSize="@dimen/text_size_small"
+                            android:theme="@style/MyRadioButtonStyle" />
+                        <!--<RadioButton
+                            android:id="@+id/radioBtnOthers"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:text="@string/others"
+                            android:textColor="@color/gray_500"
+                            android:textSize="@dimen/text_size_small" />-->
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@drawable/login_edittext_bg"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_5"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+                        android:id="@+id/countryStdCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/country_code"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_small"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/id_phone_number"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@color/colorTrasparent"
+                        android:digits="0123456789"
+                        android:ems="10"
+                        android:hint="@string/phone_number"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:longClickable="false"
+                        android:maxLength="12"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/margin_5"
+                        android:saveEnabled="false"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color"
+                        android:textSize="@dimen/text_size_small"
+                        tools:ignore="TextFields" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@drawable/login_edittext_bg"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_5"
+                    tools:ignore="RtlSymmetry">
+
+                    <EditText
+                        android:id="@+id/id_email_id"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@color/colorTrasparent"
+                        android:ems="10"
+                        android:focusableInTouchMode="true"
+                        android:focusedByDefault="false"
+                        android:fontFamily="@string/font_family_regular"
+                        android:hint="@string/email_optional"
+                        android:imeOptions="actionUnspecified"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/login_edittext_lnr_padding"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@drawable/login_edittext_bg"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_5"
+                    tools:ignore="RtlSymmetry">
+
+                    <EditText
+                        android:id="@+id/editTextPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@color/colorTrasparent"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^*()_+&amp;:;\/"
+                        android:drawableEnd="@drawable/ic_visibility"
+                        android:ems="10"
+                        android:focusableInTouchMode="true"
+                        android:focusedByDefault="false"
+                        android:fontFamily="@string/font_family_regular"
+                        android:hint="@string/password"
+                        android:imeOptions="actionUnspecified"
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/login_edittext_lnr_padding"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@drawable/login_edittext_bg"
+                    android:gravity="center|start"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5">
+
+                    <CheckBox
+                        android:id="@+id/addRelativeCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:text="@string/patient_family_member"
+                        android:textColor="@drawable/radio_btn_text_drawable_patient"
+                        android:textSize="@dimen/text_size_small"
+                        android:theme="@style/MyRadioButtonStylePatient" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/addRelativeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/id_rel_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/login_edittext_bg"
+                        android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:ems="10"
+                        android:hint="@string/relative_first_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords|textPersonName"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                    <EditText
+                        android:id="@+id/id_rel_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/login_edittext_bg"
+                        android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:ems="10"
+                        android:hint="@string/relative_last_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords|textPersonName"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/margin_5"
+                        android:paddingRight="@dimen/margin_5"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray_500"
+                        android:textCursorDrawable="@drawable/edittext_cursor_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:autofillHints="" />
+
+                    <LinearLayout
+                        android:id="@+id/id_ward_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@drawable/login_edittext_bg"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/id_spinner_relative"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/spinner_drawable"
+                            android:dropDownWidth="match_parent"
+                            android:prompt="@string/relation_to_patient"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/messageTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_80"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@drawable/login_edittext_bg"
+                    android:ems="10"
+                    android:gravity="left"
+                    android:hint="@string/patient_reg_comment_msg"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="5dp"
+                    android:scrollbarSize="@dimen/margin_2"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_500"
+                    android:textCursorDrawable="@drawable/edittext_cursor_color"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="gone"
+                    android:autofillHints=""
+                    tools:ignore="RtlHardcoded" />
+
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:orientation="horizontal">-->
+                <CheckBox
+                    android:id="@+id/agreementCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:text="@string/patient_license_msg"
+                    android:textColor="@drawable/agreement_checkbox_drawable"
+                    android:textSize="14sp"
+                    android:theme="@style/MyAgreementCheckboxStyle"
+                    android:visibility="gone" />
+                <!--<TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/agreementLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/patient_license_msg"
+                    android:textSize="14sp"
+                    android:textColor="@drawable/radio_btn_drawable"/>
+                </LinearLayout>-->
+                <Button
+                    android:id="@+id/submitBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@drawable/signin_selector_btn_bg"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/id_continue"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+</layout>

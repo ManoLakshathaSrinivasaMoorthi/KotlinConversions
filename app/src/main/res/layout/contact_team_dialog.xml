@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_30">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_rectangle"
+            android:contentDescription="@string/todo" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/products_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_30"
+        android:background="@color/bg_gray">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/team_members"
+                android:textColor="@color/text_ash"
+                android:textSize="@dimen/text_size" />
+
+            <ImageButton
+                android:id="@+id/imgCancel"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_cancel"
+                android:contentDescription="@string/todo" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.08"
+        android:background="@color/divider_color"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/membersRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_16"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/grpAudioCall"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin_30"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_4"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/group_audio_call"
+            android:textAllCaps="false"
+            android:textColor="@color/bg_blue"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/grpVideoCall"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin_30"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_4"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:gravity="center"
+            android:text="@string/group_video_call"
+            android:textAllCaps="false"
+            android:textColor="@color/bg_blue"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+</LinearLayout>

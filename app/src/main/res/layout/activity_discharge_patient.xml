@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/idContainerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.PopupOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarDischarge"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_15">
+
+            <EditText
+                android:id="@+id/edtDischargeSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:background="@drawable/edit_box_bg"
+                android:gravity="start"
+                android:hint="Discharge Note : "
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:minLines="5"
+                android:padding="@dimen/margin_5"
+                android:scrollbars="vertical"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_small" />
+
+            <Button
+                android:id="@+id/btnDischarge"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_40"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/login_edittext_bg"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="@string/discharge"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>
