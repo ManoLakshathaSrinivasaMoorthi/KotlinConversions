@@ -12,12 +12,15 @@ import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.PDFViewerActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.VideoPlayerActivity
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.adapter.AttachmentGridAdapter
 import com.example.kotlinomnicure.databinding.ActivityAttachmentBinding
+import com.example.kotlinomnicure.model.ConsultMessage
 
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
-import com.google.firebase.database.*
 
+import com.google.firebase.database.*
 import com.google.gson.Gson
 
 import java.lang.Exception
@@ -60,7 +63,7 @@ class ActivityAttachmentFilter : BaseActivity(), AttachmentGridAdapter.Attachmen
                                     if (cm1 == null || cm2 == null || cm1.time == 0L || cm2.time == 0L) {
                                         return@sort Int.MIN_VALUE
                                     }
-                                    cm2.time.compareTo(cm1.time)
+                                    cm2.time?.compareTo(cm1.time!!)!!
                                 })
                                 Log.d(
                                     TAG,
@@ -89,7 +92,7 @@ class ActivityAttachmentFilter : BaseActivity(), AttachmentGridAdapter.Attachmen
     //on create method
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.attachment_filter)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_attachment)
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, resources.displayMetrics)
         numberOfColumns = (resources.displayMetrics.widthPixels / px).toInt()
         Log.d("no of columns ", numberOfColumns.toString())
@@ -112,8 +115,8 @@ class ActivityAttachmentFilter : BaseActivity(), AttachmentGridAdapter.Attachmen
     //set the adapter
     private fun setAdapter() {
         binding!!.recyclerView.layoutManager = GridLayoutManager(this, numberOfColumns)
-        val encKey = EncUtil().decrypt(this, PrefUtility().getAESKey(this))
 
+        val encKey: String = PrefUtility().getAESAPIKey(this)!!
         adapter = AttachmentGridAdapter(this, messageList, encKey)
         adapter?.setListener(this)
         binding!!.recyclerView.adapter = adapter
@@ -145,7 +148,7 @@ class ActivityAttachmentFilter : BaseActivity(), AttachmentGridAdapter.Attachmen
                 MessageType.file.toString(), ignoreCase = true
             )
             return if (isFile) {
-                inviteTime != null && consultMessage.time / 1000 >= inviteTime!! / 1000 && consultMessage.time / 1000 <= dischargeTime!! / 1000
+                inviteTime != null && consultMessage.time!! / 1000 >= inviteTime!! / 1000 && consultMessage.time!! / 1000 <= dischargeTime!! / 1000
             } else {
                 false
             }

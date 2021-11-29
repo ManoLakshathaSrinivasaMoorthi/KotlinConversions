@@ -1,0 +1,51 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="29dp"
+    android:height="20dp"
+    android:viewportWidth="29"
+    android:viewportHeight="20">
+  <path
+      android:pathData="M23.82,5.107L26.046,5.107 26.046,6.407 23.82,6.407 23.82,8.945 22.437,8.945 22.437,6.407 20.198,6.407 20.198,5.107 22.437,5.107 22.437,2.734 23.82,2.734z"
+      android:fillColor="@color/drawer_img_bg_color"
+      android:fillType="evenOdd"/>
+  <group>
+    <clip-path android:pathData="M1.07,14.991h19c0.552,0 1,0.448 1,1 0,0.553 -0.448,1 -1,1h-19c-0.553,0 -1,-0.447 -1,-1 0,-0.552 0.447,-1 1,-1z M 0,0"/>
+    <path
+        android:pathData="M-4.93,9.991L26.07,9.991 26.07,21.991 -4.93,21.991z"
+        android:fillColor="@color/drawer_img_bg_color"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M8.07,9.991l9.02,1.804c0.57,0.114 0.98,0.615 0.98,1.196 0,0.553 -0.448,1 -1,1h-9v-4z M 0,0"/>
+    <path
+        android:pathData="M3.07,4.991L23.07,4.991 23.07,18.991 3.07,18.991z"
+        android:fillColor="@color/drawer_img_bg_color"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M5.07,13.991c-1.105,0 -2,-0.895 -2,-2 0,-1.104 0.895,-2 2,-2 1.104,0 2,0.896 2,2 0,1.105 -0.896,2 -2,2z M 0,0"/>
+    <path
+        android:pathData="M-1.93,4.991L12.07,4.991 12.07,18.991 -1.93,18.991z"
+        android:fillColor="@color/drawer_img_bg_color"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M1.07,7.991c0.552,0 1,0.448 1,1v11h-2v-11c0,-0.552 0.448,-1 1,-1z M 0,0"/>
+    <path
+        android:pathData="M-4.93,2.991L7.07,2.991 7.07,24.991 -4.93,24.991z"
+        android:fillColor="@color/drawer_img_bg_color"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M20.07,11.991c0.552,0 1,0.448 1,1v7h-2v-7c0,-0.552 0.448,-1 1,-1z M 0,0"/>
+    <path
+        android:pathData="M14.07,6.991L26.07,6.991 26.07,24.991 14.07,24.991z"
+        android:fillColor="@color/drawer_img_bg_color"
+        android:fillType="evenOdd"/>
+  </group>
+  <path
+      android:strokeWidth="1"
+      android:pathData="M23,6m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0"
+      android:fillColor="#00000000"
+      android:strokeColor="@color/drawer_img_bg_color"
+      android:fillType="evenOdd"/>
+</vector>

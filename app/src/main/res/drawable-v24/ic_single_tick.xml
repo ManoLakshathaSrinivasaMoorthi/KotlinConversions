@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="8dp"
+    android:height="6dp"
+    android:viewportWidth="8"
+    android:viewportHeight="6">
+  <path
+      android:pathData="M7.85157,0.87L2.79734,5.85C2.69077,5.955 2.55376,6 2.40152,6C2.26451,6 2.11227,5.955 2.00571,5.85L0.14843,4.02C-0.04948,3.825 -0.04948,3.495 0.14843,3.3C0.255,3.195 0.37678,3.15 0.5138,3.15C0.65081,3.15 0.78782,3.195 0.87916,3.3L2.40152,4.8L7.12084,0.15C7.2274,0.045 7.34919,0 7.4862,0C7.62322,0 7.76023,0.045 7.85157,0.15C8.04948,0.345 8.04948,0.675 7.85157,0.87Z"
+      android:strokeWidth="1"
+      android:fillColor="#B3BAC5"
+      android:fillType="nonZero"
+      android:fillAlpha="0.474524457"
+      android:strokeColor="#00000000"/>
+</vector>
+<!--For purple tick use below color-->
+    <!--      android:fillColor="#9B51E0"-->

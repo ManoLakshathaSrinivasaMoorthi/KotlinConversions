@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/tab_selected_round"
+          android:right="@dimen/margin_5"
+          android:top="@dimen/margin_5"
+          android:bottom="@dimen/margin_5"
+          android:left="@dimen/margin_5" />
+
+</layer-list>

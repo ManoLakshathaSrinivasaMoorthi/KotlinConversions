@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid android:color="@color/gray_500" />
+    <size
+        android:width="@dimen/margin_40"
+        android:height="@dimen/margin_40" />
+    <stroke android:width="@dimen/margin_1" android:color="@color/notification_img_boarder"/>
+</shape>

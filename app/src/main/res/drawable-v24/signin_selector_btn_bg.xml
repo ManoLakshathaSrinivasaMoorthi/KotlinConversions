@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:state_pressed="true" android:state_enabled="true">
+        <shape>
+            <solid android:color="@color/gray_400"/>
+            <corners android:radius="@dimen/margin_1"/>
+        </shape>
+    </item>-->
+
+    <item android:state_pressed="false" android:state_enabled="false">
+        <shape>
+            <solid android:color="@color/btn_disabled_color"/>
+            <corners android:radius="@dimen/login_edittext_bg_corner_radius"/>
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="@color/white"/>
+            <corners android:radius="@dimen/login_edittext_bg_corner_radius"/>
+        </shape>
+    </item>
+</selector>
