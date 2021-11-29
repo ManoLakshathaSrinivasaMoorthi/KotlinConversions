@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_8"
+        android:layout_marginVertical="@dimen/margin_4"
+        app:cardCornerRadius="@dimen/margin_4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_8"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:id="@+id/image_layout"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.mvp.omnicure.customview.CircularImageView
+                    android:id="@+id/profileImg"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:src="@drawable/ic_profile"
+                    android:visibility="visible"
+                    app:border="@color/colorPrimaryLight"
+                    app:border_color="@color/colorPrimaryLight"
+                    app:border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/defautlImg"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/text_image_drawable"
+                    android:fontFamily="@string/font_family_medium"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/drawer_img_txt_color"
+                    android:textSize="@dimen/text_size"
+                    android:visibility="gone" />
+
+
+                <ProgressBar
+                    android:id="@+id/imagePB"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/progress_bg"
+                    android:indeterminateDrawable="@drawable/progress_bg"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/margin_5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imgAudio"
+                app:layout_constraintStart_toEndOf="@id/image_layout"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/font_family_regular"
+                    android:maxLines="1"
+                    android:text="olive"
+                    android:ellipsize="end"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/bg_blue"
+                    android:textSize="@dimen/text_size"
+                    />
+
+                <ImageView
+                    android:id="@+id/statusIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/name"
+                    android:layout_alignBottom="@id/name"
+                    android:layout_marginLeft="@dimen/margin_3"
+                    android:layout_toRightOf="@id/name"
+                    app:srcCompat="@drawable/ic_grey_circle" />
+
+                <TextView
+                    android:id="@+id/role"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/font_family_regular"
+                    android:text="Provider role"
+                    android:textColor="@color/login_hint_color"
+                    android:textSize="@dimen/text_size_xsmall"
+                    android:layout_below="@id/name"/>
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imgAudio"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:layout_marginRight="@dimen/margin_4"
+                android:layout_weight="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/videoIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_directory_call" />
+
+            <ImageView
+                android:id="@+id/videoIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_3"
+                android:layout_weight="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_video_call_teams" />
+
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/callLayout"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginRight="@dimen/margin_3"-->
+            <!--                android:layout_weight="0.3"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent">-->
+
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/imgAudio"-->
+            <!--                    android:layout_width="@dimen/margin_30"-->
+            <!--                    android:layout_height="@dimen/margin_30"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    android:padding="@dimen/margin_2"-->
+            <!--                    app:srcCompat="@drawable/ic_directory_call" />-->
+
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/videoIcon"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    android:padding="@dimen/margin_2"-->
+            <!--                    app:srcCompat="@drawable/ic_video_call_teams" />-->
+
+            <!--            </LinearLayout>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

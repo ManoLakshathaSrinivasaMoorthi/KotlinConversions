@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/id_container_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize">
+
+                <ImageView
+                    android:id="@+id/id_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:tint="@color/title_color"
+                    app:srcCompat="@drawable/ic_back_arrow" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_20"
+                    app:srcCompat="@drawable/ic_step_2"/>
+
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:padding="@dimen/margin_20"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="0.0"
+                tools:layout_editor_absoluteX="0dp">
+
+                <RelativeLayout
+                    android:id="@+id/id_rp_provider_type_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_48"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@drawable/ash_border_drawable_bg"
+                    app:layout_constraintTop_toBottomOf="@id/id_create_profile_txt"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/margin_8"
+                        app:srcCompat="@drawable/ic_user" />
+
+                    <Spinner
+                        android:id="@+id/id_remote_provider_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/spinner_drawable_new"
+                        android:dropDownWidth="match_parent"
+                        android:paddingLeft="@dimen/margin_25"
+                        android:prompt="@string/select_provider"
+                        android:spinnerMode="dropdown"
+                        android:textAppearance="@style/textSubTitle" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/arrow_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@id/verified"
+                            android:layout_marginRight="@dimen/margin_10"
+                            app:srcCompat="@drawable/ic_chevron_down_copy" />
+
+                        <ImageView
+                            android:id="@+id/verified"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margin_10"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/ic_checkmark_edittext"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <com.mvp.omnicure.utils.CustomErrorEditText
+                    android:id="@+id/id_npi_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_48"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@drawable/ash_border_drawable_bg"
+                    android:digits="0123456789"
+                    android:drawableLeft="@drawable/ic_document"
+                    android:drawablePadding="@dimen/margin_3"
+                    android:ems="10"
+                    android:hint="@string/npi_number_abbr"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5"
+                    android:textColor="@color/black"
+                    android:textColorHint="@drawable/edittext_hint_color"
+                    android:textCursorDrawable="@drawable/edittext_cursor_color"
+                    android:textAppearance="@style/textSubTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/id_rp_provider_type_container" />
+
+                <LinearLayout
+                    android:id="@+id/terms_condition_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/id_npi_number">
+
+                    <!-- <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/margin_8"
+                        app:srcCompat="@drawable/ic_tick_mark_ash" />-->
+
+                    <CheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:button="@drawable/custom_checkbox" />
+
+                    <TextView
+                        android:id="@+id/txt_terms_and_condition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:gravity="center|start"
+                        android:text="@string/terms_and_condition"
+                        android:textAppearance="@style/textSubTitle" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/id_create_profile_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp_sign_up"
+                    android:textAppearance="@style/textBody"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_48"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_25"
+            android:background="@drawable/signin_selector_btn_bg_new"
+            app:layout_constraintBottom_toTopOf="@id/txtAlreadySignIn"
+            android:text="@string/verify_my_account"
+            android:textAllCaps="false"
+            android:textColor="@drawable/button_selector_text"
+            android:textSize="@dimen/btn_text_size" />
+
+        <TextView
+            android:id="@+id/txtAlreadySignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="@dimen/margin_8"
+            android:text="@string/already_have_an_account_log_in"
+            android:textAppearance="@style/textSubTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

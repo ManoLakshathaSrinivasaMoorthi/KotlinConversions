@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/right_nav_title"
+            fontPath="fonts/FiraSans-Medium.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_10"
+            android:text="@string/directory"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_xlarge"
+            android:visibility="gone"
+            tools:ignore="MissingPrefix" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_1"
+            android:background="@color/gray_400" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.mvp.omnicure.customview.AnimatedExpandableListView
+                android:id="@+id/id_exapandable_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:childDivider="@color/colorTrasparent"
+                android:divider="@color/gray_400"
+                android:dividerHeight="@dimen/margin_1"
+                android:groupIndicator="@null" />
+
+            <TextView
+                android:id="@+id/id_dir_empty_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/directory_list_empty"
+                android:textColor="@color/gray_600"
+                android:textSize="@dimen/text_size"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/id_pb_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/progress_bg"
+                    android:indeterminateDrawable="@drawable/progress_bg" />
+
+                <TextView
+                    fontPath="fonts/FiraSans-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/fetch_directory_pb_text"
+                    android:textColor="@color/gray_800"
+                    tools:ignore="MissingPrefix" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</layout>

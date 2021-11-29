@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="40dp">
+
+        <TextView
+            android:id="@+id/alertTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Authentication Required"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/margin_15">
+
+
+            <ImageView
+                android:id="@+id/fingerprintImage"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_below="@+id/paraLabel1"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/fingerprint" />
+
+            <TextView
+                android:id="@+id/paraLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fingerprintImage"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/bg_blue"
+                android:padding="10dp"
+                android:text="Place your Finger on the Scanner to Proceed"
+                android:textAlignment="center" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/buttonSignOut"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/margin_30"
+                android:layout_gravity="left"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="2"
+                android:background="@drawable/bg_button"
+                android:text="@string/signout"
+                android:textAllCaps="false"
+                android:textColor="@color/bg_blue"
+                android:textSize="@dimen/text_size_small" />
+
+            <Button
+                android:id="@+id/buttonContinue"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/margin_30"
+                android:layout_gravity="right"
+                android:visibility="gone"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edittext_bg"
+                android:text="@string/id_continue"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

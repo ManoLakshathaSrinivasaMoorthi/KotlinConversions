@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="@dimen/margin_1">
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/progressFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:scaleType="centerCrop"
+                android:visibility="visible"
+                app:elevation="8dp"
+                app:fabSize="normal"
+                app:maxImageSize="32dp"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/ic_add_white" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/handoffFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:elevation="8dp"
+                app:fabSize="normal"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/ic_fab" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.github.mmin18.widget.RealtimeBlurView
+                android:id="@+id/blurView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:realtimeBlurRadius="8dp"
+                app:realtimeOverlayColor="#8000"
+                android:elevation="5dp"
+                android:visibility="gone"/>
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/id_toolbar_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    app:contentInsetEnd="0dp"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetRight="0dp"
+                    app:contentInsetStart="0dp"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                    <!-- Imageview has already 10 dp pddding -->
+                    <LinearLayout
+                        android:id="@+id/id_nav_icon_container_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_5"
+                        android:padding="4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/back"
+                            android:src="@drawable/ic_back_arrow"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/llNotes"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+                        <TextView
+                            android:id="@+id/id_toolbar_title"
+                            fontPath="fonts/FiraSans-Medium.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@string/font_family_regular"
+                            android:text="@string/e_notes"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/home_title_text_size"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/id_toolbar_name"
+                            fontPath="fonts/FiraSans-Medium.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@string/font_family_regular"
+                            android:textColor="@color/white"
+
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/idRootLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/id_toolbar_container"
+                tools:context="gracious.collapsingtoolbar.ScrollingActivity">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/AppTheme.AppBarOverlay">
+
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
+                        android:id="@+id/collapsing_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_scrollFlags="scroll|enterAlways">
+
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:id="@+id/tabsLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/margin_2">
+
+                                <RelativeLayout
+                                    android:id="@+id/progressBtnLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:paddingHorizontal="12dp">
+
+                                    <TextView
+                                        android:id="@+id/id_btnProgress"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:background="@drawable/tab_selected_rounded"
+                                        android:clickable="false"
+                                        android:fontFamily="@string/font_family_regular"
+                                        android:gravity="center"
+                                        android:minWidth="0dp"
+                                        android:paddingVertical="4dp"
+                                        android:text="@string/progress"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/patient_name_text_size"
+                                        android:textStyle="bold" />
+                                    <View
+                                        android:id="@+id/tab_scrollbar"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="3dp"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/tab_scrollbar_bg"
+                                        android:visibility="invisible" />
+                                </RelativeLayout>
+
+
+
+                                <RelativeLayout
+                                    android:id="@+id/handOffBtnLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/margin_40"
+                                    android:layout_weight="1"
+                                    android:paddingHorizontal="12dp">
+
+                                    <TextView
+                                        android:id="@+id/id_btnHandOff"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:clickable="false"
+                                        android:fontFamily="@string/font_family_regular"
+                                        android:gravity="center"
+                                        android:minWidth="0dp"
+                                        android:paddingVertical="4dp"
+                                        android:text="@string/hand_off_summary"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/patient_name_text_size"
+                                        android:textStyle="bold" />
+
+                                </RelativeLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/margin_2"
+                            android:orientation="vertical"
+                            >
+                            <com.google.android.material.tabs.TabLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tabs"
+                                android:theme="@style/Base.Widget.Design.TabLayout"
+                                app:tabTextColor="@color/white"
+                                app:tabSelectedTextColor="@color/colorPrimary"
+                                app:tabTextAppearance="@style/TabText"
+                                >
+
+                            </com.google.android.material.tabs.TabLayout>
+                        </LinearLayout>
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.AppBarLayout>
+                <RelativeLayout
+                    android:id="@+id/id_enotes_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_gray"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <com.mvp.omnicure.utils.UnSwipeableViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                </RelativeLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

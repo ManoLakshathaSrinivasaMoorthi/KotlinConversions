@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:id="@+id/blurView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:realtimeBlurRadius="8dp"
+        app:realtimeOverlayColor="#8000"
+        android:elevation="5dp"
+        android:visibility="gone"/>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/root_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                    <ImageView
+                        android:id="@+id/imgBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/margin_4"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_back" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:id="@+id/id_urgent_icon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone"
+                            ads:srcCompat="@drawable/ic_urgent" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.9"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/id_toolbar_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|end"
+                                android:ellipsize="end"
+                                android:fontFamily="@string/font_family_regular"
+                                android:gravity="center|end"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:text="@string/name"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/home_title_text_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/id_patient_age_gender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:fontFamily="@string/font_family_regular"
+                                android:text="age"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/home_title_text_size"
+                                android:textStyle="normal" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/idsos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:onClick="onSOSClick"
+                            android:paddingBottom="5dp"
+                            android:visibility="gone"
+                            ads:srcCompat="@drawable/ic_sos_red" />
+
+                        <ImageView
+                            android:id="@+id/imgTeamCall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:padding="@dimen/margin_4"
+                            ads:srcCompat="@drawable/ic_chat_call" />
+
+                    </LinearLayout>
+
+
+                </androidx.appcompat.widget.Toolbar>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlViewDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        >
+
+                        <TextView
+                            android:id="@+id/tvDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@string/font_family_regular"
+                            android:gravity="center"
+                            android:text="@string/details"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/patient_name_text_size"
+                            android:textStyle="normal" />
+
+                        <ImageView
+                            android:contentDescription="@string/view_details"
+                            android:id="@+id/imgViewDetailsArrow"
+                            android:layout_toEndOf="@+id/tvDetails"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:visibility="visible"
+                            android:layout_marginTop="@dimen/margin_1"
+                            ads:srcCompat="@drawable/ic_dropdown_viewdetails" />
+
+
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/llExpandViewDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:contentDescription="@string/urgent_messages"
+                            android:id="@+id/imgViewUrgentMsgs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="visible"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            ads:srcCompat="@drawable/ic_view_urgent_messages" />
+
+                        <ImageView
+                            android:contentDescription="@string/view_details"
+                            android:id="@+id/imgViewAttachments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:visibility="visible"
+                            ads:srcCompat="@drawable/ic_view_attachments" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_below="@+id/id_appbar_layout"-->
+<!--                android:background="@color/bg_gray"-->
+<!--                app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--                >-->
+<!--                -->
+<!--            </RelativeLayout>-->
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative">
+
+        <FrameLayout
+            android:id="@+id/framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:background="@drawable/ic_rectangle_icon">
+
+            <RelativeLayout
+                android:id="@+id/llhandoffeNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/margin_5">
+
+                <TextView
+                    android:id="@+id/handoff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/margin_3"
+                    android:background="@drawable/grey_background"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_2"
+                    android:text="hand_off_enotes"
+                    android:textAppearance="@style/hand_off_enotes"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="@dimen/margin_3"
+                    android:gravity="top"
+                    android:text="@string/summary_enote"
+                    android:textAlignment="center"
+
+
+                    android:textAppearance="@style/hand_off_enotes"
+                    android:visibility="gone"
+                    tools:ignore="RtlCompat" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/llChartDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="@dimen/margin_10">
+
+                <LinearLayout
+                    android:id="@+id/llHandoffId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:id="@+id/unreadIcon"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="6.5dp"
+                        android:background="@drawable/icon_red"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center_vertical"
+                        android:text=""
+                        android:textAppearance="@style/h01"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llHandoffRP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llHandoffId"
+                    android:layout_marginStart="@dimen/margin_2"
+                    android:layout_marginTop="@dimen/margin_3"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/margin_12"
+                        android:layout_height="@dimen/margin_12"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_profile_icon_white" />
+
+                    <TextView
+                        android:id="@+id/txtRPName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/margin_2"
+                        android:text=""
+                        android:textAppearance="@style/oren_kodish" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llHandoffTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llHandoffRP"
+                    android:layout_marginStart="@dimen/margin_2"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:layout_marginTop="@dimen/margin_1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/margin_12"
+                        android:layout_height="@dimen/margin_12"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_2"
+                        android:src="@drawable/timer" />
+
+                    <TextView
+                        android:id="@+id/txtDateAndTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/margin_2"
+                        android:text=""
+                        android:textAppearance="@style/am_pst" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/llMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llHandoffTime"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:background="@drawable/accept_btn_bg"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_2"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/txtMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/details"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+
+    </RelativeLayout>
+</layout>

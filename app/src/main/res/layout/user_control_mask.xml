@@ -1,0 +1,100 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/user_control_mask_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<RelativeLayout
+    android:id="@+id/user_control_mask"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/default_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margin_5"
+        android:visibility="gone"
+        android:src="@drawable/icon_default_avatar"
+        android:contentDescription="DEFAULT_AVATAR" />
+
+    <com.mvp.omnicure.customview.CircularImageView
+        android:id="@+id/default_avatar_circular"
+        android:layout_width="@dimen/margin_120"
+        android:layout_height="@dimen/margin_120"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        app:border="@color/white"
+        app:border_overlay="true"
+        app:border_width="@dimen/margin_1" />
+    <TextView
+        android:id="@+id/avtar_image_text"
+        android:layout_width="@dimen/margin_120"
+        android:layout_height="@dimen/margin_120"
+        android:background="@drawable/text_image_drawable_white"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:text="NR"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_xxxxlarge"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/default_avatar_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_xsmall"
+        android:paddingTop="@dimen/margin_3"
+        android:paddingBottom="@dimen/margin_3"
+        android:textColor="@color/white"
+        android:text="Ranjeet jha bd"
+        android:background="@color/bg_gradient_1_50_alpha"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="DEFAULT_AVATAR" />
+
+    <ImageView
+        android:id="@+id/indicator"
+        android:layout_width="@dimen/margin_30"
+        android:layout_height="@dimen/margin_30"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:contentDescription="VIDEO_INDICATOR" />
+
+    <LinearLayout
+        android:id="@+id/video_info_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/video_info_metadata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            style="@style/NotificationUIText" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_overlay"
+        android:background="@drawable/boarder_bg_white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+</RelativeLayout>

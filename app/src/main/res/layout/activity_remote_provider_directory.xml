@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="@dimen/margin_1">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="20dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:elevation="8dp"
+                app:fabSize="normal"
+                app:maxImageSize="32dp"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/ic_add_white" />
+
+        </RelativeLayout>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/id_toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <!-- Imageview has already 10 dp pddding -->
+                    <LinearLayout
+                        android:id="@+id/id_nav_icon_container_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_5"
+                        android:padding="4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/id_navigation_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/ic_menu_icon" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/id_toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@string/font_family_regular"
+                        android:text="Provider Directory"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/home_title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/id_search_container_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_5"
+                        android:padding="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/search_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/ic_search_white" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/id_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/margin_1"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_green_circle" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/idRootLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/id_toolbar_container"
+            tools:context="gracious.collapsingtoolbar.ScrollingActivity">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/searchLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/margin_25"
+                                android:layout_margin="@dimen/margin_10"
+                                android:background="@drawable/ash_border_drawable_bg"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <com.mvp.omnicure.utils.CustomGroupEditText
+                                    android:id="@+id/searchEdittext"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/margin_30"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/transparent_bg"
+                                    android:ems="10"
+                                    android:hint="@string/search_hint"
+                                    android:importantForAutofill="no"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:nextFocusDown="@id/signin_btn"
+                                    android:paddingLeft="@dimen/margin_14"
+                                    android:paddingRight="@dimen/margin_5"
+                                    android:textAppearance="@style/textSubTitle"
+                                    android:textColor="@color/sub_title_color"
+                                    android:textColorHint="@color/gray_500"
+                                    android:textCursorDrawable="@drawable/edittext_cursor_color" />
+
+                                <ImageView
+                                    android:id="@+id/closeSearch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:paddingVertical="10dp"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="15dp"
+                                    android:tint="@color/login_hint_color"
+                                    app:srcCompat="@drawable/cross" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/tabsLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/margin_2">
+
+                                <RelativeLayout
+                                    android:id="@+id/remoteBtnLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:paddingHorizontal="12dp">
+
+                                    <TextView
+                                        android:id="@+id/id_btnRemote"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:background="@drawable/tab_selected_rounded"
+                                        android:clickable="false"
+                                        android:fontFamily="@string/font_family_regular"
+                                        android:gravity="center"
+                                        android:minWidth="0dp"
+                                        android:paddingVertical="4dp"
+                                        android:text="@string/remote"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/patient_name_text_size"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/badge_count"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_toRightOf="@+id/id_btnActive"
+                                        android:background="@drawable/badge_drawable_bg"
+                                        android:clickable="false"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/text_size_xsmall"
+                                        android:textStyle="bold"
+                                        android:visibility="gone" />
+
+                                    <View
+                                        android:id="@+id/tab_scrollbar"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="3dp"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@drawable/tab_scrollbar_bg"
+                                        android:visibility="invisible" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/bedsideBtnLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/margin_40"
+                                    android:layout_weight="1"
+                                    android:paddingHorizontal="12dp">
+
+                                    <TextView
+                                        android:id="@+id/id_btnBedside"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:clickable="false"
+                                        android:fontFamily="@string/font_family_regular"
+                                        android:gravity="center"
+                                        android:minWidth="0dp"
+                                        android:paddingVertical="4dp"
+                                        android:text="@string/bedside"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/patient_name_text_size"
+                                        android:textStyle="bold" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/searchView"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@color/white"
+                                android:visibility="gone">
+
+                                <SearchView
+                                    android:id="@+id/searchTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_toLeftOf="@+id/filterViewold"
+                                    android:gravity="center|center_vertical"
+                                    android:queryBackground="@color/transparent"
+                                    android:queryHint="Search patient" />
+
+                                <Button
+                                    android:id="@+id/filterViewold"
+                                    android:layout_width="100dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/filter_selector_btn_bg"
+                                    android:gravity="center"
+                                    android:text="@string/filter"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colorPrimaryLight" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/hospitalFilterLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:background="@color/white"
+                                android:gravity="center|start"
+                                android:visibility="gone"
+                                >
+
+                                <TextView
+                                    android:id="@+id/location"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/margin_14"
+                                    android:text="@string/location"
+                                    android:textColor="@color/gray_text"
+                                    android:textSize="@dimen/text_size" />
+
+                                <RelativeLayout
+                                    android:id="@+id/hospitalFilterView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/margin_4"
+                                    android:layout_toRightOf="@id/location">
+
+                                    <TextView
+                                        android:id="@+id/locationText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@string/font_family_regular"
+                                        android:text="All"
+                                        android:textColor="@color/title_color"
+                                        android:textFontWeight="500"
+                                        android:textSize="@dimen/text_size" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="6dp"
+                                        android:layout_toRightOf="@+id/locationText"
+                                        android:tint="@color/title_color"
+                                        app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/txtClearlocation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:text="@string/clear"
+                                    android:padding="@dimen/margin_10"
+                                    android:textColor="@color/bg_blue"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold"
+                                    android:visibility="gone"
+                                    />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/bedsideFilterLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:background="@color/white"
+                                android:gravity="center|start"
+                                android:visibility="gone"
+
+                                >
+
+                                <TextView
+                                    android:id="@+id/hospitalLocation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/margin_14"
+                                    android:text="@string/location"
+                                    android:textColor="@color/gray_text"
+                                    android:textSize="@dimen/text_size" />
+
+                                <RelativeLayout
+                                    android:id="@+id/locationFilterView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/margin_4"
+                                    android:layout_toRightOf="@id/hospitalLocation">
+
+                                    <TextView
+                                        android:id="@+id/hospitalText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@string/font_family_regular"
+                                        android:text="All"
+                                        android:textColor="@color/title_color"
+                                        android:textFontWeight="500"
+                                        android:textSize="@dimen/text_size" />
+
+                                    <ImageView
+                                        android:id="@+id/dropdownArrow"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="6dp"
+                                        android:layout_toRightOf="@+id/hospitalText"
+                                        android:tint="@color/title_color"
+                                        app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/txtClearhospital"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:text="@string/clear"
+                                    android:padding="@dimen/margin_10"
+                                    android:textColor="@color/bg_blue"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold"
+                                    android:visibility="gone"
+                                    />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/remoteFilterLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:background="@color/white"
+                                android:gravity="center|start"
+                                android:visibility="gone"
+                                >
+
+                                <TextView
+                                    android:id="@+id/acuity"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/margin_14"
+                                    android:text="@string/provider_type"
+                                    android:textColor="@color/gray_text"
+                                    android:textSize="@dimen/text_size" />
+
+                                <RelativeLayout
+                                    android:id="@+id/providerFilterView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/margin_4"
+                                    android:layout_toRightOf="@id/acuity">
+
+                                    <TextView
+                                        android:id="@+id/filterText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@string/font_family_regular"
+                                        android:text="All"
+                                        android:textColor="@color/title_color"
+                                        android:textFontWeight="500"
+                                        android:textSize="@dimen/text_size" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="6dp"
+                                        android:layout_toRightOf="@+id/filterText"
+                                        android:tint="@color/title_color"
+                                        app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/txtClearproviderfilter"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:text="@string/clear"
+                                    android:padding="@dimen/margin_10"
+                                    android:textColor="@color/bg_blue"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold"
+                                    android:visibility="gone"
+                                    />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <RelativeLayout
+                android:id="@+id/id_home_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+<!--                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--                    android:id="@+id/swipe_layout"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_below="@+id/id_appbar_layout">-->
+
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/recyclerView"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:background="@color/bg_gray" />-->
+
+<!--                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/frameLayout"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"/>-->
+
+                <com.mvp.omnicure.utils.UnSwipeableViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            </RelativeLayout>
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/noRecordsLayout"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:gravity="center"-->
+<!--                android:visibility="gone">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/noRecordsImage"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    app:srcCompat="@drawable/ic_no_patients" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/noRecordTitle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@id/noRecordsImage"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:layout_marginTop="@dimen/margin_10"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/no_result_found"-->
+<!--                    android:textColor="@color/sub_title_color"-->
+<!--                    android:textSize="@dimen/text_size_large"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/noRecordsText"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@id/noRecordTitle"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:layout_marginTop="@dimen/margin_2"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/no_results_for_filter"-->
+<!--                    android:textColor="@color/login_hint_color"-->
+<!--                    android:textSize="@dimen/text_size"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--            </RelativeLayout>-->
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
+</layout>

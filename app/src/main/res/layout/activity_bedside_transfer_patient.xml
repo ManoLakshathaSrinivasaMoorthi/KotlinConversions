@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/idContainerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_400"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.PopupOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appBar"
+            android:layout_margin="@dimen/margin_15"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/radioGrp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rbTransferWithInHospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:checked="true"
+                    android:text="@string/transfer_within_hospital"
+                    android:textColor="@drawable/radio_btn_text_drawable_blue"
+                    android:textSize="@dimen/text_size_small"
+                    android:theme="@style/MyRadioButtonStyleBlue" />
+
+                <RadioButton
+                    android:id="@+id/rbTransferAnotherHospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:text="@string/transfer_another_hospital"
+                    android:textColor="@drawable/radio_btn_text_drawable_blue"
+                    android:textSize="@dimen/text_size_small"
+                    android:theme="@style/MyRadioButtonStyleBlue" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/ll_transfer_within_ward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerWithInWard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/spinner_drawable"
+                    android:dropDownWidth="match_parent"
+                    android:imeOptions="actionNext"
+                    android:prompt="@string/sel_hospital"
+                    android:spinnerMode="dropdown" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_transfer_within_hospital_provider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerWithinProvider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/spinner_drawable"
+                    android:dropDownWidth="match_parent"
+                    android:imeOptions="actionNext"
+                    android:prompt="@string/sel_hospital"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_transfer_another_hospital"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Spinner
+                    android:id="@+id/spinnerAnotherHospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/spinner_drawable"
+                    android:dropDownWidth="match_parent"
+                    android:prompt="@string/sel_hospital"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_transfer_another_hospital_provider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Spinner
+                    android:id="@+id/spinnerAnotherProvider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/spinner_drawable"
+                    android:dropDownWidth="match_parent"
+                    android:prompt="@string/sel_hospital"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/edtSummaryNote"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_60"
+                android:layout_gravity="center|start"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/white"
+                android:gravity="center|start|top"
+                android:hint="Summary Note :"
+                android:imeOptions="actionNext"
+                android:maxLength="5000"
+                android:padding="@dimen/margin_10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_small" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnTransfer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_15"
+            android:background="@drawable/login_edittext_bg"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/transfer"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</layout>

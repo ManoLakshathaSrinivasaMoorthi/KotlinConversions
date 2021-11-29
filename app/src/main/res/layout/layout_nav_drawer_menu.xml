@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/menuMyConsults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_my_consults" />
+
+        <TextView
+            android:id="@+id/menuTxtMyConsults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/my_econsult_title"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuHandoffPatients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/icHandOffPatient"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:srcCompat="@drawable/ic_baseline_people_24" />
+
+        <TextView
+            android:id="@+id/menuTxtHandOffPatient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/hand_off_patients"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuVirtualTeam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/icVirtualTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_my_virtual_teams" />
+
+        <TextView
+            android:id="@+id/menuTxtVirtualTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/my_virtual_teams"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/menuSystemAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_system_alerts" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/system_alert"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuContactAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_contact_admin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/contact_admin"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuTrainingMaterials"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_training_materials" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/training_material"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/menuChangeLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_language_18" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/change_language"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/menuCustomNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic__notifications_active_18" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/notification_settings"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuEulaTerms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_baseline_books_24"
+            android:scaleY="-1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/terms_and_condition_text"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_feedback" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/feedback"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_signout" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/change_password"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menufingerprint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/black"
+            app:srcCompat="@drawable/ic_fingerprint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/Fingerprintauth"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+            <Switch
+                android:layout_width="@dimen/margin_45"
+                android:textSize="@dimen/drawer_txt_size"
+                android:shadowColor="@color/colorPrimary"
+                android:textColor="@color/bg_blue"
+                android:textOn="ON"
+                android:layout_marginRight="@dimen/margin_10"
+                android:textOff="OFF"
+                android:id="@+id/fingerprintonoff"
+                android:layout_height="wrap_content"
+                android:theme="@style/MySwitch">
+
+            </Switch>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuSignout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@color/drawer_menu_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/drawer_menu_left_right_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_signout" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:text="@string/signout"
+            android:textColor="@color/drawer_header_txt_color"
+            android:textSize="@dimen/drawer_txt_size"
+            android:textStyle="normal" />
+    </LinearLayout>
+</LinearLayout>

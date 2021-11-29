@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_4"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:id="@+id/image_layout"
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_weight="0.3">
+
+                <com.mvp.omnicure.customview.CircularImageView
+                    android:id="@+id/profileImg"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:src="@drawable/ic_profile"
+                    android:visibility="visible"
+                    app:border="@color/colorPrimaryLight"
+                    app:border_color="@color/colorPrimaryLight"
+                    app:border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/defautlImg"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/text_image_drawable"
+                    android:fontFamily="@string/font_family_medium"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/drawer_img_txt_color"
+                    android:textSize="@dimen/text_size"
+                    android:visibility="gone" />
+
+
+                <ProgressBar
+                    android:id="@+id/imagePB"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/progress_bg"
+                    android:indeterminateDrawable="@drawable/progress_bg"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/image_layout"
+                app:layout_constraintEnd_toStartOf="@id/audioIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="@dimen/margin_5"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="olive"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.9"
+                    android:fontFamily="@string/font_family_medium"
+                    app:layout_constraintWidth_max="wrap"
+                    android:textSize="@dimen/text_size_small" />
+
+                <TextView
+                    android:id="@+id/role"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Provider role"
+                    android:fontFamily="@string/font_family_regular"
+                    app:layout_constraintTop_toBottomOf="@id/name"
+                    android:textColor="@color/text_ash"
+                    android:textSize="@dimen/text_size_xsmall" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/audioIcon"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:layout_weight="0.3"
+                app:layout_constraintEnd_toStartOf="@id/videoIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="@dimen/margin_4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:srcCompat="@drawable/ic_directory_call" />
+
+            <ImageView
+                android:id="@+id/videoIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="@dimen/margin_3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:srcCompat="@drawable/ic_video_call_teams" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

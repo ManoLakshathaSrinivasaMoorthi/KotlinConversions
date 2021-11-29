@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/dashboardcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/blurView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="5dp"
+            android:visibility="gone"
+            app:realtimeBlurRadius="8dp"
+            app:realtimeOverlayColor="#8000" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_blue">
+
+            <LinearLayout
+                android:id="@+id/containerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:gravity="center|start"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_dashboard" />
+
+                    <TextView
+                        android:id="@+id/dashboardTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:text="@string/my_dashboard"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
+                        android:id="@+id/image_layout"
+                        android:layout_width="@dimen/image_size"
+                        android:layout_height="@dimen/image_size"
+                        android:layout_gravity="center|end">
+
+                        <FrameLayout
+                            android:id="@+id/profilePicLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <com.mvp.omnicure.customview.CircularImageView
+                                android:id="@+id/profilePic"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_profile" />
+
+                            <ProgressBar
+                                android:id="@+id/id_profile_image_pb"
+                                style="?android:attr/progressBarStyleSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/progress_bg"
+                                android:indeterminateDrawable="@drawable/progress_bg"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/default_image_view"
+                                android:layout_width="@dimen/image_size"
+                                android:layout_height="@dimen/image_size"
+                                android:layout_gravity="center"
+                                android:background="@drawable/text_image_drawable"
+                                android:fontFamily="@string/font_family_medium"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/drawer_img_txt_color"
+                                android:textSize="@dimen/drawer_img_txt_size"
+                                android:visibility="gone" />
+
+                            <com.mvp.omnicure.customview.CircularImageView
+                                android:id="@+id/iv_camera"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_marginLeft="@dimen/margin_2"
+                                android:layout_marginTop="@dimen/margin_2"
+                                app:srcCompat="@drawable/ic_online" />
+
+                        </FrameLayout>
+
+                    </FrameLayout>
+
+                    <!--
+                                    <FrameLayout
+                                        android:id="@+id/image_layout"
+                                        android:layout_width="@dimen/drawer_image_size"
+                                        android:layout_height="@dimen/drawer_image_size"
+                                        android:layout_gravity="center|end">
+
+                                        <com.mvp.omnicure.customview.CircularImageView
+                                            android:id="@+id/id_profile_img"
+                                            android:layout_width="@dimen/image_size"
+                                            android:layout_height="@dimen/image_size"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:src="@drawable/ic_profile"
+                                            android:visibility="visible"
+                                            app:border="@color/colorPrimaryLight"
+                                            app:border_color="@color/colorPrimaryLight"
+                                            app:border_width="2dp" />
+
+                                        <TextView
+                                            android:id="@+id/default_image_view"
+                                            android:layout_width="@dimen/image_size"
+                                            android:layout_height="@dimen/image_size"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/text_image_drawable"
+                                            android:fontFamily="@string/font_family_medium"
+                                            android:gravity="center"
+                                            android:text=""
+                                            android:textColor="@color/drawer_img_txt_color"
+                                            android:textSize="@dimen/drawer_img_txt_size"
+                                            android:visibility="gone" />
+
+                                        <ImageView
+                                            android:id="@+id/id_dot"
+                                            android:layout_width="wrap_content"
+                                            android:layout_gravity="center|right|top"
+                                            android:layout_height="wrap_content"
+                                            app:srcCompat="@drawable/ic_green_circle" />
+
+                                    </FrameLayout>
+                    -->
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_20"
+                    android:layout_marginLeft="@dimen/margin_20"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:text="Hello, Omnicure"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_xxlarge"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_3"
+                        android:text="Friday, December 18"
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/text_size_small" />
+
+
+                </LinearLayout>
+
+                <!--            <ViewStub-->
+                <!--                android:id="@+id/menuItems"-->
+                <!--                layout="@layout/layout_dashboard_bp"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginBottom="@dimen/margin_10" />-->
+
+                <ViewStub
+                    android:id="@+id/layout_stub"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inflatedId="@+id/message_layout" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_5"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="@dimen/margin_4">
+
+                        <RelativeLayout
+                            android:id="@+id/profileLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="25dp"
+                                android:text="@string/my_profile"
+                                android:textColor="@color/bg_blue"
+                                android:textSize="@dimen/text_size"
+                                android:textStyle="bold" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/margin_10"
+                                android:paddingTop="2dp"
+                                app:srcCompat="@drawable/ic_profile_settings" />
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_2"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_40"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_4">
+
+            <ImageView
+                android:id="@+id/caller_image_view"
+                android:layout_width="@dimen/margin_40"
+                android:layout_height="@dimen/margin_40"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/caller_image_text"
+                android:layout_width="@dimen/margin_40"
+                android:layout_height="@dimen/margin_40"
+                android:background="@drawable/text_image_drawable_blue"
+                android:gravity="center"
+                android:text="NR"
+                android:textColor="@color/notification_img_boarder"
+                android:textSize="@dimen/text_size_xlarge"
+                android:visibility="visible" />
+
+            <ProgressBar
+                android:id="@+id/id_caller_image_pb"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/progress_bg"
+                android:indeterminateDrawable="@drawable/progress_bg"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_10">
+
+            <TextView
+                android:id="@+id/provider_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ranjeet Jha"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/hospital_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_1"
+                android:text="Remote provider"
+                android:textColor="@color/gray_800"
+                android:textSize="@dimen/text_size_xsmall" />
+
+            <TextView
+                android:id="@+id/call_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Incoming video call"
+                android:textColor="@color/gray_800"
+                android:textSize="@dimen/text_size_xsmall" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_3"
+        android:layout_marginRight="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_3"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/decline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/transparent_button_selector"
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingRight="@dimen/margin_10"
+            android:text="@string/decline"
+            android:textColor="@color/red_dark"
+            android:textSize="@dimen/text_size" />
+
+
+        <Button
+            android:id="@+id/accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/transparent_button_selector"
+            android:paddingLeft="@dimen/margin_10"
+            android:text="@string/accept"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text_size"
+            app:srcCompat="@drawable/ic_audio_call_white" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

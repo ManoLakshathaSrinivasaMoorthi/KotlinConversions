@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg_gradient"
+    android:keepScreenOn="true"
+    tools:context=".videocall.openvcall.ui.CallActivity">
+
+    <com.mvp.omnicure.videocall.openvcall.ui.layout.GridVideoViewContainer
+        android:id="@+id/grid_video_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ViewStub
+        android:id="@id/small_video_view_dock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/margin_70"
+        android:inflatedId="@id/small_video_view_dock"
+        android:layout="@layout/small_video_view_dock" />
+
+    <LinearLayout
+        android:id="@+id/connecting_ui"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/transparent_25_BLACK"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="@dimen/margin_70"
+                android:layout_height="@dimen/margin_70">
+
+                <com.mvp.omnicure.customview.CircularImageView
+                    android:id="@+id/connecting_profile_pic"
+                    android:layout_width="@dimen/margin_70"
+                    android:layout_height="@dimen/margin_70"
+                    app:border="@color/white"
+                    app:border_overlay="true"
+                    app:border_width="@dimen/margin_1" />
+
+                <TextView
+                    android:id="@+id/connecting_image_text"
+                    android:layout_width="@dimen/margin_70"
+                    android:layout_height="@dimen/margin_70"
+                    android:background="@drawable/text_image_drawable_white"
+                    android:gravity="center"
+                    android:text="NR"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_xxlarge"
+                    android:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/connecting_profile_pic_pb"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/progress_bg"
+                    android:indeterminateDrawable="@drawable/progress_bg"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/connecting_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_xxlarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/connecting_hospital_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Madigan Army Medical Center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/connection_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/connecting"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_xxlarge" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/connection_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_40"
+                android:gravity="center"
+                android:paddingLeft="@dimen/margin_10"
+                android:paddingTop="@dimen/margin_5"
+                android:paddingRight="@dimen/margin_10"
+                android:paddingBottom="@dimen/margin_5"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/msg_list"
+            android:orientation="vertical">
+
+            <Chronometer
+                android:id="@+id/txt_call_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_10"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_xxlarge" />
+        </LinearLayout>
+
+
+        <com.mvp.omnicure.videocall.propeller.ui.AGLinearLayout
+            android:id="@+id/extra_ops_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Howard James"-->
+            <!--                android:textColor="@android:color/white"-->
+            <!--                android:textSize="28sp"-->
+            <!--                android:textStyle="bold" />-->
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Madigan Army Medical Center"-->
+            <!--                android:textColor="@android:color/white"-->
+            <!--                android:textSize="16sp"/>-->
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Connecting..."-->
+            <!--                android:textColor="@android:color/white"-->
+            <!--                android:textSize="22sp"-->
+            <!--                android:layout_marginTop="20dp"/>-->
+            <!--            <ImageView-->
+            <!--                android:layout_width="48dp"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:onClick="onSwitchCameraClicked"-->
+            <!--                android:scaleType="center"-->
+            <!--                android:src="@drawable/btn_switch_camera_white"-->
+            <!--                android:visibility="gone"/>-->
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="48dp"-->
+            <!--                android:layout_height="27dp"-->
+            <!--                android:onClick="onMixingAudioClicked"-->
+            <!--                android:scaleType="center"-->
+            <!--                android:src="@drawable/btn_audio_mixing_off"-->
+            <!--                android:visibility="gone"/>-->
+
+
+        </com.mvp.omnicure.videocall.propeller.ui.AGLinearLayout>
+
+        <com.mvp.omnicure.videocall.propeller.ui.AGLinearLayout
+            android:id="@+id/bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/bottom_action_container"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="8dp"
+                android:paddingEnd="8dp"
+                android:paddingRight="8dp"
+
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/btn_camera"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:onClick="onVideoMuteClicked"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_video" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:onClick="onVoiceMuteClicked"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_mic" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/red_button_selector"
+                    android:onClick="onHangupClicked"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/reject" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@id/switch_speaker_id"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:onClick="onSwitchSpeakerClicked"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_speaker" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@id/switch_camera_id"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:onClick="onSwitchCameraClicked"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_flip_camera" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/msg_input_container"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@color/dark_black"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="54dp"
+                    android:layout_height="match_parent"
+                    android:onClick="onClickHideIME"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/btn_keyboard_hide" />
+
+                <EditText
+                    android:id="@+id/msg_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/msg_say_something"
+                    android:imeActionLabel="@string/label_send"
+                    android:imeOptions="actionSend"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+            </LinearLayout>
+
+        </com.mvp.omnicure.videocall.propeller.ui.AGLinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/msg_list"
+            android:layout_width="272dp"
+            android:layout_height="144dp"
+            android:layout_above="@id/bottom_container" />
+
+
+    </RelativeLayout>
+</FrameLayout>

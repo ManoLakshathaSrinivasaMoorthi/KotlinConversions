@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/red"
+    android:gravity="center_vertical"
+    android:padding="@dimen/drawer_menu_left_right_padding"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_my_consults"/>
+    <TextView
+        android:layout_marginLeft="@dimen/drawer_menu_left_right_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_consults"
+        android:fontFamily="@string/font_family_medium"
+        android:textSize="@dimen/drawer_txt_size"
+        android:textColor="@color/drawer_header_txt_color"/>
+</LinearLayout>

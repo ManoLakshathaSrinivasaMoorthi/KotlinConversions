@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_spinner_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/margin_5"
+    android:paddingRight="@dimen/margin_5"
+    android:paddingTop="@dimen/margin_8"
+    android:paddingBottom="@dimen/margin_8"
+    android:textColor="@color/login_hint_color"
+    android:fontFamily="@string/font_family_medium"
+    android:textSize="@dimen/text_size_xsmall" />

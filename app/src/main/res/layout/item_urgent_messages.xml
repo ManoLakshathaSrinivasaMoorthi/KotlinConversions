@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_gray"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardRootView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_2">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/margin_30">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="5dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgProfileImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/blue_circle"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvProfileImg"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/text_image_drawable"
+                        android:fontFamily="@string/font_family_medium"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/drawer_img_txt_color"
+                        android:textSize="@dimen/drawer_name_txt_size"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvUrgentFullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_toRightOf="@id/relativeLayout"
+                    android:layout_toLeftOf="@id/rightArrow"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/first_name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/patient_name_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvProviderType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvUrgentFullName"
+                    android:layout_alignLeft="@id/tvUrgentFullName"
+                    android:text="@string/provider_type"
+                    android:textColor="@color/urgent_sub_provider"
+                    android:textSize="@dimen/patient_sub_text_size" />
+
+                <ImageView
+                    android:id="@+id/rightArrow"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:contentDescription="@string/move_to_chat"
+                    android:src="@drawable/ic_arrow_move_to_chat"
+                    android:tint="@color/black" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewDescSender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/margin_50"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:background="@color/bg_gray"
+                    app:cardCornerRadius="@dimen/margin_4">
+
+                    <TextView
+                        android:id="@+id/descriptionSender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvUrgentFullName"
+                        android:padding="@dimen/margin_5"
+                        android:text="@string/urgent_messages"
+                        android:textColor="@color/colorPrimary"
+                        android:visibility="visible" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewImgUrgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/margin_50"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:background="@color/bg_gray"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/margin_4">
+
+                    <ImageView
+                        android:id="@+id/imgUrgent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cardViewDescSender"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/urgent_messages"
+                        android:maxHeight="280dp"
+                        android:minHeight="260dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="visible">
+
+                    </ImageView>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewVideoUrgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/margin_50"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:background="@color/bg_gray"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/margin_4">
+
+                    <FrameLayout
+                        android:id="@+id/frameVideoLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cardViewDescSender"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/messageImageViewLeft"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:maxHeight="280dp"
+                            android:minHeight="260dp"
+                            android:scaleType="centerCrop" />
+
+                        <ImageView
+                            android:id="@+id/imgPlayIconLeft"
+                            android:layout_width="@dimen/margin_40"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/ic_video_play" />
+
+                        <ProgressBar
+                            android:id="@+id/imagePBLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/progress_bg"
+                            android:indeterminateDrawable="@drawable/progress_bg"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewFileUrgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/margin_50"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:background="@color/bg_gray"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/margin_4">
+
+                    <FrameLayout
+                        android:id="@+id/frameFileLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cardViewDescSender"
+                        android:layout_margin="12dp"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/messageTextViewLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_2"
+                            android:fontFamily="@string/font_family_regular"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/chat_msg_txt_size" />
+
+                        <LinearLayout
+                            android:id="@+id/fileViewLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/fileIconLeft"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="4dp"
+                                app:srcCompat="@drawable/ic_file_download" />
+
+                            <TextView
+                                android:id="@+id/fileTextViewLeft"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_2"
+                                android:fontFamily="@string/font_family_regular"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/chat_msg_txt_size" />
+
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgMarkAsUrgentViewRight"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/urgent_messages"
+                    android:visibility="gone"
+                    card_view:srcCompat="@drawable/mark_as_urgent_red" />
+
+                <ImageView
+                    android:id="@+id/statusTextViewRight"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    card_view:srcCompat="@drawable/ic_read" />
+
+                <TextView
+                    android:id="@+id/timeTextViewRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@string/font_family_regular"
+                    android:textColor="@color/chat_time_color"
+                    android:textSize="@dimen/time_text_size" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</layout>

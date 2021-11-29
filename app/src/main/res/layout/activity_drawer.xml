@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        tools:openDrawer="start">
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/left_nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/white"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/left_nav_drawer_header">
+
+            <!--<Button
+                fontPath="roboto_regular/FiraSans-Light.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_45"
+                android:layout_gravity="bottom"
+                android:background="@drawable/sos_btn_selector_bg"
+                android:drawableRight="@drawable/ic_sos_red"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingRight="@dimen/margin_10"
+                android:text="@string/send_s_o_s"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_xxlarge"
+                android:visibility="gone">
+            </Button>-->
+            <TextView
+                android:id="@+id/id_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|left"
+                android:fontFamily="@string/font_family_regular"
+                android:gravity="center"
+                android:padding="@dimen/margin_4"
+                android:text="@string/version"
+                android:textColor="@color/gray_700"
+                android:textSize="@dimen/text_size_small" />
+        </com.google.android.material.navigation.NavigationView>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/right_nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@color/white"
+            android:fitsSystemWindows="true">
+
+            <include
+                android:id="@+id/id_list"
+                layout="@layout/right_drawer_container_layout" />
+        </com.google.android.material.navigation.NavigationView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

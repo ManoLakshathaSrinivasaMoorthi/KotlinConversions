@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:id="@+id/id_home_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".activity.FilterActivity">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="left"
+                android:layout_margin="20dp"
+                android:text="@string/filter"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <View
+                android:id="@+id/lineView2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/textView2"
+                android:alpha="0.6"
+                android:background="#c0c0c0" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lineView2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radioAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layoutDirection="rtl"
+                    android:text="@string/all"
+                    android:textColor="@drawable/filter_radio_btn_drawable"
+                    android:textSize="20sp"
+                    android:theme="@style/FilterRadioButtonStyle" />
+
+                <RadioButton
+                    android:id="@+id/radioActive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layoutDirection="rtl"
+                    android:text="@string/active"
+                    android:textColor="@drawable/filter_radio_btn_drawable"
+                    android:textSize="20sp"
+                    android:theme="@style/FilterRadioButtonStyle" />
+
+                <RadioButton
+                    android:id="@+id/radioPending"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layoutDirection="rtl"
+                    android:text="@string/pending"
+                    android:textColor="@drawable/filter_radio_btn_drawable"
+                    android:textSize="20sp"
+                    android:theme="@style/FilterRadioButtonStyle" />
+
+                <RadioButton
+                    android:id="@+id/radioAssigned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layoutDirection="rtl"
+                    android:text="@string/assigned"
+                    android:textColor="@drawable/filter_radio_btn_drawable"
+                    android:textSize="20sp"
+                    android:theme="@style/FilterRadioButtonStyle" />
+
+                <!--<RadioButton
+                    android:id="@+id/radioCompleted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/completed"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    android:layoutDirection="rtl"
+                    android:textColor="@drawable/filter_radio_btn_drawable"
+                    android:theme="@style/FilterRadioButtonStyle"/>
+                <RadioButton
+                    android:id="@+id/radioPatients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/patients"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    android:layoutDirection="rtl"
+                    android:textColor="@drawable/filter_radio_btn_drawable"
+                    android:theme="@style/FilterRadioButtonStyle"/>-->
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="#6446a5"
+                android:text="@string/save"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF" />
+        </RelativeLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
