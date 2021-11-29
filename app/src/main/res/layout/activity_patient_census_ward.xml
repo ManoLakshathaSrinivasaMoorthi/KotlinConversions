@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
@@ -51,14 +50,13 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/margin_5"
                             android:padding="@dimen/margin_4"
-                            app:srcCompat="@drawable/ic_back_arrow"
-                            app:tint="@color/white"
-                            android:contentDescription="@string/todo" />
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/ic_back_arrow" />
 
                         <TextView
                             android:id="@+id/id_toolbar_title"
                             fontPath="fonts/FiraSans-Medium.ttf"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="0.7"
@@ -74,7 +72,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginEnd="@dimen/margin_5"
+                            android:layout_marginRight="@dimen/margin_5"
                             android:gravity="center"
                             android:padding="4dp">
 
@@ -83,9 +81,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                app:srcCompat="@drawable/ic_search_white"
-                                app:tint="@color/white"
-                                android:contentDescription="@string/todo" />
+                                android:tint="@color/white"
+                                app:srcCompat="@drawable/ic_search_white" />
 
                         </LinearLayout>
 
@@ -102,9 +99,9 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <com.example.kotlinomnicure.utils.CustomGroupEditText
+                    <com.mvp.omnicure.utils.CustomGroupEditText
                         android:id="@+id/searchEditText"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_30"
                         android:layout_gravity="center"
                         android:layout_weight="1"
@@ -115,8 +112,8 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:nextFocusDown="@id/signin_btn"
-                        android:paddingStart="@dimen/margin_14"
-                        android:paddingEnd="@dimen/margin_5"
+                        android:paddingLeft="@dimen/margin_14"
+                        android:paddingRight="@dimen/margin_5"
                         android:textAppearance="@style/textSubTitle"
                         android:textColor="@color/sub_title_color"
                         android:textColorHint="@color/gray_500"
@@ -131,9 +128,8 @@
                         android:paddingVertical="10dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        app:srcCompat="@drawable/cross"
-                        app:tint="@color/bg_blue"
-                        android:contentDescription="@string/todo" />
+                        android:tint="@color/bg_blue"
+                        app:srcCompat="@drawable/cross" />
 
                 </LinearLayout>
 
@@ -162,22 +158,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_2"
-                    android:layout_toEndOf="@+id/location"
+                    android:layout_toLeftOf="@id/dropImg"
+                    android:layout_toRightOf="@+id/location"
                     android:background="@drawable/white_color_btn_bg"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="@color/bg_blue"
                     android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold"
-                    tools:ignore="RelativeOverlap" />
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/dropImg"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="@dimen/margin_20"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:padding="@dimen/margin_4"
-                    app:srcCompat="@drawable/ic_downward"
-                    android:contentDescription="@string/todo" />
+                    app:srcCompat="@drawable/ic_downward" />
 
             </RelativeLayout>
 
@@ -200,6 +197,7 @@
             android:id="@+id/noPatientLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
@@ -209,8 +207,7 @@
                 android:id="@+id/noPatientsImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_no_patients"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/ic_no_patients" />
 
             <TextView
                 android:id="@+id/noPatientTitle"

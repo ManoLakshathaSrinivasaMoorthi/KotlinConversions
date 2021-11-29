@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
     <TextView android:id="@+id/doc_box_patient_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ranjet Jha"
-        android:paddingLeft="@dimen/margin_10"
-        android:paddingRight="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_5"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_size_large"
-        android:textColor="@color/colorPrimary"/>
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Ranjet Jha"
+              android:paddingLeft="@dimen/margin_10"
+              android:paddingRight="@dimen/margin_10"
+              android:layout_marginTop="@dimen/margin_5"
+              android:textStyle="bold"
+              android:textSize="@dimen/text_size_large"
+              android:textColor="@color/colorPrimary"/>
 
     <TextView android:id="@+id/doc_box_patient_dob"
         android:layout_width="match_parent"

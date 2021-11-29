@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_5"
+            android:layout_marginLeft="@dimen/margin_5"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -38,7 +38,7 @@
                     android:layout_gravity="center|start"
                     android:fontFamily="@string/font_family_regular"
                     android:gravity="center|start"
-                    android:text="@string/hospital_name"
+                    android:text="Hospital Name"
                     android:textColor="@color/colorPrimary"
                     android:textFontWeight="600"
                     android:textSize="@dimen/text_size"
@@ -52,7 +52,7 @@
                     android:layout_marginTop="@dimen/margin_1"
                     android:fontFamily="@string/font_family_regular"
                     android:gravity="center|start"
-                    android:text="@string/barnes_jewish"
+                    android:text="Barnes Jewish"
                     android:textColor="@color/sub_title_color"
                     android:textFontWeight="400"
                     android:textSize="@dimen/text_size_small" />
@@ -66,8 +66,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="0.3"
                 android:padding="@dimen/margin_5"
-                android:src="@drawable/icon_forward"
-                android:contentDescription="@string/todo" />
+                android:src="@drawable/icon_forward" />
 
         </LinearLayout>
 

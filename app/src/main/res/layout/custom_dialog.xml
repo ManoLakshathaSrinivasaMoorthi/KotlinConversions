@@ -23,7 +23,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:gravity="center"
-            android:text="@string/title"
+            android:text="title"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold" />
@@ -38,11 +38,11 @@
             android:layout_marginRight="@dimen/margin_10"
             android:layout_marginBottom="@dimen/margin_5"
             android:gravity="center|left"
+            android:textAlignment="center"
             android:minHeight="60dp"
-            android:text="@string/title_message"
+            android:text="Co0nsultation request already acepted by someo=ne else"
             android:textColor="@color/gray_700"
-            android:textSize="@dimen/text_size"
-            tools:ignore="RtlHardcoded" />
+            android:textSize="@dimen/text_size" />
 
 
         <LinearLayout

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -27,13 +26,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
                 android:layout_marginTop="@dimen/margin_2"
-                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_marginRight="@dimen/margin_5"
                 android:background="@drawable/status_bg"
                 android:fontFamily="@string/font_family_regular"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/margin_8"
                 android:paddingVertical="@dimen/margin_1"
-                android:text="@string/status"
+                android:text="Status"
                 android:textColor="@color/bg_blue"
                 android:textSize="@dimen/text_size_xsmall"
                 android:textStyle="bold" />
@@ -75,7 +74,7 @@
                         android:fontFamily="@string/font_family_regular"
                         android:paddingHorizontal="@dimen/margin_10"
                         android:paddingVertical="4dp"
-                        android:text="@string/low"
+                        android:text="Low"
                         android:textColor="@color/acuity_high_border"
                         android:textFontWeight="600"
                         android:textSize="@dimen/text_size_small" />
@@ -104,8 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center|start"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/txtName"
@@ -113,8 +111,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@string/font_family_regular"
-                            android:gravity="center"
-                            android:text="@string/desi_bogdanova"
+                            android:text="Desi Bogdanova"
                             android:textColor="@color/colorPrimary"
                             android:textFontWeight="600"
                             android:textSize="@dimen/text_size" />
@@ -127,8 +124,7 @@
                             android:background="@drawable/ic_arrow_drop_down_grey"
                             android:gravity="center"
                             android:padding="@dimen/margin_2"
-                            card_view:tint="@color/black"
-                            android:contentDescription="@string/todo" />
+                            android:tint="@color/black" />
 
                     </LinearLayout>
 
@@ -138,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_1"
                         android:fontFamily="@string/font_family_regular"
-                        android:text="@string/barnes_jewish"
+                        android:text="Barnes Jewish"
                         android:textColor="@color/sub_title_color"
                         android:textFontWeight="400"
                         android:textSize="@dimen/text_size_xsmall" />
@@ -215,14 +211,13 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/timer"
-                    android:contentDescription="@string/todo" />
+                    android:src="@drawable/timer" />
 
                 <TextView
                     android:id="@+id/txtRequestTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/timerIcon"
+                    android:layout_toRightOf="@id/timerIcon"
                     android:padding="6dp"
                     android:text="@string/time_stamp" />
             </RelativeLayout>

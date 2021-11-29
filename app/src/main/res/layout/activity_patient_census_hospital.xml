@@ -51,8 +51,8 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/margin_5"
                             android:padding="@dimen/margin_4"
-                            app:srcCompat="@drawable/ic_back_arrow"
-                            app:tint="@color/white" />
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/ic_back_arrow" />
 
                         <TextView
                             android:id="@+id/id_toolbar_title"
@@ -75,8 +75,8 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/margin_5"
                             android:padding="@dimen/margin_8"
-                            app:srcCompat="@drawable/ic_search_white"
-                            app:tint="@color/white" />
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/ic_search_white" />
 
                     </LinearLayout>
 
@@ -91,7 +91,7 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <com.example.kotlinomnicure.utils.CustomGroupEditText
+                    <com.mvp.omnicure.utils.CustomGroupEditText
                         android:id="@+id/searchEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_30"
@@ -120,8 +120,8 @@
                         android:paddingVertical="10dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        app:srcCompat="@drawable/cross"
-                        app:tint="@color/bg_blue" />
+                        android:tint="@color/bg_blue"
+                        app:srcCompat="@drawable/cross" />
 
                 </LinearLayout>
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -15,8 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_rectangle"
-            android:contentDescription="@string/todo" />
+            app:srcCompat="@drawable/ic_rectangle" />
 
     </LinearLayout>
 
@@ -46,9 +44,8 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                app:srcCompat="@drawable/ic_cancel"
-                android:contentDescription="@string/todo" />
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/ic_cancel" />
 
         </RelativeLayout>
 
@@ -83,17 +80,15 @@
                 android:layout_centerVertical="true"
                 android:text="@string/census_acuity"
                 android:textColor="@color/title_color"
-                android:textSize="@dimen/text_size_small"
-                tools:ignore="RelativeOverlap" />
+                android:textSize="@dimen/text_size_small" />
 
             <ImageView
                 android:id="@+id/imgAcuity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_right"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/ic_right" />
 
         </RelativeLayout>
 
@@ -118,11 +113,18 @@
                 android:id="@+id/imgActive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:visibility="gone"
-                app:srcCompat="@drawable/ic_right"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/ic_right" />
+            <ImageView
+                android:id="@+id/imgLowAcuity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_check_blue" />
 
 
         </RelativeLayout>
@@ -149,11 +151,10 @@
                 android:id="@+id/imgAllConsult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:visibility="gone"
-                app:srcCompat="@drawable/ic_right"
-                tools:ignore="ContentDescription" />
+                app:srcCompat="@drawable/ic_right" />
 
 
         </RelativeLayout>

@@ -36,6 +36,7 @@
                 android:layout_margin="@dimen/margin_10"
                 android:background="@drawable/edit_box_bg"
                 android:gravity="start"
+                android:maxLength="5000"
                 android:hint="Discharge Note : "
                 android:inputType="textMultiLine"
                 android:lines="5"

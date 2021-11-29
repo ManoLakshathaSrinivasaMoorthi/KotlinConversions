@@ -31,15 +31,14 @@
                 android:layout_height="@dimen/margin_15"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_tick_mark_blue"
-                android:padding="@dimen/margin_4"
-                android:contentDescription="@string/todo" />
+                android:padding="@dimen/margin_4" />
 
             <TextView
                 android:id="@+id/tVSuccess"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
-                android:layout_marginStart="@dimen/margin_4"
+                android:layout_marginLeft="@dimen/margin_4"
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="Success! New eConsult has been added."
@@ -55,8 +54,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/ic_close_white_24"
                 android:paddingVertical="@dimen/margin_8"
-                android:paddingHorizontal="@dimen/margin_8"
-                android:contentDescription="@string/todo" />
+                android:paddingHorizontal="@dimen/margin_8"/>
 
         </LinearLayout>
 

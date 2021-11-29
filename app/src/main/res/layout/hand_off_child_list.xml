@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_4"
-            android:text="@string/name"
+            android:text="Name"
             android:textColor="@color/bg_blue"
             android:textSize="@dimen/text_size_small" />
 

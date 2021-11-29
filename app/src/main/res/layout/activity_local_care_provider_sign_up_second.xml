@@ -25,21 +25,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    app:srcCompat="@drawable/ic_back_arrow"
-                    app:tint="@color/title_color"
-                    android:contentDescription="@string/todo" />
+                    android:tint="@color/title_color"
+                    app:srcCompat="@drawable/ic_back_arrow" />
 
                 <ImageView
                     android:id="@+id/steps"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/margin_20"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_20"
                     android:foregroundGravity="right"
-                    app:srcCompat="@drawable/ic_step_2"
-                    android:contentDescription="@string/todo" />
+                    app:srcCompat="@drawable/ic_step_2" />
 
             </RelativeLayout>
 
@@ -80,8 +78,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:padding="@dimen/margin_8"
-                            app:srcCompat="@drawable/ic_user"
-                            android:contentDescription="@string/todo" />
+                            app:srcCompat="@drawable/ic_user" />
 
                         <Spinner
                             android:id="@+id/lcp_provider_type_spinner"
@@ -89,15 +86,14 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/spinner_drawable_new"
                             android:dropDownWidth="match_parent"
-                            android:paddingStart="@dimen/margin_30"
+                            android:paddingLeft="@dimen/margin_30"
                             android:prompt="@string/select_provider"
-                            android:spinnerMode="dropdown"
-                            tools:ignore="RtlSymmetry" />
+                            android:spinnerMode="dropdown" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -105,36 +101,32 @@
                                 android:id="@+id/arrow_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/margin_10"
-                                android:layout_toStartOf="@id/verified"
-                                app:srcCompat="@drawable/ic_chevron_down_copy"
-                                android:contentDescription="@string/todo"
-                                tools:ignore="ObsoleteLayoutParam" />
+                                android:layout_marginRight="@dimen/margin_10"
+                                android:layout_toLeftOf="@id/verified"
+                                app:srcCompat="@drawable/ic_chevron_down_copy" />
 
                             <ImageView
                                 android:id="@+id/verified"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginEnd="@dimen/margin_10"
+                                android:layout_marginRight="@dimen/margin_10"
                                 android:visibility="gone"
-                                app:srcCompat="@drawable/ic_checkmark_edittext"
-                                tools:ignore="ObsoleteLayoutParam"
-                                android:contentDescription="@string/todo" />
+                                app:srcCompat="@drawable/ic_checkmark_edittext" />
 
                         </LinearLayout>
 
                     </RelativeLayout>
 
-                    <com.example.kotlinomnicure.utils.CustomErrorEditText
+                    <com.mvp.omnicure.utils.CustomErrorEditText
                         android:id="@+id/npi_number"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_48"
                         android:layout_marginTop="@dimen/margin_15"
                         android:background="@drawable/ash_border_drawable_bg"
                         android:digits="0123456789"
-                        android:drawableStart="@drawable/ic_document"
+                        android:drawableLeft="@drawable/ic_document"
                         android:drawablePadding="@dimen/margin_3"
                         android:ems="10"
                         android:hint="@string/text_npi_number"
@@ -168,8 +160,7 @@
                             android:layout_gravity="center|start"
                             android:layout_weight="0.3"
                             android:padding="@dimen/margin_8"
-                            app:srcCompat="@drawable/ic_location"
-                            android:contentDescription="@string/todo" />
+                            app:srcCompat="@drawable/ic_location" />
 
                         <TextView
                             android:id="@+id/selectHospital"
@@ -191,8 +182,7 @@
                             android:layout_gravity="center|end"
                             android:layout_weight="0.3"
                             android:visibility="invisible"
-                            app:srcCompat="@drawable/ic_checkmark_edittext"
-                            android:contentDescription="@string/todo" />
+                            app:srcCompat="@drawable/ic_checkmark_edittext" />
 
                     </LinearLayout>
 

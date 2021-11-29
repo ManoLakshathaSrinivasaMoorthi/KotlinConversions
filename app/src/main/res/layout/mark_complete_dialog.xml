@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -50,12 +49,11 @@
                     android:inputType="textMultiLine"
                     android:lines="3"
                     android:minLines="3"
+                    android:maxLength="5000"
                     android:scrollbars="vertical"
                     android:text="@string/assessment"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size"
-                    android:autofillHints=""
-                    tools:ignore="LabelFor" />
+                    android:textSize="@dimen/text_size" />
 
                 <EditText
                     android:id="@+id/discharge_plan"
@@ -68,10 +66,9 @@
                     android:minLines="3"
                     android:scrollbars="vertical"
                     android:text="@string/plan"
+                    android:maxLength="5000"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size"
-                    android:autofillHints=""
-                    tools:ignore="LabelFor" />
+                    android:textSize="@dimen/text_size" />
             </LinearLayout>
 
             <Button

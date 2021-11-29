@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -11,16 +10,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="@dimen/margin_8"
-        android:weightSum="1"
-        tools:ignore="UseCompoundDrawables">
+        android:weightSum="1">
 
         <ImageView
             android:id="@+id/imgBack"
             android:layout_width="@dimen/margin_40"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_back_arrow"
-            app:tint="@color/black"
-            android:contentDescription="@string/todo" />
+            android:tint="@color/black"
+            app:srcCompat="@drawable/ic_back_arrow" />
 
         <TextView
             android:id="@+id/select_patient"
@@ -45,7 +42,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/patient_list_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_10"
         android:layout_weight="1"
         android:divider="@color/gray_400"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -46,8 +45,8 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingStart="@dimen/margin_10"
-                    android:paddingEnd="@dimen/margin_15">
+                    android:paddingLeft="@dimen/margin_10"
+                    android:paddingRight="@dimen/margin_15">
 
                     <TextView
                         android:layout_width="0dp"
@@ -172,6 +171,106 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_10"
+                    android:paddingRight="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="@string/mechanical_vent"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGrp_mVent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/mRadioBtnNo"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:text="@string/no"
+                            android:textColor="@drawable/radio_btn_text_drawable_blue"
+                            android:textSize="@dimen/text_size_small"
+                            android:theme="@style/MyRadioButtonStylePurple" />
+
+                        <RadioButton
+                            android:id="@+id/mRadioBtnYes"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:text="@string/yes"
+                            android:textColor="@drawable/radio_btn_text_drawable_blue"
+                            android:textSize="@dimen/text_size_small"
+                            android:theme="@style/MyRadioButtonStylePurple" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_10"
+                    android:paddingRight="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="@string/noninv_vent"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGrp_nVent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/nRadioBtnNo"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:text="@string/no"
+                            android:textColor="@drawable/radio_btn_text_drawable_blue"
+                            android:textSize="@dimen/text_size_small"
+                            android:theme="@style/MyRadioButtonStylePurple" />
+
+                        <RadioButton
+                            android:id="@+id/nRadioBtnYes"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/margin_40"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:text="@string/yes"
+                            android:textColor="@drawable/radio_btn_text_drawable_blue"
+                            android:textSize="@dimen/text_size_small"
+                            android:theme="@style/MyRadioButtonStylePurple" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
                     android:background="@color/white"
@@ -197,8 +296,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:weightSum="3"
-                            tools:ignore="UselessParent">
+                            android:weightSum="3">
 
                             <RadioButton
                                 android:id="@+id/radioCovidNo"
@@ -257,21 +355,23 @@
                         android:theme="@style/MyRadioButtonStyleViolet" />
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/addPatientVitalsContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <EditText
+                    <com.mvp.omnicure.utils.CustomErrorEditText
                         android:id="@+id/id_heart_rate"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
+                        android:layout_alignParentTop="true"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/edittext_patient_bg"
+                        android:elevation="1dp"
                         android:hint="@string/heart_rate"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -281,17 +381,18 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray_500"
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
-                        android:textSize="@dimen/text_size_small"
-                        android:autofillHints="" />
+                        android:textSize="@dimen/text_size_small" />
 
-                    <EditText
+                    <com.mvp.omnicure.utils.CustomErrorEditText
                         android:id="@+id/id_blood_pressure_systolic"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
+                        android:layout_below="@+id/id_heart_rate"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/edittext_patient_bg"
+                        android:elevation="1dp"
                         android:hint="@string/systolic_blood_pressure"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -301,17 +402,18 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray_500"
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
-                        android:textSize="@dimen/text_size_small"
-                        android:autofillHints="" />
+                        android:textSize="@dimen/text_size_small" />
 
-                    <EditText
+                    <com.mvp.omnicure.utils.CustomErrorEditText
                         android:id="@+id/id_blood_pressure_diastolic"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
+                        android:layout_below="@+id/id_blood_pressure_systolic"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/edittext_patient_bg"
+                        android:elevation="1dp"
                         android:hint="@string/diastolic_blood_pressure"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -321,17 +423,18 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray_500"
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
-                        android:textSize="@dimen/text_size_small"
-                        android:autofillHints="" />
+                        android:textSize="@dimen/text_size_small" />
 
-                    <EditText
+                    <com.mvp.omnicure.utils.CustomErrorEditText
                         android:id="@+id/id_sp02"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
+                        android:layout_below="@+id/id_blood_pressure_diastolic"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/edittext_patient_bg"
+                        android:elevation="1dp"
                         android:hint="@string/txt_sp02"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -341,17 +444,18 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray_500"
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
-                        android:textSize="@dimen/text_size_small"
-                        android:autofillHints="" />
+                        android:textSize="@dimen/text_size_small" />
 
-                    <EditText
+                    <com.mvp.omnicure.utils.CustomErrorEditText
                         android:id="@+id/id_fi02"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
+                        android:layout_below="@+id/id_sp02"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/edittext_patient_bg"
+                        android:elevation="1dp"
                         android:hint="@string/txt_fi02"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -361,17 +465,18 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray_500"
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
-                        android:textSize="@dimen/text_size_small"
-                        android:autofillHints="" />
+                        android:textSize="@dimen/text_size_small" />
 
-                    <EditText
+                    <com.mvp.omnicure.utils.CustomErrorEditText
                         android:id="@+id/id_respitory_rate"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
+                        android:layout_below="@+id/id_fi02"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/edittext_patient_bg"
+                        android:elevation="1dp"
                         android:hint="@string/respiratory_rate"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -381,17 +486,18 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray_500"
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
-                        android:textSize="@dimen/text_size_small"
-                        android:autofillHints="" />
+                        android:textSize="@dimen/text_size_small" />
 
-                    <EditText
+                    <com.mvp.omnicure.utils.CustomErrorEditText
                         android:id="@+id/id_temperature"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
+                        android:layout_below="@+id/id_respitory_rate"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/edittext_patient_bg"
+                        android:elevation="1dp"
                         android:hint="@string/temperature"
                         android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
@@ -401,10 +507,102 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray_500"
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
-                        android:textSize="@dimen/text_size_small"
-                        android:autofillHints="" />
+                        android:textSize="@dimen/text_size_small" />
 
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/white"
+                    android:gravity="center|start"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5">
+
+                    <CheckBox
+                        android:id="@+id/alteredmentalstatusCheckbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:text="@string/altered_mental_status"
+                        android:textColor="@drawable/radio_btn_text_drawable_blue"
+                        android:textSize="@dimen/text_size_small"
+                        android:theme="@style/MyRadioButtonStyleViolet" />
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/alterdmentalcontainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:id="@+id/ll_best_eye_response"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <Spinner
+                            android:id="@+id/spinnerWithineyeresponse"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/spinner_drawable"
+                            android:dropDownWidth="match_parent"
+                            android:imeOptions="actionNext"
+                            android:prompt="@string/best_eye_response"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_best_verbal_response"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_below="@+id/ll_best_eye_response"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <Spinner
+                            android:id="@+id/spinnerWithinverbalresponse"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/spinner_drawable"
+                            android:dropDownWidth="match_parent"
+                            android:imeOptions="actionNext"
+                            android:prompt="@string/best_verbal_response"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_best_motor_response"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_below="@+id/ll_best_verbal_response"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <Spinner
+                            android:id="@+id/spinnerWithinmotorresponse"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/spinner_drawable"
+                            android:dropDownWidth="match_parent"
+                            android:imeOptions="actionNext"
+                            android:prompt="@string/best_motor_response"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                </RelativeLayout>
 
 
                 <LinearLayout
@@ -422,14 +620,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_wifi"
-                        android:contentDescription="@string/todo" />
+                        app:srcCompat="@drawable/ic_wifi" />
 
                     <TextView
                         android:id="@+id/athenaDeviceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
                         android:text="@string/connect_to_a_device"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/text_size_small" />
@@ -464,16 +661,14 @@
                     android:background="@color/white"
                     android:gravity="left"
                     android:imeOptions="actionDone"
-                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect|textNoSuggestions"
                     android:padding="3dp"
                     android:scrollbarSize="@dimen/margin_2"
                     android:scrollbars="vertical"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray_500"
                     android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
-                    android:textSize="@dimen/text_size_small"
-                    android:autofillHints=""
-                    tools:ignore="LabelFor,RtlHardcoded" />
+                    android:textSize="@dimen/text_size_small" />
 
                 <Button
                     android:id="@+id/id_save"

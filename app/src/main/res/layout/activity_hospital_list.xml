@@ -20,11 +20,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@drawable/ic_back_arrow"
-                app:tint="@color/title_color"
-                android:contentDescription="@string/todo" />
+                android:tint="@color/title_color"
+                app:srcCompat="@drawable/ic_back_arrow" />
 
         </LinearLayout>
 
@@ -39,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
-                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginLeft="@dimen/margin_15"
                 android:gravity="center|start"
                 android:text="@string/select_a_hospital"
                 android:textAppearance="@style/textBody"
@@ -99,7 +98,7 @@
                 android:id="@+id/rvHospitalList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp" />
+                android:layout_marginLeft="20dp" />
         </LinearLayout>
 
     </LinearLayout>

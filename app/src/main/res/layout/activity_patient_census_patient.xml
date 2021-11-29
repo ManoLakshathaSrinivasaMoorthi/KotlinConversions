@@ -12,7 +12,7 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="20dp"
             android:backgroundTint="@color/colorPrimary"
@@ -22,8 +22,7 @@
             app:fabSize="normal"
             app:maxImageSize="32dp"
             app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_add_white"
-            android:contentDescription="@string/todo" />
+            app:srcCompat="@drawable/ic_add_white" />
 
 
         <com.github.mmin18.widget.RealtimeBlurView
@@ -61,7 +60,7 @@
                         android:id="@+id/id_nav_icon_container_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_5"
+                        android:layout_marginLeft="@dimen/margin_5"
                         android:padding="4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -71,9 +70,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_back_arrow"
-                            app:tint="@color/white"
-                            android:contentDescription="@string/todo" />
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/ic_back_arrow" />
 
                     </LinearLayout>
 
@@ -96,7 +94,7 @@
                         android:id="@+id/llSearch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_5"
+                        android:layout_marginRight="@dimen/margin_5"
                         android:padding="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -106,9 +104,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_search_white"
-                            app:tint="@color/white"
-                            android:contentDescription="@string/todo" />
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/ic_search_white" />
 
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -143,8 +140,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            tools:ignore="UselessParent">
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:id="@+id/searchLayout"
@@ -155,9 +151,9 @@
                                 android:orientation="horizontal"
                                 android:visibility="gone">
 
-                                <com.example.kotlinomnicure.utils.CustomGroupEditText
+                                <com.mvp.omnicure.utils.CustomGroupEditText
                                     android:id="@+id/searchEditText"
-                                    android:layout_width="0dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="@dimen/margin_30"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
@@ -168,8 +164,8 @@
                                     android:inputType="text"
                                     android:maxLines="1"
                                     android:nextFocusDown="@id/signin_btn"
-                                    android:paddingStart="@dimen/margin_14"
-                                    android:paddingEnd="@dimen/margin_5"
+                                    android:paddingLeft="@dimen/margin_14"
+                                    android:paddingRight="@dimen/margin_5"
                                     android:textAppearance="@style/textSubTitle"
                                     android:textColor="@color/sub_title_color"
                                     android:textColorHint="@color/gray_500"
@@ -184,9 +180,8 @@
                                     android:paddingVertical="10dp"
                                     android:paddingLeft="15dp"
                                     android:paddingRight="15dp"
-                                    app:srcCompat="@drawable/cross"
-                                    app:tint="@color/bg_blue"
-                                    android:contentDescription="@string/todo" />
+                                    android:tint="@color/bg_blue"
+                                    app:srcCompat="@drawable/cross" />
 
                             </LinearLayout>
 
@@ -208,13 +203,12 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center"
-                                        android:layout_marginStart="@dimen/margin_14"
+                                        android:layout_marginLeft="@dimen/margin_14"
                                         android:gravity="center"
                                         android:padding="@dimen/margin_2"
                                         android:text="@string/ward"
                                         android:textColor="@color/gray_text"
-                                        android:textSize="@dimen/text_size"
-                                        tools:ignore="TooDeepLayout" />
+                                        android:textSize="@dimen/text_size" />
 
                                     <RelativeLayout
                                         android:id="@+id/rlWardFilter"
@@ -230,7 +224,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@string/font_family_regular"
                                             android:gravity="center"
-                                            android:text="@string/all"
+                                            android:text="All"
                                             android:textColor="@color/title_color"
                                             android:textFontWeight="500"
                                             android:textSize="@dimen/text_size" />
@@ -238,11 +232,10 @@
                                         <ImageView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginStart="@dimen/margin_2"
-                                            android:layout_toEndOf="@+id/txtWard"
-                                            app:srcCompat="@drawable/ic_arrow_drop_down"
-                                            app:tint="@color/title_color"
-                                            android:contentDescription="@string/todo" />
+                                            android:layout_marginLeft="@dimen/margin_2"
+                                            android:layout_toRightOf="@+id/txtWard"
+                                            android:tint="@color/title_color"
+                                            app:srcCompat="@drawable/ic_arrow_drop_down" />
 
                                     </RelativeLayout>
 
@@ -251,11 +244,10 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/margin_16"
-                                    android:gravity="center"
-                                    tools:ignore="RelativeOverlap,UseCompoundDrawables">
+                                    android:layout_marginRight="@dimen/margin_16"
+                                    android:gravity="center">
 
                                     <TextView
                                         android:id="@+id/txtClear"
@@ -274,8 +266,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="@dimen/margin_4"
-                                        app:srcCompat="@drawable/ic_filter"
-                                        android:contentDescription="@string/todo" />
+                                        app:srcCompat="@drawable/ic_filter" />
 
                                 </LinearLayout>
 
@@ -300,8 +291,7 @@
                     android:id="@+id/swipe_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/id_appbar_layout"
-                    tools:ignore="UnknownId">
+                    android:layout_below="@+id/id_appbar_layout">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvCensusPatientList"
@@ -329,8 +319,7 @@
                 android:id="@+id/noPatientsImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_no_patients"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/ic_no_patients" />
 
             <TextView
                 android:id="@+id/noPatientTitle"

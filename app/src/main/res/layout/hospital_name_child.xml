@@ -36,8 +36,7 @@
                 android:textAppearance="@style/textSubTitle"
                 android:textStyle="normal"
                 android:visibility="gone"
-                app:srcCompat="@drawable/ic_tick_mark"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/ic_tick_mark" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

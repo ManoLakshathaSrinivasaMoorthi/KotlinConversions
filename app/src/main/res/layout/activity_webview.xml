@@ -42,8 +42,8 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:padding="@dimen/margin_4"
-                        app:srcCompat="@drawable/ic_back"
-                        app:tint="@color/white" />
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_back" />
 
                     <TextView
                         android:id="@+id/id_toolbar_title"

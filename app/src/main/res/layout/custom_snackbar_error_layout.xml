@@ -32,15 +32,14 @@
                 android:layout_height="@dimen/margin_15"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_warning"
-                android:padding="@dimen/margin_4"
-                android:contentDescription="@string/todo" />
+                android:padding="@dimen/margin_4" />
 
             <TextView
                 android:id="@+id/tVWarning"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
-                android:layout_marginStart="@dimen/margin_4"
+                android:layout_marginLeft="@dimen/margin_4"
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="There was an error. Please try again."
@@ -55,8 +54,7 @@
                 android:layout_height="@dimen/margin_10"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_warning_close"
-                android:padding="@dimen/margin_4"
-                android:contentDescription="@string/todo" />
+                android:padding="@dimen/margin_4" />
 
         </LinearLayout>
 

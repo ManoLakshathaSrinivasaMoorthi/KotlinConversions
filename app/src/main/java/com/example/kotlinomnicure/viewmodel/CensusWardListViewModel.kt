@@ -1,40 +1,156 @@
-package com.example.kotlinomnicure.viewmodel
+package com.example.dailytasksamplepoc.kotlinomnicure.viewmodel
 
+import android.os.Handler
+import android.os.Looper
+import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import omnicurekotlin.example.com.hospitalEndpoints.HospitalRetrofit
+import com.example.kotlinomnicure.utils.Constants
+import com.mvp.omnicure.kotlinactivity.requestbodys.HospitalIdRequestBody
+import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
 import omnicurekotlin.example.com.hospitalEndpoints.model.WardPatientListResponse
-import omnicurekotlin.example.com.userEndpoints.RetrofitService
-import omnicurekotlin.example.com.userEndpoints.UserEndpointsRetrofit
 import omnicurekotlin.example.com.userEndpoints.model.HospitalListResponse
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
+import java.net.SocketTimeoutException
+import java.util.HashMap
 
-class CensusWardListViewModel:ViewModel() {
+class CensusWardListViewModel : ViewModel() {
+    private var wardListObservable: MutableLiveData<WardPatientListResponse?>? = null
+    private var hospitalListObservable: MutableLiveData<HospitalListResponse?>? = null
+    private val TAG = "CensusWardListViewModel"
 
-    private var wardListObservable: MutableLiveData<WardPatientListResponse>? = null
-    private var hospitalListObservable: MutableLiveData<HospitalListResponse>? = null
-    private lateinit var retService: RetrofitService
-
-    fun getWardList(hospitalId: Long): LiveData<Response<WardPatientListResponse>> =  liveData  {
-        retService = HospitalRetrofit.getRetrofits().create(RetrofitService::class.java)
-        wardListObservable = MutableLiveData<WardPatientListResponse>()
-
-        val response = retService.getCensusWardlists(hospitalId)
-        emit(response)
-        return@liveData
+    fun getWardList(hospitalId: Long): LiveData<WardPatientListResponse?>? {
+        wardListObservable = MutableLiveData<WardPatientListResponse?>()
+        getCensusWardListRetro(hospitalId)
+        return wardListObservable
     }
 
-    fun getHospitalList(id: Long): LiveData<Response<HospitalListResponse>> =  liveData  {
-        retService = UserEndpointsRetrofit.getretrofit()
-                .create(RetrofitService::class.java)
-        hospitalListObservable = MutableLiveData<HospitalListResponse>()
-
-        val response = retService.getHospitalLists(id)
-        emit(response)
-        return@liveData
+    fun getHospitalList(id: Long): LiveData<HospitalListResponse?>? {
+        hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+        getHospitalsRetro(id)
+        return hospitalListObservable
     }
+
+    private fun getCensusWardListRetro(hospitalId: Long) {
+        val errMsg = arrayOfNulls<String>(1)
+
+        //sending body through data class
+        val requestBody = HospitalIdRequestBody(hospitalId)
+        ApiClient().getApiHospital(true, true)?.getWards(requestBody)
+            ?.enqueue(object : Callback<WardPatientListResponse?> {
+                override fun onResponse(
+                    call: Call<WardPatientListResponse?>,
+                    response: Response<WardPatientListResponse?>
+                ) {
+
+                    if (response.isSuccessful()) {
+                        if (wardListObservable == null) {
+                            wardListObservable = MutableLiveData<WardPatientListResponse?>()
+                        }
+                        wardListObservable!!.setValue(response.body())
+                    } else {
+                        if (response.code() == 705) {
+                            errMsg[0] = "redirect"
+                        } else if (response.code() == 403) {
+                            errMsg[0] = "unauthorized"
+                        } else {
+                            errMsg[0] = Constants.API_ERROR
+                        }
+                        Handler(Looper.getMainLooper()).post {
+                            val commonResponse = WardPatientListResponse()
+                            if (wardListObservable == null) {
+                                wardListObservable = MutableLiveData<WardPatientListResponse?>()
+                            }
+                            wardListObservable!!.setValue(commonResponse)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<WardPatientListResponse?>, t: Throwable) {
+                    if (t is SocketTimeoutException) errMsg[0] =
+                        Constants.APIErrorType.SocketTimeoutException.toString()
+                    if (t is Exception) errMsg[0] = Constants.API_ERROR
+                    Handler(Looper.getMainLooper()).post {
+                        val commonResponse = WardPatientListResponse()
+
+                        if (wardListObservable == null) {
+                            wardListObservable = MutableLiveData<WardPatientListResponse?>()
+                        }
+                        wardListObservable!!.setValue(commonResponse)
+                    }
+                }
+            })
+        if (!TextUtils.isEmpty(errMsg[0])) {
+            val response = WardPatientListResponse()
+            if (wardListObservable == null) {
+                wardListObservable = MutableLiveData<WardPatientListResponse?>()
+            }
+            wardListObservable!!.setValue(response)
+        }
+    }
+
+
+
+    private fun getHospitalsRetro(id: Long) {
+        val errMsg = arrayOfNulls<String>(1)
+        val bodyValues = HashMap<String, String>()
+        bodyValues["id"] = id.toString()
+        ApiClient().getApiHospital(true, true)?.hospitallistresponseUser(bodyValues)?.enqueue(object :Callback<HospitalListResponse?>
+        {
+
+            override fun onResponse(call: Call<HospitalListResponse?>, response: Response<HospitalListResponse?>) {
+    //
+                    if (response.isSuccessful()) {
+                        if (hospitalListObservable == null) {
+                            hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+                        }
+                        hospitalListObservable!!.setValue(response.body())
+                    } else {
+                        if (response.code() == 705) {
+                            errMsg[0] = "redirect"
+                        } else if (response.code() == 403) {
+                            errMsg[0] = "unauthorized"
+                        } else {
+                            errMsg[0] = Constants.API_ERROR
+                        }
+                        Handler(Looper.getMainLooper()).post {
+                            val commonResponse = HospitalListResponse()
+                            commonResponse.setErrorMessage(errMsg[0])
+                            if (hospitalListObservable == null) {
+                                hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+                            }
+                            hospitalListObservable!!.setValue(commonResponse)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<HospitalListResponse?>, t: Throwable) {
+
+                    errMsg[0] = Constants.API_ERROR
+                    Handler(Looper.getMainLooper()).post {
+                        val commonResponse = HospitalListResponse()
+                        commonResponse.setErrorMessage(errMsg[0])
+                        if (hospitalListObservable == null) {
+                            hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+                        }
+                        hospitalListObservable!!.setValue(commonResponse)
+                    }
+                }
+            })
+        if (!TextUtils.isEmpty(errMsg[0])) {
+            val response = HospitalListResponse()
+            response.setErrorMessage(errMsg[0])
+            if (hospitalListObservable == null) {
+                hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+            }
+            hospitalListObservable!!.setValue(response)
+        }
+    }
+
 
 
 

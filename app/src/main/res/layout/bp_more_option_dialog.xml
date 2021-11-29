@@ -14,8 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_rectangle"
-            android:contentDescription="@string/todo" />
+            app:srcCompat="@drawable/ic_rectangle" />
 
     </LinearLayout>
 
@@ -45,9 +44,8 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                app:srcCompat="@drawable/ic_cancel"
-                android:contentDescription="@string/todo" />
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/ic_cancel" />
 
         </RelativeLayout>
 
@@ -67,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_10"
         android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginVertical="@dimen/margin_5"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -105,7 +104,6 @@
             android:id="@+id/rlDischargePatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_4"
             android:padding="@dimen/margin_4">
 
             <TextView
@@ -113,6 +111,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/discharge_patient"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/text_size_small" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlActivityLogs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_4">
+
+            <TextView
+                android:id="@+id/txtActivityLogs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_activity_log"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/text_size_small" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rleNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_4">
+
+            <TextView
+                android:id="@+id/txteNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_enotes"
                 android:textColor="@color/title_color"
                 android:textSize="@dimen/text_size_small" />
 
