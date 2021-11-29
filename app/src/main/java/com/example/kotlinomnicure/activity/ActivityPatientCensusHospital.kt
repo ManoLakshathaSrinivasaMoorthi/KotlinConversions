@@ -1,4 +1,4 @@
-package com.example.kotlinomnicure.activity
+package com.mvp.omnicure.kotlinactivity.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,23 +9,22 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.adapter.CensusHospitalListAdapter
-import com.example.kotlinomnicure.adapter.CensusHospitalListViewAdapter
-import com.example.kotlinomnicure.adapter.CensusWardListAdapter
-import com.example.kotlinomnicure.databinding.ActivityPatientCensusHospitalBinding
+import com.example.dailytasksamplepoc.R
+import com.example.dailytasksamplepoc.databinding.ActivityPatientCensusHospitalBinding
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
+import com.example.dailytasksamplepoc.kotlinomnicure.adapter.CensusHospitalListAdapter
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
-import com.example.kotlinomnicure.viewmodel.CensusHospitalListViewModel
 import com.google.gson.Gson
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
+import omnicurekotlin.example.com.hospitalEndpoints.model.HospitalListResponse
+
 
 class ActivityPatientCensusHospital : BaseActivity() {
-
     private val TAG = ActivityPatientCensusHospital::class.java.simpleName
     protected var binding: ActivityPatientCensusHospitalBinding? = null
     var selectedHosp = ""
@@ -36,103 +35,107 @@ class ActivityPatientCensusHospital : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_patient_census_hospital)
-        viewModel = ViewModelProvider(this).get(CensusHospitalListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(
+            CensusHospitalListViewModel::class.java
+        )
         initViews()
     }
 
-    private fun initViews() {
+    fun initViews() {
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding?.rvCensusHospitalList?.layoutManager = linearLayoutManager
-        binding?.imgBack?.setOnClickListener { v ->
+        binding?.rvCensusHospitalList?.setLayoutManager(linearLayoutManager)
+        binding?.imgBack?.setOnClickListener(View.OnClickListener { v ->
             handleMultipleClick(v)
             finish()
-        }
-        binding?.imgSearch?.setOnClickListener { v ->
+        })
+        binding?.imgSearch?.setOnClickListener(View.OnClickListener { v ->
             handleMultipleClick(v)
-            binding?.llSearch?.visibility = View.VISIBLE
-        }
-        binding?.closeSearch?.setOnClickListener { view ->
-            if (TextUtils.isEmpty(binding?.searchEditText?.text.toString())) {
-                binding?.llSearch?.visibility = View.GONE
+            binding!!.llSearch.setVisibility(View.VISIBLE)
+        })
+        binding?.closeSearch?.setOnClickListener(View.OnClickListener { view ->
+            if (TextUtils.isEmpty(binding?.searchEditText?.getText().toString())) {
+                binding!!.llSearch.setVisibility(View.GONE)
                 (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager)
                     .hideSoftInputFromWindow(view.windowToken, 0)
-            } else if (binding?.searchEditText?.text.toString().isNotEmpty()) {
-                binding?.searchEditText?.setText("")
+            } else if (binding!!.searchEditText.getText().toString().length > 0) {
+                binding!!.searchEditText.setText("")
             }
-        }
+        })
         getCensusHospitalList()
         setSearchTextWatcher()
     }
 
     private fun handleMultipleClick(view: View) {
         view.isEnabled = false
-        mHandler?.postDelayed({ view.isEnabled = true }, 500)
+        mHandler?.postDelayed(Runnable { view.isEnabled = true }, 500)
     }
 
     private fun getCensusHospitalList() {
         showProgressBar()
-        val providerId: Long? = PrefUtility().getProviderId(this)
-        providerId?.let { viewModel?.getHospitalList(it)?.observe(this) { response ->
-                dismissProgressBar()
-                if (response.getHospitalList() != null && !response.getHospitalList()!!.isEmpty()) {
-                    Log.d(TAG, "getCensusHospitalList response : " + Gson().toJson(response))
-                    censusHospitalListAdapter = CensusHospitalListAdapter(object : CensusHospitalListViewAdapter.HospitalRecyclerListener {
-
-                        override fun onItemSelected(hospital: Hospital?) {
-                            Log.d(TAG, "selected name : " + hospital?.getId().toString() + " ---- " + hospital?.getName())
-                            val intent = Intent(this@ActivityPatientCensusHospital, ActivityPatientCensusWard::class.java)
-                            intent.putExtra("hospitalID", hospital?.getId())
-                            intent.putExtra("hospitalName", hospital?.getName())
-                            intent.putExtra("hospitalAddress", hospital?.getSubRegionName())
-                            startActivity(intent)
-                        }
-                    }, response.getHospitalList() as List<Hospital>?, "")
-                    binding?.rvCensusHospitalList?.setAdapter(censusHospitalListAdapter)
-                    censusHospitalListAdapter?.notifyDataSetChanged()
-                    mHospitalList = response.getHospitalList() as List<Hospital>
-                    censusHospitalListAdapter?.setOnSearchResultListener(object : CensusWardListAdapter.OnSearchResultListener {
-                        override fun onSearchResult(count: Int) {
-                            if (count <= 0) {
-                                showEmptyErrorMessage()
-                            } else {
-                                binding?.noPatientLayout?.setVisibility(View.GONE)
-                            }
-                        }
-                    })
-                } else if (response.getErrorMessage() != null) {
-                    dismissProgressBar()
-                    val errMsg: String? = ErrorMessages().getErrorMessage(
-                        this@ActivityPatientCensusHospital,
-                        response.getErrorMessage(),
-                        Constants.API.getHospital
-                    )
-                    errMsg?.let { it1 ->
-                        CustomSnackBar.make(
-                            binding?.getRoot(), this, CustomSnackBar.WARNING,
-                            it1, CustomSnackBar.TOP, 3000, 0
-                        )?.show()
-                    }
+        val providerId = PrefUtility().getProviderId(this)
+        viewModel!!.getHospitalList(providerId).observe(this) { response: HospitalListResponse ->
+            dismissProgressBar()
+            if (response.hospitalList != null && !response.hospitalList!!.isEmpty()) {
+                Log.d(TAG, "getCensusHospitalList response : " + Gson().toJson(response))
+                censusHospitalListAdapter = CensusHospitalListAdapter({ hospital ->
                     Log.d(
                         TAG,
-                        "getCensusHospitalList getErrorMessage : " + response.getErrorMessage()
+                        "selected name : " + response.id + " ---- " + response.name
                     )
-                } else {
-                    dismissProgressBar()
-                    if (censusHospitalListAdapter?.getItemCount()!! <= 0) {
-                        showEmptyErrorMessage()
-                    } else {
-                        binding?.rvCensusHospitalList?.setVisibility(View.VISIBLE)
-                        binding?.noPatientLayout?.setVisibility(View.GONE)
+                    val intent = Intent(
+                        this,
+                        ActivityPatientCensusWard::class.java
+                    )
+                    intent.putExtra("hospitalID",response.id)
+                    intent.putExtra("hospitalName", response.name)
+                    intent.putExtra("hospitalAddress", response.subRegionName)
+                    startActivity(intent)
+                }, response.hospitalList!!, "")
+                binding?.rvCensusHospitalList?.setAdapter(censusHospitalListAdapter)
+                censusHospitalListAdapter!!.notifyDataSetChanged()
+                mHospitalList = response.hospitalList as List<Hospital>?
+                censusHospitalListAdapter!!.onSearchResultListener =
+                    CensusHospitalListAdapter.OnSearchResultListener { count ->
+                        if (count <= 0) {
+                            showEmptyErrorMessage()
+                        } else {
+                            binding?.noPatientLayout?.setVisibility(View.GONE)
+                        }
                     }
+            } else if (response.errorMessage != null) {
+                dismissProgressBar()
+                val errMsg = ErrorMessages().getErrorMessage(
+                    this,
+                    response.errorMessage,
+                    Constants.API.getHospital
+                )
+                if (errMsg != null) {
+                    CustomSnackBar.make(
+                        binding?.getRoot(), this, CustomSnackBar.WARNING,
+                        errMsg, CustomSnackBar.TOP, 3000, 0
+                    )?.show()
                 }
+                Log.d(
+                    TAG,
+                    "getCensusHospitalList getErrorMessage : " + response.errorMessage
+                )
+            } else {
+                dismissProgressBar()
+                if (response.hospitalList.isEmpty()) {
+                    showEmptyErrorMessage()
+                } else {
+                    binding?.rvCensusHospitalList?.setVisibility(View.VISIBLE)
+                    binding?.noPatientLayout?.setVisibility(View.GONE)
+                }
+
             }
         }
     }
 
     private fun onQuerySearch(query: String) {
         if (censusHospitalListAdapter != null) {
-            censusHospitalListAdapter?.getFilter()?.filter(query)
+            censusHospitalListAdapter!!.filter.filter(query)
         }
     }
 
@@ -147,22 +150,21 @@ class ActivityPatientCensusHospital : BaseActivity() {
     }
 
     private fun showEmptyErrorMessage() {
-        if (TextUtils.isEmpty(binding?.searchEditText?.text.toString())) {
+        if (TextUtils.isEmpty(binding?.searchEditText?.getText().toString())) {
             // This means there is no selected filter applied so resetted to default all section
-            binding?.noPatientLayout?.visibility = View.VISIBLE
-            binding?.noPatientsImage?.visibility = View.VISIBLE
-            binding?.noPatientTitle?.visibility = View.GONE
-            binding?.noPatientText?.text = resources.getString(R.string.no_census_hospital_found)
+            binding?.noPatientLayout?.setVisibility(View.VISIBLE)
+            binding?.noPatientsImage?.setVisibility(View.VISIBLE)
+            binding?.noPatientTitle?.setVisibility(View.GONE)
+            binding?.noPatientText?.setText(resources.getString(R.string.no_census_hospital_found))
         } else {
             showFilterErrorMessage()
         }
     }
 
     private fun showFilterErrorMessage() {
-        binding?.noPatientLayout?.visibility = View.VISIBLE
-        binding?.noPatientsImage?.visibility = View.GONE
-        binding?.noPatientTitle?.visibility = View.VISIBLE
-        binding?.noPatientText?.text = resources.getString(R.string.no_results_for_filter)
+        binding?.noPatientLayout?.setVisibility(View.VISIBLE)
+        binding?.noPatientsImage?.setVisibility(View.GONE)
+        binding?.noPatientTitle?.setVisibility(View.VISIBLE)
+        binding?.noPatientText?.setText(resources.getString(R.string.no_results_for_filter))
     }
-
 }

@@ -18,7 +18,6 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.activity.ActivityConsultChart
 import com.example.kotlinomnicure.customview.CustomDialog
 import com.example.kotlinomnicure.model.ConsultProvider
 import com.google.android.material.snackbar.Snackbar

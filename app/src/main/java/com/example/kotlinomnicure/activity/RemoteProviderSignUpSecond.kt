@@ -1,7 +1,10 @@
-package com.example.kotlinomnicure.activity
+package com.mvp.omnicure.kotlinactivity.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
@@ -9,46 +12,42 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.View.OnTouchListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.databinding.ActivityRemoteProviderSignUpSecondBinding
-import com.example.kotlinomnicure.helper.PBMessageHelper
-import com.example.kotlinomnicure.utils.*
-import com.example.kotlinomnicure.viewmodel.RemoteProviderSignUpViewModel
+import androidx.lifecycle.ViewModelProviders
+import com.example.dailytasksamplepoc.databinding.RemoteProviderSignUpSecondBinding
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.google.gson.Gson
-import omnicurekotlin.example.com.userEndpoints.model.Provider
-import omnicurekotlin.example.com.userEndpoints.model.RemoteProvider
-import omnicurekotlin.example.com.userEndpoints.model.User
-import java.util.*
+
+import java.lang.Exception
+import java.util.ArrayList
+import java.util.LinkedHashMap
 
 class RemoteProviderSignUpSecond : BaseActivity() {
-
-
     private val TAG = RemoteProviderSignUpSecond::class.java.simpleName
-    protected var binding: ActivityRemoteProviderSignUpSecondBinding? = null
+    protected var binding: RemoteProviderSignUpSecondBinding? = null
     protected var viewModel: RemoteProviderSignUpViewModel? = null
     private var providerType: String? = null
     private var remoteProvideId: String? = null
+    private var ctx: Context =com.mvp.omnicure.kotlinactivity.activity.RemoteProviderSignUpSecond()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_remote_provider_sign_up_second)
-        viewModel = ViewModelProvider(this).get(RemoteProviderSignUpViewModel::class.java)
+        binding = DataBindingUtil.setContentView(this, R.layout.remote_provider_sign_up_second)
+        viewModel = ViewModelProviders.of(this).get(
+            RemoteProviderSignUpViewModel::class.java
+        )
         setView()
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setView() {
+    @SuppressLint("StringFormatInvalid", "ClickableViewAccessibility")
+    override fun setView() {
         val labelColor = resources.getColor(R.color.btn_bg)
         val сolorString = String.format("%X", labelColor).substring(2)
-        binding?.txtAlreadySignIn?.setText(Html.fromHtml(String.format("Already have account?" + "<font color='#%s'><b>" + " LOG IN</b></font>",
-                    сolorString)
-            )
-        )
         binding?.txtAlreadySignIn?.setText(
             Html.fromHtml(
                 String.format(
@@ -57,43 +56,44 @@ class RemoteProviderSignUpSecond : BaseActivity() {
                 )
             )
         )
-        binding?.txtAlreadySignIn?.setOnClickListener {
+        binding?.txtTermsAndCondition?.setText(Html.fromHtml("By signing up you agree to " + Buildconfic.value() + " <u>Terms & Conditions</u>"))
+        binding?.txtAlreadySignIn?.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "onClick: of already signin ")
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-        }
-        binding?.idBackButton?.setOnClickListener { finish() }
+        })
+        binding?.idBackButton?.setOnClickListener { view -> finish() }
         setRemoteProviderSpinner()
-        binding?.idRemoteProviderSpinner?.setOnTouchListener { v, event ->
+        binding?.idRemoteProviderSpinner?.setOnTouchListener(OnTouchListener { v, event ->
             Log.d(TAG, "onTouch : ")
             binding?.idRpProviderTypeContainer?.setEnabled(true)
             binding?.idRpProviderTypeContainer?.setFocusableInTouchMode(true)
             binding?.idRpProviderTypeContainer?.requestFocus()
             false
-        }
-        binding?.idNpiNumber?.setOnFocusChangeListener { view, hasFocus ->
+        })
+        binding?.idNpiNumber?.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
             if (!hasFocus) {
-                binding?.idNpiNumber?.addTextChangedListener(GenericTextWatcher(binding?.idNpiNumber!!))
+                binding?.idNpiNumber?.addTextChangedListener(GenericTextWatcher(binding!!.idNpiNumber))
                 checkNpi(true)
             }
-        }
-        binding?.btnNext?.setOnClickListener {
+        })
+        binding?.btnNext?.setOnClickListener(View.OnClickListener {
             onClickNext()
-            //                passwordValidation();
-        }
-        binding?.txtTermsAndCondition?.setOnClickListener {
+
+        })
+        binding?.txtTermsAndCondition?.setOnClickListener(View.OnClickListener {
             val i = Intent(this, TermsAndConditionsActivity::class.java)
-            i.putExtra("isSelected", binding?.checkbox?.isChecked())
+            i.putExtra("isSelected", binding!!.checkbox.isChecked())
             startActivityForResult(i, 1)
-            //                passwordValidation();
-        }
-        binding?.checkbox?.setOnCheckedChangeListener { buttonView, isChecked ->
+
+        })
+        binding?.checkbox?.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             checkButton()
             buttonView.isFocusableInTouchMode = true
             buttonView.requestFocus()
             buttonView.isFocusableInTouchMode = false
-        }
-        binding?.idNpiNumber?.addTextChangedListener(ValidationTextWatcher(binding?.idNpiNumber!!))
+        })
+        binding?.idNpiNumber?.addTextChangedListener(binding?.let { ValidationTextWatcher(it.idNpiNumber) })
         checkButton()
     }
 
@@ -106,9 +106,9 @@ class RemoteProviderSignUpSecond : BaseActivity() {
     }
 
     fun checkButton() {
-        val validNpi: Boolean = ValidationUtil().checkNpi(binding?.idNpiNumber) == true
-        if (validNpi && binding?.idRemoteProviderSpinner?.selectedItemPosition!! > 0 && binding?.checkbox?.isChecked == true) {
-            binding?.btnNext?.setEnabled(true)
+        val validNpi = ValidationUtil.checkNpi(binding?.idNpiNumber)
+        if (validNpi && binding!!.idRemoteProviderSpinner.getSelectedItemPosition() > 0 && binding!!.checkbox.isChecked()) {
+            binding!!.btnNext.setEnabled(true)
         } else {
             binding?.btnNext?.setEnabled(false)
         }
@@ -118,8 +118,11 @@ class RemoteProviderSignUpSecond : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                val agreeFlag = data!!.getBooleanExtra("agree", false)
-                binding?.checkbox?.isChecked = agreeFlag
+                var agreeFlag = false
+                if (data != null) {
+                    agreeFlag = data.getBooleanExtra("agree", false)
+                }
+                binding?.checkbox?.setChecked(agreeFlag)
             }
         }
     }
@@ -129,93 +132,7 @@ class RemoteProviderSignUpSecond : BaseActivity() {
         if (!isValid()) {
             return
         }
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
-            Gson()
-            return
-        }
-        val provider = createPatientObject()
-        Log.d("PROVIDER", Gson().toJson(provider))
-        showProgressBar(PBMessageHelper().getMessage(this, Constants.API.register.toString()))
-        viewModel?.registerProvider(provider)?.observe(this, {
-            val commonResponse=it.body()
-                dismissProgressBar()
-                if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
-                    PrefUtility().saveStringInPref(
-                        applicationContext,
-                        Constants.redirectValidation.EMAIL,
-                        provider.getEmail()
-                    )
-                    PrefUtility().saveStringInPref(
-                        applicationContext,
-                        Constants.redirectValidation.PASSWORD,
-                        provider.getPassword()
-                    )
-                    commonResponse.getUser()!!
-                        .getId()?.let {
-                            PrefUtility().saveLongInPref(
-                                applicationContext,
-                                Constants.redirectValidation.ID,
-                                it
-                            )
-                        }
-                    onRegisterSuccess(commonResponse.getUser())
-                } else {
-                    val errMsg: String? = ErrorMessages().getErrorMessage(
-                        this@RemoteProviderSignUpSecond,
-                        commonResponse?.getErrorMessage(),
-                        Constants.API.register
-                    )
-                    //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
-                    errMsg?.let {
-                        CustomSnackBar.make(
-                            binding?.idContainerLayout,
-                            this,
-                            CustomSnackBar.WARNING,
-                            it,
-                            CustomSnackBar.TOP,
-                            3000,
-                            0
-                        )
-                    }?.show()
-                }
-            })
-    }
-
-    private fun onRegisterSuccess(provider: User?) {
-        val intent = Intent(this, OTPActivity::class.java)
-        intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider?.getId())
-        intent.putExtra(Constants.IntentKeyConstants.MOBILE_NO, provider?.getPhone())
-        intent.putExtra(Constants.IntentKeyConstants.COUNTRY_CODE, provider?.getCountryCode())
-        startActivity(intent)
-    }
-
-    private fun handleMultipleClick(view: View) {
-        view.isEnabled = false
-        mHandler!!.postDelayed({ view.isEnabled = true }, 500)
-    }
-
-    private fun isValid(): Boolean {
-        val errMsg: String? = binding?.let { ValidationUtil().isValidate(it) }
-        if (!errMsg?.isEmpty()!!) {
-//            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
-            CustomSnackBar.make(
-                binding?.idContainerLayout,
-                this,
-                CustomSnackBar.WARNING,
-                errMsg,
-                CustomSnackBar.TOP,
-                3000,
-                0
-            )!!
-                .show()
-            return false
-        }
-        return true
-    }
-
-    private fun setRemoteProviderSpinner() {
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods.isInternetConnected(this)) {
 //            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
             CustomSnackBar.make(
                 binding?.idContainerLayout,
@@ -225,55 +142,139 @@ class RemoteProviderSignUpSecond : BaseActivity() {
                 CustomSnackBar.TOP,
                 3000,
                 0
-            )!!
-                .show()
+            ).show()
+            return
+        }
+        val provider = createPatientObject()
+        Log.d("RemotePROVIDER", Gson().toJson(provider))
+        showProgressBar(PBMessageHelper.getMessage(this, Constants.API.register.toString()))
+
+        viewModel!!.registerProvider(provider).observe(this, { commonResponse: CommonResponse? ->
+            dismissProgressBar()
+            if (commonResponse != null && commonResponse.status != null && commonResponse.status) {
+                PrefUtility.saveStringInPref(
+                    applicationContext,
+                    Constants.redirectValidation.EMAIL,
+                    provider.email
+                )
+                PrefUtility.saveStringInPref(
+                    applicationContext,
+                    Constants.redirectValidation.PASSWORD,
+                    provider.password
+                )
+                PrefUtility.saveLongInPref(
+                    applicationContext,
+                    Constants.redirectValidation.ID,
+                    commonResponse.user.id
+                )
+                onRegisterSuccess(commonResponse.user)
+            } else {
+                val errMsg = ErrorMessages.getErrorMessage(
+                    this,
+                    commonResponse!!.errorMessage,
+                    Constants.API.register
+                )
+
+                CustomSnackBar.make(
+                    binding?.idContainerLayout,
+                    this,
+                    CustomSnackBar.WARNING,
+                    errMsg,
+                    CustomSnackBar.TOP,
+                    3000,
+                    0
+                ).show()
+            }
+        })
+    }
+
+    private fun onRegisterSuccess(provider: User) {
+        val intent = Intent(this, OTPActivity::class.java)
+        intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.id)
+        intent.putExtra(Constants.IntentKeyConstants.MOBILE_NO, provider.phone)
+        intent.putExtra(Constants.IntentKeyConstants.COUNTRY_CODE, provider.countryCode)
+        startActivity(intent)
+    }
+
+    private fun handleMultipleClick(view: View) {
+        view.isEnabled = false
+        mHandler.postDelayed(Runnable { view.isEnabled = true }, 500)
+    }
+
+    private fun isValid(): Boolean {
+        val errMsg = ValidationUtil.isValidate(binding)
+        if (!errMsg.isEmpty()) {
+
+            CustomSnackBar.make(
+                binding?.idContainerLayout,
+                this,
+                CustomSnackBar.WARNING,
+                errMsg,
+                CustomSnackBar.TOP,
+                3000,
+                0
+            ).show()
+            return false
+        }
+        return true
+    }
+
+    private fun setRemoteProviderSpinner() {
+        if (!UtilityMethods.isInternetConnected(this)) {
+
+            CustomSnackBar.make(
+                binding?.idContainerLayout,
+                this,
+                CustomSnackBar.WARNING,
+                getString(R.string.no_internet_connectivity),
+                CustomSnackBar.TOP,
+                3000,
+                0
+            ).show()
             return
         }
         showProgressBar()
         val remoteProvider = ArrayList<String?>()
-        val providerMap = LinkedHashMap<String?, String?>()
+        val providerMap = LinkedHashMap<String?, String>()
         remoteProvider.add(getString(R.string.select_provider_types))
-        viewModel?.getRemoteProviderList()?.observe(this) {
-            val response=it.body()
+        viewModel!!.remoteProviderList.observe(this, { response: RemoteProviderListResponse? ->
             dismissProgressBar()
             Log.d(TAG, "remote provider data$response")
-            if (response != null && response.getStatus() != null && response.getStatus()!!) {
-                if (response.getRemoteProviderTypeList() != null && !response.getRemoteProviderTypeList()!!
+            if (response != null && response.status != null && response.status) {
+                if (response.remoteProviderTypeList != null && !response.remoteProviderTypeList
                         .isEmpty()
                 ) {
-                    providerMap.putAll(getRemoteProviderNames(response.getRemoteProviderTypeList() as List<RemoteProvider>)!!)
+                    providerMap.putAll(getRemoteProviderNames(response.remoteProviderTypeList)!!)
                     remoteProvider.addAll(providerMap.keys)
                     setRemoteSpinner(remoteProvider, providerMap)
                 }
             } else {
-                val errMsg: String? = ErrorMessages().getErrorMessage(
+                val errMsg = ErrorMessages.getErrorMessage(
                     this,
-                    java.lang.String.valueOf(response?.getErrorId()),
+                    response!!.errorId.toString(),
                     Constants.API.getHospital
                 )
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
-                errMsg?.let {
-                    CustomSnackBar.make(
-                        binding?.idContainerLayout,
-                        this,
-                        CustomSnackBar.WARNING,
-                        it,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0
-                    )
-                }?.show()
+
+                CustomSnackBar.make(
+                    binding?.idContainerLayout,
+                    this,
+                    CustomSnackBar.WARNING,
+                    errMsg,
+                    CustomSnackBar.TOP,
+                    3000,
+                    0
+                ).show()
             }
-        }
+        })
     }
 
     private fun setRemoteSpinner(
         remoteProvider: ArrayList<String?>,
-        providerMap: LinkedHashMap<String?, String?>
+        providerMap: LinkedHashMap<String?, String>
     ) {
         val remoteProviderListAdapter =
             ArrayAdapter(this, R.layout.spinner_custom_text, remoteProvider)
-        //hospitalListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         binding?.idRemoteProviderSpinner?.setAdapter(remoteProviderListAdapter)
         binding?.idRemoteProviderSpinner?.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onItemSelected(
@@ -282,20 +283,20 @@ class RemoteProviderSignUpSecond : BaseActivity() {
                 position: Int,
                 l: Long
             ) {
-                binding?.idRpProviderTypeContainer?.setFocusableInTouchMode(true)
-                binding?.idRpProviderTypeContainer?.requestFocus()
-                binding?.idRpProviderTypeContainer?.setFocusableInTouchMode(false)
+                binding!!.idRpProviderTypeContainer.setFocusableInTouchMode(true)
+                binding!!.idRpProviderTypeContainer.requestFocus()
+                binding!!.idRpProviderTypeContainer.setFocusableInTouchMode(false)
                 try {
                     checkButton()
                     if (position == 0) {
-                        binding?.verified?.setVisibility(View.GONE)
+                        binding!!.verified.setVisibility(View.GONE)
                     } else {
-                        binding?.verified?.setVisibility(View.VISIBLE)
+                        binding!!.verified.setVisibility(View.VISIBLE)
                     }
                     val spinnerText = view as TextView
                     providerType = remoteProvider[position]
                     remoteProvideId = providerMap[providerType]
-                    binding?.idRemoteProviderSpinner!!.setTag(remoteProvideId)
+                    binding!!.idRemoteProviderSpinner.setTag(remoteProvideId)
                     if (spinnerText != null) {
                         spinnerText.maxLines = 1
                         if (spinnerText.text.toString().length >= 30) {
@@ -305,72 +306,70 @@ class RemoteProviderSignUpSecond : BaseActivity() {
                             spinnerText.textSize = 16f
                         }
                         if (position != 0) {
-                            UtilityMethods().setTextViewColor(
-                                this@RemoteProviderSignUpSecond,
+                            UtilityMethods.setTextViewColor(
+                                ctx,
                                 spinnerText,
                                 R.color.black
                             )
-                            //                            UtilityMethods.setDrawableBackground(RemoteProviderSignUpSecond.this, binding.idRemoteProviderSpinner, R.drawable.spinner_drawable_selected);
+
                         } else {
-                            UtilityMethods().setTextViewColor(
-                                this@RemoteProviderSignUpSecond,
+                            UtilityMethods.setTextViewColor(
+                                ctx,
                                 spinnerText,
                                 R.color.title_black
                             )
-                            //                            UtilityMethods.setDrawableBackground(RemoteProviderSignUpSecond.this, binding.idRemoteProviderSpinner, R.drawable.spinner_drawable);
+
                         }
                     }
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Log.e(TAG, "exception", e.cause)
                 }
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                binding?.idRpProviderTypeContainer?.setFocusableInTouchMode(true)
-                binding?.idRpProviderTypeContainer?.requestFocus()
-                binding?.idRpProviderTypeContainer?.setFocusableInTouchMode(false)
+                binding!!.idRpProviderTypeContainer.setFocusableInTouchMode(true)
+                binding!!.idRpProviderTypeContainer.requestFocus()
+                binding!!.idRpProviderTypeContainer.setFocusableInTouchMode(false)
             }
         })
     }
 
-    private fun getRemoteProviderNames(providers: List<RemoteProvider>): LinkedHashMap<String?, String?>? {
-        val providerMap = LinkedHashMap<String?, String?>()
+    private fun getRemoteProviderNames(providers: List<RemoteProvider>): LinkedHashMap<String?, String>? {
+        val providerMap = LinkedHashMap<String?, String>()
         for (i in providers.indices) {
             val remoteProvider = providers[i]
-            if (remoteProvider != null && remoteProvider.getId() != null) {
-                providerMap[remoteProvider.getName()!!.trim()] = remoteProvider.getId()
+            if (remoteProvider.id != null) {
+                providerMap[remoteProvider.name.trim { it <= ' ' }] = remoteProvider.id
             }
         }
         return providerMap
     }
 
     private fun createPatientObject(): Provider {
-        val providerID: Long? = PrefUtility().getProviderId(this)
-        val role: String? = PrefUtility().getRole(this)
+        val providerID = PrefUtility.getProviderId(this)
+        val role = PrefUtility.getRole(this)
         val extras = intent.extras
         val provider = Provider()
         if (extras != null) {
             val fname = extras.getString(Constants.IntentKeyConstants.FIRST_NAME)
             val lname = extras.getString(Constants.IntentKeyConstants.LAST_NAME)
-            provider.setFname(
+            provider.fname =
                 fname!!.substring(0, 1).toUpperCase() + fname.substring(1).toLowerCase()
-            )
-            provider.setLname(
+            provider.lname =
                 lname!!.substring(0, 1).toUpperCase() + lname.substring(1).toLowerCase()
-            )
-            provider.setEmail(extras.getString(Constants.IntentKeyConstants.EMAIL))
-            provider.setPhone(extras.getString(Constants.IntentKeyConstants.PHONE_NO))
-            provider.setPassword(extras.getString(Constants.IntentKeyConstants.PASSWORD))
-            provider.setCountryCode(extras.getString(Constants.IntentKeyConstants.COUNTRY_CODE))
+            provider.email = extras.getString(Constants.IntentKeyConstants.EMAIL)
+            provider.phone = extras.getString(Constants.IntentKeyConstants.PHONE_NO)
+            provider.password = extras.getString(Constants.IntentKeyConstants.PASSWORD)
+            provider.countryCode = extras.getString(Constants.IntentKeyConstants.COUNTRY_CODE)
         }
-        provider.setUserType("RP")
-        provider.setUserSubType(binding?.idRemoteProviderSpinner?.getSelectedItem().toString())
-        provider.setProviderType("R")
-        provider.setRole(Constants.ProviderRole.RD.toString())
-        provider.setHospital("Remote Side Provider")
-        provider.setNpiNumber(binding?.idNpiNumber?.getText().toString().trim())
-        provider.setRemoteProviderType(binding?.idRemoteProviderSpinner?.getSelectedItem().toString())
-        provider.setRemoteProviderId(java.lang.Long.valueOf(remoteProvideId))
+        provider.userType = "RP"
+        provider.userSubType = binding?.idRemoteProviderSpinner?.getSelectedItem().toString()
+        provider.providerType = "R"
+        provider.role = Constants.ProviderRole.RD.toString()
+        provider.hospital = "Remote Side Provider"
+        provider.npiNumber = binding?.idNpiNumber?.getText().toString().trim()
+        provider.remoteProviderType = binding?.idRemoteProviderSpinner?.getSelectedItem().toString()
+        provider.remoteProviderId = java.lang.Long.valueOf(remoteProvideId)
         return provider
     }
 
@@ -403,9 +402,9 @@ class RemoteProviderSignUpSecond : BaseActivity() {
         override fun afterTextChanged(editable: Editable) {
             val text = editable.toString()
             when (view.id) {
-                R.id.id_npi_number -> RemoteProviderSignUpSecond().checkNpi(false)
+                R.id.id_npi_number -> com.mvp.omnicure.kotlinactivity.activity.RemoteProviderSignUpSecond().checkNpi(false)
             }
-            RemoteProviderSignUpSecond().checkButton()
+            com.mvp.omnicure.kotlinactivity.activity.RemoteProviderSignUpSecond().checkButton()
         }
 
         init {
@@ -420,7 +419,7 @@ class RemoteProviderSignUpSecond : BaseActivity() {
         override fun afterTextChanged(editable: Editable) {
             val text = editable.toString()
             when (view.id) {
-                R.id.id_npi_number ->RemoteProviderSignUpSecond(). checkNpi(true)
+                R.id.id_npi_number -> com.mvp.omnicure.kotlinactivity.activity.RemoteProviderSignUpSecond().checkNpi(true)
             }
         }
 
@@ -428,6 +427,5 @@ class RemoteProviderSignUpSecond : BaseActivity() {
             this.view = view
         }
     }
-
 
 }

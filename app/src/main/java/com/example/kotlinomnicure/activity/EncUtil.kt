@@ -1,13 +1,15 @@
-package com.example.kotlinomnicure.activity
+package com.example.dailytasksamplepoc.kotlinomnicure.activity
 
 import android.content.Context
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.biometric.BiometricPrompt
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import java.io.ByteArrayInputStream
@@ -24,8 +26,7 @@ import javax.crypto.*
 import javax.crypto.spec.GCMParameterSpec
 import javax.security.auth.x500.X500Principal
 
-class EncUtil {
-
+class EncUtil : AppCompatActivity() {
     private val TAG = "ENCUTIL"
     private val ANDROIDKEYSTORE = "AndroidKeyStore"
     private val AES_MODE = "AES/GCM/NoPadding"
@@ -48,7 +49,7 @@ class EncUtil {
                 )
             }
             keyStore = KeyStore.getInstance(ANDROIDKEYSTORE)
-            keyStore?.load(null)
+            keyStore!!.load(null)
             if (!keyStore!!.containsAlias(KEY_ALIAS)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     val keyGenerator =
@@ -200,14 +201,14 @@ class EncUtil {
         return bytes
     }
 
-    fun decrypt(context: Context?, text: String?): String? {
+    fun decrypt(context: BiometricPrompt.AuthenticationCallback, text: String?): String? {
         try {
             var d: ByteArray? = ByteArray(0)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 d = context?.let { text?.let { it1 -> EncUtil().decryptM(it, it1) } }
             } else {
                 try {
-                    d = text?.let { context?.let { it1 -> EncUtil().rsaDecrypt(it, it1) } }
+                    d = context?.let { text?.let { it1 -> EncUtil().rsaDecrypt(it1, it) } }
                 } catch (e: Exception) {
                     Log.e(TAG, EXCEPTION, e.cause)
                 }
