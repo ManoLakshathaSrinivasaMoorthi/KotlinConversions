@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,10 +8,12 @@ import android.util.TypedValue
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.adapter.AttachmentGridAdapter
-import com.example.dailytasksamplepoc.databinding.ActivityAttachmentBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.model.ConsultMessage
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.PDFViewerActivity
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.VideoPlayerActivity
+import com.example.kotlinomnicure.databinding.ActivityAttachmentBinding
+
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.firebase.database.*

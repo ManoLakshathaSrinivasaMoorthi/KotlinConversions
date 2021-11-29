@@ -43,11 +43,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.example.dailytasksamplepoc.R
 import com.example.dailytasksamplepoc.databinding.ActivityChatBinding
 import com.example.dailytasksamplepoc.databinding.ItemMessageBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.ActivityAttachmentFilter
+import com.example.kotlinomnicure.activity.ActivityAttachmentFilter
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.DrawerActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.PatientChatHistoryAdapter
@@ -76,10 +75,8 @@ import com.google.gson.Gson
 import omnicurekotlin.example.com.patientsEndpoints.model.PatientHistory
 import omnicurekotlin.example.com.providerEndpoints.model.Members
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
-import com.example.dailytasksamplepoc.kotlinomnicure.utils.AESUtils
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ChatActivityViewModel
 import com.example.kotlinomnicure.helper.PBMessageHelper
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
 
 import java.io.*
 import java.lang.Exception

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -92,6 +93,305 @@ dependencies {
 
     implementation 'com.github.mmin18:realtimeblurview:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    implementation  'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    def nav_version = "2.1.0-alpha05"
+    implementation "androidx.navigation:navigation-fragment:$nav_version" // For Kotlin use navigation-fragment-ktx
+    implementation "androidx.navigation:navigation-ui:$nav_version" // For Kotlin use navigation-ui-ktx
+
+    def material_version = "1.1.0-alpha07"
+    implementation "com.google.android.material:material:$material_version"
+    def  datastoreVersion = "1.0.0-alpha06"
+    implementation "androidx.datastore:datastore-preferences:$datastoreVersion"
+
+
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    def work_version = "2.6.0"
+
+
+
+    def preference_version = "1.1.1"
+
+    implementation "androidx.work:work-runtime:$work_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+
+    //implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_version"
+    implementation  'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.5.0"
+
+    // Constraints layout with motion layout dependency
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+
+    //for testing retrofit.
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
+    //for unit testing
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:3.3.3"
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    testImplementation 'org.json:json:20180813'
+
+    implementation 'com.google.dagger:hilt-android:2.28-alpha'
+    kapt 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
+
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'androidx.activity:activity-ktx:1.1.0'
+
+    implementation "com.squareup.retrofit2:converter-moshi:2.6.2"
+    implementation "com.squareup.retrofit2:retrofit:2.8.1"
+    implementation "com.squareup.okhttp3:okhttp:4.7.2"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+
+/*    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"*/
+    implementation "androidx.preference:preference-ktx:$preference_version"
+
+    def  roomVersion = "2.3.0"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$roomVersion")
+    // To use Kotlin Symbolic Processing (KSP)
+
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$roomVersion")
+
+    // optional - RxJava2 support for Room
+    implementation("androidx.room:room-rxjava2:$roomVersion")
+
+    // optional - RxJava3 support for Room
+    implementation("androidx.room:room-rxjava3:$roomVersion")
+
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation("androidx.room:room-guava:$roomVersion")
+
+    // optional - Test helpers
+    testImplementation("androidx.room:room-testing:$roomVersion")
+
+    // optional - Paging 3 Integration
+    implementation("androidx.room:room-paging:2.4.0-alpha05")
+    implementation "androidx.paging:paging-runtime-ktx:3.0.0-beta03"
+    implementation("io.coil-kt:coil:1.1.1")
+
+    //Paging
+    implementation "androidx.paging:paging-runtime-ktx:3.0.0-beta03"
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
+
+    // Coroutine Lifecycle Scopes
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
+    implementation "androidx.activity:activity-ktx:1.2.2"
+
+    //dagger-hilt
+    implementation "com.google.dagger:hilt-android:2.33-beta"
+    kapt "com.google.dagger:hilt-android-compiler:2.33-beta"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    kapt "androidx.hilt:hilt-compiler:1.0.0-beta01"
+
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.4.0')
+    androidTestImplementation 'org.hamcrest:hamcrest-integration:1.3'
+    implementation 'androidx.biometric:biometric:1.0.0-beta01'
+    // material dialogs
+    def matieral_dialogs_version = "3.1.1"
+    implementation "com.afollestad.material-dialogs:core:$matieral_dialogs_version"
+    implementation "com.afollestad.material-dialogs:input:$matieral_dialogs_version"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.robolectric:robolectric:3.4.2"
+    testImplementation 'org.hamcrest:hamcrest-library:1.3'
+    testImplementation "org.mockito:mockito-core:2.11.0"
+
+    androidTestImplementation 'org.mockito:mockito-android:2.11.0'
+    androidTestImplementation 'com.android.support:support-annotations:27.0.1'
+    androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.1'
+
+    // Espresso dependencies
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-accessibility:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-web:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.1'
+
+
+    implementation 'io.realm:android-adapters:2.0.0'
+
+    // retrofit
+
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.7.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+    //JUnit Core
+    //unittesting
+    testImplementation 'junit:junit:4.13'
+    // Core library
+    androidTestImplementation 'androidx.test:core:1.4.0'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
+
+    // Assertions
+    // integration testing
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.ext:truth:1.4.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
+
+    // Espresso dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    //noinspection GradleCompatible
+    implementation('com.android.support:design:28.0.0')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:28.+'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-v4:28.+'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.navigation:navigation-ui:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation ("com.github.bumptech.glide:glide:4.12.0") {
+        exclude group: "com.android.support"
+    }
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'androidx.annotation:annotation:1.2.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation ("com.github.bumptech.glide:glide:4.12.0@aar") {
+        transitive = true
+    }
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Google
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:25.2.2')
+
+//    implementation 'com.google.firebase:firebase-database'
+//    implementation 'com.google.firebase:firebase-storage'
+//    implementation 'com.google.firebase:firebase-auth'
+
+    implementation 'com.google.firebase:firebase-auth:20.0.0'
+    implementation 'com.google.firebase:firebase-database:19.5.1'
+    implementation 'com.google.firebase:firebase-storage:19.2.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+
+    // Firebase UI
+    implementation 'com.firebaseui:firebase-ui-database:6.2.1'
+
+
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'com.github.tony19:logback-android-core:1.1.1-4'
+    implementation('com.github.tony19:logback-android-classic:1.1.1-4') {
+        // workaround issue #73
+        exclude group: 'com.google.android', module: 'android'
+    }
+    // Video Calling
+    implementation 'io.agora.rtc:full-sdk:3.2.1'
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //Google Analytics dependency.
+    //implementation 'com.google.firebase:firebase-analytics:18.0.0'
+
+    // Firebase Crashlytics SDK.
+//    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+//    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+
+    //cardview
+    implementation "androidx.cardview:cardview:1.0.0"
+
+    //paging
+    implementation "androidx.paging:paging-runtime:3.0.1"
+    implementation 'com.google.android.material:material:1.1.0-alpha10'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    //implementation "androidx.security:security-crypto:1.1.0-alpha01"
+
+    implementation 'commons-net:commons-net:3.6'
+    implementation 'com.github.instacart.truetime-android:library-extension-rx:3.4'
+
+    // or if you want the vanilla version of Truetime:
+    implementation 'com.github.instacart.truetime-android:library:3.4'
+    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+    implementation 'org.ocpsoft.prettytime:prettytime:5.0.0.Final'
+
+    implementation 'com.github.mmin18:realtimeblurview:1.2.1'
+
+    // Dependancy for exoplayer
+    implementation "com.google.android.exoplayer:exoplayer:2.13.3"
+// Core support in exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-core:2.13.3"
+// Dash support in exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-dash:2.13.3"
+// HLS support in exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-hls:2.13.3"
+// Smooth streaming of video in exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:2.13.3"
+// Default ui of exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-ui:2.13.3"
+    //fp
+    implementation 'androidx.biometric:biometric:1.0.0-beta01'
+
+    //GeeksMediaPicker
+    implementation 'com.github.im-manisharma:GeeksMediaPicker:1.1.0'
+
 
 
 }
