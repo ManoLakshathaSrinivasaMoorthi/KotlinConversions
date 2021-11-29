@@ -8,23 +8,20 @@ class CommonResponse {
     private var dischargedCount: Int? = null
     private var dischargedList: List<Patient?>? = null
     private var errorId: Int? = null
-    private var errorMessage: String? = null
-
-    //com.google.api.client.util.Key
-    private val encryptedValue: String? = null
+    var errorMessage: String? = null
     private var feedbackForm: String? = null
     private var tutorial_url: String? = null
     private var title: String? = null
     private var id: Long? = null
     private var pendingList: List<Patient?>? = null
 
-    private var user: User? = null
+    var user: User? = null
 
     private var providerList: List<Provider?>? = null
 
     private var room: Room? = null
 
-    private var status: Boolean? = null
+    var status: Boolean? = null
     private var idToken: String? = null
     private var refreshToken: String? = null
 
@@ -307,18 +304,6 @@ class CommonResponse {
         return this
     }
 
-    //    @Override
-    //    public CommonResponse set(String fieldName, Object value) {
-    //        return (CommonResponse) super.set(fieldName, value);
-    //    }
-    //
-    //    @Override
-    //    public CommonResponse clone() {
-    //        return (CommonResponse) super.clone();
-    //    }
-    fun getEncryptedValue(): String? {
-        return encryptedValue
-    }
 
 
 }

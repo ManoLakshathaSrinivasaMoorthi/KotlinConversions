@@ -1,18 +1,13 @@
-package omnicurekotlin.example.com.patientsEndpoints.model
+package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model
 
 class PatientDetail {
 
-    private var patient:Patient? = null
+    var patient: Patient? = null
 
     private var status = false
     private var errorId = 0
-    fun getPatient(): Patient? {
-        return patient
-    }
+    var errorMsg: String? =null
 
-    fun setPatient(patient: Patient?) {
-        this.patient = patient
-    }
 
     fun getStatus(): Boolean {
         return status
@@ -28,6 +23,11 @@ class PatientDetail {
 
     fun setErrorId(errorId: Int) {
         this.errorId = errorId
+    }
+
+    @JvmName("setErrorMsg1")
+    fun setErrorMsg(errorMsg: String) {
+        this.errorMsg = errorMsg
     }
 
     class Patient {
@@ -60,7 +60,7 @@ class PatientDetail {
         private var note: String? = null
         private var lname: String? = null
         private var fname: String? = null
-        private var name: String? = null
+       // var name: String? = null
         private var id: String? = null
         private var recordNumber: String? = null
         private var syncTime: String? = null
@@ -377,13 +377,13 @@ class PatientDetail {
             this.fname = fname
         }
 
-        fun getName(): String? {
+     /*   fun getName(): String? {
             return name
         }
 
         fun setName(name: String?) {
             this.name = name
-        }
+        }*/
 
         fun getId(): String? {
             return id

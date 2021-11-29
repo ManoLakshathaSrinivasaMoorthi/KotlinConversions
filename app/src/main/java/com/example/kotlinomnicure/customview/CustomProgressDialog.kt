@@ -1,10 +1,11 @@
-package com.example.kotlinomnicure.customview
+package com.example.dailytasksamplepoc.kotlinomnicure.customview
 
 import android.app.Activity
 import android.app.Dialog
 import android.view.Gravity
 import android.widget.TextView
-import com.example.kotlinomnicure.R
+import com.example.dailytasksamplepoc.R
+
 
 class CustomProgressDialog: Dialog{
     private var activity: Activity? = null

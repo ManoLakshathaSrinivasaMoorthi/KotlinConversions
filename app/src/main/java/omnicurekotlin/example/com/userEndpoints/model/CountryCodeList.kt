@@ -4,9 +4,9 @@ package omnicurekotlin.example.com.userEndpoints.model
 class CountryCodeList {
 
 
-    private var id: String? = null
+    var id: String? = null
     private var name: String? = null
-    private var code: String? = null
+    var code: String? = null
 
 
     fun getId(): String? {

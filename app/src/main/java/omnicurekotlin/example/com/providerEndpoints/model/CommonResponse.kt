@@ -1,5 +1,7 @@
 package omnicurekotlin.example.com.providerEndpoints.model
 
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+
 class CommonResponse {
 
 
@@ -10,7 +12,7 @@ class CommonResponse {
 
     private var errorId: Int? = null
 
-    private var errorMessage: String? = null
+    var errorMessage: String? = null
 
     private var title: String? = null
 
@@ -29,7 +31,9 @@ class CommonResponse {
     private var room: Room? = null
 
 
-    private var status: Boolean? = null
+    var status: Boolean? = null
+
+    var auditId:String?=null
 
 
     private var unit: Unit? = null
@@ -67,6 +71,14 @@ class CommonResponse {
         return dischargedList
     }
 
+
+   /* fun getAuditId(): String? {
+        return auditId
+    }
+
+    fun setAuditId(auditId: String) {
+        auditId = auditId
+    }*/
     /**
      * @param dischargedList dischargedList or `null` for none
      */
@@ -88,7 +100,7 @@ class CommonResponse {
         return this
     }
 
-
+/*
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -97,7 +109,7 @@ class CommonResponse {
     fun setErrorMessage(errorMessage: String?):CommonResponse? {
         this.errorMessage = errorMessage
         return this
-    }
+    }*/
 
     fun getTitle(): String? {
         return title
@@ -165,7 +177,7 @@ class CommonResponse {
 
 
 
-    fun getStatus(): Boolean? {
+  /*  fun getStatus(): Boolean? {
         return status
     }
 
@@ -173,7 +185,7 @@ class CommonResponse {
     fun setStatus(status: Boolean?):CommonResponse? {
         this.status = status
         return this
-    }
+    }*/
 
 
     fun getUnit(): Unit? {

@@ -15,11 +15,11 @@ class Hospital {
     private var doctorCount: Long? = null
     private var email: String? = null
     private var experience: String? = null
-    private var id: Long? = null
+    var id: Long? = null
     private var joiningTime: Long? = null
     private var lat: Double? = null
     private var lng: Double? = null
-    private var name: String? = null
+    var name: String? = null
     private var occupiedBeds: Int? = null
     private var phone: String? = null
     private var picUrl: String? = null

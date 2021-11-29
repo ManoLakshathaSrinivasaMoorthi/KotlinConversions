@@ -7,7 +7,7 @@ class User {
     private var userType: String? = null
     private var userSubType: String? = null
     private var consultationFee: Float? = null
-    private var countryCode: String? = null
+    var countryCode: String? = null
     private var designation: String? = null
     private var remoteProviderType: String? = null
     private var dob: Long? = null
@@ -22,7 +22,7 @@ class User {
     private var healthMonitoringTime: Long? = null
     private var hospital: String? = null
     private var hospitalId: Long? = null
-    private var id: Long? = null
+    var id: Long? = null
     private var joiningTime: Long? = null
     private var lname: String? = null
     private var name: String? = null
@@ -31,7 +31,7 @@ class User {
     private var osType: String? = null
     private var otp: String? = null
     private var password: String? = null
-    private var phone: String? = null
+    var phone: String? = null
     private var profilePicUrl: String? = null
     private var qualification: String? = null
     private var role: String? = null

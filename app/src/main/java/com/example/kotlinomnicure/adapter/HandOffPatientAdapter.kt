@@ -1,39 +1,54 @@
-package com.example.kotlinomnicure.adapter
+package com.mvp.omnicure.kotlinactivity.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.activity.HandOffPatientsActivity
-import com.example.kotlinomnicure.databinding.HandOffChildListBinding
+import com.example.dailytasksamplepoc.R
+import com.example.dailytasksamplepoc.databinding.HandOffChildListBinding
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.HandOffPatientsActivity
+
+
+
 import omnicurekotlin.example.com.providerEndpoints.model.HandOffListResponse
+import java.lang.Exception
 
-class HandOffPatientAdapter(private var handOffPatientsActivity: HandOffPatientsActivity?, private var handOffListResponse: HandOffListResponse?) :
-        RecyclerView.Adapter<HandOffPatientAdapter.ViewHolder>() {
+class HandOffPatientAdapter(
+    handOffPatientsActivity: HandOffPatientsActivity,
+    handOffListResponse: HandOffListResponse?
+) : RecyclerView.Adapter<HandOffPatientAdapter.ViewHolder>() {
 
+    private var handOffPatientsActivity: HandOffPatientsActivity? = null
+    private var handOffListResponse: HandOffListResponse? = null
+    var handOffRecyclerListener: HandOffRecyclerListener? = null
 
-    private var handOffRecyclerListener: HandOffRecyclerListener? = null
+    fun HandOffPatientAdapter(
+        handOffPatientsActivity: HandOffPatientsActivity?,
+        handOffListResponse: HandOffListResponse?
+    ) {
+        this.handOffPatientsActivity = handOffPatientsActivity
+        this.handOffListResponse = handOffListResponse
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val itemBinding: HandOffChildListBinding = DataBindingUtil.inflate(inflater, R.layout.hand_off_child_list,
-            parent, false)
+        val itemBinding: HandOffChildListBinding =
+            DataBindingUtil.inflate(inflater, R.layout.hand_off_child_list, parent, false)
         return ViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         setHandOffList(holder, position)
-        holder.itemView.setOnClickListener { handOffRecyclerListener?.onItemSelected(
-            handOffListResponse?.getOtherBspList()?.get(position))
-            println("getOtherBspList" + handOffListResponse?.getOtherBspList()?.get(position))
+        holder.itemView.setOnClickListener {
+            handOffRecyclerListener!!.onItemSelected(handOffListResponse!!.otherBspList?.get(position))
+            println("getOtherBspList" + (handOffListResponse!!.otherBspList?.get(position) ))
         }
     }
 
     override fun getItemCount(): Int {
         val count: Int
-        try {
-            count = handOffListResponse?.getOtherBspList()?.size!!
+        count = try {
+            handOffListResponse!!.otherBspList!!.size
         } catch (e: Exception) {
             return 0
         }
@@ -45,15 +60,16 @@ class HandOffPatientAdapter(private var handOffPatientsActivity: HandOffPatients
     }
 
     private fun setHandOffList(holder: ViewHolder, position: Int) {
-        val otherBspList: HandOffListResponse.OtherBspList? =
-            handOffListResponse?.getOtherBspList()?.get(position)
-        holder.itemBinding.txtHospitalName.text = otherBspList?.getName()
+        val otherBspList = handOffListResponse!!.otherBspList?.get(position)
+        holder.itemBinding.txtHospitalName.setText(otherBspList?.name)
     }
 
+    @JvmName("getHandOffRecyclerListener1")
     fun getHandOffRecyclerListener(): HandOffRecyclerListener? {
         return handOffRecyclerListener
     }
 
+    @JvmName("setHandOffRecyclerListener1")
     fun setHandOffRecyclerListener(handOffRecyclerListener: HandOffRecyclerListener?) {
         this.handOffRecyclerListener = handOffRecyclerListener
     }
@@ -63,13 +79,12 @@ class HandOffPatientAdapter(private var handOffPatientsActivity: HandOffPatients
         fun onItemSelected(otherBspList: HandOffListResponse.OtherBspList?)
     }
 
-    class ViewHolder internal constructor(var itemBinding: HandOffChildListBinding) :
-        RecyclerView.ViewHolder(itemBinding.root)
+    class ViewHolder internal constructor(itemBinding: HandOffChildListBinding) :
+        RecyclerView.ViewHolder(itemBinding.getRoot()) {
+        val itemBinding: HandOffChildListBinding
+
+        init {
+            this.itemBinding = itemBinding
+        }
+    }
 }
-
-
-
-
-
-
-

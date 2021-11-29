@@ -1,5 +1,7 @@
 package omnicurekotlin.example.com.providerEndpoints.model
 
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+
 class ProviderListResponse {
 
     private var count: Int? = null

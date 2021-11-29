@@ -1,35 +1,48 @@
-package com.example.kotlinomnicure.adapter
+package com.example.dailytasksamplepoc.kotlinomnicure.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.databinding.HospitalNameChildBinding
+import com.example.dailytasksamplepoc.R
+import com.example.dailytasksamplepoc.databinding.HospitalNameChildBinding
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
-import java.util.*
 
-class HospitalListAdapter(private var hospitalRecyclerListener: HospitalRecyclerListener?, hospitalList: List<Hospital?>?, selectedHosp: String) : RecyclerView.Adapter<HospitalListAdapter.ViewHolder>(),Filterable{
+import java.util.ArrayList
 
-
-    private var selectedHospital: String? = selectedHosp
+class HospitalListAdapter(
+    param: HospitalRecyclerListener,
+    hospitalList: Any,
+    selectedHosp: String
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var selectedHospital: String? = null
+    private var hospitalRecyclerListener: HospitalRecyclerListener? = null
     private var hospitalList: List<Hospital>? = null
-    private var hospitalListFiltered: List<Hospital>? = hospitalList as List<Hospital>?
+    private var hospitalListFiltered: List<Hospital>? = null
 
-    init { (hospitalList as List<Hospital>?).also { this.hospitalList = it } }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    fun HospitalListAdapter(
+        hospitalRecyclerListener: HospitalRecyclerListener?,
+        hospitalList: List<Hospital>?,
+        selectedHosp: String?
+    ) {
+        this.hospitalRecyclerListener = hospitalRecyclerListener
+        this.hospitalList = hospitalList
+        hospitalListFiltered = hospitalList
+        selectedHospital = selectedHosp
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding: HospitalNameChildBinding =
             DataBindingUtil.inflate(inflater, R.layout.hospital_name_child, parent, false)
         return ViewHolder(itemBinding)
     }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        setHospitalList(holder, position)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        setHospitalList(holder as ViewHolder, position)
     }
 
     override fun getItemId(position: Int): Long {
@@ -41,11 +54,13 @@ class HospitalListAdapter(private var hospitalRecyclerListener: HospitalRecycler
     }
 
     private fun setHospitalList(holder: ViewHolder, position: Int) {
-        val hospital = hospitalListFiltered!![position]
-        holder.itemBinding.hospitalName.text = hospital.getName()
-        if (selectedHospital == hospital.getName()) {
-            holder.itemBinding.icSelected.visibility = View.VISIBLE
-        } else holder.itemBinding.icSelected.visibility = View.GONE
+        val hospital: Hospital = hospitalListFiltered!![position]
+        holder.itemBinding.hospitalName.setText(hospital.name)
+        if (selectedHospital == hospital.name) {
+            holder.itemBinding.icSelected.setVisibility(View.VISIBLE)
+        } else {
+            holder.itemBinding.icSelected.setVisibility(View.GONE)
+        }
         holder.itemView.setOnClickListener { hospitalRecyclerListener!!.onItemSelected(hospital) }
     }
 
@@ -57,16 +72,16 @@ class HospitalListAdapter(private var hospitalRecyclerListener: HospitalRecycler
         hospitalRecyclerListener = recyclerListener
     }
 
-    override fun getFilter(): Filter {
+    fun getFilter(): Filter? {
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence): FilterResults {
                 val charString = charSequence.toString()
                 hospitalListFiltered = if (charString.isEmpty()) {
                     hospitalList
                 } else {
-                    val filteredList: MutableList<Hospital> = ArrayList()
+                    val filteredList: MutableList<Hospital> = ArrayList<Hospital>()
                     for (hospital in hospitalList!!) {
-                        if (hospital.getName()!!.toLowerCase(Locale.ROOT).contains(charString.toLowerCase(Locale.ROOT))) {
+                        if (hospital.name?.toLowerCase()?.contains(charString.toLowerCase()) == true) {
                             filteredList.add(hospital)
                         }
                     }
@@ -77,8 +92,9 @@ class HospitalListAdapter(private var hospitalRecyclerListener: HospitalRecycler
                 return filterResults
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                (filterResults.values as ArrayList<Hospital>).also { hospitalListFiltered = it }
+                hospitalListFiltered = filterResults.values as ArrayList<Hospital>
                 notifyDataSetChanged()
             }
         }
@@ -89,6 +105,14 @@ class HospitalListAdapter(private var hospitalRecyclerListener: HospitalRecycler
         fun onItemSelected(hospital: Hospital?)
     }
 
-    class ViewHolder(var itemBinding: HospitalNameChildBinding) :
-        RecyclerView.ViewHolder(itemBinding.root)
+    class ViewHolder(itemBinding: HospitalNameChildBinding) :
+        RecyclerView.ViewHolder(itemBinding.getRoot()) {
+        val itemBinding: HospitalNameChildBinding
+
+        init {
+            this.itemBinding = itemBinding
+        }
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.kotlinomnicure.customview
+package com.example.dailytasksamplepoc.kotlinomnicure.customview
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,10 +6,11 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.widget.EditText
-import com.example.kotlinomnicure.activity.ChatActivity
-import com.example.kotlinomnicure.interfaces.ChatEditTextListener
+import com.example.dailytasksamplepoc.kotlinomnicure.interfaces.ChatEditTextListener
+import com.mvp.omnicure.activity.ChatActivity
 
-class ChatEditText /*:androidx.appcompat.widget.AppCompatEditText {
+
+class ChatEditText :androidx.appcompat.widget.AppCompatEditText {
     var chatEditTextListener: ChatEditTextListener? = null
 
     constructor(context: Context?) :super(context!!){
@@ -45,5 +46,4 @@ class ChatEditText /*:androidx.appcompat.widget.AppCompatEditText {
     }
 
 
-}*/
-{}
+}

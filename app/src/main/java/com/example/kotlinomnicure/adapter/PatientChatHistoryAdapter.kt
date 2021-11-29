@@ -1,104 +1,87 @@
-package com.example.kotlinomnicure.adapter
+package com.example.dailytasksamplepoc.kotlinomnicure.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Html
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlinomnicure.R
-
-import com.example.kotlinomnicure.interfaces.OnPatientHistoryItemListener
+import com.example.dailytasksamplepoc.R
+import com.example.dailytasksamplepoc.kotlinomnicure.interfaces.OnPatientHistoryItemListener
 import com.example.kotlinomnicure.utils.ChatUtils
-import com.google.gson.Gson
+import com.mvp.omnicure.activity.ChatActivity
 import omnicurekotlin.example.com.patientsEndpoints.model.PatientHistory
 
-class PatientChatHistoryAdapter/*: RecyclerView.Adapter<PatientChatHistoryAdapter.ViewHolder> {
-
-    private val TAG = PatientChatHistoryAdapter::class.java.simpleName
+class PatientChatHistoryAdapter : RecyclerView.Adapter<PatientChatHistoryAdapter.ViewHolder>() {
+    private val TAG: Class<PatientChatHistoryAdapter> =PatientChatHistoryAdapter::class.java
     private var patientHistoryList: List<PatientHistory>? = null
     private var onItemClickListener: OnPatientHistoryItemListener? = null
     private var context: Context? = null
 
-  *//*  constructor(context: Context?, patientHistoryList: List<PatientHistory>?) {
+    fun PatientChatHistoryAdapter(context: Context?, patientHistoryList: List<PatientHistory>?) {
         this.context = context
         this.patientHistoryList = patientHistoryList
         onItemClickListener = context as ChatActivity?
-    }*//*
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_patient_history_chat, parent, false)
         val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
-            Log.d(TAG, "onClick: " + viewHolder.adapterPosition)
             onItemClickListener?.onClickChatHistory(viewHolder.adapterPosition, viewHolder)
         }
         viewHolder.iconImgView.setOnClickListener {
-            Log.d(TAG, "onClick: " + viewHolder.adapterPosition)
             onItemClickListener?.onClickChatHistory(viewHolder.adapterPosition, viewHolder)
         }
         viewHolder.closeIcon.setOnClickListener {
-            Log.d(TAG, "onClick: " + viewHolder.adapterPosition)
             onItemClickListener?.onCloseBtnClick(viewHolder.adapterPosition)
         }
         return viewHolder
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val patientHistory: PatientHistory = patientHistoryList!![position]
-        Log.d(TAG, "Current patientHistory" + Gson().toJson(patientHistory))
-        if (patientHistory != null) {
-            var prefix = context!!.getString(R.string.consultation_completed)
-            holder.counterTxtView.text = (position + 1).toString() + "."
-            if (!TextUtils.isEmpty(patientHistory.getDischargeMessage())) {
-                prefix = if (!TextUtils.isEmpty(patientHistory.getRdProviderName())) {
-                    prefix + " by " + "<font color=black><b>" + patientHistory.getRdProviderName() + "</b></font>" + " with notes: "
-                } else {
-                    "$prefix with notes: "
-                }
-                val str = prefix + patientHistory.getDischargeMessage()
-                holder.chatHistoryTxtView.text = Html.fromHtml(str)
+
+        var prefix = context!!.getString(R.string.consultation_completed)
+        holder.counterTxtView.text = (position + 1).toString() + "."
+        if (!TextUtils.isEmpty(patientHistory.getDischargeMessage())) {
+            prefix = if (!TextUtils.isEmpty(patientHistory.getRdProviderName())) {
+                prefix + " by " + "<font color=black><b>" + patientHistory.getRdProviderName() + "</b></font>" + " with notes: "
             } else {
-                holder.chatHistoryTxtView.text = prefix
+                "$prefix with notes: "
             }
-            if (patientHistory.getDischargeTime() != null) {
-                holder.timeTxtView.setText(ChatUtils().getStatusDateFormat(patientHistory.getDischargeTime()!!))
-            } else {
-                holder.timeTxtView.text = ""
-            }
-            holder.iconImgView.visibility = View.VISIBLE
+            val str = prefix + patientHistory.getDischargeMessage()
+            holder.chatHistoryTxtView.text = Html.fromHtml(str)
+        } else {
+            holder.chatHistoryTxtView.text = prefix
         }
+        if (patientHistory.getDischargeTime() != null) {
+            holder.timeTxtView.setText(ChatUtils().getStatusDateFormat(patientHistory.getDischargeTime()!!))
+        } else {
+            holder.timeTxtView.text = ""
+        }
+        holder.iconImgView.visibility = View.VISIBLE
     }
 
-    override fun getItemCount(): Int {
+   override fun getItemCount(): Int {
         return if (patientHistoryList == null || patientHistoryList!!.isEmpty()) {
             0
         } else patientHistoryList!!.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val counterTxtView: TextView
-        val chatHistoryTxtView: TextView
-        val timeTxtView: TextView
-        val iconImgView: ImageView
-        val closeIcon: ImageView
+        val counterTxtView: TextView = itemView.findViewById(R.id.counterTxt)
+        val chatHistoryTxtView: TextView = itemView.findViewById(R.id.chatHistoryMsgTxt)
+        val timeTxtView: TextView = itemView.findViewById(R.id.chatHistoryTimeTxt)
+        val iconImgView: ImageView = itemView.findViewById(R.id.chatHistoryIcon)
+        val closeIcon: ImageView = itemView.findViewById(R.id.closeIcon)
 
-        init {
-            counterTxtView = itemView.findViewById(R.id.counterTxt)
-            chatHistoryTxtView = itemView.findViewById(R.id.chatHistoryMsgTxt)
-            timeTxtView = itemView.findViewById(R.id.chatHistoryTimeTxt)
-            iconImgView = itemView.findViewById(R.id.chatHistoryIcon)
-            closeIcon = itemView.findViewById(R.id.closeIcon)
-        }
     }
 
-
 }
-
-*/
-{}

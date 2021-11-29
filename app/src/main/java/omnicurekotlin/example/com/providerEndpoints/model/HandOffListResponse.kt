@@ -7,11 +7,11 @@ import java.util.*
 class HandOffListResponse {
     @Expose
     @SerializedName("currentProvider")
-    private var currentProvider: CurrentProvider? = null
+    var currentProvider: CurrentProvider? = null
 
     @Expose
     @SerializedName("otherBspList")
-    private var otherBspList: ArrayList<OtherBspList?>? = null
+    var otherBspList: ArrayList<OtherBspList?>? = null
 
     @Expose
     @SerializedName("errorId")
@@ -19,7 +19,23 @@ class HandOffListResponse {
 
     @Expose
     @SerializedName("status")
-    private var status = false
+    var status = false
+
+    @Expose
+    @SerializedName("errorMessage")
+    var errorMessage: String? = null
+
+    fun isStatus(): Boolean {
+        return status
+    }
+
+    fun getErrorMessage(): String? {
+        return errorMessage
+    }
+
+    fun setErrorMessage(errorMessage: String?) {
+        this.errorMessage = errorMessage
+    }
 
     fun HandOffListResponse() {}
 
@@ -56,16 +72,6 @@ class HandOffListResponse {
     }
 
     class OtherBspList {
-        @JvmName("getName1")
-        fun getName(): String? {
-       return  name
-        }
-
-        @JvmName("getId1")
-        fun getId(): String? {
-   return id
-        }
-
         @Expose
         @SerializedName("emailOtpVerified")
         var emailOtpVerified = false
@@ -172,11 +178,6 @@ class HandOffListResponse {
     }
 
     class CurrentProvider {
-        @JvmName("getId1")
-        fun getId(): String? {
-         return  id
-        }
-
         @Expose
         @SerializedName("emailOtpVerified")
         var emailOtpVerified = false

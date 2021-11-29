@@ -1,8 +1,8 @@
 package omnicurekotlin.example.com.providerEndpoints.model
 
 class PatientHandOffRequest {
-    private var bspProviderId: String? = null
-    private var otherBspProviderId: String? = null
+    var bspProviderId: String? = null
+    var otherBspProviderId: String? = null
 
     fun getBspProviderId(): String? {
         return bspProviderId

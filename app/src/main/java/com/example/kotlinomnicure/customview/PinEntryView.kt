@@ -27,7 +27,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
-import com.example.kotlinomnicure.R
+import com.example.dailytasksamplepoc.R
+
 
 class PinEntryView : ViewGroup {
 

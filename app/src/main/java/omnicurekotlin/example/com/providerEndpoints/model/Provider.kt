@@ -1,4 +1,6 @@
-package omnicurekotlin.example.com.providerEndpoints.model
+package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model
+
+import omnicurekotlin.example.com.providerEndpoints.model.Role
 
 class Provider {
 
@@ -42,12 +44,12 @@ class Provider {
     private var specialization: String? = null
     private var status: String? = null
     private var token: String? = null
-    private var userId: Double? = null
     private var voipToken: String? = null
     private var providerType: String? = null
     private var lcpType: String? = null
 
     private var remoteProviderId: Long? = null
+    val userId: Double? = null
 
 
     fun getAccess(): List<String?>? {
@@ -107,7 +109,7 @@ class Provider {
         return designation
     }
 
-    fun setDesignation(designation: String?):Provider? {
+    fun setDesignation(designation: String?): Provider? {
         this.designation = designation
         return this
     }
@@ -149,7 +151,7 @@ class Provider {
     }
 
 
-    fun setEmailOtpVerified(emailOtpVerified: Boolean?):Provider? {
+    fun setEmailOtpVerified(emailOtpVerified: Boolean?): Provider? {
         this.emailOtpVerified = emailOtpVerified
         return this
     }
@@ -374,7 +376,7 @@ class Provider {
     }
 
 
-    fun setQualification(qualification: String?):Provider? {
+    fun setQualification(qualification: String?): Provider? {
         this.qualification = qualification
         return this
     }
@@ -460,7 +462,7 @@ class Provider {
     }
 
 
-    fun setVoipToken(voipToken: String?):Provider? {
+    fun setVoipToken(voipToken: String?): Provider? {
         this.voipToken = voipToken
         return this
     }
@@ -488,17 +490,8 @@ class Provider {
     fun setRemoteProviderId(remoteProviderId: Long?) {
         this.remoteProviderId = remoteProviderId
     }
-    fun getUserId(): Long? {
-        return userId?.toLong()
-    }
 
-    /**
-     * @param userId id or `null` for none
-     */
-    fun setUserId(userId: Long): Provider? {
-        this.userId = userId.toDouble()
-        return this
-    }
+
 
 
 }

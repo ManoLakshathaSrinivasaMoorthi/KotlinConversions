@@ -225,7 +225,25 @@ class Appointment {
         return
     }
 
+    private var providerId: Long? = null
 
+    private var token: String? = null
+
+    fun getProviderId(): Long? {
+        return providerId
+    }
+
+    fun setProviderId(providerId: Long?) {
+        this.providerId = providerId
+    }
+
+    fun getToken(): String? {
+        return token
+    }
+
+    fun setToken(token: String?) {
+        this.token = token
+    }
 
 
 }

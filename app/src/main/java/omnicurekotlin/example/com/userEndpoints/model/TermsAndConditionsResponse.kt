@@ -34,17 +34,13 @@ class TermsAndConditionsResponse {
         this.errorId = errorId
     }
 
-    fun setErrorMessage(s: String?) {
 
+   /* operator fun set(fieldName: String?, value: Any?): TermsAndConditionsResponse? {
+        return super.set(fieldName, value) as TermsAndConditionsResponse?
     }
 
-
-    /* operator fun set(fieldName: String?, value: Any?): TermsAndConditionsResponse? {
-         return super.set(fieldName, value) as TermsAndConditionsResponse?
-     }
-
-     fun clone(): TermsAndConditionsResponse? {
-         return super.clone() as TermsAndConditionsResponse?
-     }*/
+    fun clone(): TermsAndConditionsResponse? {
+        return super.clone() as TermsAndConditionsResponse?
+    }*/
 
 }

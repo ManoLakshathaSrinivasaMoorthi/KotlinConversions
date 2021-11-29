@@ -1,4 +1,4 @@
-package com.example.kotlinomnicure.customview
+package com.example.dailytasksamplepoc.kotlinomnicure.customview
 
 import android.content.Context
 import android.graphics.*
@@ -10,9 +10,10 @@ import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import com.example.kotlinomnicure.R
+import com.example.dailytasksamplepoc.R
 
-class CircularImageView : androidx.appcompat.widget.AppCompatImageView {
+
+class CircularImageView  {
 
 
 
@@ -281,5 +282,5 @@ class CircularImageView : androidx.appcompat.widget.AppCompatImageView {
         private const val DEFAULT_BORDER_COLOR = Color.WHITE
         private const val DEFAULT_FILL_COLOR = Color.TRANSPARENT
         private const val DEFAULT_SHADOW = false
-    }
+    }*/
 }

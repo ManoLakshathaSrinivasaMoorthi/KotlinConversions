@@ -5,9 +5,9 @@ class HospitalListResponse {
 
     private var count: Int? = null
     private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var hospitalList: List<Hospital?>? = null
-    private var id: Long? = null
+    var errorMessage: String? = null
+    var hospitalList: List<Hospital?>? = null
+    var id: Long? = null
     private var status: Boolean? = null
 
     fun getCount(): Int? {
@@ -32,9 +32,6 @@ class HospitalListResponse {
     }
 
 
-    fun getErrorMessage(): String? {
-        return errorMessage
-    }
 
 
     fun setErrorMessage(errorMessage: String?): HospitalListResponse {
@@ -43,9 +40,6 @@ class HospitalListResponse {
     }
 
 
-    fun getHospitalList(): List<Hospital?>? {
-        return hospitalList
-    }
 
 
     fun setHospitalList(hospitalList: List<Hospital?>?): HospitalListResponse {
@@ -54,9 +48,6 @@ class HospitalListResponse {
     }
 
 
-    fun getId(): Long? {
-        return id
-    }
 
 
     fun setId(id: Long?): HospitalListResponse? {
@@ -74,13 +65,7 @@ class HospitalListResponse {
         return this
     }
 
-   /* operator fun set(fieldName: String?, value: Any?): HospitalListResponse? {
-        return super.set(fieldName, value) as HospitalListResponse?
-    }
 
-    fun clone(): HospitalListResponse? {
-        return super.clone() as HospitalListResponse?
-    }*/
 
 }
 
