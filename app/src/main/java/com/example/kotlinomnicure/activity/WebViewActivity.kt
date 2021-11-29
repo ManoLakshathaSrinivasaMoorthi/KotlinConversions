@@ -2,7 +2,6 @@ package com.example.kotlinomnicure.activity
 
 import android.app.ProgressDialog
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -13,8 +12,8 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityWebviewBinding
 import com.example.kotlinomnicure.utils.Constants
 
-class WebviewActivity : BaseActivity() {
-    private val TAG = WebviewActivity::class.java.simpleName
+class WebViewActivity : BaseActivity() {
+    private val TAG = WebViewActivity::class.java.simpleName
     val EXTERNAL_REQUEST = 138
     var binding: ActivityWebviewBinding? = null
     var webView: WebView? = null
@@ -29,7 +28,7 @@ class WebviewActivity : BaseActivity() {
         val extras = intent.extras
         url = extras!!.getString(Constants.IntentKeyConstants.IMAGE_URL)
         println("WebView image url : $url")
-        progressDialog = ProgressDialog(this@WebviewActivity)
+        progressDialog = ProgressDialog(this@WebViewActivity)
         progressDialog?.setTitle("Please wait")
         progressDialog?.setMessage("Fetching image from server...")
         progressDialog?.setCancelable(false)
@@ -83,7 +82,7 @@ class WebviewActivity : BaseActivity() {
 
     private class InsideWebViewClient : WebViewClient() {
         override fun onPageFinished(view: WebView, url: String) {
-           WebviewActivity().progressDialog?.dismiss()
+           WebViewActivity().progressDialog?.dismiss()
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.mvp.omnicure.kotlinactivity.activity
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -16,23 +17,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
+import com.example.kotlinomnicure.activity.ActivityEnotes
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.RemoteCompleteActivity
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.TransferPatientActivity
 
-import com.example.dailytasksamplepoc.databinding.ActivityEconsultChartBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.*
-import com.example.dailytasksamplepoc.kotlinomnicure.model.ConsultProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.utils.CustomDialog
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.PatientDetailViewModel
+
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.PrefUtility
 
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.PatientDetailViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.activity.HomeActivity
+import com.example.kotlinomnicure.customview.CustomDialog
+import com.example.kotlinomnicure.databinding.ActivityEconsultChartBinding
+import com.example.kotlinomnicure.model.ConsultProvider
+import com.example.kotlinomnicure.utils.UtilityMethods
 import omnicurekotlin.example.com.providerEndpoints.model.Members
 import com.google.firebase.database.*
-
+import com.mvp.omnicure.activity.ChatActivity
 
 
 class ActivityConsultChart : AppCompatActivity() {
@@ -119,13 +125,17 @@ class ActivityConsultChart : AppCompatActivity() {
                 statusStub!!.removeAllViews()
 
                 // statusStub
-                UtilityMethods().displayPatientStatusComponent(
-                    ctx,
-                    statusStub!!,
-                    mConsultProvider.urgent,
-                    consultProviderA.status == Constants.PatientStatus.Pending,
-                    consultProviderA.score
-                )
+                mConsultProvider.urgent?.let {
+                    consultProviderA.score?.let { it1 ->
+                        UtilityMethods().displayPatientStatusComponent(
+                            ctx as Activity,
+                            statusStub!!,
+                            it,
+                            consultProviderA.status == Constants.PatientStatus.Pending,
+                            it1
+                        )
+                    }
+                }
             }
         }
 
@@ -286,7 +296,7 @@ class ActivityConsultChart : AppCompatActivity() {
                         Constants.IntentKeyConstants.INVITATION,
                         true
                     )
-                    clearNotifications(mConsultProvider.id.toInt())
+                    mConsultProvider.id?.let { clearNotifications(it.toInt()) }
                 } else if (mConsultProvider.status == Constants.PatientStatus.Completed ||
                     mConsultProvider.status == Constants.PatientStatus.Discharged
                 ) {

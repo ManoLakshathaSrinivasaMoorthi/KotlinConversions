@@ -2,9 +2,10 @@
 
     <!--    Splash Screen-->
     <string name="app_name">Omnicure</string>
-    <string name="sign_into_omnicure">Sign into Omnicure</string>
-    <string name="welcome_to_omnicurenow">Welcome to\nOmnicure Now</string>
-    <string name="welcome_to_omnicure">Welcome to\nOmnicure Now!</string>
+    <string name="app_os">Android</string>
+    <string name="sign_into_omnicure">Sign into %1$s</string>
+    <string name="welcome_to_omnicurenow">Welcome to\n%1$s</string>
+    <string name="welcome_to_omnicure">Welcome to\n%1$s!</string>
     <!--    <string name="welcome_description">Connecting local care providers with experienced remote providers any time, anywhere. Let\'s get started!</string>-->
     <string name="select_account">Select your account</string>
     <!--  SignUp Screen-->
@@ -15,7 +16,7 @@
     <string name="patient">Patient</string>
     <string name="patient_desc">I am a patient in need of critical care.</string>
     <string name="already_have_an_account_log_in">Already have account? LOG IN</string>
-    <string name="reg_success_desc">Your account is being verified. You will receive a confirmation email to sign into your Omnicure Now account. \n\nIf you have any questions, please email us at <b>support@omnicuremd.com</b>.</string>
+    <string name="reg_success_desc">Your account is being verified. You will receive a confirmation email to sign into your %1$s account. \n\nIf you have any questions, please email us at <b>support@omnicuremd.com</b>.</string>
 
     <!--  Local care provider sign up-->
     <string name="lcp_sign_up">Sign up as Local Care Provider </string>
@@ -29,7 +30,7 @@
     <string name="verify_account">Verify account</string>
     <string name="select_a_hospital">Select a hospital</string>
     <string name="search_hospital">Search hospital</string>
-    <string name="terms_and_condition">By signing up you agree to Omnicure Now <u>Terms &amp; Conditions</u></string>
+    <string name="terms_and_condition">By signing up you agree to %1$s <u>Terms &amp; Conditions</u></string>
     <string name="terms_and_condition_text">Terms &amp; Conditions</string>
     <string name="end_user_agreement">End User License Agreement</string>
     <string name="enter_email_address">Enter account email address</string>
@@ -66,6 +67,8 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="id_continue">Continue</string>
     <string name="no_internet_connectivity">No Internet Connectivity</string>
+    <string name="reconnecting">Reconnecting</string>
+    <string name="no_messages_to_filter">There are no messages to filter</string>
     <string name="recovery_email_sent">Password recovery link has been sent to your email address</string>
     <string name="first_name_empty">First name cannot be empty</string>
     <string name="first_name_empty_addpatient">Invalid first name. Try again.</string>
@@ -128,6 +131,8 @@
     <string name="select_gender">Invalid gender. Try again.</string>
     <string name="select_oxygen">Invalid supplemental oxygen. Try again.</string>
     <string name="select_AVPU">Invalid AVPU. Try again.</string>
+    <string name="select_mVentilation">Invalid mechanical ventilation. Try again.</string>
+    <string name="select_nVentilation">Invalid non-invasive ventilation. Try again.</string>
     <string name="select_covid">Invalid covid positive. Try again.</string>
     <string name="enter_experience">Please enter your experience</string>
     <string name="name">Name</string>
@@ -139,6 +144,16 @@
     <string name="emailorphone">Email or Phone Number</string>
     <string name="change_number">Change Number</string>
     <string name="change_password">Change Password</string>
+    <string name="Fingerprintauth">Enable FingerPrint</string>
+    <string name="auth">Fingerprint Authentication has been successfully enabled</string>
+    <string name="authdisable">Fingerprint Authentication has been successfully disabled</string>
+    <string name="Authfaild">FingerPrint Authentication Failed Please Try Again</string>
+    <string name="Authfaildnew">FingerPrint Authentication disabled Please enter password</string>
+    <string name="fpdisable">FingerPrint Authentication disabled Please wait for 30 seconds</string>
+    <string name="fpdisablenew">FingerPrint Authentication Operation canceled</string>
+    <string name="Tomanyattempts">To many attempts failed, Please enable FinerPrint Authentication</string>
+    <string name="Fingerprintauth_msg"></string>
+    <string name="TouchID">Touch ID</string>
     <string name="search_country_name">Search Country Name</string>
     <string name="cancel">Cancel</string>
     <string name="registration_successful">Registration Successful</string>
@@ -150,7 +165,7 @@
     <string name="invalid_password_try_again">Invalid Password. Try Again</string>
     <string name="logout">Logout</string>
     <string name="logout_in_caps">LOGOUT</string>
-    <string name="signout">Sign out</string>
+    <string name="signout">Sign Out</string>
     <string name="signout_in_caps">SIGN OUT</string>
     <string name="signin_successful">sign-in Successful</string>
     <string name="age_not_less_18">Age should not be less than 18 year</string>
@@ -172,7 +187,7 @@
     <string name="patient_list">Patient List</string>
     <string name="directory">Directory</string>
     <string name="noti_channel_default">ANDROID CHANNEL</string>
-    <string name="add_message_or_situation">Add Message or Situation…</string>
+    <string name="add_message_or_situation">Add Message or Situation...</string>
     <string name="save">Submit</string>
     <string name="provide_comments">Please provide comments</string>
     <string name="add_patient_error">Patient could not be added, please retry</string>
@@ -244,10 +259,10 @@
     // DO NOT TRANSLATE
     <string name="bit_rate_value_with_unit">%d kbps</string>
     <string name="frame_rate_value_with_unit">%d fps</string>
-    <string name="permission_denied">Required permission denied</string>
+    <string name="permission_denied">Required permission denied.Go to app permission settings and enable denied permission</string>
     <string name="provider_invite_first">For video call please add remote side provider first. </string>
     <string name="provider_invite_first_audio_call">For Audio call please add remote side provider first. </string>
-    <string name="type_a_message">Type a message…</string>
+    <string name="type_a_message">Type a message...</string>
     <string name="type">Type</string>
     <string name="send">Send</string>
     <string name="invite_accept_error">Could not accept invitation, please retry</string>
@@ -276,7 +291,7 @@
     <string name="video">Video</string>
     <string name="recommedation">Recommendation</string>
     <string name="voice_memo">Voice memo</string>
-    <string name="sos_title" />
+    <string name="sos_title"></string>
     <string name="select_patient">Select Patient</string>
     <string name="hr">HR</string>
     <string name="bp">BP</string>
@@ -290,7 +305,7 @@
     <string name="homeCare">HomeCare</string>
     <string name="logout_error">Could not sign out, please retry</string>
     <string name="auto_logout_message">You have been logged out due to</string>
-    <string name="logout_pb_msg">Signing out, Please wait…</string>
+    <string name="logout_pb_msg">Signing out, Please wait...</string>
     <string name="verison_info_error">Could not get app configuration</string>
     <string name="remote_provider_directory">Remote Provider Directory</string>
     <string name="pdf_file">PDF File</string>
@@ -307,8 +322,8 @@
     <string name="filter_in_caps">FILTER</string>
     <string name="sync_time">Sync time</string>
     <string name="last_sync_time">Last sync time: </string>
-    <string name="finding_a_doctor">Finding a Doctor…</string>
-    <string name="connecting">Connecting…</string>
+    <string name="finding_a_doctor">Finding a Doctor...</string>
+    <string name="connecting">Connecting...</string>
     <string name="duration">Call duration</string>
     <string name="group_call">Group Call</string>
     <string name="group_audio_call">Group Audio Call</string>
@@ -323,6 +338,8 @@
     <string name="summary_note_is_mandatory">Invalid summary note. Try again.</string>
     <string name="summary_note_assessment_is_mandatory">Summary note assessment is mandatory.</string>
     <string name="summary_note_plan_is_mandatory">Summary note plan is mandatory.</string>
+    <string name="assessment_is_mandatory">Assessment details is mandatory.</string>
+    <string name="plan_is_mandatory">Plan Details is mandatory.</string>
     <string name="upload_failed_error">Uploading failed, Please try again.</string>
     <string name="accept_invitation">Accept Invitation</string>
     <string name="filter">Filter</string>
@@ -351,8 +368,8 @@
     <string name="hours_of_inactivity">hours of inactivity.</string>
     <string name="sos_alert_confirmation_msg">Are you sure you want to send an SOS alert for</string>
     <string name="alert_msg">This will alert all active doctors for immediate help.</string>
-    <string name="sending_file_pb_msg">Sending file, please wait…</string>
-    <string name="sending_video_pb_msg">Sending video, please wait…</string>
+    <string name="sending_file_pb_msg">Sending file, please wait...</string>
+    <string name="sending_video_pb_msg">Sending video, please wait...</string>
     <string name="authentication_failed">Authentication failed.</string>
     <string name="authentication_failed_password">Incorrect current password. Please try again.</string>
     <string name="signin_with_email_password_failed">signInWithEmailAndPassword failed.</string>
@@ -360,12 +377,12 @@
     <string name="sel_hospital">Select Hospital</string>
     <string name="sel_hospital_location">Select Hospital Location</string>
     <string name="sel_hospital_mandatory">Select Hospital*</string>
-    <string name="disconnecting">Disconnecting…</string>
+    <string name="disconnecting">Disconnecting...</string>
     <string name="connection_timeout_error_msg">Connection timeout, Please retry</string>
     <string name="complete_consultation">Complete Consultation</string>
-    <string name="image_uploading_pb_msg">Uploading image, please wait…</string>
-    <string name="downloading_image_pb_msg">Downloading image, please wait…</string>
-    <string name="downloading_file_pb_msg">Downloading file, please wait…</string>
+    <string name="image_uploading_pb_msg">Uploading image, please wait...</string>
+    <string name="downloading_image_pb_msg">Downloading image, please wait...</string>
+    <string name="downloading_file_pb_msg">Downloading file, please wait...</string>
     <string name="file_delete_err_msg">File is deleted or corrupted</string>
     <string name="email_address">Email address</string>
     <string name="email_address_mandatory">Email Address*</string>
@@ -380,6 +397,7 @@
     <string name="uploadVideo">Upload Video</string>
     <string name="uploadFile">Upload file</string>
     <string name="consultation_request_already_accepted_msg">Consultation request already accepted by someone else.</string>
+    <string name="consultation_request_completed">This consultation has been completed.</string>
     <string name="patient_handed_off_to_other_grp">Patient handed off to another remote care team by MD/DO.</string>
     <string name="handoff_request_already_accepted_msg">Handoff request already actioned by someone else.</string>
     <string name="req_not_available">Request not available</string>
@@ -397,6 +415,8 @@
     <string name="gender_with_questionmark">Gender?</string>
     <string name="supplement_oxygen">Supplemental Oxygen?</string>
     <string name="supplemental_oxygen">Supplemental Oxygen?</string>
+    <string name="mechanical_vent">Mechanical Ventilation?</string>
+    <string name="noninv_vent">Non-invasive Ventilation?</string>
     <string name="covid_positive">COVID Positive?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
@@ -414,12 +434,19 @@
     <string name="confirmation">Confirmation</string>
     <string name="reset_acuity_score_confirm_msg">Do you really want to reset acuity score?</string>
     <string name="reset_acuity_score_confirm">Are you sure you want to reset acuity?</string>
+    <string name="handoff_confirm_title">Are you sure you want to handoff patient?</string>
+    <string name="complete_confirm_title">Are you sure you want to complete consulation?</string>
+    <string name="handoff_confirm_text">By submitting a Handoff eNote you will end the consultation session for this eConsult.</string>
+    <string name="complete_confirm_text">By submitting a Summary eNote you will end the consultation session for this eConsult.</string>
     <string name="select_athena_device">Select Athena Device</string>
     <string name="athena_hardware_id">Hardware Id: </string>
     <string name="athena_empty_sync_time">Last update time not available</string>
     <string name="attachment">Attachment</string>
+    <string name="attachments">Attachments</string>
     <string name="no_patient_found">No patients found</string>
     <string name="no_patient_found_new">There are no\n%1$s eConsults</string>
+    <string name="invalid_vitals">Invalid %1$s</string>
+    <string name="patient_vitals_validation">Enter a value between %1$d and %2$d for %3$s</string>
     <string name="no_remote_providers_found">There are no\nremote providers</string>
     <string name="no_hospital_found">There are no\nhospitals</string>
     <string name="no_bedside_providers_found">There are no\nbedside providers</string>
@@ -437,6 +464,11 @@
     <string name="patient_chat_history_error">Could not get patient chat history, please retry</string>
     <string name="consultation_completed">Consultation completed</string>
     <string name="assessment">Assessment: </string>
+    <string name="assessment_plan">Assessment Plan</string>
+    <string name="add_plan_details">Add plan details </string>
+    <string name="add_title">Add title</string>
+    <string name="add_description">Add description</string>
+    <string name="add_assess_details">Add Assessment details </string>
     <string name="plan">Plan: </string>
     <string name="chief_complaint">Chief complaint: </string>
     <string name="feedback">Feedback</string>
@@ -453,13 +485,13 @@
     <string name="already_have_an_account">Already have account?</string>
     <string name="start_your_patient_consultation">Start your patient consultation</string>
     <string name="email_optional">Email (Optional)</string>
-    <string name="omnicurenow">OmnicureNow</string>
-    <string name="omnicure_now">Omnicure Now</string>
+    <string name="omnicurenow">%1$s</string>
+    <string name="omnicure_now">%1$s</string>
     <string name="login_text">Connecting local care providers with experienced remote providers any time, anywhere. Login to access your account.</string>
     <string name="dob_hint">D.O.B. (mm/dd/yyyy)</string>
     <string name="submit">Submit</string>
     <string name="patient_license_msg">Click here to confirm and accept our end user license <u>agreement.</u></string>
-    <string name="patient_reg_comment_msg">Start typing to start a message or \ndescribe the patient situation…</string>
+    <string name="patient_reg_comment_msg">Start typing to start a message or \ndescribe the patient situation...</string>
     <string name="patient_consultation">Patient Consultation</string>
     <string name="consultation_request_submitted">Consultation request submitted.</string>
     <string name="consultation_success_msg">Thank you for submitting your consultation request. Our clinical team will contact you on the phone number you provided shortly.</string>
@@ -500,28 +532,48 @@
     <string name="clear">Clear</string>
     <string name="relation_to_patient">Relationship to Patient</string>
     <string name="txt_continue">Continue</string>
-    <string name="patient_apvu">What is the patient APVU?</string>
+    <string name="patient_apvu">What is the patient AVPU?</string>
     <string name="pain">Pain</string>
     <string name="voice">Voice</string>
     <string name="unresponsive">Unresponsive</string>
     <string name="heart_rate">Heart Rate (Optional)</string>
-    <string name="systolic_blood_pressure">Systolic Blood Pressure (Optional)</string>
-    <string name="diastolic_blood_pressure">Diastolic Blood Pressure (Optional)</string>
+    <string name="systolic_blood_pressure">Systolic Blood Pressure - mmHg (Optional)</string>
+    <string name="diastolic_blood_pressure">Diastolic Blood Pressure - mmHg (Optional)</string>
     <string name="blood_pressure">Blood Pressure (Optional)</string>
-    <string name="txt_sp02">SPO2 (Optional)</string>
-    <string name="txt_fi02">FiO2 (Optional)</string>
+    <string name="txt_sp02">SPO2 - % (Optional)</string>
+    <string name="txt_fi02">FiO2 - % (Optional)</string>
     <string name="respiratory_rate">Respiratory Rate (Optional)</string>
-    <string name="temperature">Temperature (Optional)</string>
+    <string name="temperature">Temperature - °F (Optional)</string>
+    <string name="heart_rate_vital">Heart Rate</string>
+    <string name="systolic_bp_vital">Systolic Blood Pressure</string>
+    <string name="diastolic_bp_vital">Diastolic Blood Pressure</string>
+    <string name="sp02_vital">SPO2</string>
+    <string name="fi02_vital">FiO2</string>
+    <string name="respiratory_rate_vital">Respiratory Rate</string>
+    <string name="temperature_vital">Temperature</string>
     <string name="add_new_patient_vitals">Add new patient Vitals</string>
     <string name="add_patient_vitals">Add patient vitals</string>
+    <string name="altered_mental_status">Glasgow Coma Scale (GCS)</string>
+    <string name="best_eye_response">Best eye response</string>
+    <string name="best_verbal_response">Best verbal response</string>
+    <string name="best_motor_response">Best motor response</string>
     <string name="patient_family_member">I am a patient family member</string>
     <string name="add_new_patient_information">Add New Patient</string>
     <string name="hand_off">Handoff Patient</string>
+    <string name="hand_off_text">Handoff</string>
+    <string name="progress_text">Progress</string>
+    <string name="summary_text">Summary</string>
     <string name="hand_off_all_patients">Handoff All Patients</string>
     <string name="select_wards">Select Ward</string>
     <string name="select_ward">Select Ward (Optional)</string>
     <string name="select_ward_name">Select Ward</string>
     <string name="location_name">Location cannot be empty</string>
+    <string name="enote_type">eNote Type</string>
+    <string name="enote_details">eNote Details</string>
+    <string name="plan_details">Plan Details</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="assessment_details">Assessment Details</string>
 
     <string name="success">Success</string>
     <string name="transfer">Transfer</string>
@@ -532,6 +584,7 @@
     <string name="patient_transfer_successfully">Patient transferred.</string>
     <string name="Handoff_patient_successfully">Handoff completed.</string>
     <string name="Handoff_patient_successfully_rp">Handoff initiated.</string>
+    <string name="progress_success">Progress eNote created successfully</string>
     <string name="patient_discharged_successfully">Patient discharged.</string>
     <string name="fetch_patient_details">Fetching patient details</string>
     <string name="email_address_verify">Verifying email address</string>
@@ -580,6 +633,8 @@
     <string name="updated_at">Updated\u0020</string>
     <string name="messages">Messages</string>
     <string name="econsult_chart">eConsult Chart</string>
+    <string name="handoff_enote">Handoff eNote</string>
+    <string name="summary_enote">Summary eNote</string>
     <string name="contact_team">Contact team</string>
     <string name="details">Details</string>
     <string name="clinical_data">Clinical Data</string>
@@ -646,7 +701,7 @@
     <string name="empty_feedback">Invalid entry. Try again.</string>
     <string name="password_reset_success">Your password has been reset.</string>
     <string name="email_phone_invalid">Invalid email or phone number. Try again</string>
-    <string name="start_typing_your_message">Start typing your message…</string>
+    <string name="start_typing_your_message">Start typing your message...</string>
     <string name="expired_password_title">Expired Password</string>
     <string name="password_expired_title">Password expired</string>
     <string name="expired_password_subtext">Your password has expired. Please enter a new password to access your account.</string>
@@ -657,6 +712,7 @@
         Click ‘Continue’ to terminate other session and proceed with this session, or ‘Cancel’ to terminate this login.</string>
 
     <!-- Acuity and Filter Menu Titles-->
+
 
     <string name="low_acuity">Low Acuity</string>
     <string name="medium_acuity">Medium Acuity</string>
@@ -682,6 +738,7 @@
     <string name="reset_by_acuity">Reset Acuity</string>
     <string name="filter_by_acuity">Filter by Acuity</string>
     <string name="filter_by_rp">Filter by Remote Provider</string>
+    <string name="filter_by_enotes">Filter by eNotes</string>
     <string name="filter_by">Filter by</string>
     <string name="filter_by_urgency">Filter by Urgency</string>
     <string name="filter_by_eConsult_status">Filter by eConsult Status</string>
@@ -698,10 +755,13 @@
     <string name="sent_all">All</string>
 
     <string name="no_result_found">No Results Found</string>
+    <string name="no_enotes">There are no eNotes</string>
+    <string name="no_log_found">No Activity Log Found</string>
     <string name="no_census_patient_found">There are no Patients</string>
     <string name="no_census_hospital_found">There are no Hospitals</string>
     <string name="no_census_ward_found">There are no Wards</string>
     <string name="no_results_for_filter">Try adjusting your search or filters \n to find what you\'re looking for</string>
+    <string name="no_attachments_found">There are no Attachments.</string>
 
     <!--Filter Type-->
     <string name="no_active_acuity">There are no\n Active eConsults</string>
@@ -720,34 +780,92 @@
     <string name="user_not_exist">Invalid credentials. Try again or sign up first.</string>
     <string name="invalid_creds">Invalid credentials. Try again.</string>
     <string name="temporarily_locked">Your account has been temporarily locked due to five invalid attempts</string>
-    <string name="todo">TODO</string>
-    <string name="hello_omnicure">Hello, Omnicure</string>
-    <string name="friday_december_18">Friday, December 18</string>
-    <string name="n">\n</string>
-    <string name="title">title</string>
-    <string name="title_message">title message</string>
-    <string name="timezone">Timezone</string>
-    <string name="age">Age</string>
-
-    <string name="mrn">MRN</string>
-    <string name="summary_note">Summary Note :</string>
-
-    <string name="name_age">Name Age</string>
-    <string name="sex">Sex</string>
-    <string name="phone">Phone</string>
-    <string name="record_no">Record No</string>
-    <string name="patient_id">Patient ID</string>
 
 
-    <string name="lorem_ipsum_is_simply_dummy_text_of_the_printing_and_typesetting_industry_lorem_ipsum_has_been_the_industry_s_standard_dummy_text_ever_since_the_1500s_when_an_unknown_printer_took_a_galley_of_type_and_scrambled_it_to_make_a_type_specimen_book_it_has_survived_not_only_five_centuries_but_also_the_leap_into_electronic_typesetting_remaining_essentially_unchanged_it_was_popularised_in_the_1960s_with_the_release_of_letraset_sheets_containing_lorem_ipsum_passages_and_more_recently_with_desktop_publishing_software_like_aldus_pagemaker_including_versions_of_lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
-    <string name="status">Status</string>
-    <string name="low">Low</string>
-    <string name="desi_bogdanova">Desi Bogdanova</string>
-    <string name="a">-</string>
+    <!--Localization strings-->
+    <string name="change_language">Change Language</string>
+    <string name="notification_settings">Notification Settings</string>
+    <string name="change_language_english">English</string>
+    <string name="change_language_spanish">Español</string>
 
-    <string name="barnes_jewish">Barnes Jewish</string>
-    <string name="_1">1.</string>
-    <string name="consultation_completed_by_james_with_notes">Consultation completed by James with notes :</string>
-    <string name="jan_15_2020_8_40_am">Jan 15, 2020 8:40 AM</string>
+    <!--Custom notification strings-->
+    <string name="acuity_alerts">Acuity Alerts</string>
+    <string name="econsult_alerts">eConsult Alerts</string>
+    <string name="econsult">eConsult</string>
+    <string name="econsults">eConsults</string>
+    <string name="census_alerts">Census Alerts</string>
+    <string name="handoff_alerts">Handoff Alerts</string>
+    <string name="new_patient_alerts">New Patient Alerts</string>
+    <string name="handoff_enote_warning_text">Handoff eNote will end active consultation.</string>
+    <string name="summary_warning_text">Completion eNote will complete active consultation.</string>
+
+    <!--Dashboard-->
+    <string name="dash_hospitals"> hospitals</string>
+    <string name="dash_hospital"> hospital</string>
+    <string name="dash_patients"> patients</string>
+    <string name="dash_patient"> patient</string>
+
+    <string name="dash_hello">Hello, </string>
+    <string name="authentication_required">Authentication Required</string>
+    <string name="please_enter_your_password_to_continue">Please enter your password to continue</string>
+    <string name="patient_high">High</string>
+    <string name="patient_med">Med</string>
+    <string name="patient_low">Low</string>
+    <string name="patient_na">NA</string>
+    <string name="patient_request_sent">Request sent : </string>
+    <string name="handoff_consult">HandOff Consultation</string>
+    <string name="unassigned" translatable="false">Unassigned</string>
+    <string name="recon">Reconnecting</string>
+    <string name="acuity_notification_title">Acuity Change Alert</string>
+    <string name="change_of_patient_acuity">Change of patient acuity</string>
+    <string name="customize_notifications">Customize notifications</string>
+    <string name="choose_the_messages_you_d_like_to_receive">Choose the messages you’d like to receive</string>
+    <string name="mark_as_urgent">Mark as Urgent</string>
+    <string name="unmark_as_urgent">Unmark as Urgent</string>
+    <string name="urgent_messages">Urgent Messages</string>
+    <string name="img_back">Back</string>
+    <string name="move_to_chat">Move to chat</string>
+    <string name="new_provider">New provider:</string>
+
+    <string name="barry_armst">Delivered to</string>
+    <string name="read_16_26">June 30 2020</string>
+    <string name="read_time">10:02AM</string>
+    <string name="no_urgent_messages_available">There are no Urgent Messages.</string>
+    <string name="no_notification_settings_available">No notification settings available!!</string>
+    <string name="acuity_message">One of your patient\'s acuity has changed to </string>
+    <string name="read_by">Read by</string>
+
+    <string name="e_notes">eNotes</string>
+    <string name="enote">eNote</string>
+    <string name="view_enotes">View eNotes</string>
+    <string name="progress">Progress</string>
+    <string name="hand_off_summary"><![CDATA[Handoff & Summary]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="s01">s01</string>
+    <string name="value_n">n</string>
+    <string name="pass">password</string>
+    <string name="dummy_pass">DUMMYPASSWORD</string>
+    <string name="temppass">tempPassword</string>
+    <string name="lockpass">Password lock</string>
+    <string name="consultProviderPatientId">consultProviderPatientId</string>
+    <string name="sent_to">Sent to</string>
+    <string name="marked_as_urgent">Marked as Urgent</string>
+    <string name="video_preview">Video Preview</string>
+
+    <!--    enotes details-->
+    <string name="progress_enotes">Progress eNotes</string>
+    <string name="progress_enote">Progress eNote</string>
+    <string name="add_progress_enote">Add Progress eNote</string>
+    <string name="progress_enotes_desc">Progress eNotes are used to document any eConsult information that serves as reminder or something else. This note is accessible to all team members.</string>
+    <string name="summary_enotes">Summary eNotes</string>
+    <string name="summary_enotes_desc">Summary eNotes are used for completing consultation. Document assessment and plan details for eConsult to follow after consultation is closed.</string>
+    <string name="handoff_enotes">Handoff eNotes</string>
+    <string name="view_activity_log">View Activity Log</string>
+    <string name="activity_log">Activity Log</string>
+    <string name="create_progress_enote">Create Progress eNote</string>
+    <string name="new_progress_enote">New Progress eNote</string>
+    <string name="handoff_enotes_desc">Handoff eNotes are used document details when eConsult is being handed off to another medical professional.</string>
+
 
 </resources>

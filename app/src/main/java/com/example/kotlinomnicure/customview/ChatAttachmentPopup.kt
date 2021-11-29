@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.customview
+package com.example.kotlinomnicure.customview
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -10,13 +10,15 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.view.*
 import android.view.View.OnTouchListener
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
+
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import com.example.dailytasksamplepoc.R
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.utils.UtilityMethods
+
 import com.mvp.omnicure.activity.ChatActivity
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+
 import java.lang.Exception
 
 class ChatAttachmentPopup(context: Context?) : PopupWindow(context) {
@@ -66,12 +68,12 @@ class ChatAttachmentPopup(context: Context?) : PopupWindow(context) {
         width = activity!!.window.decorView.width - 60
         height = activity!!.window.decorView.height - statusBarHeight
         xOffset = 0
-        if (ChatActivity.getChatEditTextViewHeight() !== 0) {
-            yOffset = ChatActivity.getChatEditTextViewHeight()
+        if (ChatActivity().getChatEditTextViewHeight() !== 0) {
+            yOffset = ChatActivity().getChatEditTextViewHeight()
         } else {
             yOffset = UtilityMethods().dpToPx(getStatusBarHeight())
         }
-        if (ChatActivity.isIsKeyboardShowing) {
+        if (ChatActivity().isIsKeyboardShowing) {
             (layout.findViewById<View>(R.id.root_view) as LinearLayout).background =
                 activity!!.resources.getDrawable(R.drawable.rect_drawable_white_bg)
         } else {
@@ -161,7 +163,7 @@ class ChatAttachmentPopup(context: Context?) : PopupWindow(context) {
             if (isShow) {
                 var revealAnimator: Animator? = null
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    if (ChatActivity.isIsKeyboardShowing) {
+                    if (ChatActivity().isIsKeyboardShowing) {
                         revealAnimator = ViewAnimationUtils.createCircularReveal(
                             contentView,
                             width - 60,

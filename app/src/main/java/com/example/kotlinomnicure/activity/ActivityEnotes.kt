@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,11 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityEnotesBinding
-
-import com.mvp.omnicure.kotlinactivity.fragment.HandoffFragment
-import com.mvp.omnicure.kotlinactivity.fragment.ProgressFragment
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityEnotesBinding
 
 
 class ActivityEnotes : AppCompatActivity() {
@@ -52,7 +49,7 @@ class ActivityEnotes : AppCompatActivity() {
     }
 
     fun detailsClick(position: Int) {
-        val intent = Intent(this, ActivityEnotesDetail::class.java)
+            val intent = Intent(this, ActvityEnotesDetail::class.java)
         intent.putExtra("patient_name", patient_name)
         val fragment1 =
             supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager.toString() + ":" + binding.viewPager.getCurrentItem())

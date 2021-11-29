@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,15 +12,17 @@ import androidx.appcompat.widget.Toolbar
 
 import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityCensusEconsultChartBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.media.Utils
+
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityCensusEconsultChartBinding
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
+import com.example.kotlinomnicure.utils.UtilityMethods
 
 
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+
 import omnicurekotlin.example.com.hospitalEndpoints.model.Patient
 import omnicurekotlin.example.com.providerEndpoints.model.Members
 
@@ -156,7 +158,7 @@ class ActivityCensusConsultChart : AppCompatActivity() {
         patient!!.setPatientCondition(strPatientCondition)
 
         Log.d(TAG, "Patient Vital Values : " + Gson().toJson(patient))
-        UtilityMethods().displayCensusVitals(this, stub!!, patient)
+        UtilityMethods().displayCensusVitals(this, stub!!, patient!!)
         UtilityMethods().displayPatientStatusComponent(
             this, statusStub!!, Boolean.valueOf(strPatientUrgent),
             strPatientStatus.equals(Constants.PatientStatus.Pending.toString(), ignoreCase = true),

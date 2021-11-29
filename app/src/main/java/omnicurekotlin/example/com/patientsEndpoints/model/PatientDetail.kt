@@ -60,7 +60,7 @@ class PatientDetail {
         private var note: String? = null
         private var lname: String? = null
         private var fname: String? = null
-       // var name: String? = null
+        var name: String? = null
         private var id: String? = null
         private var recordNumber: String? = null
         private var syncTime: String? = null

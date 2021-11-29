@@ -49,8 +49,8 @@ import com.example.dailytasksamplepoc.databinding.ItemMessageBinding
 import com.example.kotlinomnicure.activity.ActivityAttachmentFilter
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.DrawerActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.PatientChatHistoryAdapter
-import com.example.dailytasksamplepoc.kotlinomnicure.customview.ChatAttachmentPopup
+import com.example.kotlinomnicure.adapter.PatientChatHistoryAdapter
+import com.example.kotlinomnicure.customview.ChatAttachmentPopup
 import com.example.dailytasksamplepoc.kotlinomnicure.customview.DownloadProgressDialog
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.ChatMessageStatusModel
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageInputRequestModel

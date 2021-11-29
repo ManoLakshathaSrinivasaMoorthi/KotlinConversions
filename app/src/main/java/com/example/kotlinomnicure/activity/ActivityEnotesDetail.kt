@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
@@ -7,12 +7,13 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityEnotesDetailsBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.model.ConsultMessage
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityEnotesDetailsBinding
+import com.example.kotlinomnicure.model.ConsultMessage
+
 import com.google.firebase.database.*
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.fragment.ProgressFragment
+
 import java.util.ArrayList
 
 class ActivityEnotesDetail : AppCompatActivity() {

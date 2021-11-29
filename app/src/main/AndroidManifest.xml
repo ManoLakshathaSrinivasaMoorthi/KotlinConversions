@@ -38,7 +38,7 @@
             android:name=".activity.ViewUrgentMessagesActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.WebviewActivity"
+            android:name=".activity.WebViewActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ResetSuccessActivity"

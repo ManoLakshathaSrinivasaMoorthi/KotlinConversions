@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,14 +10,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.kotlinomnicure.interfaces.OnPatientHistoryItemListener
+
+import com.example.kotlinomnicure.interfaces.OnPatientHistoryItemListener
 import com.example.kotlinomnicure.utils.ChatUtils
 import com.mvp.omnicure.activity.ChatActivity
 import omnicurekotlin.example.com.patientsEndpoints.model.PatientHistory
 
 class PatientChatHistoryAdapter : RecyclerView.Adapter<PatientChatHistoryAdapter.ViewHolder>() {
-    private val TAG: Class<PatientChatHistoryAdapter> =PatientChatHistoryAdapter::class.java
+    private val TAG: Class<PatientChatHistoryAdapter> = PatientChatHistoryAdapter::class.java
     private var patientHistoryList: List<PatientHistory>? = null
     private var onItemClickListener: OnPatientHistoryItemListener? = null
     private var context: Context? = null

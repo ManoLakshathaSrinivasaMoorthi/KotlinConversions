@@ -1,19 +1,19 @@
-package com.example.kotlinomnicure.media
+package com.example.dailytasksamplepoc.kotlinomnicure.media
 
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.*
 
-class ByteBuf(data: ByteArray?) {
-    private var buffer: ByteBuffer = ByteBuffer.allocate(1024).order(ByteOrder.LITTLE_ENDIAN)
+class ByteBuf() {
+    var buffer = ByteBuffer.allocate(1024).order(ByteOrder.LITTLE_ENDIAN)
 
-    fun ByteBuf() {}
+
 
     fun ByteBuf(bytes: ByteArray?) {
         buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
     }
 
-    fun asBytes(): ByteArray {
+    fun asBytes(): ByteArray? {
         val out = ByteArray(buffer.position())
         buffer.rewind()
         buffer[out, 0, out.size]
@@ -21,33 +21,33 @@ class ByteBuf(data: ByteArray?) {
     }
 
     // packUint16
-    fun put(v: Short): ByteBuf {
+    fun put(v: Short): ByteBuf? {
         buffer.putShort(v)
         return this
     }
 
-    fun put(v: ByteArray): ByteBuf {
+    fun put(v: ByteArray): ByteBuf? {
         put(v.size.toShort())
         buffer.put(v)
         return this
     }
 
     // packUint32
-    fun put(v: Int): ByteBuf {
+    fun put(v: Int): ByteBuf? {
         buffer.putInt(v)
         return this
     }
 
-    fun put(v: Long): ByteBuf {
+    fun put(v: Long): ByteBuf? {
         buffer.putLong(v)
         return this
     }
 
-    fun put(v: String): ByteBuf {
+    fun put(v: String): ByteBuf? {
         return put(v.toByteArray())
     }
 
-    fun put(extra: TreeMap<Short, String>): ByteBuf {
+    fun put(extra: TreeMap<Short, String>): ByteBuf? {
         put(extra.size.toShort())
         for ((key, value) in extra) {
             put(key)
@@ -65,28 +65,28 @@ class ByteBuf(data: ByteArray?) {
         return this
     }
 
-    private fun readShort(): Short {
+    fun readShort(): Short {
         return buffer.short
     }
 
 
-    private fun readInt(): Int {
+    fun readInt(): Int {
         return buffer.int
     }
 
-    private fun readBytes(): ByteArray {
+    fun readBytes(): ByteArray {
         val length = readShort()
         val bytes = ByteArray(length.toInt())
         buffer[bytes]
         return bytes
     }
 
-    private fun readString(): String {
+    fun readString(): String {
         val bytes = readBytes()
         return String(bytes)
     }
 
-    fun readMap(): TreeMap<*, *> {
+    fun readMap(): TreeMap<*, *>? {
         val map = TreeMap<Short, String>()
         val length = readShort()
         for (i in 0 until length) {
@@ -97,7 +97,7 @@ class ByteBuf(data: ByteArray?) {
         return map
     }
 
-    fun readIntMap(): TreeMap<Short, Int> {
+    fun readIntMap(): TreeMap<Short, Int>? {
         val map = TreeMap<Short, Int>()
         val length = readShort()
         for (i in 0 until length) {
@@ -108,6 +108,3 @@ class ByteBuf(data: ByteArray?) {
         return map
     }
 }
-
-
-
