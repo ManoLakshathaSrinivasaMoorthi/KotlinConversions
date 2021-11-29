@@ -10,7 +10,7 @@ class ConsultMessage {
     private var name: String? = null
     private var role: String? = null
     private var urgent = false
-    private var senderId: String? = null
+    var senderId: String? = null
     private var photoUrl: String? = null
     private var imageUrl: String? = null
     private var thumbUrl: String? = null

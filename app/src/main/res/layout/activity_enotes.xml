@@ -248,7 +248,7 @@
                     android:background="@color/bg_gray"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                    <com.mvp.omnicure.utils.UnSwipeableViewPager
+                    <com.example.kotlinomnicure.utils.UnSwipeableViewPager
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

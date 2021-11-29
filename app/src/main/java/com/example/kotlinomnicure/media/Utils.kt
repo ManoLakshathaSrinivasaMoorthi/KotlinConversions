@@ -139,4 +139,11 @@ class Utils {
             false
         } else uuid.matches("\\p{XDigit}+".toRegex())
     }
+    fun timestampToDateYYYY(timeStamp: Long): String? {
+        val cal = Calendar.getInstance(Locale.ENGLISH)
+        cal.timeInMillis = timeStamp
+        var date = DateFormat.format("MM-dd-yyyy hh:mma", cal).toString()
+        date = date.replace("AM", "am").replace("PM", "pm")
+        return date
+    }
 }

@@ -28,7 +28,7 @@ import com.example.dailytasksamplepoc.databinding.ActivityRemoteProviderDirector
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.BedsideDirectoryAdapter
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.HospitalDirectoryAdapter
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.RemoteDirectoryAdapter
-import com.example.dailytasksamplepoc.kotlinomnicure.fragment.BedsideDirectoryFragment
+import com.example.kotlinomnicure.fragment.BedsideDirectoryFragment
 import com.example.dailytasksamplepoc.kotlinomnicure.fragment.HospitalDirectoryFragment
 import com.example.dailytasksamplepoc.kotlinomnicure.fragment.RemoteDirectoryFragment
 import com.example.dailytasksamplepoc.kotlinomnicure.utils.UnSwipeableViewPager

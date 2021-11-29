@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityEnotesBinding
+import com.mvp.omnicure.kotlinactivity.fragment.HandoffFragment
+import com.mvp.omnicure.kotlinactivity.fragment.ProgressFragment
 
 
 class ActivityEnotes : AppCompatActivity() {
@@ -20,7 +22,7 @@ class ActivityEnotes : AppCompatActivity() {
     val TAG = "ActivityENotes"
     var patient_id: Long = 0
     private var patient_name: String? = null
-    val fragment: Fragment? = null
+    var fragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +51,10 @@ class ActivityEnotes : AppCompatActivity() {
     }
 
     fun detailsClick(position: Int) {
-            val intent = Intent(this, ActvityEnotesDetail::class.java)
+            val intent = Intent(this, ActivityEnotesDetails::class.java)
         intent.putExtra("patient_name", patient_name)
         val fragment1 =
-            supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager.toString() + ":" + binding.viewPager.getCurrentItem())
+            supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager.toString() + ":" + binding?.viewPager?.getCurrentItem())
         if (binding!!.viewPager.getCurrentItem() === 0 && fragment1 != null) {
             intent.putExtra("position", position)
             intent.putExtra("patient_id", patient_id)
@@ -71,11 +73,11 @@ class ActivityEnotes : AppCompatActivity() {
             Log.d("ActivityEnotes", "getItem: $position")
             if (position == 0) {
 
-                fragment = ProgressFragment(patient_id)
+                ActivityEnotes().fragment = ProgressFragment(ActivityEnotes().patient_id)
             } else {
-                fragment = HandoffFragment(patient_id)
+               ActivityEnotes().fragment = HandoffFragment(ActivityEnotes().patient_id)
             }
-            return fragment
+            return ActivityEnotes().fragment!!
         }
 
         override fun getCount(): Int {

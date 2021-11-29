@@ -43,7 +43,8 @@ class Patient {
     private var spO2: Double? = null
     private var status: String? = null
     private var urgent: Boolean? = null
-
+  var wardName: String? = null
+   var recordNumber: String? = null
 
     fun getAcceptTime(): Long? {
         return acceptTime
