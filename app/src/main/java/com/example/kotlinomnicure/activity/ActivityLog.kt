@@ -5,13 +5,15 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityLogBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.LogDateAdapter
-import com.example.dailytasksamplepoc.kotlinomnicure.model.ENotesList
+
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ENotesViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityLogBinding
+import com.example.kotlinomnicure.model.ENotesList
 import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
+
 import java.util.ArrayList
 
 class ActivityLog :BaseActivity() {

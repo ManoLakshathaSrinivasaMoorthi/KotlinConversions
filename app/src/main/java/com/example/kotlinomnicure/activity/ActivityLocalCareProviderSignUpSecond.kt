@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,19 +17,16 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityLocalCareProviderSignUpSecondBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.*
-import com.example.dailytasksamplepoc.kotlinomnicure.utils.Buildconfic
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.ActivityHospitalList
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
+
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.LocalCareProviderSignUpSecondViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityLocalCareProviderSignUpSecondBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
-import com.example.kotlinomnicure.utils.PrefUtility
+import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
-import com.mvp.omnicure.kotlinactivity.utils.ValidationUtil
+
 
 import omnicurekotlin.example.com.userEndpoints.model.Provider
 import omnicurekotlin.example.com.userEndpoints.model.User
@@ -428,7 +425,7 @@ class ActivityLocalCareProviderSignUpSecond : BaseActivity() {
         override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
         override fun afterTextChanged(editable: Editable) {
             when (view.id) {
-                R.id.npi_number ->ActivityLocalCareProviderSignUpSecond().checkNPI(true)
+                R.id.npi_number -> ActivityLocalCareProviderSignUpSecond().checkNPI(true)
             }
         }
 
@@ -444,7 +441,7 @@ class ActivityLocalCareProviderSignUpSecond : BaseActivity() {
         override fun afterTextChanged(editable: Editable) {
             val text = editable.toString()
             when (view.id) {
-                R.id.npi_number ->ActivityLocalCareProviderSignUpSecond().checkNPI(false)
+                R.id.npi_number -> ActivityLocalCareProviderSignUpSecond().checkNPI(false)
             }
             ActivityLocalCareProviderSignUpSecond().checkButtonValidation()
         }

@@ -16,11 +16,12 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityAddProgressBinding
+
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageInputRequestModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ChatActivityViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityAddProgressBinding
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
@@ -160,15 +161,17 @@ class AddProgressEnoteActivity : BaseActivity() {
                                 sendChatMessageOutuputResponseModel1?.errorMessage,
                                 Constants.API.startCall
                             )
-                            CustomSnackBar.make(
-                                binding!!.getRoot(),
-                                this,
-                                CustomSnackBar.WARNING,
-                                errMsg,
-                                CustomSnackBar.TOP,
-                                3000,
-                                0
-                            )?.show()
+                            if (errMsg != null) {
+                                CustomSnackBar.make(
+                                    binding!!.getRoot(),
+                                    this,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0
+                                )?.show()
+                            }
                         }
                     }
             }

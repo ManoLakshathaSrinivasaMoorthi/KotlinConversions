@@ -1,5 +1,6 @@
-package com.mvp.omnicure.kotlinactivity.activity
+package com.example.kotlinomnicure.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -22,19 +23,17 @@ import android.widget.TextView
 
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityLocalCareProviderSignUpFirstBinding
+import androidx.lifecycle.ViewModelProvider
+
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.LoginActivity
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityLocalCareProviderSignUpFirstBinding
 import com.example.kotlinomnicure.helper.MobileNumberFormatter
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
+import com.example.kotlinomnicure.utils.*
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
-import com.mvp.omnicure.kotlinactivity.utils.ValidationUtil
+import com.mvp.omnicure.kotlinactivity.activity.RemoteProviderSignUpSecond
+
 
 
 import com.mvp.omnicure.kotlinactivity.viewmodel.LocalCareProviderSignUpFirstViewModel
@@ -52,7 +51,7 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
     var viewModel: LocalCareProviderSignUpFirstViewModel? = null
     var role: String? = null
     private var sequenceWordList: ArrayList<String>? = null
-    var context: Context =ActivityLocalCareProviderSignUpFirst()
+    var context: Context = ActivityLocalCareProviderSignUpFirst()
 
 
      //on create method
@@ -61,7 +60,7 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
 
          //Initialise the variables
         binding = DataBindingUtil.setContentView(this, R.layout.activity_local_care_provider_sign_up_first)
-        viewModel = ViewModelProviders.of(this).get(LocalCareProviderSignUpFirstViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LocalCareProviderSignUpFirstViewModel::class.java)
         setView()
     }
 
@@ -103,6 +102,7 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
 
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun setOnclickListener() {
         binding!!.idPhoneNumber.onFocusChangeListener =
             OnFocusChangeListener { view, hasFocus ->
@@ -310,7 +310,7 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
 
     private fun setCountryCode() {
         if (!UtilityMethods().isInternetConnected(this)!!) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+
             CustomSnackBar.make(
                 binding!!.idContainerLayout,
                 this,
@@ -479,6 +479,7 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     fun checkPhone(showError: Boolean) {
         if (binding?.let { ValidationUtil().checkPhoneNo(it) } != null) {
             if (showError) {
@@ -546,7 +547,8 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
                 if (str.isNotEmpty() && str.contains(" ")) {
 
                     ActivityLocalCareProviderSignUpFirst().binding!!.idEmailId.setText(s.toString().replace(" ", ""))
-                    ActivityLocalCareProviderSignUpFirst().binding!!.idEmailId.getText()?.let { Selection.setSelection(ActivityLocalCareProviderSignUpFirst().binding!!.idEmailId.getText(), it.length) }
+                    ActivityLocalCareProviderSignUpFirst().binding!!.idEmailId.getText()?.let { Selection.setSelection(
+                        ActivityLocalCareProviderSignUpFirst().binding!!.idEmailId.getText(), it.length) }
                 }
             }
         }
@@ -555,7 +557,7 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
             val text = editable.toString()
             when (view.id) {
                 R.id.id_first_name -> ActivityLocalCareProviderSignUpFirst().checkFirstName(false)
-                R.id.id_last_name ->ActivityLocalCareProviderSignUpFirst(). checkLastName(false)
+                R.id.id_last_name -> ActivityLocalCareProviderSignUpFirst(). checkLastName(false)
                 R.id.id_email_id -> ActivityLocalCareProviderSignUpFirst().checkEmail(false)
                 R.id.id_password ->  ActivityLocalCareProviderSignUpFirst().checkPassword(false)
                 R.id.id_phone_number ->  ActivityLocalCareProviderSignUpFirst().checkPhone(false)
@@ -579,7 +581,7 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
                 R.id.id_last_name -> ActivityLocalCareProviderSignUpFirst().checkLastName(true)
                 R.id.id_email_id -> ActivityLocalCareProviderSignUpFirst().checkEmail(true)
                 R.id.id_password -> ActivityLocalCareProviderSignUpFirst().checkPassword(true)
-                R.id.id_phone_number ->ActivityLocalCareProviderSignUpFirst().checkPhone(true)
+                R.id.id_phone_number -> ActivityLocalCareProviderSignUpFirst().checkPhone(true)
             }
         }
 

@@ -27,8 +27,8 @@
                     android:layout_gravity="start"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:tint="@color/title_color"
-                    app:srcCompat="@drawable/ic_back_arrow" />
+                    app:srcCompat="@drawable/ic_back_arrow"
+                    app:tint="@color/title_color" />
 
                 <ImageView
                     android:id="@+id/steps"
@@ -66,7 +66,7 @@
                         android:textAppearance="@style/textBody"
                         android:textStyle="bold" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_48"
@@ -89,7 +89,7 @@
                         android:textCursorDrawable="@drawable/edittext_cursor_color"
                         android:textSize="14sp" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_48"
@@ -111,7 +111,7 @@
                         android:textColorHint="@drawable/edittext_hint_color"
                         android:textCursorDrawable="@drawable/edittext_cursor_color" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_email_id"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_48"
@@ -141,7 +141,7 @@
                         android:orientation="horizontal"
                         android:paddingRight="@dimen/margin_2">
 
-                        <com.mvp.omnicure.utils.CustomGroupEditText
+                        <com.example.kotlinomnicure.utils.CustomGroupEditText
                             android:id="@+id/id_password"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/margin_48"
@@ -171,8 +171,8 @@
                             android:paddingVertical="10dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="6dp"
-                            android:tint="@color/login_hint_color"
-                            app:srcCompat="@drawable/ic_visibility" />
+                            app:srcCompat="@drawable/ic_visibility"
+                            app:tint="@color/login_hint_color" />
 
                         <ImageView
                             android:id="@+id/password_info"
@@ -182,9 +182,9 @@
                             android:paddingVertical="10dp"
                             android:paddingLeft="6dp"
                             android:paddingRight="6dp"
-                            android:tint="@color/login_hint_color"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/ic_info_24" />
+                            app:srcCompat="@drawable/ic_info_24"
+                            app:tint="@color/login_hint_color" />
 
                         <ImageView
                             android:id="@+id/password_verified"
@@ -199,27 +199,6 @@
 
 
                     </LinearLayout>
-                    <!--                    <com.mvp.omnicure.utils.CustomErrorEditText-->
-                    <!--                        android:id="@+id/id_password"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="@dimen/margin_48"-->
-                    <!--                        android:layout_gravity="center"-->
-                    <!--                        android:layout_marginTop="@dimen/margin_15"-->
-                    <!--                        android:layout_weight="1"-->
-                    <!--                        android:background="@drawable/ash_border_drawable_bg"-->
-                    <!--                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^*()_+&amp;:;\/"-->
-                    <!--                        android:drawableRight="@drawable/ic_visibility_off"-->
-                    <!--                        android:ems="10"-->
-                    <!--                        android:hint="@string/password"-->
-                    <!--                        android:imeOptions="actionDone"-->
-                    <!--                        android:importantForAutofill="no"-->
-                    <!--                        android:inputType="textPassword"-->
-                    <!--                        android:maxLines="1"-->
-                    <!--                        android:paddingLeft="@dimen/margin_14"-->
-                    <!--                        android:paddingRight="@dimen/margin_5"-->
-                    <!--                        android:textAppearance="@style/textSubTitle"-->
-                    <!--                        android:textColorHint="@color/gray_500"-->
-                    <!--                        android:textCursorDrawable="@drawable/edittext_cursor_color" />-->
 
                     <LinearLayout
                         android:id="@+id/phone_layout"
@@ -247,7 +226,7 @@
                             android:background="@color/edittext_stroke_color" />
 
 
-                        <com.mvp.omnicure.utils.CustomGroupEditText
+                        <com.example.kotlinomnicure.utils.CustomGroupEditText
                             android:id="@+id/id_phone_number"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

@@ -1,23 +1,24 @@
 package com.example.dailytasksamplepoc.kotlinomnicure.activity
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.HospitalListAdapter
 
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HospitalListViewModel
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
-import com.example.kotlinomnicure.utils.PrefUtility
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityHospitalListBinding
+import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.ValidationUtil
+
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
 
 class ActivityHospitalList : BaseActivity() {
@@ -29,7 +30,7 @@ class ActivityHospitalList : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_hospital_list)
-        viewModel = ViewModelProviders.of(this)[HospitalListViewModel::class.java]
+        viewModel = ViewModelProvider(this)[HospitalListViewModel::class.java]
 
         val extras = intent.extras
         selectedHosp = extras!!.getString(Constants.IntentKeyConstants.SELECTED_HOSPITAL, "")
@@ -86,6 +87,7 @@ class ActivityHospitalList : BaseActivity() {
         })
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getHospitalList() {
         val providerId: Long? = PrefUtility().getProviderId(this)
 
@@ -96,11 +98,11 @@ class ActivityHospitalList : BaseActivity() {
                     Log.d(TAG, "getHospitalList response : " + Gson().toJson(response))
                     if (response != null) {
                         hospitalListAdapter = HospitalListAdapter(object : HospitalListAdapter.HospitalRecyclerListener {
-                            override  fun onItemSelected(hospital: Hospital) {
-                                Log.d(TAG, "selected name : " + hospital.id.toString() + "----" + hospital.name)
+                            override  fun onItemSelected(hospital: Hospital?) {
+                                Log.d(TAG, "selected name : " + hospital?.id.toString() + "----" + hospital?.name)
                                 val intent = Intent()
-                                intent.putExtra("hospitalID", hospital.id)
-                                intent.putExtra("hospitalName", hospital.name)
+                                intent.putExtra("hospitalID", hospital?.id)
+                                intent.putExtra("hospitalName", hospital?.name)
                                 setResult(RESULT_OK, intent)
                                 finish()
                             }
@@ -110,7 +112,7 @@ class ActivityHospitalList : BaseActivity() {
                     }
                     binding!!.rvHospitalList.adapter = hospitalListAdapter
                     hospitalListAdapter!!.notifyDataSetChanged()
-                } else if (response != null) {
+                } else {
                     if (response.getErrorMessage() != null) {
                         val errMsg: String? = ErrorMessages().getErrorMessage(
                             this,

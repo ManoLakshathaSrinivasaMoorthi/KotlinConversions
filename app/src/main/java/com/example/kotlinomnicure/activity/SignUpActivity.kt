@@ -1,7 +1,6 @@
 package com.mvp.omnicure.kotlinactivity.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -13,6 +12,7 @@ import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.LoginActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.PatientAppointmentActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.utils.Buildconfic
+import com.example.kotlinomnicure.activity.ActivityLocalCareProviderSignUpFirst
 import com.example.kotlinomnicure.utils.Constants
 
 

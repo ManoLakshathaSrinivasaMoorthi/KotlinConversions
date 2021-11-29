@@ -119,7 +119,7 @@
 
                     </RelativeLayout>
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/npi_number"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_48"
