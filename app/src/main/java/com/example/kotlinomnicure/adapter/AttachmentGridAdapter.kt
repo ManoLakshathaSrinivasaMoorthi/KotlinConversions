@@ -28,9 +28,9 @@ class AttachmentGridAdapter(
 
     fun AttachmentGridAdapter(context: Context, list: ArrayList<ConsultMessage>, key: String?) {
         this.context = context
-        this@AttachmentGridAdapter.messageList = list
+        this.messageList = list
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        this@AttachmentGridAdapter.encKey = key
+        this.encKey = key
         setHasStableIds(true)
     }
 

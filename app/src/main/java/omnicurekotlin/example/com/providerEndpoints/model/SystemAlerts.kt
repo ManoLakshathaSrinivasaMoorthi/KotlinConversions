@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 class SystemAlerts {
     @Expose
     @SerializedName("systemAlertList")
-    private var systemAlertList: List<SystemAlertList?>? = null
+    var systemAlertList: List<SystemAlertList?>? = null
 
     @Expose
     @SerializedName("status")

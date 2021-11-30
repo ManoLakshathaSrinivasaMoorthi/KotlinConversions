@@ -16,7 +16,7 @@ import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
 
-import com.mvp.omnicure.kotlinactivity.adapter.SystemAlertAdapter
+import com.example.kotlinomnicure.adapter.SystemAlertAdapter
 import com.mvp.omnicure.kotlinactivity.viewmodel.SystemAlertViewModel
 import omnicurekotlin.example.com.providerEndpoints.model.SystemAlerts
 

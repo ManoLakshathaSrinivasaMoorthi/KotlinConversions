@@ -1,5 +1,6 @@
 package com.example.kotlinomnicure.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Handler
@@ -43,8 +44,8 @@ class ENotesDetailsAdapter(
         t: String?,
     ) {
         this.context = context
-        this@ENotesDetailsAdapter.messagesList = list
-        this@ENotesDetailsAdapter.patientDetails = pat
+        this.messagesList = list
+        this.patientDetails = pat
         type = t
         EncUtil().generateKey(this.context)
         encKey = context?.let { PrefUtility().getAESAPIKey(it).toString() }.toString()
@@ -57,6 +58,7 @@ class ENotesDetailsAdapter(
         return ViewHolder(itemBinding)
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemBinding.llSummarylayout.setOnClickListener(View.OnClickListener { listener!!.detailsClick() })
         var strGender = ""

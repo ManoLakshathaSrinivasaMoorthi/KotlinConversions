@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.LogDateAdapter
+import com.example.kotlinomnicure.adapter.LogDateAdapter
 
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ENotesViewModel
 import com.example.kotlinomnicure.R

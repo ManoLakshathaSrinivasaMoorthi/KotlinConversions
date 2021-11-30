@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import android.widget.Filter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.HospitalNameChildBinding
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.HospitalNameChildBinding
+
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
 
 import java.util.ArrayList

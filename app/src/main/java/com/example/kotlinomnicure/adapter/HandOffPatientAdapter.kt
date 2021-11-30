@@ -1,13 +1,13 @@
-package com.mvp.omnicure.kotlinactivity.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.HandOffChildListBinding
-import com.example.kotlinomnicure.activity.HandOffPatientsActivity
+import com.example.kotlinomnicure.R
 
+import com.example.kotlinomnicure.activity.HandOffPatientsActivity
+import com.example.kotlinomnicure.databinding.HandOffChildListBinding
 
 
 import omnicurekotlin.example.com.providerEndpoints.model.HandOffListResponse

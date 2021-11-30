@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.content.Context
 import android.os.Build
@@ -9,10 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.R
+
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
-import com.example.dailytasksamplepoc.kotlinomnicure.model.ENotesMessageList
-import com.example.dailytasksamplepoc.kotlinomnicure.utils.AESUtils
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.model.ENotesMessageList
+import com.example.kotlinomnicure.utils.AESUtils
+
 import com.example.kotlinomnicure.utils.PrefUtility
 
 class InnerLogsAdapter(
@@ -34,14 +36,11 @@ class InnerLogsAdapter(
         this.context = context
         this.logDateAdapter = logDateAdapter
         EncUtil().generateKey(this.context)
-        encKey = PrefUtility().getAESAPIKey(context)
+        encKey = context?.let { PrefUtility().getAESAPIKey(it) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        logDateAdapter!!.getLogsRecycler()!!.setRecycledViewPool(LogDateAdapter(
-            applicationContext,
-            eNotesList
-        ).recycledViewPool)
+        logDateAdapter!!.getLogsRecycler()!!.setRecycledViewPool(LogDateAdapter(applicationContext, eNotesList).recycledViewPool)
         return ViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.activites_log_logs_item, parent, false)

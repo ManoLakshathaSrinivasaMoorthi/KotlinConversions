@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.kotlinomnicure.model.ENotesList
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.model.ENotesList
+
 
 class LogDateAdapter(applicationContext: Context, eNotesList: MutableList<ENotesList>) : RecyclerView.Adapter<LogDateAdapter.ViewHolder>() {
     private var eNoteslist: List<ENotesList>? = null

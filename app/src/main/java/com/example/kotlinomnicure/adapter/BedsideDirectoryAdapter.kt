@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.Manifest
 import android.app.Activity
@@ -21,13 +21,13 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.RemoteDirectoryChildBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.ChatActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.RemoteDirectoryChildBinding
+import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.mvp.omnicure.activity.ChatActivity
 
 class BedsideDirectoryAdapter(
     requireActivity: FragmentActivity,
@@ -140,7 +140,7 @@ class BedsideDirectoryAdapter(
                 })
                 .into(holder.itemBinding.profileImg)
         } else {
-            holder.itemBinding.defautlImg.setVisibility(View.VISIBLE)
+            holder.itemBinding.defautlImg.visibility = View.VISIBLE
             holder.itemBinding.defautlImg.setText(provider.getName()?.let {
                 UtilityMethods().getNameText(
                     it
@@ -185,12 +185,11 @@ class BedsideDirectoryAdapter(
     fun checkSelfPermissions(): Boolean {
         return checkSelfPermission(
             Manifest.permission.RECORD_AUDIO,
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO
+            ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO
         ) &&
                 checkSelfPermission(
                     Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA
-                )
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA)
     }
 
     fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
@@ -213,13 +212,13 @@ class BedsideDirectoryAdapter(
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
 
         when (requestCode) {
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO -> {
+            ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
                 checkSelfPermission(
                     Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA
                 )
             }
-            ConstantApp.PERMISSION_REQ_ID_CAMERA -> {
+            ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
             }
             else -> {
                 Toast.makeText(context, "Please give permission", Toast.LENGTH_SHORT).show()

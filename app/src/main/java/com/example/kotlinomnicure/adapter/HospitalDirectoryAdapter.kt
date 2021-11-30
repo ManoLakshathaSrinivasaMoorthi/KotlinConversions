@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.content.Context
 import android.os.Handler
@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.HospitalDirectoryChildBinding
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.HospitalDirectoryChildBinding
+
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
 
 class HospitalDirectoryAdapter(context: Context?, hospitals: List<Hospital>) : RecyclerView.Adapter<HospitalDirectoryAdapter.ViewHolder>() {

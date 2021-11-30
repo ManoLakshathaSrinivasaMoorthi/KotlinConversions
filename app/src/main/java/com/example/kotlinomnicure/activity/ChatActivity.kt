@@ -77,6 +77,7 @@ import omnicurekotlin.example.com.providerEndpoints.model.Members
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ChatActivityViewModel
 import com.example.kotlinomnicure.helper.PBMessageHelper
+import com.example.kotlinomnicure.interfaces.OnPatientHistoryItemListener
 
 import java.io.*
 import java.lang.Exception
@@ -87,7 +88,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ChatActivity() : DrawerActivity(), ChatEditTextListener,
-    OnPatientHistoryItemListener,BaseActivity() {
+    OnPatientHistoryItemListener,BaseActivity(), OnPatientHistoryItemListener {
 
     //variables
     private val membersList: MutableList<Members>? = ArrayList<Members>()

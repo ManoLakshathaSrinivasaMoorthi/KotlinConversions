@@ -27,7 +27,7 @@ import com.google.gson.Gson
 
 
 
-import com.mvp.omnicure.kotlinactivity.adapter.HandOffPatientAdapter
+import com.example.kotlinomnicure.adapter.HandOffPatientAdapter
 
 
 import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse

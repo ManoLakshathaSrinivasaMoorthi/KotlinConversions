@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.os.Build
 import android.text.Html
@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.mvp.omnicure.R
+import com.example.kotlinomnicure.R
 
-import com.mvp.omnicure.databinding.SystemAlertChildListBinding
 import com.example.kotlinomnicure.activity.SystemAlertActivity
-import com.mvp.omnicure.utils.ChatUtils
-import omnicure.mvp.com.providerEndpoints.model.SystemAlerts
+import com.example.kotlinomnicure.databinding.SystemAlertChildListBinding
+import com.example.kotlinomnicure.utils.ChatUtils
+
+import omnicurekotlin.example.com.providerEndpoints.model.SystemAlerts
 
 import java.lang.Exception
 
@@ -37,13 +38,13 @@ class SystemAlertAdapter(systemAlertActivity: SystemAlertActivity, systemAlerts:
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun onBindViewHolder(holder: SystemAlertAdapter.ViewHolder, position: Int) {
-        val systemAlert = systemAlerts!!.systemAlertList[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val systemAlert = systemAlerts!!.systemAlertList?.get(position)
         holder.itemBinding.systemAlertTitle.setText(systemAlert.title)
-        holder.itemBinding.systemAlertCreatedTime.setText(ChatUtils.getTimeAgo(systemAlert.createdTime.toLong()))
+        holder.itemBinding.systemAlertCreatedTime.setText(ChatUtils().getTimeAgo(systemAlert.createdTime.toLong()))
         holder.itemBinding.systemAlertDisplayMessage.setText(
             Html.fromHtml(
-                systemAlerts!!.systemAlertList[position].alertMsg,
+                systemAlerts!!.systemAlertList?.get(position)?.alertMsg,
                 Html.FROM_HTML_MODE_COMPACT
             )
         )
@@ -63,7 +64,7 @@ class SystemAlertAdapter(systemAlertActivity: SystemAlertActivity, systemAlerts:
         return position.toLong()
     }
 
-    fun setSystemAlertRecyclerListener(systemAlertRecyclerListener: SystemAlertAdapter.SystemAlertRecyclerListener) {
+    fun setSystemAlertRecyclerListener(systemAlertRecyclerListener: SystemAlertRecyclerListener) {
         this.systemAlertRecyclerListener = systemAlertRecyclerListener
     }
 

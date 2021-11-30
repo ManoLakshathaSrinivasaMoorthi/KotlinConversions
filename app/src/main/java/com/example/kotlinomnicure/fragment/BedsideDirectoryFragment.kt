@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.kotlinomnicure.activity.RemoteProviderDirectoryActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.BedsideDirectoryAdapter
+import com.example.kotlinomnicure.adapter.BedsideDirectoryAdapter
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 import com.google.gson.Gson
 import com.example.kotlinomnicure.utils.UtilityMethods

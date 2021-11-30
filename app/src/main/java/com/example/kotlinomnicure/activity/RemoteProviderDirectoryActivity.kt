@@ -25,8 +25,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.MyDashboardActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.BedsideDirectoryAdapter
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.HospitalDirectoryAdapter
+import com.example.kotlinomnicure.adapter.BedsideDirectoryAdapter
+import com.example.kotlinomnicure.adapter.HospitalDirectoryAdapter
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.RemoteDirectoryAdapter
 import com.example.kotlinomnicure.fragment.BedsideDirectoryFragment
 import com.example.dailytasksamplepoc.kotlinomnicure.fragment.HospitalDirectoryFragment

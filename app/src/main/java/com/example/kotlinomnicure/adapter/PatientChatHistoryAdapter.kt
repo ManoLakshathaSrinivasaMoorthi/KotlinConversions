@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlinomnicure.R
 
 import com.example.kotlinomnicure.interfaces.OnPatientHistoryItemListener
 import com.example.kotlinomnicure.utils.ChatUtils

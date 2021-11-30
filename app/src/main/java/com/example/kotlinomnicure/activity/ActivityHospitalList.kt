@@ -8,10 +8,9 @@ import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.HospitalListAdapter
+import com.example.kotlinomnicure.adapter.HospitalListAdapter
 
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HospitalListViewModel
 import com.example.kotlinomnicure.R
