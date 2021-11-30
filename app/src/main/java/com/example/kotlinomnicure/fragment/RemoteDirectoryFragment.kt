@@ -27,7 +27,7 @@ import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
 import java.util.*
 

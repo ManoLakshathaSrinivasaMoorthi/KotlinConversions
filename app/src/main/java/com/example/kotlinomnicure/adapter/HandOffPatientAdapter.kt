@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dailytasksamplepoc.R
 import com.example.dailytasksamplepoc.databinding.HandOffChildListBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.HandOffPatientsActivity
+import com.example.kotlinomnicure.activity.HandOffPatientsActivity
 
 
 

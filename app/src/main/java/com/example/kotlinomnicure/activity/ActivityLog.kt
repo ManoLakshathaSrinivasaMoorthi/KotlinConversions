@@ -1,10 +1,11 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.LogDateAdapter
 
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ENotesViewModel
@@ -16,7 +17,7 @@ import com.example.kotlinomnicure.utils.UtilityMethods
 
 import java.util.ArrayList
 
-class ActivityLog :BaseActivity() {
+class ActivityLog : BaseActivity() {
     private var binding: ActivityLogBinding? = null
     private val TAG = "ActivityENotes"
     private var patientId: Long = 0

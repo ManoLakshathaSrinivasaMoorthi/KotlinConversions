@@ -13,7 +13,7 @@ class Patient {
     private var dischargeTime: Long? = null
     private var dob: Long? = null
     private var docBoxManagerId: String? = null
-    private var docBoxPatientId: String? = null
+    var docBoxPatientId: String? = null
     private var email: String? = null
     private var completed_by: String? = null
     private var fname: String? = null
@@ -36,14 +36,14 @@ class Patient {
     private var inviteTime: Long? = null
     private var acceptTime: Long? = null
     private var wardName: String? = null
-    private var patientCondition: String? = null
-    private var heartRate: Double? = null
-    private var arterialBloodPressureSystolic: Double? = null
-    private var arterialBloodPressureDiastolic: Double? = null
-    private var spO2: Double? = null
-    private var fio2: Double? = null
-    private var temperature: Double? = null
-    private var respiratoryRate: Double? = null
+    var patientCondition: String? = null
+    var heartRate: Double? = null
+    var arterialBloodPressureSystolic: Double? = null
+    var arterialBloodPressureDiastolic: Double? = null
+    var spO2: Double? = null
+    var fio2: Double? = null
+    var temperature: Double? = null
+    var respiratoryRate: Double? = null
     private var heartRateValue: String? = null
     private var arterialBloodPressureSystolicValue: String? = null
     private var arterialBloodPressureDiastolicValue: String? = null
@@ -52,7 +52,7 @@ class Patient {
     private var temperatureValue: String? = null
     private var respiratoryRateValue: String? = null
     private var recordNumber: String? = null
-    private var oxygenSupplement: Boolean? = null
+    var oxygenSupplement: Boolean? = null
     private var urgent: Boolean? = null
 
     fun getCompleted_by(): String? {

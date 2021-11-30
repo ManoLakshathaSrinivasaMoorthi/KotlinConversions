@@ -23,7 +23,7 @@ class CustomDialog: Dialog {
     private var positiveListener: View.OnClickListener? = null
     private var negativeTextId = -1
     private var negetiveListener: View.OnClickListener? = null
-    private var positiveButtonColor = -1
+    var positiveButtonColor = -1
 
     constructor(context: Context?):   super(context!!)
 

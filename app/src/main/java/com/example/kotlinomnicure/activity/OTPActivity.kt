@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.customview.PinEntryView
 import com.example.kotlinomnicure.databinding.ActivityOtpBinding
@@ -108,7 +109,7 @@ class OTPActivity : BaseActivity() {
     }
 
     private fun onSubmitOTP(uid: Long, pin: String) {
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods().isInternetConnected(this)!!) {
 //            UtilityMethods.showInternetError(binding.getRoot(), Snackbar.LENGTH_LONG);
             CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)?.show()
             return

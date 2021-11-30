@@ -1,4 +1,4 @@
-package com.mvp.omnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -41,7 +41,7 @@ class ActivityENotesDetails : BaseActivity(), ENotesDetailsAdapter.DetailsClick 
     private var adapter: ENotesDetailsAdapter? = null
     var encKey = ""
     private var viewModel: ENotesViewModel? = null
-    protected fun onCreate(savedInstanceState: Bundle?) {
+    protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_enotes_details)
         viewModel = ViewModelProvider(this).get(ENotesViewModel::class.java)
@@ -144,7 +144,7 @@ class ActivityENotesDetails : BaseActivity(), ENotesDetailsAdapter.DetailsClick 
             .setDuration(800)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     private fun setClickListeners() {
 
 
@@ -166,7 +166,7 @@ class ActivityENotesDetails : BaseActivity(), ENotesDetailsAdapter.DetailsClick 
             setFabState()
             callReadApi()
         })
-        binding?.imgBack?.setOnClickListener(View.OnClickListener { this@ActivityENotesDetails.onBackPressed() })
+        binding?.imgBack?.setOnClickListener(View.OnClickListener { this.onBackPressed() })
     }
 
     @SuppressLint("SetTextI18n")

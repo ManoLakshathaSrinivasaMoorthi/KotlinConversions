@@ -20,7 +20,6 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.toolbox.ImageLoader
-import com.example.dailytasksamplepoc.R
 
 import com.example.dailytasksamplepoc.databinding.ActivityDashboardBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.AddNotificationDataRequest
@@ -40,7 +39,7 @@ import com.google.firebase.database.*
 import com.google.gson.Gson
 import com.mvp.omnicure.kotlinactivity.activity.ActivityConsultChart
 import com.mvp.omnicure.kotlinactivity.activity.ActivityPatientCensusHospital
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
 import java.lang.Exception
 import java.lang.ref.WeakReference

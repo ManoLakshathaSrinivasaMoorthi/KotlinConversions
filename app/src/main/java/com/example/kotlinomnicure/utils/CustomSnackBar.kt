@@ -13,10 +13,15 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.biometric.BiometricPrompt
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.HomeActivity
 
 class CustomSnackBar {
+    private lateinit var patientStatus: String
+    private lateinit var patientName: String
+    private var patientId: Long = 0
+
     /**
      * This method auto dismiss snackbar
      */
@@ -89,6 +94,16 @@ class CustomSnackBar {
         }
     }
 
+
+    fun setPatientDetails(id:Long,name:String,status:String)
+    {
+        if (instance == null) {
+            instance =  CustomSnackBar();
+        }
+        instance!!.patientId = id;
+        instance!!.patientName = name;
+        instance!!.patientStatus = status;
+    }
     fun isAsDropDown(): Boolean {
         return asDropDown
     }
@@ -109,45 +124,6 @@ class CustomSnackBar {
      * Hide close icon if duration is already set
      */
     private fun setCancelButton(clickIntent: Int) {
-//        if (duration > 0) {
-////            imgClose.setVisibility(View.INVISIBLE);
-//            imgClose.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    handler.removeCallbacksAndMessages(null);
-//                    popupWindow.dismiss();
-//
-//                    if (clickIntent == 1) {
-//                        Intent intent = new Intent(instance.activity, HomeActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        instance.activity.startActivity(intent);
-//                        instance.activity.finish();
-//                    } else if (clickIntent == 2) {
-//                        new LogoutHelper(instance.activity, instance.rootView).doLogout();
-//
-//                    }
-//
-//                }
-//            });
-//        } else {
-//            imgClose.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    handler.removeCallbacksAndMessages(null);
-//                    popupWindow.dismiss();
-//                    // Giving intent to respect activity based on the type of clickIntent
-//                    if (clickIntent == 1) {
-//                        Intent intent = new Intent(instance.activity, HomeActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        instance.activity.startActivity(intent);
-//                        instance.activity.finish();
-//
-//                    } else if (clickIntent == 2) {
-//                        new LogoutHelper(instance.activity, instance.rootView).doLogout();
-//                    }
-//                }
-//            });
-//        }
         imgClose!!.setOnClickListener {
             handler!!.removeCallbacksAndMessages(null)
             popupWindow!!.dismiss()
@@ -179,26 +155,24 @@ class CustomSnackBar {
             // Giving intent to respect activity based on the type of clickIntent
             when (clickIntent) {
                 1 -> {
-                    val intent = Intent(instance!!.activity, HomeActivity::class.java)
-                    //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    instance!!.activity!!.startActivity(intent)
-                    instance!!.activity!!.finish()
+                    /* val intent = Intent(instance!!.activity, HomeActivity::class.java)
+                     //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                     instance!!.activity!!.startActivity(intent)
+                     instance!!.activity!!.finish()*/
                 }
                 2 -> {
-                  //  LogoutHelper(instance!!.activity, instance!!.rootView).doLogout()
+                    //  LogoutHelper(instance!!.activity, instance!!.rootView).doLogout()
                 }
                 3 -> {
-                    val intent = Intent(instance!!.activity, HomeActivity::class.java)
+                    /*val intent = Intent(instance!!.activity, HomeActivity::class.java)
                     intent.putExtra(Constants.IntentKeyConstants.TARGET_PAGE, "completed")
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     instance!!.activity!!.startActivity(intent)
-                    instance!!.activity!!.finish()
+                    instance!!.activity!!.finish()*/
                 }
                 4 -> {
-        //                Intent intent = new Intent(instance.activity, ActivityPatientCensusPatient.class);
-        //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //                instance.activity.startActivity(intent);
+
                     instance!!.activity!!.setResult(Activity.RESULT_OK)
                     instance!!.activity!!.finish()
                 }
@@ -215,7 +189,7 @@ class CustomSnackBar {
      */
     fun show() {
         if (activity != null) {
-//            if(activity.hasWindowFocus()){  //this will prevent activity not running crash due to async call
+
             showSnackBar = true
             //Changing status bar color as per snack bar type
             if (customSnackBarType == 1) {
@@ -247,9 +221,9 @@ class CustomSnackBar {
     }
 
     private fun setAnimationstyle() {
-        if (gravity == TOP) animationStyle = R.style.topAnimation
-        //        else if (gravity == BOTTOM)
-//            animationStyle = R.style.bottomAnimation;
+        /* if (gravity == TOP) animationStyle = R.style.topAnimation
+         //        else if (gravity == BOTTOM)
+ //            animationStyle = R.style.bottomAnimation;*/
     }
 
     fun setCustomAnimationStyle(customAnimationStyle: Int) {
@@ -296,7 +270,7 @@ class CustomSnackBar {
                 }
             }
             instance!!.rootView = view
-            //            instance.mContext = context;
+
             instance!!.activity = activity
             instance!!.setCustomSnackBarLayout(snackBarType)
             instance!!.setLayout(instance!!.layout)
@@ -316,9 +290,9 @@ class CustomSnackBar {
          */
         fun make(
             view: View?,
-            activity: Activity?,
+            activity: Activity,
             snackBarType: Int,
-            message: String,
+            message: String?,
             position: Int,
             duration: Int,
             clickIntent: Int
@@ -335,7 +309,9 @@ class CustomSnackBar {
             instance!!.activity = activity
             instance!!.setCustomSnackBarLayout(snackBarType)
             instance!!.setLayout(instance!!.layout)
-            instance!!.setSnackBarText(message)
+            if (message != null) {
+                instance!!.setSnackBarText(message)
+            }
             instance!!.duration = duration
             instance!!.intentClick = clickIntent
             instance!!.gravity = position

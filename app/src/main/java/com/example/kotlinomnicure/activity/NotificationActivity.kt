@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -24,17 +24,18 @@ import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
 import com.example.dailytasksamplepoc.kotlinomnicure.customview.CustomProgressDialog
-import com.example.dailytasksamplepoc.kotlinomnicure.utils.PrefUtility
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.helper.LogoutHelper
+import com.example.kotlinomnicure.utils.*
+
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
-import com.mvp.omnicure.kotlinactivity.utils.ValidationUtil
+import com.example.kotlinomnicure.viewmodel.LoginViewModel
+
 import java.lang.Exception
 import java.security.KeyStore
 import java.util.concurrent.Executor
@@ -59,7 +60,7 @@ class NotificationActivity : BaseActivity(){
     private val keyStore: KeyStore? = null
     private val cipher: Cipher? = null
     private val KEY_NAME = "AndroidKey"
-    private var ctx:Context=NotificationActivity()
+    private var ctx:Context= NotificationActivity()
     override fun onCreate(savedInstanceState: Intent?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
@@ -133,18 +134,18 @@ class NotificationActivity : BaseActivity(){
     fun checkfingerprintabove29() {
         val biometricManager = BiometricManager.from(this)
         if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE) {
-            PrefUtility.saveBooleanInPref(this,
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false)
-            PrefUtility.saveStringInPref(this,
+            PrefUtility().saveStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD,
                 "")
             showPasswordPopup()
         } else if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED) {
-            PrefUtility.saveBooleanInPref(this,
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false)
-            PrefUtility.saveStringInPref(this,
+            PrefUtility().saveStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD,
                 "")
             showPasswordPopup()
@@ -161,10 +162,10 @@ class NotificationActivity : BaseActivity(){
             TODO("VERSION.SDK_INT < M")
         }
         if (fingerprintManager2 == null) {
-            PrefUtility.saveBooleanInPref(this,
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false)
-            PrefUtility.saveStringInPref(this,
+            PrefUtility().saveStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD,
                 "")
             showPasswordPopup()
@@ -174,10 +175,10 @@ class NotificationActivity : BaseActivity(){
                 TODO("VERSION.SDK_INT < M")
             }
         ) {
-            PrefUtility.saveBooleanInPref(this,
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false)
-          PrefUtility.saveStringInPref(this,
+          PrefUtility().saveStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD,
                 "")
             showPasswordPopup()
@@ -187,10 +188,10 @@ class NotificationActivity : BaseActivity(){
                 TODO("VERSION.SDK_INT < M")
             }
         ) {
-            PrefUtility.saveBooleanInPref(this,
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false)
-            PrefUtility.saveStringInPref(this,
+            PrefUtility().saveStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD,
                 "")
             showPasswordPopup()
@@ -227,7 +228,7 @@ class NotificationActivity : BaseActivity(){
         if (messageType != null && messageType == Constants.FCMMessageType.PASSWORD_LOCK) {
             if (!getTopActivity().contains("CallActivity") && !getTopActivity().contains("RingingActivity")) {
                 val finerprintstate: Boolean =
-                    PrefUtility.getBooleanInPref(this,
+                    PrefUtility().getBooleanInPref(this,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG,
                         false)
                 if (finerprintstate) {
@@ -285,22 +286,22 @@ class NotificationActivity : BaseActivity(){
             //  Clear the preference values and redirect to login activity, signout from the firebase as well
             if (messageType == Constants.FCMMessageType.LOGOUT_EXCEEDED) {
                 val email: String? =
-                    context?.let { it1 -> PrefUtility.getStringInPref(it1, Constants.SharedPrefConstants.EMAIL, "") }
+                    context?.let { it1 -> PrefUtility().getStringInPref(it1, Constants.SharedPrefConstants.EMAIL, "") }
                 val password: String? =
-                    context?.let { it1 -> PrefUtility.getStringInPref(it1, Constants.SharedPrefConstants.PASSWORD, "") }
-                val finerprintstate: Boolean = PrefUtility.getBooleanInPref(context as NotificationActivity,
+                    context?.let { it1 -> PrefUtility().getStringInPref(it1, Constants.SharedPrefConstants.PASSWORD, "") }
+                val finerprintstate: Boolean = PrefUtility().getBooleanInPref(context as NotificationActivity,
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     false)
                 clearPrefs()
 
                 if (finerprintstate) {
-                    PrefUtility.saveStringInPref(ctx,
+                    PrefUtility().saveStringInPref(ctx,
                         Constants.SharedPrefConstants.PASSWORD,
                         password)
-                    PrefUtility.saveStringInPref(ctx,
+                    PrefUtility().saveStringInPref(ctx,
                         Constants.SharedPrefConstants.EMAIL,
                         email)
-                    PrefUtility.saveBooleanInPref(context,
+                    PrefUtility().saveBooleanInPref(context,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG,
                         finerprintstate)
                 } else {
@@ -312,18 +313,18 @@ class NotificationActivity : BaseActivity(){
                 // To disable/stop showing push notification to the user, when session expired
                 // If false - notfication can be displayed
                 // If true - Notification will not be displayed
-                PrefUtility.saveBooleanInPref(this,
+                PrefUtility().saveBooleanInPref(this,
                     Constants.SharedPrefConstants.DISABLE_NOTIFICATION,
                     false)
             } else if (messageType == Constants.FCMMessageType.DENIED_USER) {
                 val email: String? =
-                    PrefUtility.getStringInPref(context, Constants.SharedPrefConstants.EMAIL, "")
+                    context?.let { it1 -> PrefUtility().getStringInPref(it1, Constants.SharedPrefConstants.EMAIL, "") }
                 val password: String? =
-                    PrefUtility.getStringInPref(context, Constants.SharedPrefConstants.PASSWORD, "")
-                val finerprintstate: Boolean = PrefUtility.getBooleanInPref(context as NotificationActivity,
+                    context?.let { it1 -> PrefUtility().getStringInPref(it1, Constants.SharedPrefConstants.PASSWORD, "") }
+                val finerprintstate: Boolean = PrefUtility().getBooleanInPref(context as NotificationActivity,
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     false)
-                PrefUtility.saveBooleanInPref(context,
+                PrefUtility().saveBooleanInPref(context,
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     false)
                 clearPrefs()
@@ -336,7 +337,7 @@ class NotificationActivity : BaseActivity(){
                 // To disable/stop showing push notification to the user, when session expired
                 // If false - notfication can be displayed
                 // If true - Notification will not be displayed
-                PrefUtility.saveBooleanInPref(this,
+                PrefUtility().saveBooleanInPref(this,
                     Constants.SharedPrefConstants.DISABLE_NOTIFICATION,
                     false)
             } else {
@@ -344,7 +345,7 @@ class NotificationActivity : BaseActivity(){
                 // To disable/stop showing push notification to the user, when session expired
                 // If false - notfication can be displayed
                 // If true - Notification will not be displayed
-                PrefUtility.saveBooleanInPref(this,
+                PrefUtility().saveBooleanInPref(this,
                     Constants.SharedPrefConstants.DISABLE_NOTIFICATION,
                     false)
             }
@@ -364,10 +365,12 @@ class NotificationActivity : BaseActivity(){
 
     private fun onSuccessLogout() {
         val topic: String? = UtilityMethods().getFCMTopic()
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
-            .addOnCompleteListener {
-              
-            }
+        if (topic != null) {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
+                .addOnCompleteListener {
+
+                }
+        }
     }
 
     private fun showPasswordPopupfingerprint() {
@@ -390,7 +393,7 @@ class NotificationActivity : BaseActivity(){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 val finerprintstate: Boolean =
-                    PrefUtility.getBooleanInPref(this,
+                    PrefUtility().getBooleanInPref(this,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG,
                         false)
                 if (finerprintstate) {
@@ -413,7 +416,7 @@ class NotificationActivity : BaseActivity(){
         alertDialog!!.setCanceledOnTouchOutside(false)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //   generateKey();
-            val finerprintstate: Boolean = PrefUtility.getBooleanInPref(this,
+            val finerprintstate: Boolean = PrefUtility().getBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false)
             if (finerprintstate) {
@@ -469,10 +472,10 @@ class NotificationActivity : BaseActivity(){
                         /**
                          * The device does not have a biometric sensor.
                          */
-                        PrefUtility.saveBooleanInPref(this,
+                        PrefUtility().saveBooleanInPref(this,
                             Constants.SharedPrefConstants.FINGERPRINTFLAG,
                             false)
-                        PrefUtility.saveStringInPref(this,
+                        PrefUtility().saveStringInPref(this,
                             Constants.SharedPrefConstants.PASSWORD,
                             "")
                         handledisable()
@@ -492,10 +495,10 @@ class NotificationActivity : BaseActivity(){
                          * The user does not have any biometrics enrolled.
                          */
                         //   menufingerprint.setVisibility(View.GONE);
-                        PrefUtility.saveBooleanInPref(this,
+                        PrefUtility().saveBooleanInPref(this,
                             Constants.SharedPrefConstants.FINGERPRINTFLAG,
                             false)
-                        PrefUtility.saveStringInPref(this,
+                        PrefUtility().saveStringInPref(this,
                             Constants.SharedPrefConstants.PASSWORD,
                             "")
                         handledisable()
@@ -541,8 +544,7 @@ class NotificationActivity : BaseActivity(){
                             CustomSnackBar.WARNING,
                             getString(R.string.fpdisable),
                             CustomSnackBar.TOP,
-                            3000,
-                            0).show()
+                            300)?.show()
 
 
                         stopAuth()
@@ -586,7 +588,7 @@ class NotificationActivity : BaseActivity(){
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    val password: String? = PrefUtility.getStringInPref(this,
+                    val password: String? = PrefUtility().getStringInPref(this,
                         Constants.SharedPrefConstants.PASSWORD,
                         "")
                     EncUtil().generateKey(activity)
@@ -599,7 +601,7 @@ class NotificationActivity : BaseActivity(){
 
                 override fun onAuthenticationFailed() {
                     val finerprintstate: Boolean =
-                        PrefUtility.getBooleanInPref(this,
+                        PrefUtility().getBooleanInPref(this,
                             Constants.SharedPrefConstants.FINGERPRINTFLAG,
                             false)
                     if (finerprintstate) {
@@ -625,7 +627,7 @@ class NotificationActivity : BaseActivity(){
 
     private fun handledisable() {
         mHandler = Handler()
-        mHandler.postDelayed(Runnable {
+        mHandler!!.postDelayed(Runnable {
             if (alertDialog != null) {
                 alertDialog!!.dismiss()
                 finish()
@@ -699,7 +701,7 @@ class NotificationActivity : BaseActivity(){
      */
     private fun handleMultipleClick(view: View) {
         view.isEnabled = false
-        mHandler.postDelayed({ view.isEnabled = true }, 500)
+        mHandler?.postDelayed({ view.isEnabled = true }, 500)
     }
 
     fun checkPasswordFirebase(password: String) {
@@ -708,29 +710,33 @@ class NotificationActivity : BaseActivity(){
         }
         val user = FirebaseAuth.getInstance().currentUser
         val email: String? =
-            PrefUtility.getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
+            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
 
         showProgressBar(getString(R.string.password_verify))
-        val credential = EmailAuthProvider
-            .getCredential(email, password)
+        val credential = email?.let {
+            EmailAuthProvider
+                .getCredential(it, password)
+        }
 
         // Prompt the user to re-provide their sign-in credentials
-        user!!.reauthenticate(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    checkPasswordApi(password)
-                } else {
-                    dismissProgressBar()
-                    CustomSnackBar.make(dialogView,
-                        this,
-                        CustomSnackBar.WARNING,
-                        getString(R.string.authentication_failed_password),
-                        CustomSnackBar.TOP,
-                        3000,
-                        0)?.show()
+        if (credential != null) {
+            user!!.reauthenticate(credential)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        checkPasswordApi(password)
+                    } else {
+                        dismissProgressBar()
+                        CustomSnackBar.make(dialogView,
+                            this,
+                            CustomSnackBar.WARNING,
+                            getString(R.string.authentication_failed_password),
+                            CustomSnackBar.TOP,
+                            3000,
+                            0)?.show()
 
+                    }
                 }
-            }
+        }
     }
 
     /**
@@ -741,11 +747,11 @@ class NotificationActivity : BaseActivity(){
         if (!isValid()) {
             return
         }
-        val token: String? = PrefUtility.getStringInPref(this,
+        val token: String? = PrefUtility().getStringInPref(this,
             Constants.SharedPrefConstants.TOKEN,
             "")
         val strEmail: String?=
-            PrefUtility.getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
+            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
         viewModel.checkPassword(strEmail, password, token).observe(this) { commonResponse ->
             dismissProgressBar()
 
@@ -787,10 +793,10 @@ class NotificationActivity : BaseActivity(){
                         3000,
                         0)?.show()
 
-                    PrefUtility.saveBooleanInPref(this,
+                    PrefUtility().saveBooleanInPref(this,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG,
                         false)
-                    PrefUtility.saveStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
+                    PrefUtility().saveStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
                     alertDialog!!.dismiss()
 
                     val intent =
@@ -818,11 +824,11 @@ class NotificationActivity : BaseActivity(){
 
     // Showing loader for this activity
     fun checkPasswordApifingerprint(password: String?) {
-        val token: String?= PrefUtility.getStringInPref(this,
-            com.mvp.omnicure.utils.Constants.SharedPrefConstants.TOKEN,
+        val token: String?= PrefUtility().getStringInPref(this,
+            Constants.SharedPrefConstants.TOKEN,
             "")
         val strEmail: String? =
-            PrefUtility.getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
+            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
         viewModel.checkPassword(strEmail, password, token).observe(this) { commonResponse ->
             dismissProgressBar()
 
@@ -830,10 +836,10 @@ class NotificationActivity : BaseActivity(){
                 EncUtil().generateKey(this)
                 val encryptpassword: String? =
                     EncUtil().encrypt(this, password)
-                PrefUtility.saveStringInPref(this,
+                PrefUtility().saveStringInPref(this,
                     Constants.SharedPrefConstants.PASSWORD,
                     encryptpassword)
-                PrefUtility.saveBooleanInPref(this,
+                PrefUtility().saveBooleanInPref(this,
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     true)
                 val auth = "Authentication Permission Granted"
@@ -871,10 +877,10 @@ class NotificationActivity : BaseActivity(){
                         CustomSnackBar.TOP,
                         3000,
                         0)?.show()
-                    PrefUtility.saveBooleanInPref(this,
+                    PrefUtility().saveBooleanInPref(this,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG,
                         false)
-                    PrefUtility.saveStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
+                    PrefUtility().saveStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
                     alertDialog!!.dismiss()
 
                     val intent =
@@ -902,15 +908,14 @@ class NotificationActivity : BaseActivity(){
     }
 
     var progressDialog: CustomProgressDialog? = null
-    fun showProgressBar(string: String) {
+
+   fun showProgressBar(string: String) {
         dismissProgressBar()
         try {
             progressDialog = CustomProgressDialog(this)
             progressDialog!!.setCancelable(false)
             var isDestyoed = false
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                isDestyoed = isDestroyed
-            }
+            isDestyoed = isDestroyed
             if (!isFinishing && !isDestyoed) {
                 if (progressDialog != null && !progressDialog!!.isShowing()) {
                     progressDialog!!.show()
@@ -935,7 +940,7 @@ class NotificationActivity : BaseActivity(){
                 errMsg,
                 CustomSnackBar.TOP,
                 3000,
-                0).show()
+                0)?.show()
             return false
         }
         return true

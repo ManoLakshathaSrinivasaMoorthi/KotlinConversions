@@ -17,7 +17,7 @@ import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.PatientDetailView
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
 import java.text.SimpleDateFormat
 import java.util.*

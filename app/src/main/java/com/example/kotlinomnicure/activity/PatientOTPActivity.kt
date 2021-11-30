@@ -19,7 +19,7 @@ import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.TextSpanBuilder
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.patientsEndpoints.model.PatientOtpModel
 import java.lang.Exception

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +7,9 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityFilterBinding
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityFilterBinding
+
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 

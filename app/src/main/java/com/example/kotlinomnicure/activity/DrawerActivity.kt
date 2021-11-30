@@ -1,5 +1,6 @@
 package com.example.dailytasksamplepoc.kotlinomnicure.activity
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,12 +11,14 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityDrawerBinding
+
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityDrawerBinding
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
+
 
 open class DrawerActivity : AppCompatActivity() {
     private val TAG = DrawerActivity::class.java.simpleName
@@ -31,6 +34,7 @@ open class DrawerActivity : AppCompatActivity() {
         initDrawer()
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun initDrawer() {
         drawerLayout = binding?.drawerLayout
         navHeaderView = binding?.leftNavView?.getHeaderView(0)
@@ -71,6 +75,7 @@ open class DrawerActivity : AppCompatActivity() {
         setVersion()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setVersion() {
         try {
             val packageInfo = packageManager.getPackageInfo(packageName, 0)

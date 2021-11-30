@@ -1,5 +1,6 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -15,21 +16,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.HandOffPatientsBinding
+
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HandOffPatientViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.HandOffPatientsBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
-import com.example.kotlinomnicure.utils.PrefUtility
+import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
 
 
 
 import com.mvp.omnicure.kotlinactivity.adapter.HandOffPatientAdapter
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
-import com.mvp.omnicure.kotlinactivity.utils.ValidationUtil
+
 
 import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.providerEndpoints.model.HandOffListResponse
@@ -47,7 +46,7 @@ class HandOffPatientsActivity : BaseActivity(){
     private var handOffPatientAdapter: HandOffPatientAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
     private var selectedProviderId: String? = null
-    private var ctx: Context?=HandOffPatientsActivity()
+    private var ctx: Context?= HandOffPatientsActivity()
 
    //on create method
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -146,6 +145,7 @@ class HandOffPatientsActivity : BaseActivity(){
             handOffPatientAdapter!!.setHandOffRecyclerListener(object : HandOffPatientAdapter.HandOffRecyclerListener {
 
 
+                @SuppressLint("UseCompatLoadingForDrawables")
                 override fun onItemSelected(otherBspList: HandOffListResponse.OtherBspList?) {
                     val strName: String? = otherBspList?.name
                     if (otherBspList != null) {
@@ -189,7 +189,7 @@ class HandOffPatientsActivity : BaseActivity(){
         ) { commonResponse: CommonResponse? ->
             Log.d(TAG, "sendHandOffPatient response: " + Gson().toJson(commonResponse))
             dismissProgressBar()
-            if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
+            if (commonResponse?.status != null && commonResponse.status!!) {
                 onHandOffSendSuccess(commonResponse)
             } else {
                 binding?.btnHandOff?.setEnabled(true)

@@ -25,7 +25,7 @@ import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.firebase.database.FirebaseDatabase
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import java.util.ArrayList
 
 class RemoteCompleteActivity :BaseActivity(){

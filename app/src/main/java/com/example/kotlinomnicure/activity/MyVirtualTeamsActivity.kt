@@ -1,5 +1,6 @@
 package com.example.dailytasksamplepoc.kotlinomnicure.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 
 import android.os.Bundle
@@ -11,11 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityMyVirtualWardBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.TeamListAdapter
-import com.example.dailytasksamplepoc.kotlinomnicure.videocall.openvcall.model.ConstantApp
-import com.example.dailytasksamplepoc.kotlinomnicure.videocall.openvcall.ui.CallActivity
+
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.MyVirtualViewModel
 import com.example.kotlinomnicure.utils.Constants
@@ -23,8 +21,13 @@ import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.activity.CallActivity
+import com.example.kotlinomnicure.activity.GroupCallActivity
+import com.example.kotlinomnicure.databinding.ActivityMyVirtualWardBinding
+import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.ArrayList
@@ -159,75 +162,82 @@ class MyVirtualTeamsActivity : BaseActivity() {
         val name: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.NAME, "")
         val hospitalName: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.HOSPITAL_NAME, "")
         val imageURL: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.PROFILE_IMG_URL, "")
-        HomeViewModel().startCall(providerID, token, selectedProviderList[0].getId(), 0L, Constants.FCMMessageType.VIDEO_CALL)?.observe(this) { commonResponse ->
-            dismissProgressBar()
-            if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
-                val callScreen = Intent(this, CallActivity::class.java)
-                callScreen.putExtra("providerName", selectedProviderList[0].getName())
-                callScreen.putExtra("providerHospitalName", selectedProviderList[0].getHospital())
-                callScreen.putExtra("profilePicUrl", selectedProviderList[0].getProfilePicUrl())
-                callScreen.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, providerID.toString() + channelName)
-                callScreen.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, "")
-                callScreen.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE, resources.getStringArray(R.array.encryption_mode_values)[0])
-                callScreen.putExtra("callType", "outgoing")
-                callScreen.putExtra("call", Constants.FCMMessageType.AUDIO_CALL)
-                val gson = Gson()
-                val providerList: MutableList<Provider> = ArrayList<Provider>()
+        if (providerID != null) {
+            selectedProviderList[0].getId()?.let {
+                if (token != null) {
+                    HomeViewModel().startCall(providerID, token, it, 0L, Constants.FCMMessageType.VIDEO_CALL)?.observe(this) { commonResponse ->
+                        dismissProgressBar()
+                        if (commonResponse?.status != null && commonResponse.status!!) {
+                            val callScreen = Intent(this, CallActivity::class.java)
+                            callScreen.putExtra("providerName", selectedProviderList[0].getName())
+                            callScreen.putExtra("providerHospitalName", selectedProviderList[0].getHospital())
+                            callScreen.putExtra("profilePicUrl", selectedProviderList[0].getProfilePicUrl())
+                            callScreen.putExtra(ConstantApp().ACTION_KEY_CHANNEL_NAME, providerID.toString() + channelName)
+                            callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_KEY, "")
+                            callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_MODE, resources.getStringArray(R.array.encryption_mode_values)[0])
+                            callScreen.putExtra("callType", "outgoing")
+                            callScreen.putExtra("call", Constants.FCMMessageType.AUDIO_CALL)
+                            val gson = Gson()
+                            val providerList: MutableList<Provider> = ArrayList<Provider>()
 
-                val selfProvider = Provider()
-                selfProvider.setId(providerID)
-                selfProvider.setName(
-                    PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.NAME, ""))
-                selfProvider.setProfilePicUrl(
-                    PrefUtility().getStringInPref(
-                        this,
-                        Constants.SharedPrefConstants.PROFILE_IMG_URL,
-                        ""
-                    )
-                )
-                selfProvider.setHospital(
-                    PrefUtility().getStringInPref(
-                        this,
-                        Constants.SharedPrefConstants.HOSPITAL_NAME,
-                        ""
-                    )
-                )
-                selfProvider.setRole(
-                    PrefUtility().getStringInPref(
-                        this,
-                        Constants.SharedPrefConstants.ROLE,
-                        ""
-                    )
-                )
-                providerList.add(selfProvider)
-                providerList.addAll(selectedProviderList)
-                callScreen.putExtra("providerList", gson.toJson(providerList))
-                startActivity(callScreen)
-            } else {
-                val errMsg: String? = ErrorMessages().getErrorMessage(this, commonResponse?.getErrorMessage(), Constants.API.startCall)
+                            val selfProvider = Provider()
+                            selfProvider.setId(providerID)
+                            selfProvider.setName(
+                                PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.NAME, ""))
+                            selfProvider.setProfilePicUrl(
+                                PrefUtility().getStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.PROFILE_IMG_URL,
+                                    ""
+                                )
+                            )
+                            selfProvider.setHospital(
+                                PrefUtility().getStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.HOSPITAL_NAME,
+                                    ""
+                                )
+                            )
+                            selfProvider.setRole(
+                                PrefUtility().getStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.ROLE,
+                                    ""
+                                )
+                            )
+                            providerList.add(selfProvider)
+                            providerList.addAll(selectedProviderList)
+                            callScreen.putExtra("providerList", gson.toJson(providerList))
+                            startActivity(callScreen)
+                        } else {
+                            val errMsg: String? = ErrorMessages().getErrorMessage(this, commonResponse?.errorMessage, Constants.API.startCall)
 
-                if (errMsg != null) {
-                    CustomSnackBar.make(
-                        binding?.idContainerLayout,
-                        this,
-                        CustomSnackBar.WARNING,
-                        errMsg,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0
-                    )?.show()
+                            if (errMsg != null) {
+                                CustomSnackBar.make(
+                                    binding?.idContainerLayout,
+                                    this,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0
+                                )?.show()
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun callApi() {
         showProgressBar()
         viewModel?.getTeams(uid)?.observe(this) { commonResponse ->
             dismissProgressBar()
             Log.d(TAG, "TeamsDetailsRes-->" + Gson().toJson(commonResponse))
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
+            if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
                 val gson = Gson()
                 var obj: JSONObject? = null
                 try {
@@ -280,99 +290,103 @@ class MyVirtualTeamsActivity : BaseActivity() {
             val lngPrId = java.lang.Double.valueOf(prId).toLong()
 
          //start the call
-            HomeViewModel().startCall(providerID, token, lngPrId.toString().toLong(), 0L, Constants.FCMMessageType.AUDIO_CALL)
-                ?.observe(this) { commonResponse ->
-                    dismissProgressBar()
-                    try {
-                        if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
-                            val callScreen =
-                                Intent(this, CallActivity::class.java)
-                            callScreen.putExtra("providerName", provider.getString("providerName"))
-                            callScreen.putExtra(
-                                "providerHospitalName",
-                                provider.getString("providerName")
-                            )
+            if (providerID != null) {
+                if (token != null) {
+                    HomeViewModel().startCall(providerID, token, lngPrId.toString().toLong(), 0L, Constants.FCMMessageType.AUDIO_CALL)
+                        ?.observe(this) { commonResponse ->
+                            dismissProgressBar()
+                            try {
+                                if (commonResponse?.status!= null && commonResponse.status!!) {
+                                    val callScreen =
+                                        Intent(this, CallActivity::class.java)
+                                    callScreen.putExtra("providerName", provider.getString("providerName"))
+                                    callScreen.putExtra(
+                                        "providerHospitalName",
+                                        provider.getString("providerName")
+                                    )
 
-                            callScreen.putExtra("providerId", lngPrId.toString().toLong())
-                            callScreen.putExtra("profilePicUrl", "")
+                                    callScreen.putExtra("providerId", lngPrId.toString().toLong())
+                                    callScreen.putExtra("profilePicUrl", "")
 
-                            callScreen.putExtra(
-                                ConstantApp.ACTION_KEY_CHANNEL_NAME,
-                                providerID.toString() + "-" + lngPrId.toString().toLong()
-                            )
-                            callScreen.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, "")
-                            callScreen.putExtra(
-                                ConstantApp.ACTION_KEY_ENCRYPTION_MODE,
-                                resources.getStringArray(R.array.encryption_mode_values)[0]
-                            )
-                            callScreen.putExtra("callType", "outgoing")
-                            callScreen.putExtra("call", Constants.FCMMessageType.AUDIO_CALL)
-                            val gson = Gson()
-                            val providerList: MutableList<Provider> =
-                                ArrayList<Provider>()
-                            val selfVal = Provider()
+                                    callScreen.putExtra(
+                                        ConstantApp().ACTION_KEY_CHANNEL_NAME,
+                                        providerID.toString() + "-" + lngPrId.toString().toLong()
+                                    )
+                                    callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_KEY, "")
+                                    callScreen.putExtra(
+                                        ConstantApp().ACTION_KEY_ENCRYPTION_MODE,
+                                        resources.getStringArray(R.array.encryption_mode_values)[0]
+                                    )
+                                    callScreen.putExtra("callType", "outgoing")
+                                    callScreen.putExtra("call", Constants.FCMMessageType.AUDIO_CALL)
+                                    val gson = Gson()
+                                    val providerList: MutableList<Provider> =
+                                        ArrayList<Provider>()
+                                    val selfVal = Provider()
 
-                            selfVal.setId(lngPrId.toString().toLong())
-                            selfVal.setName(provider.getString("providerName"))
-                            selfVal.setHospital("Team " + provider.getString("teamName"))
-                            selfVal.setRole(provider.getString("rpType"))
-                            providerList.add(selfVal)
-                            val selfProvider = Provider()
-                            selfProvider.setId(providerID)
-                            selfProvider.setName(
-                                PrefUtility().getStringInPref(
-                                    this,
-                                    Constants.SharedPrefConstants.NAME,
-                                    ""
-                                )
-                            )
-                            selfProvider.setProfilePicUrl(
-                                PrefUtility().getStringInPref(
-                                    this,
-                                    Constants.SharedPrefConstants.PROFILE_IMG_URL,
-                                    ""
-                                )
-                            )
-                            selfProvider.setHospital(
-                                PrefUtility().getStringInPref(
-                                    this,
-                                    Constants.SharedPrefConstants.HOSPITAL_NAME,
-                                    ""
-                                )
-                            )
-                            selfProvider.setRole(
-                                PrefUtility().getStringInPref(
-                                    this,
-                                    Constants.SharedPrefConstants.ROLE,
-                                    ""
-                                )
-                            )
-                            providerList.add(selfProvider)
-                            callScreen.putExtra("providerList", gson.toJson(providerList))
-                            startActivity(callScreen)
-                        } else {
-                            val errMsg: String? = ErrorMessages().getErrorMessage(
-                                this,
-                                commonResponse?.getErrorMessage(),
-                                Constants.API.startCall
-                            )
+                                    selfVal.setId(lngPrId.toString().toLong())
+                                    selfVal.setName(provider.getString("providerName"))
+                                    selfVal.setHospital("Team " + provider.getString("teamName"))
+                                    selfVal.setRole(provider.getString("rpType"))
+                                    providerList.add(selfVal)
+                                    val selfProvider = Provider()
+                                    selfProvider.setId(providerID)
+                                    selfProvider.setName(
+                                        PrefUtility().getStringInPref(
+                                            this,
+                                            Constants.SharedPrefConstants.NAME,
+                                            ""
+                                        )
+                                    )
+                                    selfProvider.setProfilePicUrl(
+                                        PrefUtility().getStringInPref(
+                                            this,
+                                            Constants.SharedPrefConstants.PROFILE_IMG_URL,
+                                            ""
+                                        )
+                                    )
+                                    selfProvider.setHospital(
+                                        PrefUtility().getStringInPref(
+                                            this,
+                                            Constants.SharedPrefConstants.HOSPITAL_NAME,
+                                            ""
+                                        )
+                                    )
+                                    selfProvider.setRole(
+                                        PrefUtility().getStringInPref(
+                                            this,
+                                            Constants.SharedPrefConstants.ROLE,
+                                            ""
+                                        )
+                                    )
+                                    providerList.add(selfProvider)
+                                    callScreen.putExtra("providerList", gson.toJson(providerList))
+                                    startActivity(callScreen)
+                                } else {
+                                    val errMsg: String? = ErrorMessages().getErrorMessage(
+                                        this,
+                                        commonResponse?.errorMessage,
+                                        Constants.API.startCall
+                                    )
 
-                            if (errMsg != null) {
-                                CustomSnackBar.make(
-                                    binding?.idContainerLayout,
-                                    this,
-                                    CustomSnackBar.WARNING,
-                                    errMsg,
-                                    CustomSnackBar.TOP,
-                                    3000,
-                                    0
-                                )?.show()
+                                    if (errMsg != null) {
+                                        CustomSnackBar.make(
+                                            binding?.idContainerLayout,
+                                            this,
+                                            CustomSnackBar.WARNING,
+                                            errMsg,
+                                            CustomSnackBar.TOP,
+                                            3000,
+                                            0
+                                        )?.show()
+                                    }
+                                }
+                            } catch (e: JSONException) {
+                                Log.e(TAG, "exception", e.cause)
                             }
                         }
-                    } catch (e: JSONException) {
-                        Log.e(TAG, "exception", e.cause)
-                    }
                 }
+            }
         } catch (e: JSONException) {
             Log.e(TAG, "exception", e.cause)
         }

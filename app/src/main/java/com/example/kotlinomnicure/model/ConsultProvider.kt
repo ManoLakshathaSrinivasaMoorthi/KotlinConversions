@@ -51,23 +51,23 @@ class ConsultProvider :Serializable{
     private var dischargeTime: Long? = null
     private var bed: String? = null
     var note: String? = null
-    private var patientCondition: Constants.PatientCondition? = null
-    private var oxygenSupplement: Boolean? = null
+    var patientCondition: Constants.PatientCondition? = null
+    var oxygenSupplement: Boolean? = null
     var urgent: Boolean? = null
     private var resetAcuityFlag: Boolean? = null
 
     //Metrics
-    private var docBoxPatientId: String? = null
+    var docBoxPatientId: String? = null
     private var docBoxManagerId: String? = null
     private var timeHeartRate: Long? = null
     private var timeSpO2: Long? = null
-    private var arterialBloodPressureSystolic: Double? = null
-    private var heartRate: Double? = null
+    var arterialBloodPressureSystolic: Double? = null
+    var heartRate: Double? = null
     private var timeRespiratoryRate: Long? = null
 
     //    private Double sp02;
-    private var respiratoryRate: Double? = null
-    private var arterialBloodPressureDiastolic: Double? = null
+    var respiratoryRate: Double? = null
+    var arterialBloodPressureDiastolic: Double? = null
     private var timeArterialBloodPressureDiastolic: Long? = null
     private var timeArterialBloodPressureSystolic: Long? = null
 
@@ -78,9 +78,9 @@ class ConsultProvider :Serializable{
     private var completed_by: String? = null
     private var dobYear: Int? = null
     var score: Constants.AcuityLevel? = null
-    private var fio2: Double? = null
-    private var spO2: Double? = null
-    private var temperature: Double? = null
+    var fio2: Double? = null
+    var spO2: Double? = null
+    var temperature: Double? = null
     private var unreadCount = 0
 
     fun ConsultProvider() {}

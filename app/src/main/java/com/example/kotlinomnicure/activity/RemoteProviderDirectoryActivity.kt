@@ -42,7 +42,7 @@ import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.Behavior.DragCallback
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
 import java.util.ArrayList

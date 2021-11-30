@@ -9,14 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityRemoteProviderDirectoryBinding
-import com.example.dailytasksamplepoc.databinding.FragmentBedsideDirectoryBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.RemoteProviderDirectoryActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.BedsideDirectoryAdapter
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityRemoteProviderDirectoryBinding

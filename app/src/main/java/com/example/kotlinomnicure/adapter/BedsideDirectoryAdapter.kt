@@ -26,7 +26,7 @@ import com.example.dailytasksamplepoc.databinding.RemoteDirectoryChildBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.ChatActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import com.example.kotlinomnicure.utils.Constants
-import com.mvp.omnicure.kotlinactivity.utils.UtilityMethods
+import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
 
 class BedsideDirectoryAdapter(
