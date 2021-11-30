@@ -10,8 +10,9 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
 import androidx.databinding.DataBindingUtil
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityPdfViewerBinding
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityPdfViewerBinding
+
 import com.example.kotlinomnicure.utils.Constants
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener
@@ -35,6 +36,7 @@ class PDFViewerActivity : AppCompatActivity(),OnPageChangeListener,
 
     var url: String? = null
     var pdfView: PDFView? = null
+    var ctx:Context?=PDFViewerActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +76,7 @@ class PDFViewerActivity : AppCompatActivity(),OnPageChangeListener,
         AsyncTask<String?, Void?, InputStream?>(), OnPageChangeListener, OnLoadCompleteListener,
         OnPageErrorListener {
         private val progressDialog: ProgressDialog = ProgressDialog(loadPdf)
+
         override fun onPreExecute() {
             super.onPreExecute()
             progressDialog.setTitle("Please wait")
@@ -92,7 +95,7 @@ class PDFViewerActivity : AppCompatActivity(),OnPageChangeListener,
                 .onPageChange(this)
                 .enableAnnotationRendering(true)
                 .onLoad(this)
-                .scrollHandle(DefaultScrollHandle(this))
+                .scrollHandle(DefaultScrollHandle(PDFViewerActivity().ctx))
                 .spacing(10)
                 .onPageError(this)
                 .enableAnnotationRendering(false)
@@ -116,16 +119,18 @@ class PDFViewerActivity : AppCompatActivity(),OnPageChangeListener,
         }
 
         override fun onPageChanged(page: Int, pageCount: Int) {
-
+            TODO("Not yet implemented")
         }
 
         override fun loadComplete(nbPages: Int) {
-
+            TODO("Not yet implemented")
         }
 
         override fun onPageError(page: Int, t: Throwable?) {
-
+            TODO("Not yet implemented")
         }
+
+
     }
 
     @SuppressLint("Range")
@@ -145,7 +150,17 @@ class PDFViewerActivity : AppCompatActivity(),OnPageChangeListener,
         return result
     }
 
+    override fun onPageChanged(page: Int, pageCount: Int) {
+        TODO("Not yet implemented")
+    }
 
+    override fun loadComplete(nbPages: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPageError(page: Int, t: Throwable?) {
+        TODO("Not yet implemented")
+    }
 
 
 }

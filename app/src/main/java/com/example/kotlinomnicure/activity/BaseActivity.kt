@@ -200,7 +200,7 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
     /**
      * Add back button in action bar
      */
-    protected fun addBackButton() {
+    protected open fun addBackButton() {
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)

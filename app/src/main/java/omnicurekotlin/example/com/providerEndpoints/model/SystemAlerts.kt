@@ -10,12 +10,15 @@ class SystemAlerts {
 
     @Expose
     @SerializedName("status")
-    private var status = false
+    var status = false
 
     @Expose
     @SerializedName("errorId")
     private var errorId = 0
 
+    @Expose
+    @SerializedName("errorMessage")
+    val errorMessage: String? = null
     fun getSystemAlertList(): List<SystemAlertList?>? {
         return systemAlertList
     }
@@ -24,13 +27,6 @@ class SystemAlerts {
         this.systemAlertList = systemAlertList
     }
 
-    fun getStatus(): Boolean {
-        return status
-    }
-
-    fun setStatus(status: Boolean) {
-        this.status = status
-    }
 
     fun getErrorId(): Int {
         return errorId

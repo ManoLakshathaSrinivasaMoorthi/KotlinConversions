@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
 import android.text.TextUtils
 import android.util.Log
@@ -7,8 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.CommonPatientIdRequestBody
-import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
+
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

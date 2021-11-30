@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mvp.omnicure.R
 
 import com.mvp.omnicure.databinding.SystemAlertChildListBinding
-import com.mvp.omnicure.kotlinactivity.activity.SystemAlertActivity
+import com.example.kotlinomnicure.activity.SystemAlertActivity
 import com.mvp.omnicure.utils.ChatUtils
 import omnicure.mvp.com.providerEndpoints.model.SystemAlerts
 

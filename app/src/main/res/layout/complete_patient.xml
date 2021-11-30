@@ -52,8 +52,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:tint="@color/white"
-                            app:srcCompat="@drawable/ic_back" />
+                            app:srcCompat="@drawable/ic_back"
+                            app:tint="@color/white" />
 
                     </LinearLayout>
 
@@ -148,7 +148,7 @@
                     android:text="@string/econsults"
                     android:textColor="@color/title_color" />
 
-                <com.mvp.omnicure.utils.CustomErrorEditText
+                <com.example.kotlinomnicure.utils.CustomErrorEditText
                     android:id="@+id/editTextUserName"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_48"

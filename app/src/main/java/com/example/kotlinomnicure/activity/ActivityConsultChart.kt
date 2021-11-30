@@ -18,8 +18,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinomnicure.activity.ActivityEnotes
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.RemoteCompleteActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.TransferPatientActivity
+import com.example.kotlinomnicure.activity.RemoteCompleteActivity
+import com.example.kotlinomnicure.activity.TransferPatientActivity
 
 
 import com.example.kotlinomnicure.utils.Constants
@@ -29,7 +29,7 @@ import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
 
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.PatientDetailViewModel
+import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.HomeActivity
 import com.example.kotlinomnicure.customview.CustomDialog

@@ -1,7 +1,8 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -15,19 +16,18 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityBedsideTransferPatientBinding
+
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.TransferPatientViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityBedsideTransferPatientBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
-import com.example.kotlinomnicure.utils.PrefUtility
+import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
-import com.example.kotlinomnicure.utils.UtilityMethods
-import com.mvp.omnicure.kotlinactivity.utils.ValidationUtil
+
 import omnicurekotlin.example.com.hospitalEndpoints.model.AddNewPatientWard
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
+import omnicurekotlin.example.com.patientsEndpoints.model.HospitalList
 import omnicurekotlin.example.com.patientsEndpoints.model.PatientTransferRequest
 import omnicurekotlin.example.com.patientsEndpoints.model.Provider
 import java.lang.Exception
@@ -45,6 +45,7 @@ class TransferPatientActivity : BaseActivity() {
     private var viewModel: TransferPatientViewModel? = null
     private var providerId: Long = 0
     private var strScreenCensus = ""
+    private var ctx:Context=TransferPatientActivity()
 
     //on create method
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -171,34 +172,36 @@ class TransferPatientActivity : BaseActivity() {
                 patientTransferRequest.setProviderId(binding!!.spinnerWithinProvider.tag as String)
                 patientTransferRequest.setSummaryNote(binding!!.edtSummaryNote.text.toString())
                 Log.i(TAG, "TRANSFER REQUEST $patientTransferRequest")
-                viewModel.transferPatientWithInHospital(token, patientTransferRequest)
-                    .observe(this) { commonResponse ->
-                        Log.i(TAG, "tranferWithinHospitalResponse $commonResponse"
-                        )
-                        dismissProgressBar()
-                        if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                            onTransferPatientWithInHospitalSuccess(commonResponse)
-                        } else {
-                            binding!!.btnTransfer.isEnabled = true
-                            val errMsg: String? = ErrorMessages().getErrorMessage(
-                                this,
-                                commonResponse.getErrorMessage(),
-                                Constants.API.register
+                if (token != null) {
+                    viewModel?.transferPatientWithInHospital(token, patientTransferRequest)
+                        ?.observe(this) { commonResponse ->
+                            Log.i(TAG, "tranferWithinHospitalResponse $commonResponse"
                             )
-
-                            if (errMsg != null) {
-                                CustomSnackBar.make(
-                                    binding!!.idContainerLayout,
+                            dismissProgressBar()
+                            if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
+                                onTransferPatientWithInHospitalSuccess(commonResponse)
+                            } else {
+                                binding!!.btnTransfer.isEnabled = true
+                                val errMsg: String? = ErrorMessages().getErrorMessage(
                                     this,
-                                    CustomSnackBar.WARNING,
-                                    errMsg,
-                                    CustomSnackBar.TOP,
-                                    3000,
-                                    0
-                                )?.show()
+                                    commonResponse?.getErrorMessage(),
+                                    Constants.API.register
+                                )
+
+                                if (errMsg != null) {
+                                    CustomSnackBar.make(
+                                        binding!!.idContainerLayout,
+                                        this,
+                                        CustomSnackBar.WARNING,
+                                        errMsg,
+                                        CustomSnackBar.TOP,
+                                        3000,
+                                        0
+                                    )?.show()
+                                }
                             }
                         }
-                    }
+                }
             }
             R.id.rbTransferAnotherHospital -> {
                 patientTransferRequest.setPatientId(patientId)
@@ -207,33 +210,35 @@ class TransferPatientActivity : BaseActivity() {
                 patientTransferRequest.setProviderId(binding!!.spinnerAnotherProvider.tag as String)
                 patientTransferRequest.setSummaryNote(binding!!.edtSummaryNote.text.toString())
                 patientTransferRequest.setToken(token)
-                viewModel.transferPatientToAnotherHospital(token, patientTransferRequest)
-                    .observe(this) { commonResponse ->
-                        Log.i(TAG, "tranferAnotherHospitalResponse $commonResponse")
-                        dismissProgressBar()
-                        if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                            onTransferPatientWithInHospitalSuccess(commonResponse)
-                        } else {
-                            binding!!.btnTransfer.isEnabled = true
-                            val errMsg: String? = ErrorMessages().getErrorMessage(
-                                this,
-                                commonResponse.getErrorMessage(),
-                                Constants.API.register
-                            )
-
-                            if (errMsg != null) {
-                                CustomSnackBar.make(
-                                    binding!!.idContainerLayout,
+                if (token != null) {
+                    viewModel?.transferPatientToAnotherHospital(token, patientTransferRequest)
+                        ?.observe(this) { commonResponse ->
+                            Log.i(TAG, "tranferAnotherHospitalResponse $commonResponse")
+                            dismissProgressBar()
+                            if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
+                                onTransferPatientWithInHospitalSuccess(commonResponse)
+                            } else {
+                                binding!!.btnTransfer.isEnabled = true
+                                val errMsg: String? = ErrorMessages().getErrorMessage(
                                     this,
-                                    CustomSnackBar.WARNING,
-                                    errMsg,
-                                    CustomSnackBar.TOP,
-                                    3000,
-                                    0
-                                )?.show()
+                                    commonResponse?.getErrorMessage(),
+                                    Constants.API.register
+                                )
+
+                                if (errMsg != null) {
+                                    CustomSnackBar.make(
+                                        binding!!.idContainerLayout,
+                                        this,
+                                        CustomSnackBar.WARNING,
+                                        errMsg,
+                                        CustomSnackBar.TOP,
+                                        3000,
+                                        0
+                                    )?.show()
+                                }
                             }
                         }
-                    }
+                }
             }
         }
     }
@@ -279,8 +284,8 @@ class TransferPatientActivity : BaseActivity() {
 
 
     private fun setSpinnerWithInWard() {
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(
                 binding!!.idContainerLayout,
                 this,
@@ -289,7 +294,7 @@ class TransferPatientActivity : BaseActivity() {
                 CustomSnackBar.TOP,
                 3000,
                 0
-            ).show()
+            )?.show()
             return
         }
         showProgressBar()
@@ -299,12 +304,12 @@ class TransferPatientActivity : BaseActivity() {
         val providerMap = LinkedHashMap<String, String>()
         wardList.add(getString(R.string.select_wards))
         val errMsg = AtomicReference("")
-        viewModel.getWardsList(hospitalId).observe(this) { response ->
+        viewModel?.getWardsList(hospitalId)?.observe(this) { response ->
             dismissProgressBar()
             Log.d(TAG, "Wards response" + Gson().toJson(response))
-            if (response != null && response.getStatus() != null && response.getStatus()) {
-                if (response.getWards() != null && !response.getWards().isEmpty()) {
-                    providerMap.putAll(getWardNames(response.getWards())!!)
+            if (response?.getStatus() != null && response.getStatus()!!) {
+                if (response.getWards() != null && !response.getWards()!!.isEmpty()) {
+                    providerMap.putAll(getWardNames(response.getWards()!!)!!)
                     wardList.addAll(providerMap.keys)
                 }
                 setSpinner(wardList, errMsg)
@@ -313,7 +318,7 @@ class TransferPatientActivity : BaseActivity() {
                 errMsg.set(
                     ErrorMessages().getErrorMessage(
                         this,
-                        java.lang.String.valueOf(response.getErrorId()),
+                        java.lang.String.valueOf(response?.getErrorId()),
                         Constants.API.getHospital
                     )
                 )
@@ -369,20 +374,20 @@ class TransferPatientActivity : BaseActivity() {
                         spinnerText.maxLines = 1
                         if (position != 0) {
                             UtilityMethods().setTextViewColor(
-                                this ,spinnerText, R.color.black)
+                                ctx ,spinnerText, R.color.black)
                             UtilityMethods().setDrawableBackground(
-                                this,
+                                ctx,
                                 binding!!.spinnerWithInWard,
                                 R.drawable.spinner_drawable_selected
                             )
                         } else {
                             UtilityMethods().setTextViewColor(
-                                this,
+                                ctx,
                                 spinnerText,
                                 R.color.gray_500
                             )
                             UtilityMethods().setDrawableBackground(
-                                this,
+                                ctx,
                                 binding!!.spinnerWithInWard,
                                 R.drawable.spinner_drawable
                             )
@@ -409,59 +414,50 @@ class TransferPatientActivity : BaseActivity() {
                 }
             }
         }
-        /*for (int i = 0; i < lists.size(); i++) {
-            Provider providerList = lists.get(i);
-            if (providerList != null && providerList.getName() != null) {
-                if (providerId != providerList.getId()) {
-                    wardMap.put(providerList.getName(), String.valueOf(providerList.getId()));
-                }
-            }
-        }*/return wardMap
+      return wardMap
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setSpinnerWithinProvider() {
-        if (!UtilityMethods.isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(
                 binding!!.idContainerLayout,
-                this@TransferPatientActivity,
+                this,
                 CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity),
                 CustomSnackBar.TOP,
                 3000,
                 0
-            ).show()
+            )?.show()
             return
         }
-        val hospitalId: Long = PrefUtility.getLongInPref(
-            this@TransferPatientActivity,
-            Constants.SharedPrefConstants.HOSPITAL_ID,
-            0L
-        )
+        val hospitalId: Long = PrefUtility().getLongInPref(
+            this,
+            Constants.SharedPrefConstants.HOSPITAL_ID, 0L)
         val errMsg = AtomicReference("")
         val providerList = ArrayList<String>()
         val providerMap = LinkedHashMap<String, String>()
         providerList.add(getString(R.string.select_provider))
         println("given values $hospitalId $providerId")
-        viewModel.getProviderListResponse(hospitalId, providerId).observe(this) { response ->
-            Log.d(
-                TransferPatientActivity.TAG,
+        viewModel?.getProviderListResponse(hospitalId, providerId)?.observe(this) { response ->
+            Log.d(TAG,
                 "getProviderListResponse : " + Gson().toJson(response)
             )
-            if (response != null && response.getStatus() != null && response.getStatus()) {
-                if (response.getProviderList() != null && !response.getProviderList().isEmpty()) {
-                    providerMap.putAll(getHospitalProviderNames(response.getProviderList())!!)
+            if (response != null && response.getStatus() != null && response.getStatus()!!) {
+                if (response.getProviderList() != null && !response.getProviderList()!!.isEmpty()) {
+                    providerMap.putAll(getHospitalProviderNames(response.getProviderList()!!)!!)
                     providerList.addAll(providerMap.keys)
                 }
             } else {
                 errMsg.set(
-                    ErrorMessages.getErrorMessage(
-                        this@TransferPatientActivity,
-                        java.lang.String.valueOf(response.getErrorMessage()),
+                    ErrorMessages().getErrorMessage(
+                        this,
+                        java.lang.String.valueOf(response?.getErrorMessage()),
                         Constants.API.getHospital
                     )
                 )
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg.get(), Snackbar.LENGTH_LONG);
+
             }
         }
         val remoteProviderListAdapter =
@@ -472,16 +468,16 @@ class TransferPatientActivity : BaseActivity() {
                 when (motionEvent.action) {
                     MotionEvent.ACTION_UP -> {
 
-//                            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg.get(), Snackbar.LENGTH_LONG);
+
                         CustomSnackBar.make(
                             binding!!.idContainerLayout,
-                            this@TransferPatientActivity,
+                            this,
                             CustomSnackBar.WARNING,
                             errMsg.get(),
                             CustomSnackBar.TOP,
                             3000,
                             0
-                        ).show()
+                        )?.show()
                     }
                 }
             }
@@ -503,31 +499,31 @@ class TransferPatientActivity : BaseActivity() {
                         if (spinnerText != null) {
                             spinnerText.maxLines = 1
                             if (position != 0) {
-                                UtilityMethods.setTextViewColor(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setTextViewColor(
+                                    ctx,
                                     spinnerText,
                                     R.color.black
                                 )
-                                UtilityMethods.setDrawableBackground(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setDrawableBackground(
+                                    ctx,
                                     binding!!.spinnerWithinProvider,
                                     R.drawable.spinner_drawable_selected
                                 )
                             } else {
-                                UtilityMethods.setTextViewColor(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setTextViewColor(
+                                    ctx,
                                     spinnerText,
                                     R.color.gray_500
                                 )
-                                UtilityMethods.setDrawableBackground(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setDrawableBackground(
+                                    ctx,
                                     binding!!.spinnerWithinProvider,
                                     R.drawable.spinner_drawable
                                 )
                             }
                         }
                     } catch (e: Exception) {
-                        Log.e(TransferPatientActivity.TAG, "exception", e.cause)
+                        Log.e(TAG, "exception", e.cause)
                     }
                 }
 
@@ -535,57 +531,60 @@ class TransferPatientActivity : BaseActivity() {
             }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setSpinnerAnotherHospital() {
-        if (!UtilityMethods.isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(
                 binding!!.idContainerLayout,
-                this@TransferPatientActivity,
+                this,
                 CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity),
                 CustomSnackBar.TOP,
                 3000,
                 0
-            ).show()
+            )?.show()
             return
         }
         val errMsg = AtomicReference("")
-        val token: String =
-            PrefUtility.getStringInPref(this, Constants.SharedPrefConstants.TOKEN, "")
+        val token: String? =
+            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.TOKEN, "")
         val hospitalList = ArrayList<String>()
         val hospitalIds = ArrayList<String>()
         hospitalList.add(getString(R.string.sel_hospital))
-        viewModel.getHospitalList(token, patientId).observe(this) { response ->
-            println("Hospital response " + Gson().toJson(response))
-            if (response != null && response.getStatus() != null && response.getStatus()) {
-                if (response.getHospitalList() != null && !response.getHospitalList().isEmpty()) {
-                    hospitalList.clear()
-                    hospitalIds.clear()
-                    hospitalList.add(getString(R.string.sel_hospital))
-                    for (i in 0 until response.getHospitalList().size()) {
-                        val hospital: HospitalList = response.getHospitalList().get(i)
-                        val myHospName: String = PrefUtility.getStringInPref(
-                            this@TransferPatientActivity,
-                            Constants.SharedPrefConstants.HOSPITAL_NAME,
-                            ""
-                        )
-                        if (hospitalList != null && hospital.getName() != null && !hospital.getName()
-                                .equals(myHospName)
-                        ) {
-                            hospitalList.add(hospital.getName())
-                            hospitalIds.add(hospital.getId())
+        if (token != null) {
+            viewModel?.getHospitalList(token, patientId)?.observe(this) { response ->
+                println("Hospital response " + Gson().toJson(response))
+                if (response != null && response.getStatus() != null && response.getStatus()!!) {
+                    if (response.getHospitalList() != null && !response.getHospitalList()!!.isEmpty()) {
+                        hospitalList.clear()
+                        hospitalIds.clear()
+                        hospitalList.add(getString(R.string.sel_hospital))
+                        for (i in 0 until response.getHospitalList()!!.size) {
+                            val hospital: HospitalList? = response.getHospitalList()!!.get(i)
+                            val myHospName: String? = PrefUtility().getStringInPref(
+                                this,
+                                Constants.SharedPrefConstants.HOSPITAL_NAME,
+                                ""
+                            )
+                            if (hospitalList != null && hospital?.getName() != null && !hospital.getName()
+                                    .equals(myHospName)
+                            ) {
+                                hospitalList.add(hospital.getName()!!)
+                                hospitalIds.add(hospital.getId()!!)
+                            }
                         }
                     }
-                }
-            } else {
-                errMsg.set(
-                    ErrorMessages.getErrorMessage(
-                        this@TransferPatientActivity,
-                        java.lang.String.valueOf(response.getErrorMessage()),
-                        Constants.API.getHospital
+                } else {
+                    errMsg.set(
+                        ErrorMessages().getErrorMessage(
+                            this,
+                            java.lang.String.valueOf(response?.getErrorMessage()),
+                            Constants.API.getHospital
+                        )
                     )
-                )
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg.get(), Snackbar.LENGTH_LONG);
+
+                }
             }
         }
         val remoteProviderListAdapter =
@@ -595,17 +594,15 @@ class TransferPatientActivity : BaseActivity() {
             if (!TextUtils.isEmpty(errMsg.get())) {
                 when (motionEvent.action) {
                     MotionEvent.ACTION_UP -> {
-
-//                            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg.get(), Snackbar.LENGTH_LONG);
                         CustomSnackBar.make(
                             binding!!.idContainerLayout,
-                            this@TransferPatientActivity,
+                            this,
                             CustomSnackBar.WARNING,
                             errMsg.get(),
                             CustomSnackBar.TOP,
                             3000,
                             0
-                        ).show()
+                        )?.show()
                     }
                 }
             }
@@ -617,8 +614,7 @@ class TransferPatientActivity : BaseActivity() {
                     adapterView: AdapterView<*>?,
                     view: View,
                     position: Int,
-                    l: Long
-                ) {
+                    l: Long) {
                     try {
 
                         // To clear provider list
@@ -637,32 +633,32 @@ class TransferPatientActivity : BaseActivity() {
                         if (spinnerText != null) {
                             spinnerText.maxLines = 1
                             if (position != 0) {
-                                UtilityMethods.setTextViewColor(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setTextViewColor(
+                                    ctx,
                                     spinnerText,
                                     R.color.black
                                 )
-                                UtilityMethods.setDrawableBackground(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setDrawableBackground(
+                                    ctx,
                                     binding!!.spinnerAnotherHospital,
                                     R.drawable.spinner_drawable_selected
                                 )
                                 setSpinnerAnotherProvider(hospitalId.toLong())
                             } else {
-                                UtilityMethods.setTextViewColor(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setTextViewColor(
+                                    ctx,
                                     spinnerText,
                                     R.color.gray_500
                                 )
-                                UtilityMethods.setDrawableBackground(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setDrawableBackground(
+                                    ctx,
                                     binding!!.spinnerAnotherHospital,
                                     R.drawable.spinner_drawable
                                 )
                             }
                         }
                     } catch (e: Exception) {
-                        Log.e(TransferPatientActivity.TAG, "exception", e.cause)
+                        Log.e(TAG, "exception", e.cause)
                     }
                 }
 
@@ -672,47 +668,47 @@ class TransferPatientActivity : BaseActivity() {
 
 
     private fun setSpinnerAnotherProvider(hospitalId: Long) {
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
-            CustomSnackBar().make(
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
+            CustomSnackBar.make(
                 binding!!.idContainerLayout,
-                this@TransferPatientActivity,
-                CustomSnackBar().WARNING,
+                this,
+                CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity),
-                CustomSnackBar().TOP,
+                CustomSnackBar.TOP,
                 3000,
                 0
-            ).show()
+            )?.show()
             return
         }
-        showProgressBar(PBMessageHelper().getMessage(this, Constants().API.transferPatient.toString()))
+        showProgressBar(PBMessageHelper().getMessage(this, Constants.API.transferPatient.toString()))
         val providerList = ArrayList<String>()
         val providerMap = LinkedHashMap<String, String>()
         providerList.add(getString(R.string.select_provider))
-        viewModel.getProviderListResponse(hospitalId, providerId).observe(this) { response ->
-            Log.d(TransferPatientActivity.TAG, "PROVIDER RESPONSE$response")
+        viewModel?.getProviderListResponse(hospitalId, providerId)?.observe(this) { response ->
+            Log.d(TAG, "PROVIDER RESPONSE$response")
             dismissProgressBar()
-            if (response != null && response.getStatus() != null && response.getStatus()) {
-                if (response.getProviderList() != null && !response.getProviderList().isEmpty()) {
-                    providerMap.putAll(getHospitalProviderNames(response.getProviderList())!!)
+            if (response != null && response.getStatus() != null && response.getStatus()!!) {
+                if (response.getProviderList() != null && !response.getProviderList()!!.isEmpty()) {
+                    providerMap.putAll(getHospitalProviderNames(response.getProviderList()!!)!!)
                     providerList.addAll(providerMap.keys)
                 }
             } else {
-                val errMsg: String = ErrorMessages.getErrorMessage(
-                    this@TransferPatientActivity,
-                    java.lang.String.valueOf(response.getErrorMessage()),
+                val errMsg: String? = ErrorMessages().getErrorMessage(
+                    this,
+                    java.lang.String.valueOf(response?.getErrorMessage()),
                     Constants.API.getHospital
                 )
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+
                 CustomSnackBar.make(
                     binding!!.idContainerLayout,
-                    this@TransferPatientActivity,
+                    this,
                     CustomSnackBar.WARNING,
                     errMsg,
                     CustomSnackBar.TOP,
                     3000,
                     0
-                ).show()
+                )?.show()
             }
         }
         val remoteProviderListAdapter =
@@ -734,24 +730,24 @@ class TransferPatientActivity : BaseActivity() {
                         if (spinnerText != null) {
                             spinnerText.maxLines = 1
                             if (position != 0) {
-                                UtilityMethods.setTextViewColor(
-                                    this@TransferPatientActivity,
+                                UtilityMethods().setTextViewColor(
+                                    ctx,
                                     spinnerText,
                                     R.color.black
                                 )
                                 UtilityMethods().setDrawableBackground(
-                                    this@TransferPatientActivity,
+                                    ctx,
                                     binding!!.spinnerAnotherProvider,
                                     R.drawable.spinner_drawable_selected
                                 )
                             } else {
                                 UtilityMethods().setTextViewColor(
-                                    this@TransferPatientActivity,
+                                    ctx,
                                     spinnerText,
                                     R.color.gray_500
                                 )
                                 UtilityMethods().setDrawableBackground(
-                                    this,
+                                    ctx,
                                     binding!!.spinnerAnotherProvider,
                                     R.drawable.spinner_drawable
                                 )

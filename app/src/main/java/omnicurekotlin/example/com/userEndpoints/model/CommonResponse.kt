@@ -7,7 +7,7 @@ class CommonResponse {
     private var activeList: List<Patient?>? = null
     private var dischargedCount: Int? = null
     private var dischargedList: List<Patient?>? = null
-    private var errorId: Int? = null
+    var errorId: Int? = null
     var errorMessage: String? = null
     private var feedbackForm: String? = null
     private var tutorial_url: String? = null

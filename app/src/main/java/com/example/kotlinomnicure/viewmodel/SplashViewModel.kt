@@ -1,26 +1,10 @@
-package com.mvp.omnicure.kotlinactivity.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
-import android.os.Handler
-import android.os.Looper
-import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
 
-import com.mvp.omnicure.backend.EndPointBuilder
-import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
-import com.mvp.omnicure.utils.Constants
-import omnicure.mvp.com.loginEndpoints.model.LoginRequest
-import omnicure.mvp.com.userEndpoints.model.CommonResponse
-import omnicure.mvp.com.userEndpoints.model.RedirectRequest
-import omnicure.mvp.com.userEndpoints.model.VersionInfoResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.lang.Exception
-import java.net.SocketTimeoutException
+
 import java.util.HashMap
 
 

@@ -190,7 +190,7 @@ class UtilityMethods {
         return userNumber
     }
 
-    fun setDrawableBackground(mContext: AdapterView.OnItemSelectedListener, view: View, drawable: Int) {
+    fun setDrawableBackground(mContext: Context, view: View, drawable: Int) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 view.background = ContextCompat.getDrawable(mContext, drawable)

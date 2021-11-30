@@ -10,7 +10,7 @@ class Provider {
     private var consultationFee: Float? = null
     var countryCode: String? = null
     private var designation: String? = null
-    private var remoteProviderType: String? = null
+    var remoteProviderType: String? = null
     private var dob: Long? = null
     var email: String? = null
     private var emailOtp: String? = null
@@ -45,7 +45,7 @@ class Provider {
     private var voipToken: String? = null
     var providerType: String? = null
     var lcpType: String? = null
-    private var remoteProviderId: Long? = null
+    var remoteProviderId: Long? = null
 
 
     fun getAccess(): List<String?>? {

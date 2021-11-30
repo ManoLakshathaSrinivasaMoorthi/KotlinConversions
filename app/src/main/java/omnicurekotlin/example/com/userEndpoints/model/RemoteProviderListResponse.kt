@@ -2,10 +2,10 @@ package omnicurekotlin.example.com.userEndpoints.model
 
 class RemoteProviderListResponse {
 
-    private var status: Boolean? = null
+    var status: Boolean? = null
 
-    private var errorId: Int? = null
-    private var remoteProviderTypeList: List<RemoteProvider?>? = null
+    var errorId: Int? = null
+    var remoteProviderTypeList: List<RemoteProvider>? = null
 
     fun getStatus(): Boolean? {
         return status

@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.activity
+package com.example.kotlinomnicure.activity
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -6,10 +6,10 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivitySystemAlertBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.SystemAlerts
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivitySystemAlertBinding
+
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
@@ -18,8 +18,7 @@ import com.google.gson.Gson
 
 import com.mvp.omnicure.kotlinactivity.adapter.SystemAlertAdapter
 import com.mvp.omnicure.kotlinactivity.viewmodel.SystemAlertViewModel
-
-
+import omnicurekotlin.example.com.providerEndpoints.model.SystemAlerts
 
 
 class SystemAlertActivity : BaseActivity(){

@@ -28,6 +28,7 @@ import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.CensusHospitalLis
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.CensusWardListViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.helper.NotificationHelper
+import com.example.kotlinomnicure.activity.RemoteProviderDirectoryActivity
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
@@ -48,10 +49,10 @@ import java.security.SecureRandom
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MyDashBoardActivity : BaseActivity() {
+class MyDashboardActivity : BaseActivity() {
 
     //variables
-    private val TAG: String = MyDashBoardActivity::class.java.getSimpleName()
+    private val TAG: String = MyDashboardActivity::class.java.getSimpleName()
     protected var binding: ActivityDashboardBinding? = null
     var linearMyConsult: LinearLayout? = null
     var linearProviderDirectory: LinearLayout? = null
@@ -1021,11 +1022,11 @@ class MyDashBoardActivity : BaseActivity() {
         }
 
         class ImageLoader internal constructor(
-            activity: MyDashBoardActivity,
+            activity: MyDashboardActivity,
             imageURL: String?
         ) :
             AsyncTask<Void?, Void?, Bitmap?>() {
-            var activityReference: WeakReference<MyDashBoardActivity>
+            var activityReference: WeakReference<MyDashboardActivity>
             var imageURL: String?
 
             @SuppressLint("StaticFieldLeak")
@@ -1063,7 +1064,7 @@ class MyDashBoardActivity : BaseActivity() {
 
             override fun onPostExecute(bitmap: Bitmap?) {
                 super.onPostExecute(bitmap)
-                val myDashboardActivity: MyDashBoardActivity? =
+                val myDashboardActivity: MyDashboardActivity? =
                     activityReference.get()
                 if (myDashboardActivity != null) {
                     imageProgressBar.visibility = View.GONE
@@ -1089,7 +1090,7 @@ class MyDashBoardActivity : BaseActivity() {
             }
 
             init {
-                activityReference = WeakReference<MyDashBoardActivity>(activity)
+                activityReference = WeakReference<MyDashboardActivity>(activity)
                 this.imageURL = imageURL
                 imageView = activityReference.get().binding.profilePic
                 imageProgressBar = activityReference.get()?.binding?.idProfileImagePb!!

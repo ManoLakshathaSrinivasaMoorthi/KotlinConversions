@@ -4,7 +4,7 @@ class AddNewPatientWardResponse {
 
     private var status: Boolean? = null
     private var errorId: Int? = null
-    private var wards: List<AddNewPatientWard?>? = null
+    private var wards: List<AddNewPatientWard>? = null
 
     fun getStatus(): Boolean? {
         return status
@@ -22,11 +22,11 @@ class AddNewPatientWardResponse {
         this.errorId = errorId
     }
 
-    fun getWards(): List<AddNewPatientWard?>? {
+    fun getWards(): List<AddNewPatientWard>? {
         return wards
     }
 
-    fun setWards(wards: List<AddNewPatientWard?>?) {
+    fun setWards(wards: List<AddNewPatientWard>?) {
         this.wards = wards
     }
 

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,8 +6,9 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityTrainingMaterialBinding
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityTrainingMaterialBinding
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 

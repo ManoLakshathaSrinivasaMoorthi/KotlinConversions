@@ -32,8 +32,6 @@ import com.example.kotlinomnicure.helper.MobileNumberFormatter
 import com.example.kotlinomnicure.utils.*
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.activity.RemoteProviderSignUpSecond
-
 
 
 import com.mvp.omnicure.kotlinactivity.viewmodel.LocalCareProviderSignUpFirstViewModel

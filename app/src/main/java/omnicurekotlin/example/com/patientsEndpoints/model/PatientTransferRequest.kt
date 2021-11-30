@@ -8,7 +8,15 @@ class PatientTransferRequest {
     private var providerId: String? = null
     private var hospitalId: String? = null
     private var summaryNote: String? = null
+    private var token: String? = null
 
+    fun getToken(): String? {
+        return token
+    }
+
+    fun setToken(token: String?) {
+        this.token = token
+    }
     fun getPatientId(): String? {
         return patientId
     }

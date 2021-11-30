@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,11 +15,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
 
-import com.example.dailytasksamplepoc.databinding.CompletePatientBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.PatientDetailViewModel
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
+import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.CompletePatientBinding
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
@@ -28,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.example.kotlinomnicure.utils.UtilityMethods
 import java.util.ArrayList
 
-class RemoteCompleteActivity :BaseActivity(){
+class RemoteCompleteActivity : BaseActivity(){
 
     //Variables
     private var binding: CompletePatientBinding? = null
@@ -59,17 +60,17 @@ class RemoteCompleteActivity :BaseActivity(){
         patientID = java.lang.String.valueOf(intent.getLongExtra("patient_id", 0))
         strScreenCensus = intent.getStringExtra(Constants.IntentKeyConstants.SCREEN_TYPE)
         val name: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.NAME, "")
-        binding?.editTextUserName.setText(name)
+        binding?.editTextUserName?.setText(name)
         binding?.imgBack?.setOnClickListener(View.OnClickListener { finish() })
 
         binding?.btnComplete?.setOnClickListener(View.OnClickListener { v ->
             handleMultipleClick(v)
             showConfirmationPopup()
         })
-        addMandatoryText(binding?.eConsultText)
-        addMandatoryText(binding?.eNoteText)
-        addMandatoryText(binding?.assessDetailsText)
-        addMandatoryText(binding?.planDetailsText)
+        binding?.eConsultText?.let { addMandatoryText(it) }
+        binding?.eNoteText?.let { addMandatoryText(it) }
+        binding?.assessDetailsText?.let { addMandatoryText(it) }
+        binding?.planDetailsText?.let { addMandatoryText(it) }
         binding?.dischargePlan?.addTextChangedListener(binding?.let { ValidationTextWatcher(it.dischargePlan) })
         binding?.dischargeAssessment?.addTextChangedListener(binding?.let { ValidationTextWatcher(it.dischargeAssessment) })
         buttonValidation()
@@ -124,7 +125,7 @@ class RemoteCompleteActivity :BaseActivity(){
         if (!UtilityMethods().isInternetConnected(this)!!) {
 
             CustomSnackBar.make(
-                binding?.getRoot(), this@RemoteCompleteActivity, CustomSnackBar.WARNING,
+                binding?.getRoot(), this, CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity),
                 CustomSnackBar.TOP, 3000, 0
             )?.show()
@@ -132,7 +133,7 @@ class RemoteCompleteActivity :BaseActivity(){
         }
         if (TextUtils.isEmpty(assessment)) {
             CustomSnackBar.make(
-                binding?.getRoot(), this@RemoteCompleteActivity, CustomSnackBar.WARNING,
+                binding?.getRoot(), this, CustomSnackBar.WARNING,
                 getString(R.string.assessment_is_mandatory),
                 CustomSnackBar.TOP, 3000, 0
             )?.show()
@@ -140,7 +141,7 @@ class RemoteCompleteActivity :BaseActivity(){
         }
         if (TextUtils.isEmpty(plan)) {
             CustomSnackBar.make(
-                binding?.getRoot(), this@RemoteCompleteActivity, CustomSnackBar.WARNING,
+                binding?.getRoot(), this, CustomSnackBar.WARNING,
                 getString(R.string.plan_is_mandatory),
                 CustomSnackBar.TOP, 3000, 0
             )?.show()

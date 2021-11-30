@@ -9,9 +9,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.PDFViewerActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.VideoPlayerActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.adapter.AttachmentGridAdapter
 import com.example.kotlinomnicure.databinding.ActivityAttachmentBinding

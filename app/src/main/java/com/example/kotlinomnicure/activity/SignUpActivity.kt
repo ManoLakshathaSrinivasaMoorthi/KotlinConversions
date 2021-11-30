@@ -10,7 +10,7 @@ import com.example.dailytasksamplepoc.R
 import com.example.dailytasksamplepoc.databinding.ActivitySignupBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.LoginActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.PatientAppointmentActivity
+import com.example.kotlinomnicure.activity.PatientAppointmentActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.utils.Buildconfic
 import com.example.kotlinomnicure.activity.ActivityLocalCareProviderSignUpFirst
 import com.example.kotlinomnicure.utils.Constants

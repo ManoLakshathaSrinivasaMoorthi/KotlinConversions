@@ -3,7 +3,7 @@ package omnicurekotlin.example.com.userEndpoints.model
 
 class VersionInfoResponse {
 
-  private var appConfig: Int? = null
+  var appConfig: Int? = null
 
   private var errorId: Int? = null
   private var errorMessage: String? = null

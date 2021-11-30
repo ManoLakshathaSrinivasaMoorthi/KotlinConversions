@@ -6,7 +6,7 @@ class HospitalListResponse {
     private var count: Int? = null
     private var errorId: Int? = null
     var errorMessage: String? = null
-    var hospitalList: List<Hospital?>? = null
+    var hospitalList: List<Hospital>?= null
     var id: Long? = null
     private var status: Boolean? = null
 

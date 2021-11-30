@@ -12,7 +12,7 @@ class CommonResponse {
     private var pendingList: List<Patient?>? = null
     private var provider: Provider? = null
     private var patient: Provider? = null
-    private var providerList: List<Provider?>? = null
+    private var providerList: List<Provider>? = null
     private var room: Room? = null
 
     private var status: Boolean? = null
@@ -108,14 +108,14 @@ class CommonResponse {
     }
 
 
-    fun getProviderList(): List<Provider?>? {
+    fun getProviderList(): List<Provider>? {
         return providerList
     }
 
     /**
      * @param providerList providerList or `null` for none
      */
-    fun setProviderList(providerList: List<Provider?>?):CommonResponse? {
+    fun setProviderList(providerList: List<Provider>?):CommonResponse? {
         this.providerList = providerList
         return this
     }

@@ -18,7 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.dailytasksamplepoc.R
 import com.example.dailytasksamplepoc.databinding.ActivityRemoteProviderDirectoryBinding
 import com.example.dailytasksamplepoc.databinding.FragmentRemoteDirectoryBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.RemoteProviderDirectoryActivity
+import com.example.kotlinomnicure.activity.RemoteProviderDirectoryActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.adapter.RemoteDirectoryAdapter
 import com.example.dailytasksamplepoc.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
