@@ -1,5 +1,7 @@
 
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.appointmentEndpoints.model
+package omnicurekotlin.example.com.appointmentEndpoints.model
+
+
 class CommonResponse {
 
     var activeList: List<Patient>? = null
@@ -132,14 +134,14 @@ class CommonResponse {
     /**
      * @return value or `null` for none
      */
-    fun getRoom():Room? {
+    fun getRoom(): Room? {
         return room
     }
 
     /**
      * @param room room or `null` for none
      */
-    fun setRoom(room:Room?): CommonResponse {
+    fun setRoom(room: Room?): CommonResponse {
         this.room = room
         return this
     }

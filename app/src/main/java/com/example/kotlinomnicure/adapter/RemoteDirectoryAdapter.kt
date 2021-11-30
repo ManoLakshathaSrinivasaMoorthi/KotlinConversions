@@ -140,8 +140,7 @@ class RemoteDirectoryAdapter(
                         holder.itemBinding.profileImg.setImageDrawable(resource)
                         return true
                     }
-                })
-                .into(holder.itemBinding.profileImg)
+                }).into(holder.itemBinding.profileImg)
         } else {
             holder.itemBinding.defautlImg.setVisibility(View.VISIBLE)
             holder.itemBinding.defautlImg.setText(provider.getName()?.let {

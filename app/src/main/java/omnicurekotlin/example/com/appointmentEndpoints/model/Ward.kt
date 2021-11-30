@@ -1,5 +1,5 @@
 
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.appointmentEndpoints.model
+package omnicurekotlin.example.com.appointmentEndpoints.model
 
 import java.io.Serializable
 

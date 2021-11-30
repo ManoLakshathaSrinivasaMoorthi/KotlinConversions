@@ -64,9 +64,7 @@ class TeamMembersListAdapter(private val context: Context, arr: List<Members>) :
             }
         }
         holder.call_icon.setOnClickListener {
-           /* (context as TeamGroupChatActivity).videoCall(
-                members
-            )*/
+
         }
     }
 
