@@ -132,7 +132,7 @@ class OTPActivity : BaseActivity() {
     }
 
     private fun onResendOTP() {
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods().isInternetConnected(this)!!) {
 //            UtilityMethods.showInternetError(binding.getRoot(), Snackbar.LENGTH_LONG);
             CustomSnackBar.make(binding?.root, this@OTPActivity, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)!!.show()
             return
