@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,14 +11,16 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityPatientDetailBinding
+
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.PatientDetailViewModel
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
 import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityPatientDetailBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -85,43 +87,43 @@ class PatientDetailActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun populatePatientDetails() {
         setAcuityLevel()
-        val heartRate: Double? = patientDetails?.getPatient()?.getHeartRate()
-        val highBP: Double? = patientDetails?.getPatient()?.getArterialBloodPressureSystolic()
-        val lowBP: Double? = patientDetails?.getPatient()?.getArterialBloodPressureDiastolic()
-        val spo2: Double? = patientDetails?.getPatient()?.getSpO2()
-        val respRate: Double ?= patientDetails?.getPatient()?.getRespiratoryRate()
-        val fiO2: Double? = patientDetails?.getPatient()?.getFio2()
-        val temp: Double? = patientDetails?.getPatient()?.getTemperature()
-        val heartRateValue: String? = patientDetails?.getPatient()?.getHeartRateValue()
+        val heartRate: Double? = patientDetails?.patient?.getHeartRate()
+        val highBP: Double? = patientDetails?.patient?.getArterialBloodPressureSystolic()
+        val lowBP: Double? = patientDetails?.patient?.getArterialBloodPressureDiastolic()
+        val spo2: Double? = patientDetails?.patient?.getSpO2()
+        val respRate: Double ?= patientDetails?.patient?.getRespiratoryRate()
+        val fiO2: Double? = patientDetails?.patient?.getFio2()
+        val temp: Double? = patientDetails?.patient?.getTemperature()
+        val heartRateValue: String? = patientDetails?.patient?.getHeartRateValue()
         val highBPValue: String? =
-            patientDetails?.getPatient()?.getArterialBloodPressureSystolicValue()
-        val lowBPValue: String? = patientDetails?.getPatient()?.getArterialBloodPressureDiastolicValue()
-        val spo2Value: String?= patientDetails?.getPatient()?.getSpO2Value()
-        val respRateValue: String? = patientDetails?.getPatient()?.getRespiratoryRateValue()
-        val fiO2Value: String? = patientDetails?.getPatient()?.getFio2Value()
-        val tempValue: String? = patientDetails?.getPatient()?.getTemperatureValue()
-        if (patientDetails?.getPatient()?.getGender().equals("Male",ignoreCase = true)) {
+            patientDetails?.patient?.getArterialBloodPressureSystolicValue()
+        val lowBPValue: String? = patientDetails?.patient?.getArterialBloodPressureDiastolicValue()
+        val spo2Value: String?= patientDetails?.patient?.getSpO2Value()
+        val respRateValue: String? = patientDetails?.patient?.getRespiratoryRateValue()
+        val fiO2Value: String? = patientDetails?.patient?.getFio2Value()
+        val tempValue: String? = patientDetails?.patient?.getTemperatureValue()
+        if (patientDetails?.patient?.getGender().equals("Male",ignoreCase = true)) {
             binding?.txtPatientDetailsNameAge?.setText(
-                patientDetails?.getPatient()?.getFname()
-                    .toString() + " " + patientDetails?.getPatient()
+                patientDetails?.patient?.getFname()
+                    .toString() + " " + patientDetails?.patient
                     ?.getLname() + " . " + getAge() + " " + "M"
             )
-        } else if (patientDetails?.getPatient()?.getGender().equals("Female",ignoreCase = true)) {
+        } else if (patientDetails?.patient?.getGender().equals("Female",ignoreCase = true)) {
             binding?.txtPatientDetailsNameAge?.setText(
-                patientDetails?.getPatient()?.getFname()
-                    .toString() + " " + patientDetails?.getPatient()
+                patientDetails?.patient?.getFname()
+                    .toString() + " " + patientDetails?.patient
                     ?.getLname() + " . " + getAge() + " " + "F"
             )
         }
         binding?.txtPatientDetailsAge?.setText(getAge())
         binding?.txtPatientDetailsDob?.setText(getDob())
-        if (patientDetails?.getPatient()
-                ?.getPhone() != null && !TextUtils.isEmpty(patientDetails!!.getPatient()?.getPhone())
+        if (patientDetails?.patient
+                ?.getPhone() != null && !TextUtils.isEmpty(patientDetails!!.patient?.getPhone())
         ) {
-            binding?.txtPatientDetailsPhone?.setText(patientDetails!!.getPatient()?.getPhone())
+            binding?.txtPatientDetailsPhone?.setText(patientDetails!!.patient?.getPhone())
             binding?.txtPatientDetailsPhone?.setOnClickListener(View.OnClickListener {
                 val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = Uri.parse("tel:" + patientDetails!!.getPatient()?.getPhone())
+                intent.data = Uri.parse("tel:" + patientDetails!!.patient?.getPhone())
                 startActivity(intent)
             })
 
@@ -134,28 +136,28 @@ class PatientDetailActivity : BaseActivity() {
                 )
             )
         }
-        if (!TextUtils.isEmpty(patientDetails?.getPatient()?.getRecordNumber())) {
-            binding?.txtPatientDetailsRecordNo?.setText(patientDetails?.getPatient()?.getRecordNumber())
+        if (!TextUtils.isEmpty(patientDetails?.patient?.getRecordNumber())) {
+            binding?.txtPatientDetailsRecordNo?.setText(patientDetails?.patient?.getRecordNumber())
         } else {
             binding?.txtPatientDetailsRecordNo?.setText(" - ")
         }
-        binding?.txtPatientDetailsSex?.setText(patientDetails?.getPatient()?.getGender())
-        if (!TextUtils.isEmpty(patientDetails?.getPatient()?.getHospital())) {
-            binding?.txtPatientDetailsHospital?.setText(patientDetails?.getPatient()?.getHospital())
+        binding?.txtPatientDetailsSex?.setText(patientDetails?.patient?.getGender())
+        if (!TextUtils.isEmpty(patientDetails?.patient?.getHospital())) {
+            binding?.txtPatientDetailsHospital?.setText(patientDetails?.patient?.getHospital())
         } else {
             binding?.txtPatientDetailsHospital?.setText("-")
         }
-        if (!TextUtils.isEmpty(patientDetails?.getPatient()?.getWardName())) {
-            binding?.txtPatientDetailsWard?.setText(patientDetails?.getPatient()?.getWardName())
+        if (!TextUtils.isEmpty(patientDetails?.patient?.getWardName())) {
+            binding?.txtPatientDetailsWard?.setText(patientDetails?.patient?.getWardName())
         } else {
             binding?.txtPatientDetailsWard?.setText("-")
         }
-        if (!TextUtils.isEmpty(patientDetails?.getPatient()?.getCovidPositive())) {
-            binding?.txtCovidPositive?.setText(patientDetails?.getPatient()?.getCovidPositive())
+        if (!TextUtils.isEmpty(patientDetails?.patient?.getCovidPositive())) {
+            binding?.txtCovidPositive?.setText(patientDetails?.patient?.getCovidPositive())
         } else {
             binding?.txtCovidPositive?.setText("-")
         }
-        binding?.txtPatientDetailsPatientId?.setText(patientDetails?.getPatient()?.getId())
+        binding?.txtPatientDetailsPatientId?.setText(patientDetails?.patient?.getId())
         if (!TextUtils.isEmpty(heartRateValue)) {
             binding?.idPatientDetailsHrValue?.setText(heartRate?.toInt().toString())
         } else {
@@ -204,17 +206,17 @@ class PatientDetailActivity : BaseActivity() {
         } else {
             binding?.idPatientDetailsTempValue?.setText("-")
         }
-        binding?.idPatientDetailsAvpuValue?.setText(patientDetails?.getPatient()?.getPatientCondition())
-        if (patientDetails?.getPatient()?.isOxygenSupplement() == true) {
+        binding?.idPatientDetailsAvpuValue?.setText(patientDetails?.patient?.getPatientCondition())
+        if (patientDetails?.patient?.isOxygenSupplement() == true) {
             binding?.idPatientDetailsOxygenValue?.setText("Yes")
         } else {
             binding?.idPatientDetailsOxygenValue?.setText("No")
         }
-        if (patientDetails?.getPatient()?.getSyncTime() != null && !patientDetails!!.getPatient()
+        if (patientDetails?.patient?.getSyncTime() != null && !patientDetails!!.patient
                 ?.getSyncTime().equals("0")
         ) {
             binding?.idMaticsUpdateTime?.setText(
-                patientDetails!!.getPatient()?.getSyncTime()?.toLong()?.let {
+                patientDetails!!.patient?.getSyncTime()?.toLong()?.let {
                     ChatUtils().getTimeAgo(
                         it
                     )
@@ -228,7 +230,7 @@ class PatientDetailActivity : BaseActivity() {
     }
 
     private fun setAcuityLevel() {
-        val acuityLevel: String? = patientDetails?.getPatient()?.getScore()
+        val acuityLevel: String? = patientDetails?.patient?.getScore()
         if (acuityLevel != null) {
             if (acuityLevel.equals("Low", ignoreCase = true)) {
                 binding?.llPatientDetailsAcuityLevel?.getResources()
@@ -263,14 +265,14 @@ class PatientDetailActivity : BaseActivity() {
     }
 
     private fun getDob(): String? {
-        val timeInMillis: Long = java.lang.Long.valueOf(patientDetails?.getPatient()?.getDob())
+        val timeInMillis: Long = java.lang.Long.valueOf(patientDetails?.patient?.getDob())
         return SimpleDateFormat("dd-MMM-yyyy").format(Date(timeInMillis))
     }
 
     private fun getAge(): String {
         val calendar = Calendar.getInstance()
         val year = calendar[Calendar.YEAR]
-        calendar.timeInMillis = patientDetails?.getPatient()?.getDob()?.toLong()!!
+        calendar.timeInMillis = patientDetails?.patient?.getDob()?.toLong()!!
         val agee = year - calendar[Calendar.YEAR]
         return agee.toString()
     }

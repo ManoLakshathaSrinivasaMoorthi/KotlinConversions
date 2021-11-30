@@ -1,6 +1,6 @@
 package com.example.dailytasksamplepoc.kotlinomnicure.activity
 import android.content.Intent
-import com.example.dailytasksamplepoc.R
+
 
 
 import android.os.Bundle
@@ -8,16 +8,14 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.databinding.ActivityPatientAppointmentInfoBinding
+
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.AppointmentInfoViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityPatientAppointmentInfoBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
-import com.example.kotlinomnicure.utils.PrefUtility
+import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
-import com.example.kotlinomnicure.utils.UtilityMethods
-import com.mvp.omnicure.kotlinactivity.utils.ValidationUtil
+
 import omnicurekotlin.example.com.appointmentEndpoints.model.Appointment
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
 import java.util.*

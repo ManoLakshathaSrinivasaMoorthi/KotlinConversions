@@ -1,7 +1,8 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
 
 import android.content.Intent
 import android.graphics.Color
@@ -21,19 +22,18 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
 
-import com.example.dailytasksamplepoc.databinding.ActivityPatientAppointmentBinding
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
+import com.example.dailytasksamplepoc.kotlinomnicure.activity.PatientAppointmentActivityInfo
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.AppointmentViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.EmailcheckViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityPatientAppointmentBinding
 import com.example.kotlinomnicure.helper.MobileNumberFormatter
 import com.example.kotlinomnicure.helper.PBMessageHelper
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
+import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
-import com.example.kotlinomnicure.utils.UtilityMethods
-import com.mvp.omnicure.kotlinactivity.utils.ValidationUtil
+
 import omnicurekotlin.example.com.appointmentEndpoints.model.Appointment
 import omnicurekotlin.example.com.userEndpoints.model.Provider
 import java.lang.Exception
@@ -46,6 +46,7 @@ class PatientAppointmentActivity : BaseActivity() {
     var relation = ArrayList<String>()
     private var binding: ActivityPatientAppointmentBinding? = null
     private var viewModel: AppointmentViewModel? = null
+    var ctx :Context=PatientAppointmentActivity()
 
     //on create method
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,23 +89,23 @@ class PatientAppointmentActivity : BaseActivity() {
                         spinnerText.maxLines = 1
                         if (position != 0) {
                             UtilityMethods().setTextViewColor(
-                                this,
+                                ctx,
                                 spinnerText,
                                 R.color.white
                             )
                             UtilityMethods().setDrawableBackground(
-                                this,
+                                ctx,
                                 binding!!.idSpinnerRelative,
                                 R.drawable.spinner_drawable_selected
                             )
                         } else {
                             UtilityMethods().setTextViewColor(
-                                this,
+                                ctx,
                                 spinnerText,
                                 R.color.gray_500
                             )
                             UtilityMethods().setDrawableBackground(
-                                this,
+                                ctx,
                                 binding!!.idSpinnerRelative,
                                 R.drawable.spinner_drawable
                             )
@@ -190,6 +191,7 @@ class PatientAppointmentActivity : BaseActivity() {
             val ss = SpannableString(agreementTxt)
             val drawableBG: Drawable? = binding?.agreementCheckBox?.getBackground()
             val clickableSpan: ClickableSpan = object : ClickableSpan() {
+                @SuppressLint("UseCompatLoadingForDrawables")
                 override fun onClick(textView: View) {
                     Log.d(TAG, "onClick: of user agreement")
                     binding!!.agreementCheckBox.setEnabled(false)
