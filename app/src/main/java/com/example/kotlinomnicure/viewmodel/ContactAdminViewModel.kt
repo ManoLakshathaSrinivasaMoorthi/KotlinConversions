@@ -30,7 +30,7 @@ class ContactAdminViewModel:ViewModel() {
 
     private fun contactAdmin(params: ContactAdminParams) {
         val errMsg = ""
-        ApiClient().getApiProviderEndpoints(true, true).sendContactAdminEmail(params)
+        ApiClient().getApiProviderEndpoints(true, true)?.sendContactAdminEmail(params)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,

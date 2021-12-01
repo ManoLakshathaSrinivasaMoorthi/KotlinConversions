@@ -7,7 +7,8 @@ import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.customview.PinEntryView
 import com.example.kotlinomnicure.databinding.ActivityEmailOtpBinding
@@ -30,7 +31,7 @@ class EmailOTPActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_email_otp)
-        viewModel = ViewModelProviders.of(this)[OTPViewModel::class.java]
+        viewModel = ViewModelProvider(this)[OTPViewModel::class.java]
         setView()
 
         // Initialize FirebaseAuth
@@ -105,7 +106,7 @@ class EmailOTPActivity : BaseActivity() {
                 val pin = binding?.pinEntryBorder!!.getText().toString()
                 if (pin.length < 4) {
 //                        UtilityMethods.showErrorSnackBar(binding.getRoot(), getString(R.string.invalid_otp), Snackbar.LENGTH_LONG);
-                    CustomSnackBar.make(binding?.root, this@EmailOTPActivity, CustomSnackBar.WARNING, getString(R.string.invalid_otp), CustomSnackBar.TOP, 3000, 0)?.show()
+                    CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING, getString(R.string.invalid_otp), CustomSnackBar.TOP, 3000, 0)?.show()
                     return@OnEditorActionListener false
                 }
                 onSubmitOTP(uid, pin)
@@ -117,9 +118,9 @@ class EmailOTPActivity : BaseActivity() {
     }
 
     private fun onSubmitOTP(uid: Long, pin: String) {
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.getRoot(), Snackbar.LENGTH_LONG);
-            CustomSnackBar.make(binding?.root, this@EmailOTPActivity, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)?.show()
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
+            CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)?.show()
             return
         }
         showProgressBar(PBMessageHelper().getMessage(this, Constants.API.verifyOTP.toString()))
@@ -128,22 +129,22 @@ class EmailOTPActivity : BaseActivity() {
         viewModel?.submitOTP(uid, pin, fcm, Constants.OTPChannel.EMAIL.toString())?.observe(this, {
             val commonResponse= it.body()
             Log.d(TAG, "SUBMIT OTP RESPONSE$commonResponse")
-            //                dismissProgressBar();
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
+
+            if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
                 commonResponse.getUser()?.let { it1 -> onOTPSuccessVerify(it1) }
             } else {
                 dismissProgressBar()
-                val errMsg: String? = ErrorMessages().getErrorMessage(this@EmailOTPActivity, commonResponse?.getErrorMessage(), Constants.API.verifyOTP)
-                //                    UtilityMethods.showErrorSnackBar(binding.getRoot(), errMsg, Snackbar.LENGTH_LONG);
-                errMsg?.let { it1 -> CustomSnackBar.make(binding?.root, this@EmailOTPActivity, CustomSnackBar.WARNING, it1, CustomSnackBar.TOP, 3000, 0)?.show() }
+                val errMsg: String? = ErrorMessages().getErrorMessage(this, commonResponse?.getErrorMessage(), Constants.API.verifyOTP)
+
+                errMsg?.let { it1 -> CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING, it1, CustomSnackBar.TOP, 3000, 0)?.show() }
             }
         })
     }
 
     private fun onResendOTP() {
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.getRoot(), Snackbar.LENGTH_LONG);
-            CustomSnackBar.make(binding?.root, this@EmailOTPActivity, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)?.show()
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
+            CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)?.show()
             return
         }
         showProgressBar(getString(R.string.sending_otp_msg))
@@ -154,23 +155,22 @@ class EmailOTPActivity : BaseActivity() {
             val commonResponse=it.body()
             dismissProgressBar()
             Log.d(TAG, "EMAIL RESEND RESPONSE$commonResponse")
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
+            if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
                 startResetTimer()
             } else {
-                val errMsg: String? = ErrorMessages().getErrorMessage(this@EmailOTPActivity, commonResponse?.getErrorMessage(), Constants.API.registrationEmailOTP)
-                //                UtilityMethods.showErrorSnackBar(binding.getRoot(), errMsg, Snackbar.LENGTH_LONG);
-                errMsg?.let { it1 -> CustomSnackBar.make(binding?.root, this@EmailOTPActivity, CustomSnackBar.WARNING, it1, CustomSnackBar.TOP, 3000, 0)?.show() }
+                val errMsg: String? = ErrorMessages().getErrorMessage(this, commonResponse?.getErrorMessage(), Constants.API.registrationEmailOTP)
+
+                errMsg?.let { it1 -> CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING, it1, CustomSnackBar.TOP, 3000, 0)?.show() }
             }
         })
     }
 
     private fun onOTPSuccessVerify(provider: User) {
 
-//        PrefUtility.saveUserData(this, provider);
-//        String mobile = PrefUtility.getStringInPref(this, Constants.SharedPrefConstants.USER_MOBILE_NO, "");
+
         val mobile: String? = provider.getPhone()
         Log.d(TAG, "Firebase Mobile No$mobile")
-        val intent = Intent(this@EmailOTPActivity, RegistrationSuccessActivity::class.java)
+        val intent = Intent(this, RegistrationSuccessActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
         startActivity(intent)

@@ -8,6 +8,6 @@ import com.example.kotlinomnicure.R
 class GroupCallActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_group_call)
+        setContentView(R.layout.activity_groups_list)
     }
 }

@@ -90,7 +90,7 @@ class CustomNotificationActivity : BaseActivity(){
                 Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
                 "") == null || PrefUtility().getStringInPref(this,
                 Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
-                "").isEmpty()
+                "")?.isEmpty() == true
         ) {
             false
         } else {
@@ -177,7 +177,7 @@ class CustomNotificationActivity : BaseActivity(){
                 PrefUtility().saveStringInPref(this,
                     Constants.SharedPrefConstants.ALERT_NOTIFTY_ID,
                     java.lang.String.valueOf(notificationResponse.getNotificationSettings()
-                        .id)
+                        .id))
 
                 // Saving the current status of Acuity in shared preference
 
@@ -201,7 +201,7 @@ class CustomNotificationActivity : BaseActivity(){
                     this.resources.getString(R.string.api_error),
                     Constants.API.updateProvider)
                
-                CustomSnackBar.make(customNotificationBinding.container,
+                CustomSnackBar.make(customNotificationBinding?.container,
                     this,
                     CustomSnackBar.WARNING,
                     errMsg,
