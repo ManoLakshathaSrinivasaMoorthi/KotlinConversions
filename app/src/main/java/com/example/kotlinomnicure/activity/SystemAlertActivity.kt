@@ -4,18 +4,16 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.adapter.SystemAlertAdapter
 import com.example.kotlinomnicure.databinding.ActivitySystemAlertBinding
-
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
-
-import com.example.kotlinomnicure.adapter.SystemAlertAdapter
 import com.mvp.omnicure.kotlinactivity.viewmodel.SystemAlertViewModel
 import omnicurekotlin.example.com.providerEndpoints.model.SystemAlerts
 
@@ -32,7 +30,7 @@ class SystemAlertActivity : BaseActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_system_alert)
-        viewModel = ViewModelProviders.of(this).get(SystemAlertViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SystemAlertViewModel::class.java)
         initToolbar()
         initViews()
     }
@@ -50,7 +48,7 @@ class SystemAlertActivity : BaseActivity(){
     private fun initViews() {
         linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager!!.orientation = LinearLayoutManager.VERTICAL
-        binding?.rvSystemAlerts?.setLayoutManager(linearLayoutManager)
+        binding?.rvSystemAlerts?.layoutManager = linearLayoutManager
         getSystemAlerts()
     }
 
@@ -66,34 +64,19 @@ class SystemAlertActivity : BaseActivity(){
                     systemAlerts = response
                     Log.d(TAG, "SYSTEM ALERT" + Gson().toJson(response))
                     populateSystemAlerts()
-                } else if (response != null && response.errorMessage != null && !TextUtils.isEmpty(
-                        response.errorMessage
-                    )
-                ) {
-                    val errMsg = ErrorMessages().getErrorMessage(
-                        this,
-                        response.errorMessage,
-                        Constants.API.getDocBoxPatientList
-                    )
+                } else if (response?.errorMessage != null && !TextUtils.isEmpty(response.errorMessage)) {
+                    val errMsg = ErrorMessages().getErrorMessage(this, response.errorMessage,
+                        Constants.API.getDocBoxPatientList)
                     Log.d(TAG, "getSystemAlerts: $errMsg")
 
                     if (errMsg != null) {
-                        CustomSnackBar.make(
-                            binding?.idContainerLayout,
-                            this,
-                            CustomSnackBar.WARNING,
-                            errMsg,
-                            CustomSnackBar.TOP,
-                            3000,
-                            8
-                        )?.show()
+                        CustomSnackBar.make(binding?.idContainerLayout, this,
+                            CustomSnackBar.WARNING, errMsg, CustomSnackBar.TOP, 3000, 8)?.show()
                     }
                 } else {
                     Log.d(TAG, "getSystemAlerts: " + "else " + Gson().toJson(response))
-                    CustomSnackBar.make(
-                        binding?.idContainerLayout, this, CustomSnackBar.WARNING,
-                        getString(R.string.api_error), CustomSnackBar.TOP, 3000, 8
-                    )?.show()
+                    CustomSnackBar.make(binding?.idContainerLayout, this, CustomSnackBar.WARNING,
+                        getString(R.string.api_error), CustomSnackBar.TOP, 3000, 8)?.show()
                 }
             })
         }
@@ -101,15 +84,8 @@ class SystemAlertActivity : BaseActivity(){
 
     fun onErrorPopup(errMsg: String?) {
         if (errMsg != null) {
-            CustomSnackBar.make(
-                binding?.idContainerLayout,
-                this,
-                CustomSnackBar.WARNING,
-                errMsg,
-                CustomSnackBar.TOP,
-                3000,
-                1
-            )?.show()
+            CustomSnackBar.make(binding?.idContainerLayout, this, CustomSnackBar.WARNING,
+                errMsg, CustomSnackBar.TOP, 3000, 1)?.show()
         }
 
     }
@@ -119,7 +95,7 @@ class SystemAlertActivity : BaseActivity(){
         if (adapterRecycler == null) {
             adapterRecycler = SystemAlertAdapter(this, systemAlerts)
 
-            binding?.rvSystemAlerts?.setAdapter(adapterRecycler)
+            binding?.rvSystemAlerts?.adapter = adapterRecycler
         }
     }
 }

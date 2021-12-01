@@ -28,25 +28,24 @@ class TrainingMaterialsActivity : BaseActivity(){
         setSupportActionBar(binding!!.toolbar)
         addBackButton()
         if (supportActionBar != null) {
-            supportActionBar!!.setDisplayShowTitleEnabled(false)
+            supportActionBar?.setDisplayShowTitleEnabled(false)
         }
         //        binding.toolbar.setTitle(getString(R.string.system_alert));
-        binding!!.toolbar.setNavigationIcon(R.drawable.ic_back)
+        binding?.toolbar?.setNavigationIcon(R.drawable.ic_back)
     }
 
     //set the view
     @SuppressLint("SetJavaScriptEnabled")
     private fun setView() {
-        val url: String? =
-            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.TUTORIAL_URL, "")
+        val url: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.TUTORIAL_URL, "")
 
 
-        binding!!.webView.webViewClient = MyBrowser()
-        binding!!.webView.settings.loadsImagesAutomatically = true
-        binding!!.webView.settings.javaScriptEnabled = true
-        binding!!.webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+        binding?.webView?.webViewClient = MyBrowser()
+        binding?.webView?.settings?.loadsImagesAutomatically = true
+        binding?.webView?.settings?.javaScriptEnabled = true
+        binding?.webView?.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
         if (url != null) {
-            binding!!.webView.loadUrl(url)
+            binding?.webView?.loadUrl(url)
         }
     }
 

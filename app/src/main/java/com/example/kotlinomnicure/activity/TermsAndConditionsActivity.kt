@@ -6,10 +6,8 @@ import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityTermsAndConditionsBinding
 import com.example.kotlinomnicure.utils.Constants
@@ -77,7 +75,7 @@ class TermsAndConditionsActivity : BaseActivity() {
                     binding?.agreementText?.text = Html.fromHtml(
                         termsAndConditionsResponse.getConfiguration()!!.getValue())
                     if (binding?.agreementText != null) {
-                        binding?.agreementText?.setMovementMethod(LinkMovementMethod.getInstance())
+                        binding?.agreementText?.movementMethod = LinkMovementMethod.getInstance()
                     }
                 }
             } else {
