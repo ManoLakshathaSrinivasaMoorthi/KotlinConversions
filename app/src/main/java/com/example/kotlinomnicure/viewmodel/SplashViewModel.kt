@@ -3,6 +3,9 @@ package com.example.kotlinomnicure.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinomnicure.utils.Constants
+import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
+import omnicurekotlin.example.com.userEndpoints.model.VersionInfoResponse
 
 
 import java.util.HashMap

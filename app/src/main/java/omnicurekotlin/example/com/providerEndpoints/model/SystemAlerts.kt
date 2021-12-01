@@ -18,7 +18,7 @@ class SystemAlerts {
 
     @Expose
     @SerializedName("errorMessage")
-    val errorMessage: String? = null
+    var errorMessage: String? = null
     fun getSystemAlertList(): List<SystemAlertList?>? {
         return systemAlertList
     }

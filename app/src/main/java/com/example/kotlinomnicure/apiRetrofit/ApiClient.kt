@@ -2,6 +2,7 @@ package com.example.kotlinomnicure.apiRetrofit
 
 import android.util.Log
 import com.example.kotlinomnicure.OmnicureApp
+import com.example.kotlinomnicure.utils.BuildConfigConstants
 
 import com.example.kotlinomnicure.utils.PrefUtility
 
