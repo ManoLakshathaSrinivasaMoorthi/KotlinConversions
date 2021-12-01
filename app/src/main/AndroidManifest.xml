@@ -32,6 +32,12 @@
         android:theme="@style/Theme.KotlinOmniCure"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.ExpirePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ContactAdminActivity"
             android:exported="false" />
         <activity

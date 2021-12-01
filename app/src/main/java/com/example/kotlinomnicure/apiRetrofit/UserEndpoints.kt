@@ -4,8 +4,9 @@ import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.mo
 import com.example.dailytasksamplepoc.kotlinomnicure.requestbodys.RegistrationEmailOtpRequestBody
 import com.example.dailytasksamplepoc.kotlinomnicure.requestbodys.RegistrationPhoneOtpRequestBody
 import com.example.kotlinomnicure.model.CommonResponseRetro
+import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
 import com.example.kotlinomnicure.requestbodys.RegistrationVerifyRequestBody
-import com.mvp.omnicure.kotlinactivity.requestbodys.CommonPatientIdRequestBody
+
 import com.mvp.omnicure.kotlinactivity.requestbodys.LoginFailedRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.PhoneNumberBody
 import omnicurekotlin.example.com.userEndpoints.model.*

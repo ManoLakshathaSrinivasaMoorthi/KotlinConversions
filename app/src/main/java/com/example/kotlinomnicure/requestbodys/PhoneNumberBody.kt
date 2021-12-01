@@ -3,7 +3,7 @@ package com.mvp.omnicure.kotlinactivity.requestbodys
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class PhoneNumberBody {
+class PhoneNumberBody(phone: String) {
     @Expose
     @SerializedName("phoneNumber")
     private var phoneNumber: String? = null

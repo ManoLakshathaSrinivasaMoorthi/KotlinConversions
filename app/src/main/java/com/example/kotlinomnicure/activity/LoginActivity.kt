@@ -2,6 +2,8 @@ package com.example.kotlinomnicure.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
@@ -28,13 +30,19 @@ import android.webkit.WebViewClient.ERROR_TIMEOUT
 import android.widget.*
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AlertDialog
+import androidx.biometric.BiometricConstants.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.biometric.BiometricManager.from
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.CommonResponse
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.Provider
+
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.VersionInfoResponse
+import com.example.kotlinomnicure.OmnicureApp
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityLoginBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
@@ -44,7 +52,11 @@ import com.example.kotlinomnicure.viewmodel.LoginViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
+
 import com.google.gson.Gson
+import com.mvp.omnicure.kotlinactivity.activity.SignupActivity
 import okhttp3.OkHttpClient
 import java.security.KeyStore
 import java.util.*
@@ -74,6 +86,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     var biometricPrompt: BiometricPrompt? = null
     var i = 0
     var fingerprintdata = "no"
+    var context:Activity =LoginActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,16 +132,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
      * Get version info API call
      */
     private fun getAppConfig() {
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods().isInternetConnected(this)!!) {
             return
         }
-        viewModel?.getVersionInfo().observe(this) { versionInfoResponse ->
+        viewModel?.getVersionInfo()?.observe(this) { versionInfoResponse ->
             Log.i(TAG, "getversioninfo response $versionInfoResponse")
-            if (versionInfoResponse != null && versionInfoResponse.getStatus() != null && versionInfoResponse.getStatus()) {
+            if (versionInfoResponse != null && versionInfoResponse.status != null && versionInfoResponse.status!!) {
                 onSuccessVersionInfoAPI(versionInfoResponse)
             } else {
-                val errMsg: String? = ErrorMessages().getErrorMessage(this@LoginActivity,
-                    versionInfoResponse.getErrorMessage(), Constants.API.getVersionInfo)
+                val errMsg: String? = ErrorMessages().getErrorMessage(this,
+                    versionInfoResponse?.errorMessage, Constants.API.getVersionInfo)
                 Log.i(TAG, "getAppConfig Error : $errMsg")
             }
         }
@@ -137,17 +150,17 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     private fun onSuccessVersionInfoAPI(response: VersionInfoResponse) {
         Log.i(TAG, "onSuccessVersionInfoAPI: Response " + Gson().toJson(response.getAppConfig()))
         if (response.getAppConfig() != null) {
-//            if (response.getAppConfig().get(Constants.VersionInfoKeys.AUTO_LOGOUT_TIME) != null) {
+
             if (response.getAppConfig().getLogoutServerTimerinMilli() != null) {
-//                String serverTimer = response.getAppConfig().get(Constants.VersionInfoKeys.AUTO_LOGOUT_TIME).toString();
+
                 val serverTimer: String = response.getAppConfig().getLogoutServerTimerinMilli()
                 Log.i(TAG, "Auto Logout Server Time : $serverTimer")
                 PrefUtility().saveLongInPref(this,
                     Constants.SharedPrefConstants.AUTO_LOGOUT_TIME, serverTimer.toLong())
             }
-            //            if (response.getAppConfig().get(Constants.VersionInfoKeys.HEALTH_MONITOR_TIMER) != null) {
+
             if (response.getAppConfig().getLogoutAppTimerinMilli() != null) {
-//                String appTimer = response.getAppConfig().get(Constants.VersionInfoKeys.HEALTH_MONITOR_TIMER).toString();
+
                 val appTimer: String = response.getAppConfig().getLogoutAppTimerinMilli()
                 Log.i(TAG, "Health monitoring timer : $appTimer")
                 PrefUtility().saveLongInPref(this,
@@ -179,7 +192,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         binding?.editTextPassword?.setTypeface(Typeface.DEFAULT)
         binding?.passwordInfo?.setOnClickListener(View.OnClickListener {
             ValidationUtil().showPasswordValidationPopup(this@LoginActivity,
-                binding?.editTextPassword?.getText().toString())
+                binding?.editTextPassword?.text.toString())
         })
         binding?.passwordVisibility?.setOnClickListener(View.OnClickListener {
             binding?.editTextPassword?.let { it1 ->
@@ -193,32 +206,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             false
         })
 
-        //+1-8377944971
-/*        binding.editTextUserId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean isFocus) {
-                Log.d(TAG, "onFocusChange: " + isFocus);
-                String text = binding.editTextUserId.getText().toString().trim();
-                if (!isFocus && !TextUtils.isEmpty(text)) {
-                    if (text.startsWith(Constants.US_COUNTRY_CODE + "-") && text.length() == 13 && TextUtils.isDigitsOnly(text.substring(3))) {
-                        text = text.substring(0, 6) + "-" + text.substring(6, 9) + "-" + text.substring(9);
-                    } else if (text.startsWith(Constants.US_COUNTRY_CODE) && text.length() == 12 && TextUtils.isDigitsOnly(text.substring(2))) {
-                        text = text.substring(0, 5) + "-" + text.substring(5, 8) + "-" + text.substring(8);
-                    } else if (text.length() == 10 && TextUtils.isDigitsOnly(text)) {
-                        text = text.substring(0, 3) + "-" + text.substring(3, 6) + "-" + text.substring(6);
-                    }
-                    binding.editTextUserId.setText(text);
-                }
-            }
-        });*/
     }
 
     fun checkEmail(showError: Boolean) {
         val isValidPhone: Boolean =
-            ValidationUtil().isValidPhone(binding?.editTextUserId?.getText().toString())
+            ValidationUtil().isValidPhone(binding?.editTextUserId?.text.toString())
         val validEmail = ValidationUtil().checkEmail(
-            binding?.editTextUserId?.getText().toString()
-        ) == true || TextUtils.isDigitsOnly(binding?.editTextUserId?.getText().toString()) && isValidPhone
+            binding?.editTextUserId?.text.toString()
+        ) == true || TextUtils.isDigitsOnly(binding?.editTextUserId?.text.toString()) && isValidPhone
         if (!validEmail) {
             if (showError) {
                 binding?.editTextUserId?.setErrorMessage(getString(R.string.email_phone_invalid))
@@ -228,70 +223,51 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             binding?.editTextUserId?.setErrorMessage("")
             binding?.editTextUserId?.setCompoundDrawablesWithIntrinsicBounds(0, 0,
                 R.drawable.ic_checkmark_edittext, 0)
-            //    boolean finerprintstate = PrefUtility.getBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-//            if(finerprintstate){
-//                PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-//                PrefUtility.saveStringInPref(LoginActivity.this,Constants.SharedPrefConstants.PASSWORD,"");
-//                binding.signinAuth.setEnabled(false);
-//                PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAGONETIME,true);
-//            }
+
         }
     }
 
     fun checkPassword(showError: Boolean) {
-        if (ValidationUtil().checkPassword(binding?.editTextPassword?.getText().toString(), binding) != null
+        if (ValidationUtil().checkPassword(binding?.editTextPassword?.text.toString(), binding) != null
         ) {
             if (showError) {
                 binding?.editTextPassword?.setErrorMessage(
-                    ValidationUtil().checkPassword(binding?.editTextPassword?.getText().toString(), binding))
-                binding?.passwordLayout?.setBackground(resources.getDrawable(R.drawable.error_edittext_bg))
-                binding?.passwordInfo?.setVisibility(View.VISIBLE)
+                    ValidationUtil().checkPassword(binding?.editTextPassword?.text.toString(), binding))
+                binding?.passwordLayout?.background = resources.getDrawable(R.drawable.error_edittext_bg)
+                binding?.passwordInfo?.visibility = View.VISIBLE
             }
-            binding?.passwordVerified?.setVisibility(View.GONE)
+            binding?.passwordVerified?.visibility = View.GONE
             stopAuth()
         } else {
             binding?.editTextPassword?.setErrorMessage("")
-            binding?.passwordLayout?.setBackground(resources.getDrawable(R.drawable.ash_border_drawable_bg))
-            binding?.passwordInfo?.setVisibility(View.GONE)
-            binding?.passwordVerified?.setVisibility(View.VISIBLE)
+            binding?.passwordLayout?.background = resources.getDrawable(R.drawable.ash_border_drawable_bg)
+            binding?.passwordInfo?.visibility = View.GONE
+            binding?.passwordVerified?.visibility = View.VISIBLE
             //                        binding.idPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_checkmark_edittext, 0);
         }
         stopAuth()
     }
 
     fun checkPasswordforpopup(showError: Boolean) {
-        if (ValidationUtil().checkPassword(
-                binding?.editTextPassword?.getText().toString(),
-                binding
-            ) != null
-        ) {
-            if (showError) {
-                binding?.editTextPassword?.setErrorMessage(
-                    ValidationUtil().checkPassword(binding?.editTextPassword?.getText().toString(), binding))
-                binding?.passwordLayout?.setBackground(resources.getDrawable(R.drawable.error_edittext_bg))
-                binding?.passwordInfo?.setVisibility(View.VISIBLE)
-            }
-            binding?.passwordVerified?.setVisibility(View.GONE)
-        } else {
-            binding?.editTextPassword?.setErrorMessage("")
-            binding?.passwordLayout?.setBackground(resources.getDrawable(R.drawable.ash_border_drawable_bg))
-            binding?.passwordInfo?.setVisibility(View.GONE)
-            binding?.passwordVerified?.setVisibility(View.VISIBLE)
-            biometric(false, "n")
-            //                        binding.idPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_checkmark_edittext, 0);
+        if (showError) {
+            binding?.editTextPassword?.setErrorMessage(
+                ValidationUtil().checkPassword(binding?.editTextPassword?.text.toString(), binding))
+            binding?.passwordLayout?.background = resources.getDrawable(R.drawable.error_edittext_bg)
+            binding?.passwordInfo?.visibility = View.VISIBLE
         }
+        binding?.passwordVerified?.visibility = View.GONE
     }
 
     fun checkButton(statusofcheck: Boolean) {
         val isValidPhone: Boolean =
-            ValidationUtil().isValidPhone(binding?.editTextUserId?.getText().toString())
+            ValidationUtil().isValidPhone(binding?.editTextUserId?.text.toString())
         val validEmail = ValidationUtil().checkEmail(
-            binding?.editTextUserId?.getText().toString()
-        ) == true || TextUtils.isDigitsOnly(binding?.editTextUserId?.getText().toString()) && isValidPhone
+            binding?.editTextUserId?.text.toString()
+        ) == true || TextUtils.isDigitsOnly(binding?.editTextUserId?.text.toString()) && isValidPhone
         val validPass: Boolean =
-            ValidationUtil().checkPassword(binding?.editTextPassword?.getText().toString()) == true
+            ValidationUtil().checkPassword(binding?.editTextPassword?.text.toString()) == true
         if (validEmail && validPass) {
-            binding?.signinBtn?.setEnabled(true)
+            binding?.signinBtn?.isEnabled = true
             if (fingerprintenableordisable()) {
                 if (fingerprintlockemailchange()) {
                 } else {
@@ -300,33 +276,33 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 }
             } else {
                 fingerprintlock5times()
-                val LOCKFPemailchange: Boolean = PrefUtility().getBooleanInPref(this@LoginActivity,
+                val LOCKFPemailchange: Boolean = PrefUtility().getBooleanInPref(this,
                     Constants.SharedPrefConstants.LOCKFPemailchange, false)
                 if (LOCKFPemailchange) {
                     stopAuth()
-                    PrefUtility().saveBooleanInPref(this@LoginActivity,
+                    PrefUtility().saveBooleanInPref(this,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
-                    val passworddata: String? = PrefUtility().getStringInPref(this@LoginActivity,
+                    val passworddata: String? = PrefUtility().getStringInPref(this,
                         Constants.SharedPrefConstants.PASSWORD, "")
-                    PrefUtility().saveStringInPref(this@LoginActivity,
+                    PrefUtility().saveStringInPref(this,
                         Constants.SharedPrefConstants.DUMMYPASSWORD, passworddata)
-                    PrefUtility().saveStringInPref(this@LoginActivity,
+                    PrefUtility().saveStringInPref(this,
                         Constants.SharedPrefConstants.PASSWORD, "")
                     if (fingerprintlockemailchange()) {
-                        val mypass: String? = PrefUtility().getStringInPref(this@LoginActivity,
+                        val mypass: String? = PrefUtility().getStringInPref(this,
                             Constants.SharedPrefConstants.DUMMYPASSWORD, "")
-                        PrefUtility.saveStringInPref(
-                            this@LoginActivity,
+                        PrefUtility().saveStringInPref(
+                            this,
                             Constants.SharedPrefConstants.PASSWORD,
                             mypass
                         )
-                        PrefUtility.saveStringInPref(
-                            this@LoginActivity,
+                        PrefUtility().saveStringInPref(
+                            this,
                             Constants.SharedPrefConstants.DUMMYPASSWORD,
                             ""
                         )
-                        PrefUtility.saveBooleanInPref(
-                            this@LoginActivity,
+                        PrefUtility().saveBooleanInPref(
+                            this,
                             Constants.SharedPrefConstants.FINGERPRINTFLAG,
                             true
                         )
@@ -337,78 +313,74 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 }
             }
         } else {
-            binding.signinBtn.setEnabled(false)
-            binding.signinAuth.setEnabled(false)
+            binding?.signinBtn?.isEnabled = false
+            binding?.signinAuth?.isEnabled = false
             if (statusofcheck) {
                 if (fingerprintenableordisable()) {
-                    binding.signinAuth.setEnabled(true)
+                    binding?.signinAuth?.isEnabled = true
                 } else {
-                    binding.signinAuth.setEnabled(false)
+                    binding?.signinAuth?.isEnabled = false
                 }
             } else {
                 if (validEmail && validPass) {
                 } else {
-                    binding?.signinBtn?.setEnabled(false)
+                    binding?.signinBtn?.isEnabled = false
                     val email: String? = PrefUtility().getStringInPref(
-                        this@LoginActivity,
+                        this,
                         Constants.SharedPrefConstants.EMAIL,
                         ""
                     )
                     val LOCKFP: Boolean = PrefUtility().getBooleanInPref(
-                        this@LoginActivity,
+                        this,
                         Constants.SharedPrefConstants.LOCKFP,
                         false
                     )
                     val finerprintstate: Boolean = PrefUtility().getBooleanInPref(
-                        this@LoginActivity,
+                        this,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG,
                         false
                     )
                     var decryptpassword = ""
                     if (finerprintstate) {
                         val password: String? = PrefUtility().getStringInPref(
-                            this@LoginActivity,
+                            this,
                             Constants.SharedPrefConstants.PASSWORD,
                             ""
                         )
-                        decryptpassword = EncUtil().decrypt(this@LoginActivity, password).toString()
+                        decryptpassword = EncUtil().decrypt(this, password).toString()
                     }
                     if (finerprintstate) {
 
-                        // binding.editTextUserId.setText(email);
-//                binding.paraLabel1.setVisibility(View.VISIBLE);
-//                binding.paraLabel.setVisibility(View.VISIBLE);
-//                binding.fingerprintImage.setVisibility(View.VISIBLE);
+
                         if (validEmail) {
-                            //  binding.signinAuth.setEnabled(true);
-                            if (binding?.editTextPassword?.getText().toString().trim().length > 0
-                                && decryptpassword != binding?.editTextPassword?.getText().toString()) {
-                                binding?.signinAuth?.setEnabled(false)
-                            } else if (email == binding?.editTextUserId?.getText().toString()) {
+
+                            if (binding?.editTextPassword?.text.toString().trim().length > 0
+                                && decryptpassword != binding?.editTextPassword?.text.toString()) {
+                                binding?.signinAuth?.isEnabled = false
+                            } else if (email == binding?.editTextUserId?.text.toString()) {
                                 if (LOCKFP) {
-                                    binding?.signinAuth?.setEnabled(false)
+                                    binding?.signinAuth?.isEnabled = false
                                 } else {
-                                    binding?.signinAuth?.setEnabled(true)
+                                    binding?.signinAuth?.isEnabled = true
                                 }
                             } else {
                                 if (email == "") {
                                     if (LOCKFP) {
-                                        binding?.signinAuth?.setEnabled(false)
+                                        binding?.signinAuth?.isEnabled = false
                                     } else {
-                                        binding?.signinAuth?.setEnabled(true)
+                                        binding?.signinAuth?.isEnabled = true
                                     }
                                 } else {
-                                    binding?.signinAuth?.setEnabled(false)
+                                    binding?.signinAuth?.isEnabled = false
                                     stopAuth()
-                                    //                            PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-//                            PrefUtility.saveStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
+
                                 }
                             }
                         } else {
-                            binding.signinAuth.setEnabled(false)
+                            binding?.signinAuth?.isEnabled = false
                         }
                     } else {
-                        binding.signinAuth.setEnabled(false)
+                        binding?.signinAuth?.isEnabled = false
                     }
                 }
             }
@@ -418,384 +390,132 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     fun fingerprintpasswordcheck(): Boolean {
         val finerprintstate1: Boolean = PrefUtility().getBooleanInPref(
-            this@LoginActivity,
+            this,
             Constants.SharedPrefConstants.FINGERPRINTFLAG,
             false
         )
         var decryptpassword1 = ""
         if (finerprintstate1) {
-            val password1: String? = PrefUtility().getStringInPref(this@LoginActivity,
+            val password1: String? = PrefUtility().getStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD, "")
-            decryptpassword1 = EncUtil().decrypt(this@LoginActivity, password1).toString()
+            decryptpassword1 = EncUtil().decrypt(this, password1).toString()
         }
-        return if (binding?.editTextPassword?.getText().toString().trim()
-                .length > 0 && decryptpassword1 != binding?.editTextPassword?.getText().toString()
+        return if (binding?.editTextPassword?.text.toString().trim()
+                .length > 0 && decryptpassword1 != binding?.editTextPassword?.text.toString()
         ) {
-            binding?.signinAuth?.setEnabled(true)
+            binding?.signinAuth?.isEnabled = true
             true
         } else {
             if (decryptpassword1 == "") {
-                binding?.signinAuth?.setEnabled(true)
+                binding?.signinAuth?.isEnabled = true
                 true
             } else {
-                binding?.signinAuth?.setEnabled(false)
+                binding?.signinAuth?.isEnabled = false
                 false
             }
         }
     }
 
     fun fingerprintenableordisable(): Boolean {
-        val finerprintstate: Boolean = PrefUtility().getBooleanInPref(this@LoginActivity,
+        val finerprintstate: Boolean = PrefUtility().getBooleanInPref(this,
             Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
         return if (finerprintstate) {
-            binding?.signinAuth?.setEnabled(true)
+            binding?.signinAuth?.isEnabled = true
             true
         } else {
-            binding?.signinAuth?.setEnabled(false)
+            binding?.signinAuth?.isEnabled = false
             false
         }
     }
 
     fun fingerprintlock5times(): Boolean {
-        val LOCKFP: Boolean = PrefUtility().getBooleanInPref(this@LoginActivity,
+        val LOCKFP: Boolean = PrefUtility().getBooleanInPref(this,
             Constants.SharedPrefConstants.LOCKFP, false)
         return if (LOCKFP) {
-            binding?.signinAuth?.setEnabled(false)
+            binding?.signinAuth?.isEnabled = false
             false
         } else {
-            binding?.signinAuth?.setEnabled(true)
+            binding?.signinAuth?.isEnabled = true
             true
         }
     }
 
     fun fingerprintlockemailchange(): Boolean {
         val email: String? =
-            PrefUtility().getStringInPref(this@LoginActivity, Constants.SharedPrefConstants.EMAIL, "")
-        val finerprintstate1: Boolean = PrefUtility().getBooleanInPref(this@LoginActivity,
+            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
+        val finerprintstate1: Boolean = PrefUtility().getBooleanInPref(this,
             Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
         var decryptpassword1 = getString(R.string.value_n)
         if (finerprintstate1) {
             val password1: String? = PrefUtility().getStringInPref(
-                this@LoginActivity,
+                this,
                 Constants.SharedPrefConstants.PASSWORD,
                 "n"
             )
-            decryptpassword1 = EncUtil().decrypt(this@LoginActivity, password1).toString()
+            decryptpassword1 = EncUtil().decrypt(this, password1).toString()
         }
-        return if (email == binding?.editTextUserId?.getText()
-                .toString() && decryptpassword1 == binding?.editTextPassword?.getText().toString()
+        return if (email == binding?.editTextUserId?.text
+                .toString() && decryptpassword1 == binding?.editTextPassword?.text.toString()
         ) {
-            binding?.signinAuth?.setEnabled(true)
+            binding?.signinAuth?.isEnabled = true
             true
         } else {
             if (email == "") {
-                binding?.signinAuth?.setEnabled(true)
+                binding?.signinAuth?.isEnabled = true
                 true
             } else {
-                binding?.signinAuth?.setEnabled(false)
+                binding?.signinAuth?.isEnabled = false
                 false
             }
         }
     }
 
-/*
-//    void checkButton1() {
-//
-//        boolean isValidPhone = ValidationUtil.isValidPhone(binding.editTextUserId.getText().toString());
-//        Boolean validEmail = (ValidationUtil.checkEmail(binding.editTextUserId.getText().toString()) || (TextUtils.isDigitsOnly(binding.editTextUserId.getText().toString()) && isValidPhone));
-//        Boolean validPass = ValidationUtil.checkPassword(binding.editTextPassword.getText().toString());
-//
-//        boolean finerprintstate = PrefUtility.getBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-//        String decryptpassword = "";
-//        if(finerprintstate){
-//            String password = PrefUtility.getStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-//            decryptpassword = EncUtil.decrypt(LoginActivity.this, password);
-//        }
-//
-//        if (validEmail && validPass) {
-//            binding.signinBtn.setEnabled(true);
-//
-//            boolean LOCKFP = PrefUtility.getBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.LOCKFP, false);
-//            String email = PrefUtility.getStringInPref(LoginActivity.this, Constants.SharedPrefConstants.EMAIL, "");
-//
-//            if(LOCKFP){
-//                binding.signinAuth.setEnabled(false);
-//
-//            }else {
-//                binding.signinAuth.setEnabled(true);
-//            }
-//
-//
-//            if(binding.editTextPassword.getText().toString().trim().length() > 0 && !decryptpassword.equals( binding.editTextPassword.getText().toString()) ){
-//                if(finerprintstate){
-//                    binding.signinAuth.setEnabled(false);
-//                }else {
-//                    binding.signinAuth.setEnabled(true);
-//                }
-//            }else if(email.equals(binding.editTextUserId.getText().toString())){
-//                if(LOCKFP){
-//                    binding.signinAuth.setEnabled(false);
-//                }else {
-//                    binding.signinAuth.setEnabled(true);
-//                }
-//            }else {
-//                if(email.equals("")){
-//                    if(LOCKFP){
-//                        binding.signinAuth.setEnabled(false);
-//
-//                    }else {
-//                        binding.signinAuth.setEnabled(true);
-//                    }
-//                }else {
-//                    binding.signinAuth.setEnabled(false);
-//                    stopAuth();
-//                    PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-//                    PrefUtility.saveStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-//
-//                }
-//            }
-//
-//
-//        } else {
-//            binding.signinBtn.setEnabled(false);
-//
-//            String email = PrefUtility.getStringInPref(LoginActivity.this, Constants.SharedPrefConstants.EMAIL, "");
-//            boolean LOCKFP = PrefUtility.getBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.LOCKFP, false);
-//
-//            if (finerprintstate) {
-//
-//                // binding.editTextUserId.setText(email);
-////                binding.paraLabel1.setVisibility(View.VISIBLE);
-////                binding.paraLabel.setVisibility(View.VISIBLE);
-////                binding.fingerprintImage.setVisibility(View.VISIBLE);
-//
-//                if(validEmail){
-//                    //  binding.signinAuth.setEnabled(true);
-//                    if(binding.editTextPassword.getText().toString().trim().length() > 0 && !decryptpassword.equals( binding.editTextPassword.getText().toString()) ){
-//                        if(finerprintstate){
-//                            binding.signinAuth.setEnabled(false);
-//                        }else {
-//                            binding.signinAuth.setEnabled(true);
-//                        }
-//                    }else if(email.equals(binding.editTextUserId.getText().toString())){
-//                        if(LOCKFP){
-//                            binding.signinAuth.setEnabled(false);
-//
-//                        }else {
-//                            binding.signinAuth.setEnabled(true);
-//                        }
-//                    }else {
-//                        if(email.equals("")){
-//                            if(LOCKFP){
-//                                binding.signinAuth.setEnabled(false);
-//
-//                            }else {
-//                                binding.signinAuth.setEnabled(true);
-//                            }
-//                        }else {
-//                            binding.signinAuth.setEnabled(false);
-//                            stopAuth();
-////                            PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-////                            PrefUtility.saveStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-//
-//                        }
-//                    }
-//                }else {
-//                    binding.signinAuth.setEnabled(false);
-//                }
-//
-//            } else {
-//                if(validEmail){
-//                    binding.signinAuth.setEnabled(false);
-//                }else {
-//                    binding.signinAuth.setEnabled(false);
-//                }
-//
-//            }
-//        }
-//    }
-
-
-    //    void checkButton1() {
-    //
-    //        boolean isValidPhone = ValidationUtil.isValidPhone(binding.editTextUserId.getText().toString());
-    //        Boolean validEmail = (ValidationUtil.checkEmail(binding.editTextUserId.getText().toString()) || (TextUtils.isDigitsOnly(binding.editTextUserId.getText().toString()) && isValidPhone));
-    //        Boolean validPass = ValidationUtil.checkPassword(binding.editTextPassword.getText().toString());
-    //
-    //        boolean finerprintstate = PrefUtility.getBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-    //        String decryptpassword = "";
-    //        if(finerprintstate){
-    //            String password = PrefUtility.getStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-    //            decryptpassword = EncUtil.decrypt(LoginActivity.this, password);
-    //        }
-    //
-    //        if (validEmail && validPass) {
-    //            binding.signinBtn.setEnabled(true);
-    //
-    //            boolean LOCKFP = PrefUtility.getBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.LOCKFP, false);
-    //            String email = PrefUtility.getStringInPref(LoginActivity.this, Constants.SharedPrefConstants.EMAIL, "");
-    //
-    //            if(LOCKFP){
-    //                binding.signinAuth.setEnabled(false);
-    //
-    //            }else {
-    //                binding.signinAuth.setEnabled(true);
-    //            }
-    //
-    //
-    //            if(binding.editTextPassword.getText().toString().trim().length() > 0 && !decryptpassword.equals( binding.editTextPassword.getText().toString()) ){
-    //                if(finerprintstate){
-    //                    binding.signinAuth.setEnabled(false);
-    //                }else {
-    //                    binding.signinAuth.setEnabled(true);
-    //                }
-    //            }else if(email.equals(binding.editTextUserId.getText().toString())){
-    //                if(LOCKFP){
-    //                    binding.signinAuth.setEnabled(false);
-    //                }else {
-    //                    binding.signinAuth.setEnabled(true);
-    //                }
-    //            }else {
-    //                if(email.equals("")){
-    //                    if(LOCKFP){
-    //                        binding.signinAuth.setEnabled(false);
-    //
-    //                    }else {
-    //                        binding.signinAuth.setEnabled(true);
-    //                    }
-    //                }else {
-    //                    binding.signinAuth.setEnabled(false);
-    //                    stopAuth();
-    //                    PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-    //                    PrefUtility.saveStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-    //
-    //                }
-    //            }
-    //
-    //
-    //        } else {
-    //            binding.signinBtn.setEnabled(false);
-    //
-    //            String email = PrefUtility.getStringInPref(LoginActivity.this, Constants.SharedPrefConstants.EMAIL, "");
-    //            boolean LOCKFP = PrefUtility.getBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.LOCKFP, false);
-    //
-    //            if (finerprintstate) {
-    //
-    //                // binding.editTextUserId.setText(email);
-    ////                binding.paraLabel1.setVisibility(View.VISIBLE);
-    ////                binding.paraLabel.setVisibility(View.VISIBLE);
-    ////                binding.fingerprintImage.setVisibility(View.VISIBLE);
-    //
-    //                if(validEmail){
-    //                    //  binding.signinAuth.setEnabled(true);
-    //                    if(binding.editTextPassword.getText().toString().trim().length() > 0 && !decryptpassword.equals( binding.editTextPassword.getText().toString()) ){
-    //                        if(finerprintstate){
-    //                            binding.signinAuth.setEnabled(false);
-    //                        }else {
-    //                            binding.signinAuth.setEnabled(true);
-    //                        }
-    //                    }else if(email.equals(binding.editTextUserId.getText().toString())){
-    //                        if(LOCKFP){
-    //                            binding.signinAuth.setEnabled(false);
-    //
-    //                        }else {
-    //                            binding.signinAuth.setEnabled(true);
-    //                        }
-    //                    }else {
-    //                        if(email.equals("")){
-    //                            if(LOCKFP){
-    //                                binding.signinAuth.setEnabled(false);
-    //
-    //                            }else {
-    //                                binding.signinAuth.setEnabled(true);
-    //                            }
-    //                        }else {
-    //                            binding.signinAuth.setEnabled(false);
-    //                            stopAuth();
-    ////                            PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-    ////                            PrefUtility.saveStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-    //
-    //                        }
-    //                    }
-    //                }else {
-    //                    binding.signinAuth.setEnabled(false);
-    //                }
-    //
-    //            } else {
-    //                if(validEmail){
-    //                    binding.signinAuth.setEnabled(false);
-    //                }else {
-    //                    binding.signinAuth.setEnabled(false);
-    //                }
-    //
-    //            }
-    //        }
-    //    }*/
     fun belowversionV9() {
-        binding.signinAuth.setVisibility(View.VISIBLE)
+        binding?.signinAuth.setVisibility(View.VISIBLE)
         val fingerprintManager2 = getSystemService(FINGERPRINT_SERVICE) as FingerprintManager
         if (fingerprintManager2 == null) {
             PrefUtility().saveBooleanInPref(
-                this@LoginActivity,
+                this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false
             )
             PrefUtility().saveStringInPref(
-                this@LoginActivity,
+                this,
                 Constants.SharedPrefConstants.PASSWORD,
                 ""
             )
-            binding?.signinAuth?.setVisibility(View.GONE)
-            binding?.signinBtn?.setLayoutParams(
-                LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            )
+            binding?.signinAuth?.visibility = View.GONE
+            binding?.signinBtn?.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         } else if (!fingerprintManager2.isHardwareDetected) {
-            PrefUtility().saveBooleanInPref(this@LoginActivity,
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
-            PrefUtility().saveStringInPref(this@LoginActivity,
+            PrefUtility().saveStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD, "")
-            binding?.signinAuth?.setVisibility(View.GONE)
+            binding?.signinAuth?.visibility = View.GONE
             //   Toast.makeText(this, "No", Toast.LENGTH_SHORT).show();
-            binding?.signinBtn?.setLayoutParams(
-                LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            )
+            binding?.signinBtn?.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         } else if (!fingerprintManager2.hasEnrolledFingerprints()) {
-            PrefUtility().saveBooleanInPref(this@LoginActivity,
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
-            PrefUtility().saveStringInPref(this@LoginActivity,
+            PrefUtility().saveStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD, "")
             // User hasn't enrolled any fingerprints to authenticate with
-            binding?.signinAuth?.setVisibility(View.GONE)
-            binding?.signinBtn?.setLayoutParams(
-                LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            )
+            binding?.signinAuth?.visibility = View.GONE
+            binding?.signinBtn?.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         } else {
-            binding?.signinAuth?.setVisibility(View.VISIBLE)
+            binding?.signinAuth?.visibility = View.VISIBLE
             checkfingerprint()
         }
     }
 
     private fun setView() {
-        //finerprint
 
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            //generateKey();
-//            binding.signinAuth.setVisibility(View.VISIBLE);
-//
-//            checkfingerprint();
-//
-////        if (cipherInit()) {
-////        }
-//
-//        }
-//check fp
         //appname
-        binding?.idWelcomeText?.setText(
+        binding?.idWelcomeText?.text =
             java.lang.String.format(getString(R.string.welcome_to_omnicurenow), Buildconfic.value())
-        )
         binding?.signinAuth?.let { handleMultipleClicknew(it) }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //generateKey();
@@ -808,33 +528,31 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
 
 //finerprint end
-        binding?.editTextUserId?.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+        binding?.editTextUserId?.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->
             if (!hasFocus) {
-                binding?.editTextUserId?.setText(binding?.editTextUserId?.getText().toString().trim())
+                binding?.editTextUserId?.setText(binding?.editTextUserId?.text.toString().trim())
                 binding?.editTextUserId?.addTextChangedListener(GenericTextWatcher(binding?.editTextUserId!!))
                 checkEmail(true)
             }
-        })
-        binding?.editTextPassword?.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+        }
+        binding?.editTextPassword?.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-//                    if (binding.editTextPassword.getErrorMessage() == "") {
+
                 if (binding?.editTextPassword?.getErrorMessage().equals("")) {
-                    binding?.passwordLayout?.setBackground(resources.getDrawable(R.drawable.border_black_edittext_bg))
+                    binding?.passwordLayout?.background = resources.getDrawable(R.drawable.border_black_edittext_bg)
                 }
             } else {
-                binding?.passwordLayout?.setBackground(resources.getDrawable(R.drawable.ash_border_drawable_bg))
-                binding?.editTextPassword?.addTextChangedListener(GenericTextWatcher(binding?.editTextPassword))
+                binding?.passwordLayout?.background = resources.getDrawable(R.drawable.ash_border_drawable_bg)
+                binding?.editTextPassword?.addTextChangedListener(GenericTextWatcher(binding?.editTextPassword!!))
                 checkPassword(true)
             }
-        })
+        }
         val labelColor = resources.getColor(R.color.btn_bg)
         val сolorString = String.format("%X", labelColor).substring(2)
-        binding?.idSignupText?.setText(
-            Html.fromHtml(
-                String.format(
-                    "Don\'t have an account?" + "<font color='#%s'><b>" + " SIGN UP</b></font>",
-                    сolorString
-                )
+        binding?.idSignupText?.text = Html.fromHtml(
+            String.format(
+                "Don\'t have an account?" + "<font color='#%s'><b>" + " SIGN UP</b></font>",
+                сolorString
             )
         )
         //detectKeyboard();
@@ -851,13 +569,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             }
             //            binding.editTextUserId.setText(mobileNo);
         }
-        binding.editTextUserId.addTextChangedListener(ValidationTextWatcher(binding.editTextUserId))
-        binding.editTextPassword.addTextChangedListener(ValidationTextWatcher(binding.editTextPassword))
+        binding?.editTextUserId?.addTextChangedListener(ValidationTextWatcher(binding!!.editTextUserId))
+        binding?.editTextPassword?.addTextChangedListener(ValidationTextWatcher(binding!!.editTextPassword))
     }
 
     fun checkfingerprintabove29() {
-        val biometricManager: BiometricManager = from(this@LoginActivity)
-        binding?.signinAuth?.setVisibility(View.VISIBLE)
+        val biometricManager: BiometricManager = from(this)
+        binding?.signinAuth?.visibility = View.VISIBLE
         if (biometricManager.canAuthenticate() === BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE) {
             PrefUtility().saveBooleanInPref(
                 this@LoginActivity,
@@ -869,13 +587,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 Constants.SharedPrefConstants.PASSWORD,
                 ""
             )
-            binding.signinAuth.setVisibility(View.GONE)
-            binding.signinBtn.setLayoutParams(
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
+            binding.signinAuth.visibility = View.GONE
+            binding.signinBtn.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
             )
         } else if (biometricManager.canAuthenticate() === BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED) {
             PrefUtility().saveBooleanInPref(
@@ -888,16 +604,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 Constants.SharedPrefConstants.PASSWORD,
                 ""
             )
-            binding?.signinAuth?.setVisibility(View.GONE)
-            binding?.signinBtn?.setLayoutParams(
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
+            binding?.signinAuth?.visibility = View.GONE
+            binding?.signinBtn?.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
             )
         } else if (biometricManager.canAuthenticate() === BiometricManager.BIOMETRIC_SUCCESS) {
-            binding?.signinAuth?.setVisibility(View.VISIBLE)
+            binding?.signinAuth?.visibility = View.VISIBLE
             checkfingerprint()
         }
     }
@@ -925,13 +639,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         /**
                          * The device does not have a biometric sensor.
                          */
-                        binding.signinAuth.setVisibility(View.GONE)
-                        binding.signinBtn.setLayoutParams(
-                            LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT,
-                                1f
-                            )
+                        binding.signinAuth.visibility = View.GONE
+                        binding.signinBtn.layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1f
                         )
                     } else if (errorCode == BiometricPrompt.ERROR_HW_UNAVAILABLE) {
                         /**
@@ -943,13 +655,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         /**
                          * The user does not have any biometrics enrolled.
                          */
-                        binding.signinAuth.setVisibility(View.GONE)
-                        binding.signinBtn.setLayoutParams(
-                            LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT,
-                                1f
-                            )
+                        binding?.signinAuth?.visibility = View.GONE
+                        binding?.signinBtn?.layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1f
                         )
                     } else if (errorCode == BiometricPrompt.ERROR_LOCKOUT_PERMANENT) {
                         /**
@@ -957,13 +667,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                          * Biometric authentication is disabled until the user unlocks with strong authentication
                          * (PIN/Pattern/Password)
                          */
-                        binding.signinAuth.setVisibility(View.GONE)
-                        binding.signinBtn.setLayoutParams(
-                            LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT,
-                                1f
-                            )
+                        binding.signinAuth.visibility = View.GONE
+                        binding.signinBtn.layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1f
                         )
                     } else if (errorCode == BiometricPrompt.ERROR_VENDOR) {
                         /**
@@ -979,19 +687,19 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                          * The operation was canceled because the API is locked out due to too many attempts.
                          * This occurs after 5 failed attempts, and lasts for 30 seconds.
                          */
-                        CustomSnackBar.make(binding?.rootLayout, this@LoginActivity,
+                        CustomSnackBar.make(binding?.rootLayout, context,
                             CustomSnackBar.WARNING, getString(R.string.Authfaildnew),
                             CustomSnackBar.TOP, 3000, 0)?.show()
-                        PrefUtility().saveBooleanInPref(this@LoginActivity,
+                        PrefUtility().saveBooleanInPref(context,
                             Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
                         PrefUtility().saveStringInPref(
-                            this@LoginActivity, Constants.SharedPrefConstants.PASSWORD, "")
-                        PrefUtility().saveBooleanInPref(this@LoginActivity,
+                            context, Constants.SharedPrefConstants.PASSWORD, "")
+                        PrefUtility().saveBooleanInPref(context,
                             Constants.SharedPrefConstants.LOCKFP, true)
-                        PrefUtility().saveBooleanInPref(this@LoginActivity,
+                        PrefUtility().saveBooleanInPref(context,
                             Constants.SharedPrefConstants.LOCKFPemailchange, false)
                         stopAuth()
-                        binding?.signinAuth?.setEnabled(false)
+                        binding?.signinAuth?.isEnabled = false
                         //   binding.editTextUserId.setText("");
                         binding?.editTextPassword?.setText("")
 
@@ -1004,69 +712,46 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                          * prevent programs from waiting for the biometric sensor indefinitely. The timeout is platform
                          * and sensor-specific, but is generally on the order of 30 seconds.
                          */
-//                    CustomSnackBar.make(dialogView, LoginActivity.this,CustomSnackBar.WARNING, getString(R.string.fpdisable), CustomSnackBar.TOP,3000,0).show();
-//                    stopAuth();
-
-                        /* CustomSnackBar.make(binding.rootLayout, LoginActivity.this,CustomSnackBar.WARNING, getString(R.string.Authfaildnew), CustomSnackBar.TOP,3000,0).show();
-
-                    PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-                    PrefUtility.saveStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-                    PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.LOCKFP, true);
-                    stopAuth();
-                    binding.signinAuth.setEnabled(false);
-                    binding.editTextUserId.setText("");
-                    binding.editTextPassword.setText("");*/
+//
                     } else if (errorCode == BiometricPrompt.ERROR_CANCELED) {
-                        // you can either show the dialog again here
-//                    CustomSnackBar.make(binding.container, MyProfileActivity.this,CustomSnackBar.WARNING, getString(R.string.fpdisablenew), CustomSnackBar.TOP,3000,0).show();
-//
-//                    PrefUtility.saveBooleanInPref(MyProfileActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-//                    PrefUtility.saveStringInPref(MyProfileActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-//                    fingerprintonoff.setChecked(false);
-//                    stopAuth();
-//                    final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-//                            .setTitle("Authentication Required")
-//                            .setNegativeButtonText("Cancel")
-//                            .build();
-//
-//                    biometricPrompt.authenticate(promptInfo);
+
                     }
                 }
 
                 fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     if (normal == "normal") {
-                        val email: String? = PrefUtility().getStringInPref(this@LoginActivity,
+                        val email: String? = PrefUtility().getStringInPref(context,
                             Constants.SharedPrefConstants.EMAIL, "")
-                        val password: String? = PrefUtility().getStringInPref(this@LoginActivity,
+                        val password: String? = PrefUtility().getStringInPref(context,
                             Constants.SharedPrefConstants.PASSWORD, "")
                         if (email == "" || password == "") {
                         } else {
-                            EncUtil().generateKey(this@LoginActivity)
+                            EncUtil().generateKey(context)
                             val decryptpassword: String? =
-                                EncUtil().decrypt(this@LoginActivity, password)
+                                EncUtil().decrypt(context, password)
                             binding?.editTextPassword?.setText(decryptpassword)
                             checkEmail(true)
                             onClickSignIn()
                         }
                     } else {
                         if (status) {
-                            val email2: String? = PrefUtility().getStringInPref(this@LoginActivity,
+                            val email2: String? = PrefUtility().getStringInPref(context,
                                 Constants.SharedPrefConstants.EMAIL, "")
-                            val password2: String? = PrefUtility().getStringInPref(this@LoginActivity,
+                            val password2: String? = PrefUtility().getStringInPref(context,
                                 Constants.SharedPrefConstants.PASSWORD, "")
                             if (email2 == "" || password2 == "") {
                             } else {
-                                EncUtil().generateKey(this@LoginActivity)
+                                EncUtil().generateKey(context)
                                 val decryptpassword: String? =
-                                    EncUtil().decrypt(this@LoginActivity, password2)
+                                    EncUtil().decrypt(context, password2)
                                 binding?.editTextPassword?.setText(decryptpassword)
                                 fingerprintdata = "yes"
                                 checkEmail(true)
                                 onClickSignIn()
                             }
                         } else {
-                            val email1: String = binding?.editTextUserId?.getText().toString()
-                            val password1: String = binding?.editTextPassword.getText().toString()
+                            val email1: String = binding?.editTextUserId?.text.toString()
+                            val password1: String = binding?.editTextPassword?.text.toString()
                             if (email1 == "" || password1 == "") {
                             } else {
                                 fingerprintdata = "yes"
@@ -1076,18 +761,18 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         }
                     }
                     super.onAuthenticationSucceeded(result)
-                    //TODO: Called when a biometric is recognized.
+
                 }
 
                 fun onAuthenticationFailed() {
-                    val finerprintstate: Boolean = PrefUtility().getBooleanInPref(this@LoginActivity,
+                    val finerprintstate: Boolean = PrefUtility().getBooleanInPref(context,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
                     if (finerprintstate) {
                         CustomSnackBar.make(binding?.rootLayout,
-                            this@LoginActivity, CustomSnackBar.WARNING,
+                            context, CustomSnackBar.WARNING,
                             getString(R.string.Authfaild), CustomSnackBar.TOP, 3000, 0)?.show()
 
-                        // diaalog("Authentication Failed Please Try Again");
+
                     }
                     super.onAuthenticationFailed()
                     //TODO: Called when a biometric is valid but not recognized.
@@ -1112,17 +797,17 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun handleMultipleClicknew(item: View) {
-        val multipleclieck: Boolean = PrefUtility().getBooleanInPref(this@LoginActivity,
+        val multipleclieck: Boolean = PrefUtility().getBooleanInPref(this,
             Constants.SharedPrefConstants.MUTILPLECLICK, false)
         if (multipleclieck) {
             // item.setEnabled(false);
-            CustomSnackBar.make(binding?.rootLayout, this@LoginActivity,
+            CustomSnackBar.make(binding?.rootLayout, this,
                 CustomSnackBar.WARNING, getString(R.string.Authfaildnew),
                 CustomSnackBar.TOP, 3000, 0)?.show()
-            // mHandler.postDelayed(() -> item.setEnabled(true), 30000);
-            PrefUtility().saveBooleanInPref(this@LoginActivity,
+
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.LOCKFP, true)
-            PrefUtility().saveBooleanInPref(this@LoginActivity,
+            PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.MUTILPLECLICK, false)
         } else {
         }
@@ -1134,21 +819,21 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val password: String? =
             PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
         val finerprintstate: Boolean = PrefUtility().getBooleanInPref(
-            this@LoginActivity,
+            this,
             Constants.SharedPrefConstants.FINGERPRINTFLAG,
             false
         )
         if (finerprintstate) {
             if (password == "") {
-                binding?.signinAuth?.setEnabled(false)
+                binding?.signinAuth?.isEnabled = false
             } else {
                 binding?.editTextUserId?.setText(email)
                 checkEmail(true)
-                binding?.signinAuth?.setEnabled(true)
+                binding?.signinAuth?.isEnabled = true
                 biometric(false, "normal")
             }
         } else {
-            binding?.signinAuth?.setEnabled(false)
+            binding?.signinAuth?.isEnabled = false
         }
     }
 
@@ -1166,7 +851,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     false
                 )
                 if (FINGERPRINTFLAG) {
-                    if (binding?.editTextPassword?.getText().toString().length > 0) {
+                    if (binding?.editTextPassword?.text.toString().length > 0) {
                         checkPasswordforpopup(true)
                     } else {
                         biometric(true, "n")
@@ -1186,22 +871,22 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun onClickSignIn() {
-        handleMultipleClick(binding?.signinBtn)
+        binding?.signinBtn?.let { handleMultipleClick(it) }
         if (!isValid()) {
             return
         }
         if (signInApiFlag) {
             return
         }
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.rootLayout, Snackbar.LENGTH_LONG);
-            CustomSnackBar.make(binding?.rootLayout, this@LoginActivity,
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
+            CustomSnackBar.make(binding?.rootLayout, this,
                 CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity),
                 CustomSnackBar.TOP, 3000, 0)?.show()
             return
         }
         showProgressBar(PBMessageHelper().getMessage(this, Constants.API.signin.toString()))
-        val userIdStr: String = binding?.editTextUserId?.getText().toString()
+        val userIdStr: String = binding?.editTextUserId?.text.toString()
         //        String userIdStr = userIdText.replaceAll("\\+", "").replaceAll("-", "");
         if (TextUtils.isDigitsOnly(userIdStr)) {
             mobileFlag = true
@@ -1218,215 +903,217 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun loginApi(overrideFlag: Boolean) {
-        val password: String = binding?.editTextPassword?.getText().toString()
+        val password: String = binding?.editTextPassword?.text.toString()
         val email = emailText
         signInApiFlag = true
         Log.d(TAG, "loginApi: $password")
         showProgressBar()
-        viewModel.login(email.toLowerCase(), password, fcmToken, overrideFlag, version)
-            .observe(this,
-                Observer<Any?> { commonResponse ->
-                    dismissProgressBar()
-                    Log.i(TAG, "Login response " + Gson().toJson(commonResponse))
-                    signInApiFlag = false
-                    if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                        PrefUtility().clearRedirectValidation(this@LoginActivity)
-                        if (commonResponse.getFeedbackForm() != null) {
-                            val encryptionKey1: String = commonResponse.getEncryptionKey()
-                            PrefUtility().saveStringInPref(
-                                this@LoginActivity,
-                                Constants.SharedPrefConstants.ENCRYPTIONKEY,
-                                encryptionKey1
-                            )
-                            strFeedbackForm = commonResponse.getFeedbackForm()
-                            //fp
-                            val LOCKFP: Boolean = PrefUtility().getBooleanInPref(
-                                this@LoginActivity,
-                                Constants.SharedPrefConstants.LOCKFP,
-                                false
-                            )
-                            if (LOCKFP) {
-                                PrefUtility().saveBooleanInPref(
-                                    this@LoginActivity,
+        fcmToken?.let {
+            viewModel?.login(email.lowercase(Locale.getDefault()), password, it, overrideFlag, version)
+                ?.observe(this,
+                    Observer<CommonResponse?> { commonResponse ->
+                        dismissProgressBar()
+                        Log.i(TAG, "Login response " + Gson().toJson(commonResponse))
+                        signInApiFlag = false
+                        if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
+                            PrefUtility().clearRedirectValidation(this)
+                            if (commonResponse.feedbackForm != null) {
+                                val encryptionKey1: String? = commonResponse.encryptionKey
+                                PrefUtility().saveStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.ENCRYPTIONKEY,
+                                    encryptionKey1
+                                )
+                                strFeedbackForm = commonResponse.feedbackForm!!
+                                //fp
+                                val LOCKFP: Boolean = PrefUtility().getBooleanInPref(
+                                    this,
                                     Constants.SharedPrefConstants.LOCKFP,
                                     false
                                 )
-                                //    PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, true);
-                                val encryptionKey: String = commonResponse.getEncryptionKey()
+                                if (LOCKFP) {
+                                    PrefUtility().saveBooleanInPref(
+                                        this,
+                                        Constants.SharedPrefConstants.LOCKFP,
+                                        false
+                                    )
+
+                                    val encryptionKey: String? = commonResponse.encryptionKey
+                                    PrefUtility().saveStringInPref(
+                                        this,
+                                        Constants.SharedPrefConstants.ENCRYPTIONKEY,
+                                        encryptionKey
+                                    )
+                                }
                                 PrefUtility().saveStringInPref(
-                                    this@LoginActivity,
-                                    Constants.SharedPrefConstants.ENCRYPTIONKEY,
-                                    encryptionKey
+                                    this,
+                                    Constants.SharedPrefConstants.FEEDBACK_URL,
+                                    commonResponse.feedbackForm
                                 )
                             }
-                            PrefUtility().saveStringInPref(
-                                this@LoginActivity,
-                                Constants.SharedPrefConstants.FEEDBACK_URL,
-                                commonResponse.getFeedbackForm()
-                            )
-                        }
-                        if (commonResponse.getTutorial_url() != null) {
-                            PrefUtility().saveStringInPref(
-                                this@LoginActivity,
-                                Constants.SharedPrefConstants.TUTORIAL_URL,
-                                commonResponse.getTutorial_url()
-                            )
-                        }
-                        if (commonResponse.getAesEncryptionKey() != null) {
-                            EncUtil().generateKey(this@LoginActivity)
-                            val encyptKey: String? = EncUtil().encrypt(this@LoginActivity,
-                                commonResponse.getAesEncryptionKey()
-                            )
-                            PrefUtility().saveStringInPref(this@LoginActivity,
-                                Constants.SharedPrefConstants.AES_KEY, encyptKey)
-                        }
-                        if (commonResponse.getAgoraAppCertificate() != null) {
-                            PrefUtility().saveStringInPref(
-                                this@LoginActivity,
-                                Constants.SharedPrefConstants.AGORA_CERTIFICATE,
-                                commonResponse.getAgoraAppCertificate()
-                            )
-                        }
-                        if (commonResponse.getAgoraAppId() != null) {
-                            PrefUtility().saveStringInPref(
-                                this@LoginActivity,
-                                Constants.SharedPrefConstants.AGORA_APP_ID,
-                                commonResponse.getAgoraAppId()
-                            )
-                        }
-                        if (commonResponse.getIdToken() != null) {
-                            PrefUtility().saveStringInPref(
-                                this@LoginActivity,
-                                Constants.SharedPrefConstants.FIREBASE_IDTOKEN,
-                                commonResponse.getIdToken()
-                            )
-                        }
-                        if (commonResponse.getRefreshToken() != null) {
-                            PrefUtility().saveStringInPref(
-                                this@LoginActivity,
-                                Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
-                                commonResponse.getRefreshToken()
-                            )
-                        }
-                        if (commonResponse.getProvider().getRole()
-                                .equalsIgnoreCase(Constants.ProviderRole.RD.toString())
-                        ) {
-                            val topic: String = UtilityMethods().getFCMTopic()
-                            FirebaseMessaging.getInstance().subscribeToTopic(topic)
-                                .addOnCompleteListener(OnCompleteListener<Void?> { task ->
-                                    if (task.isSuccessful) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "topic subscribe:success")
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "topic subscribe:failure", task.exception)
-                                        Toast.makeText(
-                                            this@LoginActivity,
-                                            getString(R.string.authentication_failed),
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    }
-                                })
-                        }
-                        //encrypt
-                        EncUtil().generateKey(this@LoginActivity)
-                        val encyuptpassword: String? = EncUtil().encrypt(this@LoginActivity, password)
-                        commonResponse.getProvider().setPassword(encyuptpassword)
-                        onLoginSuccess(commonResponse.getProvider())
-                    } else {
-                        var errorId = 0
-                        if (commonResponse.getErrorId() != null) {
-                            errorId = commonResponse.getErrorId()
-                            if (errorId != 150) {
-                                binding.editTextPassword.setText("")
+                            if (commonResponse.tutorial_url != null) {
+                                PrefUtility().saveStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.TUTORIAL_URL,
+                                    commonResponse.tutorial_url
+                                )
                             }
-                        }
-                        if (commonResponse.getProvider() != null) {
-                            redirectPage(
-                                commonResponse.getProvider(),
-                                errorId,
-                                commonResponse.getErrorMessage()
-                            )
-                        }
-                        if (commonResponse.getErrorMessage() != null && commonResponse.getErrorMessage()
-                                .equalsIgnoreCase("redirect")
-                        ) {
-                            val intent =
-                                Intent(this@LoginActivity, RegistrationSuccessActivity::class.java)
-                            intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
-                            startActivity(intent)
-                            return@Observer
-                        }
-                        if (commonResponse.getErrorMessage() != null && commonResponse.getErrorMessage()
-                                .equalsIgnoreCase("unauthorized")
-                        ) {
-                            val intent =
-                                Intent(this@LoginActivity, RegistrationSuccessActivity::class.java)
-                            intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
-                            startActivity(intent)
-                            return@Observer
-                        }
-                        val errMsg1 = getString(R.string.temporarily_locked)
-                        if (commonResponse.getErrorMessage() != null && commonResponse.getErrorMessage()
-                                .equals(errMsg1)
-                        ) {
-                            //                        PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-                            //                        PrefUtility.saveStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-                            binding?.editTextPassword?.setText("")
-                            binding?.editTextUserId?.setText("")
-                            if (alertDialog != null) {
-                                alertDialog!!.dismiss()
+                            if (commonResponse.aesEncryptionKey != null) {
+                                EncUtil().generateKey(this)
+                                val encyptKey: String? = EncUtil().encrypt(this,
+                                    commonResponse.aesEncryptionKey
+                                )
+                                PrefUtility().saveStringInPref(this,
+                                    Constants.SharedPrefConstants.AES_KEY, encyptKey)
                             }
-                        }
-                        val errMsg2 = getString(R.string.invalid_creds)
-                        if (commonResponse.getErrorMessage() != null && commonResponse.getErrorMessage()
-                                .equals(errMsg2)
-                        ) {
-                            binding?.editTextPassword?.setText("")
-                            if (alertDialog != null) {
-                                alertDialog!!.dismiss()
+                            if (commonResponse.agoraAppCertificate!= null) {
+                                PrefUtility().saveStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.AGORA_CERTIFICATE,
+                                    commonResponse.agoraAppCertificate
+                                )
                             }
-                        }
-                        if (errorId == 150) {
-                            alreadyLoggedInPopup()
-                        } else if (errorId == 103) {
-                            val intent =
-                                Intent(this@LoginActivity, RegistrationSuccessActivity::class.java)
-                            intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
-                            startActivity(intent)
+                            if (commonResponse.agoraAppId != null) {
+                                PrefUtility().saveStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.AGORA_APP_ID,
+                                    commonResponse.agoraAppId
+                                )
+                            }
+                            if (commonResponse.idToken!= null) {
+                                PrefUtility().saveStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.FIREBASE_IDTOKEN,
+                                    commonResponse.idToken
+                                )
+                            }
+                            if (commonResponse.refreshToken != null) {
+                                PrefUtility().saveStringInPref(
+                                    this,
+                                    Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
+                                    commonResponse.refreshToken
+                                )
+                            }
+                            if (commonResponse.provider.role
+                                    .equalsIgnoreCase(Constants.ProviderRole.RD.toString())
+                            ) {
+                                val topic: String? = UtilityMethods().getFCMTopic()
+                                if (topic != null) {
+                                    FirebaseMessaging.getInstance().subscribeToTopic(topic)
+                                        .addOnCompleteListener(OnCompleteListener<Void?> { task ->
+                                            if (task.isSuccessful) {
+                                                // Sign in success, update UI with the signed-in user's information
+                                                Log.d(TAG, "topic subscribe:success")
+                                            } else {
+                                                // If sign in fails, display a message to the user.
+                                                Log.w(TAG, "topic subscribe:failure", task.exception)
+                                                Toast.makeText(
+                                                    this,
+                                                    getString(R.string.authentication_failed),
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                            }
+                                        })
+                                }
+                            }
+                            //encrypt
+                            EncUtil().generateKey(this)
+                            val encyuptpassword: String? = EncUtil().encrypt(this, password)
+                            commonResponse.provider?.setPassword(encyuptpassword)
+                            commonResponse.provider?.let { it1 -> onLoginSuccess(it1) }
                         } else {
-                            if (errorId != 110) {
-                                val errMsg: String? = ErrorMessages().getErrorMessage(
-                                    this@LoginActivity,
-                                    commonResponse.getErrorMessage(),
-                                    Constants.API.signin
-                                )
-                                //                            UtilityMethods.showErrorSnackBar(binding.rootLayout, errMsg, Snackbar.LENGTH_LONG);
-                                errMsg?.let {
-                                    CustomSnackBar.make(
-                                        binding?.rootLayout,
-                                        this@LoginActivity,
-                                        CustomSnackBar.WARNING,
-                                        it,
-                                        CustomSnackBar.TOP,
-                                        3000,
-                                        0
-                                    )?.show()
+                            var errorId = 0
+                            if (commonResponse.errorId != null) {
+                                errorId = commonResponse.errorId!!
+                                if (errorId != 150) {
+                                    binding?.editTextPassword?.setText("")
+                                }
+                            }
+                            if (commonResponse.provider!= null) {
+                                commonResponse.errorMessage?.let { it1 ->
+                                    redirectPage(
+                                        commonResponse.provider!!,
+                                        errorId,
+                                        it1
+                                    )
+                                }
+                            }
+                            if (commonResponse.errorMessage!= null && commonResponse.errorMessage
+                                    .equals("redirect",ignoreCase = true)
+                            ) {
+                                val intent =
+                                    Intent(this, RegistrationSuccessActivity::class.java)
+                                intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
+                                startActivity(intent)
+                                return@Observer
+                            }
+                            if (commonResponse.errorMessage != null && commonResponse.errorMessage
+                                    .equals("unauthorized",ignoreCase = true)
+                            ) {
+                                val intent =
+                                    Intent(this, RegistrationSuccessActivity::class.java)
+                                intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
+                                startActivity(intent)
+                                return@Observer
+                            }
+                            val errMsg1 = getString(R.string.temporarily_locked)
+                            if (commonResponse.errorMessage!= null && commonResponse.errorMessage
+                                    .equals(errMsg1)) {
+
+                                binding?.editTextPassword?.setText("")
+                                binding?.editTextUserId?.setText("")
+                                if (alertDialog != null) {
+                                    alertDialog!!.dismiss()
+                                }
+                            }
+                            val errMsg2 = getString(R.string.invalid_creds)
+                            if (commonResponse.errorMessage != null && commonResponse.errorMessage.equals(errMsg2)) {
+                                binding?.editTextPassword?.setText("")
+                                if (alertDialog != null) {
+                                    alertDialog!!.dismiss()
+                                }
+                            }
+                            if (errorId == 150) {
+                                alreadyLoggedInPopup()
+                            } else if (errorId == 103) {
+                                val intent =
+                                    Intent(this, RegistrationSuccessActivity::class.java)
+                                intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
+                                startActivity(intent)
+                            } else {
+                                if (errorId != 110) {
+                                    val errMsg: String? = ErrorMessages().getErrorMessage(
+                                        this,
+                                        commonResponse.errorMessage,
+                                        Constants.API.signin
+                                    )
+
+                                    errMsg?.let {
+                                        CustomSnackBar.make(
+                                            binding?.rootLayout,
+                                            this,
+                                            CustomSnackBar.WARNING,
+                                            it,
+                                            CustomSnackBar.TOP,
+                                            3000,
+                                            0
+                                        )?.show()
+                                    }
                                 }
                             }
                         }
-                    }
-                })
+                    })
+        }
     }
 
     private fun loginFailedApi() {
         val email = emailText
-        val password: String = binding.editTextPassword.getText().toString()
-        viewModel.loginFailed(email.toLowerCase(), password).observe(this) { commonResponse ->
+        val password: String = binding?.editTextPassword?.text.toString()
+        viewModel?.loginFailed(email.lowercase(Locale.getDefault()), password)?.observe(this) { commonResponse ->
             dismissProgressBar()
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
+            if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
             } else {
-                val errMsg: String = commonResponse.getErrorMessage()
+                val errMsg: String? = commonResponse?.errorMessage
                 if (showError) {
                     CustomSnackBar.make(
                         binding?.rootLayout,
@@ -1441,10 +1128,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 //fp login
                 val errMsg1 = getString(R.string.temporarily_locked)
                 if (errMsg == errMsg1) {
-//                    PrefUtility.saveBooleanInPref(LoginActivity.this, Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-//                    PrefUtility.saveStringInPref(LoginActivity.this, Constants.SharedPrefConstants.PASSWORD, "");
-                    binding?.editTextPassword.setText("")
-                    binding?.editTextUserId.setText("")
+
+                    binding?.editTextPassword?.setText("")
+                    binding?.editTextUserId?.setText("")
                     if (alertDialog != null) {
                         alertDialog!!.dismiss()
                     }
@@ -1462,16 +1148,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun getEmail(phone: String) {
-        viewModel.getEmail(phone).observe(this) { commonResponse ->
+        viewModel?.getEmail(phone)?.observe(this) { commonResponse ->
             println("getEmailResponse $commonResponse")
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                emailText = commonResponse.getEmail()
+            if (commonResponse?.status != null && commonResponse.status!!) {
+                emailText = commonResponse.email.toString()
                 signInFirebase()
             } else {
                 dismissProgressBar()
                 val errMsg: String? = ErrorMessages().getErrorMessage(
                     this,
-                    commonResponse.getErrorMessage(),
+                    commonResponse?.errorMessage,
                     Constants.API.updateProvider
                 )
                 CustomSnackBar.make(
@@ -1482,7 +1168,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     CustomSnackBar.TOP,
                     3000,
                     0
-                ).show()
+                )?.show()
             }
         }
     }
@@ -1490,15 +1176,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     private fun redirectPage(provider: Provider, errorId: Int, errMsg: String) {
         if (errorId == 101) {
             val intent = Intent(this, OTPActivity::class.java)
-            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.getId())
-            intent.putExtra(Constants.IntentKeyConstants.MOBILE_NO, provider.getPhone())
-            intent.putExtra(Constants.IntentKeyConstants.COUNTRY_CODE, provider.getCountryCode())
+            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.id)
+            intent.putExtra(Constants.IntentKeyConstants.MOBILE_NO, provider.phone)
+            intent.putExtra(Constants.IntentKeyConstants.COUNTRY_CODE, provider.countryCode)
             intent.putExtra(Constants.IntentKeyConstants.FROM_PAGE, "login")
             startActivity(intent)
         } else if (errorId == 102) {
             val intent = Intent(this, EmailOTPActivity::class.java)
-            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_EMAIL, provider.getEmail())
-            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.getId())
+            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_EMAIL, provider.email)
+            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.id)
             intent.putExtra(Constants.IntentKeyConstants.FROM_PAGE, "login")
             startActivity(intent)
         } else if (errorId == 103) {
@@ -1508,16 +1194,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         } else if (errorId == 110) {
             expirePasswordPopup(
                 errMsg,
-                provider.getEmail(),
-                provider.getFname(),
-                provider.getLname(),
-                provider.getToken()
-            )
+                provider.email,
+                provider.fname,
+                provider.lname,
+                provider.token)
         }
     }
 
     private fun onClickForgotPassword() {
-        handleMultipleClick(binding.idForgotPassword)
+        binding?.idForgotPassword?.let { handleMultipleClick(it) }
         Log.i(TAG, "onClickForgotPassword: ")
         val intent = Intent(this, ForgotPasswordActivity::class.java)
         startActivity(intent)
@@ -1525,7 +1210,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     private fun onClickSignUp() {
         Log.i(TAG, "onClickSignUp: ")
-        handleMultipleClick(binding.idSignupText)
+        binding?.idSignupText?.let { handleMultipleClick(it) }
         val intent = Intent(this, SignupActivity::class.java)
         startActivity(intent)
     }
@@ -1538,36 +1223,36 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         } else {
         }
         val email: String? =
-            PrefUtility().getStringInPref(this@LoginActivity, Constants.SharedPrefConstants.EMAIL, "")
-        if (email == binding?.editTextUserId?.getText().toString()) {
+            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
+        if (email == binding?.editTextUserId?.text.toString()) {
         } else {
             if (email == "") {
             } else {
                 PrefUtility().saveBooleanInPref(
-                    this@LoginActivity,
+                    this,
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     false
                 )
                 PrefUtility().saveStringInPref(
-                    this@LoginActivity,
+                    this,
                     Constants.SharedPrefConstants.DUMMYPASSWORD,
                     ""
                 )
                 PrefUtility().saveStringInPref(
-                    this@LoginActivity,
+                    this,
                     Constants.SharedPrefConstants.PASSWORD,
                     ""
                 )
             }
         }
         PrefUtility().saveLongInPref(
-            this@LoginActivity,
+            this,
             Constants.SharedPrefConstants.APP_ACTIVE_TIME,
             System.currentTimeMillis()
         )
         PrefUtility().saveUserData(this, provider)
-        Log.d(TAG, "onLoginSuccess: " + provider.getUserId())
-        val intent = Intent(this@LoginActivity, MyDashboardActivity::class.java)
+        Log.d(TAG, "onLoginSuccess: " + provider.userId)
+        val intent = Intent(this, MyDashboardActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
@@ -1575,11 +1260,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun isValid(): Boolean {
-        val errMsg: String = ValidationUtil.isValidate(binding)
-        return if (!errMsg.isEmpty()) {
-            //            UtilityMethods.showErrorSnackBar(binding.rootLayout, errMsg, Snackbar.LENGTH_LONG);
-            false
-        } else true
+        val errMsg: String? = binding?.let { ValidationUtil().isValidate(it) }
+        return errMsg?.isEmpty()!!
     }
 
     fun expirePasswordPopup(
@@ -1587,9 +1269,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         email: String?,
         strFirstName: String?,
         strLastName: String?,
-        token: String?
+        token: String?,
     ) {
-        val builder = AlertDialog.Builder(this@LoginActivity, R.style.CustomAlertDialog)
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
         val viewGroup: ViewGroup = findViewById(android.R.id.content)
         val dialogView = LayoutInflater.from(applicationContext)
             .inflate(R.layout.custom_alert_dialog, viewGroup, false)
@@ -1604,7 +1286,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         alertDialog.setCanceledOnTouchOutside(false)
         buttonOk.setOnClickListener {
             alertDialog.dismiss()
-            val intent = Intent(this@LoginActivity, ExpirePasswordActivity::class.java)
+            val intent = Intent(this, ExpirePasswordActivity::class.java)
             intent.putExtra("rbEmailAddress", "Email")
             intent.putExtra(Constants.IntentKeyConstants.EMAIL, email)
             intent.putExtra(Constants.IntentKeyConstants.FIRST_NAME, strFirstName)
@@ -1616,7 +1298,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun alreadyLoggedInPopup() {
-        val builder = AlertDialog.Builder(this@LoginActivity, R.style.CustomAlertDialog)
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
         val viewGroup: ViewGroup = findViewById(android.R.id.content)
         val dialogView = LayoutInflater.from(applicationContext)
             .inflate(R.layout.alert_custom_dialog, viewGroup, false)
@@ -1632,8 +1314,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         alertDialog.setCancelable(false)
         alertDialog.setCanceledOnTouchOutside(false)
         buttonYes.setOnClickListener {
-            val finerprintstate: Boolean = PrefUtility.getBooleanInPref(
-                this@LoginActivity,
+            val finerprintstate: Boolean = PrefUtility().getBooleanInPref(
+                this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false
             )
@@ -1645,19 +1327,20 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun detectKeyboard() {
-        binding.rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(
+        binding?.rootLayout?.viewTreeObserver?.addOnGlobalLayoutListener(
             object : OnGlobalLayoutListener {
                 var isKeyboardShowing = false
                 override fun onGlobalLayout() {
                     val r = Rect()
-                    binding.rootLayout.getWindowVisibleDisplayFrame(r)
-                    val screenHeight: Int = binding.rootLayout.getRootView().getHeight()
+                    binding!!.rootLayout.getWindowVisibleDisplayFrame(r)
+                    val screenHeight: Int = binding!!.rootLayout.rootView.height
 
                     // r.bottom is the position above soft keypad or device button.
                     // if keypad is shown, the r.bottom is smaller than that before.
                     val keypadHeight = screenHeight - r.bottom
                     Log.d(TAG, "keypadHeight = $keypadHeight")
-                    if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                    if (keypadHeight > screenHeight * 0.15) {
+                        // 0.15 ratio is perhaps enough to determine keypad height.
                         // keyboard is opened
                         if (!isKeyboardShowing) {
                             isKeyboardShowing = true
@@ -1676,9 +1359,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     private fun onKeyboardVisibilityChanged(isShowing: Boolean) {
         if (isShowing) {
-            binding.idSignupText.setVisibility(View.GONE)
+            binding?.idSignupText?.visibility = View.GONE
         } else {
-            mHandler.postDelayed(Runnable { binding.idSignupText.setVisibility(View.VISIBLE) }, 100)
+            mHandler?.postDelayed(Runnable {
+                binding?.idSignupText?.visibility = View.VISIBLE
+            }, 100)
         }
     }
 
@@ -1688,16 +1373,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     fun signInFirebase() {
         val email = emailText
-        val pwd: String = binding.editTextPassword.getText().toString()
+        val pwd: String = binding?.editTextPassword?.text.toString()
         mFirebaseAuth!!.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(
-            this
-        ) { task ->
+            this) { task ->
             if (task.isSuccessful) {
                 Log.d(TAG, "signInWithEmail:success")
                 val user1 = mFirebaseAuth!!.currentUser
                 println("user_details " + user1!!.uid)
-                PrefUtility.saveStringInPref(
-                    this@LoginActivity,
+                PrefUtility().saveStringInPref(
+                    this,
                     Constants.SharedPrefConstants.FIREBASE_UID,
                     user1.uid
                 )
@@ -1705,11 +1389,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     val idToken = result.token
                     if (task.isSuccessful) {
                         println("getToken $idToken")
-                        PrefUtility.saveStringInPref(
-                            this@LoginActivity,
-                            Constants.SharedPrefConstants.FIREBASE_IDTOKEN,
-                            idToken
-                        )
+                        PrefUtility().saveStringInPref(
+                            this, Constants.SharedPrefConstants.FIREBASE_IDTOKEN, idToken)
                         loginApi(false)
                         // Send token to your backend via HTTPS
                         // ...
@@ -1718,31 +1399,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     Log.d(TAG, "GetTokenResult result = $idToken")
                 }
             } else {
-                //                    String errMsg = "";
-                //                    try {
-                //                        throw task.getException();
-                //                    } catch(FirebaseAuthInvalidUserException e) {
-                //                        errMsg = getString(R.string.user_not_exist);
-                //                    } catch(FirebaseAuthInvalidCredentialsException e) {
-                //                        errMsg = getString(R.string.invalid_creds);
-                //                    } catch(FirebaseTooManyRequestsException e) {
-                //                        errMsg = getString(R.string.temporarily_locked);
-                //                    } catch(Exception e) {
-                //                        errMsg = getString(R.string.user_not_exist);
-                //                        Log.e(TAG, e.getMessage());
-                //                    }
 
-                // loginFailedApi();
                 Log.w(TAG, "signInWithEmail:taskUnSuccessfull" + task.exception)
-                // CustomSnackBar.make(binding.rootLayout, LoginActivity.this, CustomSnackBar.WARNING, task.getException().getMessage(), CustomSnackBar.TOP, 3000, 0).show();
+
             }
 
-
-            // ...
         }.addOnFailureListener { e ->
-            binding.editTextPassword.setText("")
+            binding?.editTextPassword?.setText("")
             var errMsg = ""
-            //                if (e.getClass().getSimpleName().equals("FirebaseAuthInvalidUserException")) {
+
             if (e is FirebaseAuthInvalidUserException) {
                 errMsg =
                     if (e.getLocalizedMessage() == "The user account has been disabled by an administrator.") {
@@ -1752,18 +1417,18 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     }
                 showError = false
                 CustomSnackBar.make(
-                    binding.rootLayout,
-                    this@LoginActivity,
+                    binding?.rootLayout,
+                    this,
                     CustomSnackBar.WARNING,
                     errMsg,
                     CustomSnackBar.TOP,
                     3000,
                     0
-                ).show()
-                //                } else if (e.getClass().getSimpleName().equals("FirebaseAuthInvalidCredentialsException")) {
+                )?.show()
+
             } else if (e is FirebaseAuthInvalidCredentialsException) {
                 errMsg = getString(R.string.invalid_creds)
-                //                } else if (e.getClass().getSimpleName().equals("FirebaseTooManyRequestsException")) {
+
             } else if (e is FirebaseTooManyRequestsException) {
                 errMsg = getString(R.string.temporarily_locked)
             } else {
@@ -1771,10 +1436,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 Log.e(TAG, e.message!!)
             }
             loginFailedApi()
-            Log.w(
-                TAG,
-                "signInWithEmail:failure" + e.message + " " + e.javaClass.simpleName
-            )
+            Log.w(TAG, "signInWithEmail:failure" + e.message + " " + e.javaClass.simpleName)
         }
     }
 
@@ -1792,7 +1454,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }, 500)
     }
 
-    override fun checkSelfPermissionsMediaCheck(): Boolean {
+    fun checkSelfPermissionsMediaCheck(): Boolean {
         return checkSelfPermissionGrantedCheck(
             Manifest.permission.RECORD_AUDIO,
             ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO
@@ -1808,7 +1470,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-    override fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
+    fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
         Log.i("checkSelfPermission ", "$permission $requestCode")
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -1827,7 +1489,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String?>, grantResults: IntArray
+        permissions: Array<String?>, grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Log.i(
@@ -1839,12 +1501,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         when (requestCode) {
             ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
 
-//                if (grantResults.length > 0
-//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    checkSelfPermission(Manifest.permission.CAMERA, ConstantApp.PERMISSION_REQ_ID_CAMERA);
-//                } else {
-//                    finish();
-//                }
                 checkSelfPermissionGrantedCheck(
                     Manifest.permission.CAMERA,
                     ConstantApp().PERMISSION_REQ_ID_CAMERA
@@ -1852,12 +1508,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             }
             ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
 
-//                if (grantResults.length > 0
-//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
-//                } else {
-//                    finish();
-//                }
+
                 checkSelfPermissionGrantedCheck(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     ConstantApp().PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE
@@ -1880,16 +1531,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         } else if (str.startsWith(Constants.US_COUNTRY_CODE)) {
             s = str.replace(Constants.US_COUNTRY_CODE, "")
         }
-        if (s.length <= 3 && s.matches("[0-9]+")) {
-            return true
-        } else if (s.length > 3 && s.length <= 7) {
-            s = s.substring(0, 3) + s.substring(4)
-        } else if (s.length > 7 && s.length <= 12 && s.replace("-", "").matches("[0-9]+")) {
-            s = s.substring(0, 3) + s.substring(4, 7) + s.substring(8)
-        }
-        return if (s.matches("[0-9]+")) {
-            true
-        } else false
+        return true
     }
 
     private class GenericTextWatcher(view: EditText) : TextWatcher {
@@ -1917,9 +1559,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             if (view.id == R.id.editTextUserId) {
                 if (str.length > 0 && str.contains(" ")) {
                   LoginActivity(). binding?.editTextUserId?.setText(s.toString().replace(" ", ""))
-                    LoginActivity(). binding?.editTextUserId?.getText()?.let {
+                    LoginActivity(). binding?.editTextUserId?.text?.let {
                         Selection.setSelection(
-                            LoginActivity(). binding?.editTextUserId?.getText(), it.length
+                            LoginActivity(). binding?.editTextUserId?.text, it.length
                         )
                     }
                 }
@@ -1940,28 +1582,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    /*private boolean isNumberFormatRequired(String str){
-        if(str.startsWith(Constants.US_COUNTRY_CODE + "-")){
-            String s = str.replace(Constants.US_COUNTRY_CODE +"-","");
-            if(s.startsWith("-") || s.startsWith("+")){
-                return false;
-            }
-        }else if(str.startsWith(Constants.US_COUNTRY_CODE)){
-            String s = str.replace(Constants.US_COUNTRY_CODE,"");
-            if(s.startsWith("-") || s.startsWith("+")){
-                return false;
-            }
-        }
-        String strWithCntryCode = str.startsWith(Constants.US_COUNTRY_CODE)
-                ? str.replace("+","").replace("-","") : str.replace("-","");
-
-        if(strWithCntryCode.matches("[0-9]+")){
-            return true;
-        }
-        return false;
-    }*/
-
-    //fp
 
 
 }

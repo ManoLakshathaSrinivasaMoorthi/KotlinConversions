@@ -30,10 +30,7 @@ class DecryptionInterceptor(appContext: Context?) : Interceptor {
         val response: Response = chain.proceed(chain.request())
         Log.e(TAG, "intercept: SentResponseTime-->" + response.sentRequestAtMillis)
         Log.e(TAG, "intercept: ReceivedResponseTime-->" + response.receivedResponseAtMillis)
-        Log.e(
-            TAG,
-            "Final response time : " + (response.receivedResponseAtMillis - response.sentRequestAtMillis) + " ms"
-        )
+        Log.e(TAG, "Final response time : " + (response.receivedResponseAtMillis - response.sentRequestAtMillis) + " ms")
         if (response.isSuccessful) {
             val encrypted = response.body!!.string()
             val newResponse: Response.Builder = response.newBuilder()

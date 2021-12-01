@@ -3,7 +3,12 @@ package com.mvp.omnicure.kotlinactivity.requestbodys
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class LoginDetailsRequestBody {
+class LoginDetailsRequestBody( appVersion: String?,
+                               fcmkey: String?,
+                               opSysType: String?,
+                               email: String?,
+                               password: String?,
+                               overrride: String?,) {
     // provided by backend
     @Expose
     @SerializedName("appVersion")
@@ -36,13 +41,8 @@ class LoginDetailsRequestBody {
     @SerializedName("overrride")
     private var overrride: String? = null
 
-    fun LoginDetailsRequestBody(
-        appVersion: String?,
-        fcmkey: String?,
-        opSysType: String?,
-        email: String?,
-        password: String?,
-        overrride: String?
+  /*  fun LoginDetailsRequestBody(
+
     ) {
         this.appVersion = appVersion
         this.fcmkey = fcmkey
@@ -51,5 +51,5 @@ class LoginDetailsRequestBody {
         this.password = password
         //        this.returnSecureToken = returnSecureToken;
         this.overrride = overrride
-    }
+    }*/
 }

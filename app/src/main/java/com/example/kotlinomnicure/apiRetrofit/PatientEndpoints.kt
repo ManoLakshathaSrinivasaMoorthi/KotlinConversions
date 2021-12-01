@@ -3,8 +3,9 @@ package com.example.kotlinomnicure.apiRetrofit
 
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
 import com.example.kotlinomnicure.model.SOSResponse
+import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
 import com.google.gson.JsonObject
-import com.mvp.omnicure.kotlinactivity.requestbodys.CommonPatientIdRequestBody
+
 import com.mvp.omnicure.kotlinactivity.requestbodys.InviteProviderRequestBody
 import omnicurekotlin.example.com.appointmentEndpoints.model.Appointment
 import omnicurekotlin.example.com.patientsEndpoints.model.*

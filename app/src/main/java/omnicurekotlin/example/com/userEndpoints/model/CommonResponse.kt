@@ -14,6 +14,7 @@ class CommonResponse {
     private var title: String? = null
     private var id: Long? = null
     private var pendingList: List<Patient?>? = null
+    private val encryptedValue: String? = null
 
     var user: User? = null
 
@@ -48,26 +49,7 @@ class CommonResponse {
         this.refreshToken = refreshToken
     }
 
-    /**
-     * The value may be `null`.
-     */
-    /*  @com.google.api.client.util.Key
-  private java.util.List<OtherBspList> otherBspList;
 
-  static {
-    // hack to force ProGuard to consider Provider used, since otherwise it would be stripped out
-    // see https://github.com/google/google-api-java-client/issues/543
-    com.google.api.client.util.Data.nullOf(OtherBspList.class);
-  }
-
-  public List<OtherBspList> getOtherBspList() {
-    return otherBspList;
-  }
-
-  public CommonResponse setOtherBspList(List<OtherBspList> otherBspList) {
-    this.otherBspList = otherBspList;
-    return this;
-  }*/
     fun getFeedbackForm(): String? {
         return feedbackForm
     }
@@ -148,6 +130,7 @@ class CommonResponse {
     /**
      * @return value or `null` for none
      */
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -163,6 +146,7 @@ class CommonResponse {
     /**
      * @return value or `null` for none
      */
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -216,6 +200,7 @@ class CommonResponse {
     /**
      * @return value or `null` for none
      */
+    @JvmName("getUser1")
     fun getUser(): User? {
         return user
     }
@@ -262,6 +247,7 @@ class CommonResponse {
     /**
      * @return value or `null` for none
      */
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
@@ -305,5 +291,8 @@ class CommonResponse {
     }
 
 
+    fun getEncryptedValue(): String? {
+        return encryptedValue
+    }
 
 }

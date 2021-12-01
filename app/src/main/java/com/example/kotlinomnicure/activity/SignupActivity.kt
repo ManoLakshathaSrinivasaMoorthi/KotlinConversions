@@ -16,10 +16,10 @@ import com.example.kotlinomnicure.activity.ActivityLocalCareProviderSignUpFirst
 import com.example.kotlinomnicure.utils.Constants
 
 
-class SignUpActivity : BaseActivity(){
+class SignupActivity : BaseActivity(){
 
     //Declare the variables
-    private val TAG = SignUpActivity::class.java.simpleName
+    private val TAG = SignupActivity::class.java.simpleName
     private var binding: ActivitySignupBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

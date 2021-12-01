@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
 import android.os.Handler
 import android.os.Looper
@@ -6,14 +6,16 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
-import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
+
 import omnicurekotlin.example.com.userEndpoints.model.HospitalListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
 import java.net.SocketTimeoutException
+
 import java.util.HashMap
 
 class CensusHospitalListViewModel : ViewModel() {
@@ -21,7 +23,7 @@ class CensusHospitalListViewModel : ViewModel() {
     private val TAG = "CensusHospitalListVM"
 
     fun getHospitalList(id: Long): LiveData<HospitalListResponse?>? {
-        hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+        hospitalListObservable = MutableLiveData()
         //        getHospitals(id);
         getHospitalsRetro(id)
         return hospitalListObservable
@@ -32,14 +34,15 @@ class CensusHospitalListViewModel : ViewModel() {
         val bodyValues = HashMap<String, String>()
         bodyValues["id"] = id.toString()
         ApiClient().getApiHospital(true, true)?.hospitallistresponseUser(bodyValues)
-            ?.enqueue(object : Callback<HospitalListResponse?> {
+            ?.enqueue(object : Callback<HospitalListResponse?>! {
                 override fun onResponse(
                     call: Call<HospitalListResponse?>,
-                    response: Response<HospitalListResponse?>
+                    response: Response<HospitalListResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+
+                    if (response.isSuccessful) {
                         if (hospitalListObservable == null) {
-                            hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+                            hospitalListObservable = MutableLiveData()
                         }
                         hospitalListObservable!!.setValue(response.body())
                     } else {
@@ -54,7 +57,7 @@ class CensusHospitalListViewModel : ViewModel() {
                             val commonResponse = HospitalListResponse()
                             commonResponse.setErrorMessage(errMsg[0])
                             if (hospitalListObservable == null) {
-                                hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+                                hospitalListObservable = MutableLiveData()
                             }
                             hospitalListObservable!!.setValue(commonResponse)
                         }
@@ -68,7 +71,7 @@ class CensusHospitalListViewModel : ViewModel() {
                         val commonResponse = HospitalListResponse()
                         commonResponse.setErrorMessage(errMsg[0])
                         if (hospitalListObservable == null) {
-                            hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+                            hospitalListObservable = MutableLiveData()
                         }
                         hospitalListObservable!!.setValue(commonResponse)
                     }
@@ -78,7 +81,7 @@ class CensusHospitalListViewModel : ViewModel() {
             val response = HospitalListResponse()
             response.setErrorMessage(errMsg[0])
             if (hospitalListObservable == null) {
-                hospitalListObservable = MutableLiveData<HospitalListResponse?>()
+                hospitalListObservable = MutableLiveData()
             }
             hospitalListObservable!!.setValue(response)
         }

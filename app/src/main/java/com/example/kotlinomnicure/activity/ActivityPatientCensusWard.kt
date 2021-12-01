@@ -3,6 +3,7 @@ package com.example.kotlinomnicure.activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -20,6 +21,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.CensusWardListViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.adapter.CensusHospitalListViewAdapter
 import com.example.kotlinomnicure.adapter.CensusWardListAdapter
@@ -29,7 +31,7 @@ import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
-import com.example.kotlinomnicure.viewmodel.CensusWardListViewModel
+
 import com.google.gson.Gson
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
 import omnicurekotlin.example.com.hospitalEndpoints.model.WardPatientList
@@ -200,7 +202,7 @@ class ActivityPatientCensusWard : BaseActivity() {
         val providerId: Long? = PrefUtility().getProviderId(this)
         providerId?.let { it ->
             viewModel?.getHospitalList(it)?.observe(this) {
-                val response=it.body()
+                val response=it
                 if (response?.getHospitalList() != null && response.getHospitalList()!!.isNotEmpty()) {
                     Log.d(TAG, "getHospitalList response : " + Gson().toJson(response))
                     hospitalListAdapter = strHospitalID?.let { it1 ->
@@ -246,7 +248,7 @@ class ActivityPatientCensusWard : BaseActivity() {
         showProgressBar(PBMessageHelper().getMessage(this, "Getting ward list"))
         strHospitalID?.let { viewModel?.getWardList(it)?.observe(this) {
             dismissProgressBar()
-            val response=it.body()
+            val response=it
                 if (response?.getWardPatientList() != null && !response.getWardPatientList()!!.isEmpty()) {
                     binding!!.rvCensusWardList.visibility = View.VISIBLE
                     val wardPatientList: ArrayList<WardPatientList> = response.getWardPatientList() as ArrayList<WardPatientList>
@@ -307,7 +309,7 @@ class ActivityPatientCensusWard : BaseActivity() {
         showProgressBar(PBMessageHelper().getMessage(this, "Getting ward list"))
         strDashboardHospitalID?.let { viewModel?.getWardList(it)?.observe(this) {
             dismissProgressBar()
-             val response=it.body()
+             val response=it
                 if (response?.getWardPatientList() != null && !response.getWardPatientList()!!.isEmpty()) {
                     binding!!.rvCensusWardList.visibility = View.VISIBLE
                     val wardPatientList: ArrayList<WardPatientList> = response.getWardPatientList() as ArrayList<WardPatientList>
@@ -324,11 +326,7 @@ class ActivityPatientCensusWard : BaseActivity() {
                     Log.d(TAG, "getCensusWardList response : " + Gson().toJson(response))
                     censusWardListAdapter = CensusWardListAdapter(object : CensusWardListAdapter.HospitalRecyclerListener {
                         override fun onItemSelected(ward: WardPatientList?) {
-                            Log.d(TAG, "selected name : " + ward?.getWardName())
-                            val intent = Intent(
-                                this@ActivityPatientCensusWard,
-                                ActivityPatientCensusPatient::class.java
-                            )
+                            var intent = Intent(this, ActivityPatientCensusPatient::class.java)
                             intent.putExtra("hospitalName", strDashboardHospitalName)
                             intent.putExtra("hospitalAddress", strDashboardHospitalAddress)
                             intent.putExtra("wardName", ward?.getWardName())

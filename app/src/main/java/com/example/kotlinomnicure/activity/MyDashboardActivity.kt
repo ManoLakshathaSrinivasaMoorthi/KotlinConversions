@@ -24,7 +24,7 @@ import com.android.volley.toolbox.ImageLoader
 import com.example.dailytasksamplepoc.databinding.ActivityDashboardBinding
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.AddNotificationDataRequest
 import com.example.dailytasksamplepoc.kotlinomnicure.model.ConsultProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.CensusHospitalListViewModel
+import com.example.kotlinomnicure.viewmodel.CensusHospitalListViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.CensusWardListViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.helper.NotificationHelper

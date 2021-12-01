@@ -9,8 +9,12 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kotlinomnicure.viewmodel.CensusHospitalListViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.adapter.CensusHospitalListAdapter
+import com.example.kotlinomnicure.databinding.ActivityPatientCensusHospitalBinding
 
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
@@ -32,9 +36,7 @@ class ActivityPatientCensusHospital : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_patient_census_hospital)
-        viewModel = ViewModelProviders.of(this).get(
-            CensusHospitalListViewModel::class.java
-        )
+        viewModel = ViewModelProvider(this).get(CensusHospitalListViewModel::class.java)
         initViews()
     }
 
@@ -71,61 +73,63 @@ class ActivityPatientCensusHospital : BaseActivity() {
     private fun getCensusHospitalList() {
         showProgressBar()
         val providerId = PrefUtility().getProviderId(this)
-        viewModel!!.getHospitalList(providerId).observe(this) { response: HospitalListResponse ->
-            dismissProgressBar()
-            if (response.hospitalList != null && !response.hospitalList!!.isEmpty()) {
-                Log.d(TAG, "getCensusHospitalList response : " + Gson().toJson(response))
-                censusHospitalListAdapter = CensusHospitalListAdapter({ hospital ->
+        if (providerId != null) {
+            viewModel!!.getHospitalList(providerId)?.observe(this) {
+                dismissProgressBar()
+                if (response.hospitalList != null && !response.hospitalList!!.isEmpty()) {
+                    Log.d(TAG, "getCensusHospitalList response : " + Gson().toJson(response))
+                    censusHospitalListAdapter = CensusHospitalListAdapter({ hospital ->
+                        Log.d(
+                            TAG,
+                            "selected name : " + response.id + " ---- " + response.name
+                        )
+                        val intent = Intent(
+                            this,
+                            ActivityPatientCensusWard::class.java
+                        )
+                        intent.putExtra("hospitalID",response.id)
+                        intent.putExtra("hospitalName", response.name)
+                        intent.putExtra("hospitalAddress", response.subRegionName)
+                        startActivity(intent)
+                    }, response.hospitalList!!, "")
+                    binding?.rvCensusHospitalList?.setAdapter(censusHospitalListAdapter)
+                    censusHospitalListAdapter!!.notifyDataSetChanged()
+                    mHospitalList = response.hospitalList as List<Hospital>?
+                    censusHospitalListAdapter!!.onSearchResultListener =
+                        CensusHospitalListAdapter.OnSearchResultListener { count ->
+                            if (count <= 0) {
+                                showEmptyErrorMessage()
+                            } else {
+                                binding?.noPatientLayout?.setVisibility(View.GONE)
+                            }
+                        }
+                } else if (response.errorMessage != null) {
+                    dismissProgressBar()
+                    val errMsg = ErrorMessages().getErrorMessage(
+                        this,
+                        response.errorMessage,
+                        Constants.API.getHospital
+                    )
+                    if (errMsg != null) {
+                        CustomSnackBar.make(
+                            binding?.getRoot(), this, CustomSnackBar.WARNING,
+                            errMsg, CustomSnackBar.TOP, 3000, 0
+                        )?.show()
+                    }
                     Log.d(
                         TAG,
-                        "selected name : " + response.id + " ---- " + response.name
+                        "getCensusHospitalList getErrorMessage : " + response.errorMessage
                     )
-                    val intent = Intent(
-                        this,
-                        ActivityPatientCensusWard::class.java
-                    )
-                    intent.putExtra("hospitalID",response.id)
-                    intent.putExtra("hospitalName", response.name)
-                    intent.putExtra("hospitalAddress", response.subRegionName)
-                    startActivity(intent)
-                }, response.hospitalList!!, "")
-                binding?.rvCensusHospitalList?.setAdapter(censusHospitalListAdapter)
-                censusHospitalListAdapter!!.notifyDataSetChanged()
-                mHospitalList = response.hospitalList as List<Hospital>?
-                censusHospitalListAdapter!!.onSearchResultListener =
-                    CensusHospitalListAdapter.OnSearchResultListener { count ->
-                        if (count <= 0) {
-                            showEmptyErrorMessage()
-                        } else {
-                            binding?.noPatientLayout?.setVisibility(View.GONE)
-                        }
-                    }
-            } else if (response.errorMessage != null) {
-                dismissProgressBar()
-                val errMsg = ErrorMessages().getErrorMessage(
-                    this,
-                    response.errorMessage,
-                    Constants.API.getHospital
-                )
-                if (errMsg != null) {
-                    CustomSnackBar.make(
-                        binding?.getRoot(), this, CustomSnackBar.WARNING,
-                        errMsg, CustomSnackBar.TOP, 3000, 0
-                    )?.show()
-                }
-                Log.d(
-                    TAG,
-                    "getCensusHospitalList getErrorMessage : " + response.errorMessage
-                )
-            } else {
-                dismissProgressBar()
-                if (response.hospitalList.isEmpty()) {
-                    showEmptyErrorMessage()
                 } else {
-                    binding?.rvCensusHospitalList?.setVisibility(View.VISIBLE)
-                    binding?.noPatientLayout?.setVisibility(View.GONE)
-                }
+                    dismissProgressBar()
+                    if (response.hospitalList.isEmpty()) {
+                        showEmptyErrorMessage()
+                    } else {
+                        binding?.rvCensusHospitalList?.setVisibility(View.VISIBLE)
+                        binding?.noPatientLayout?.setVisibility(View.GONE)
+                    }
 
+                }
             }
         }
     }

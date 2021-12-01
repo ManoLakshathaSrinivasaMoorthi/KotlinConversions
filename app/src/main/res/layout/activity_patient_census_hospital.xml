@@ -91,7 +91,7 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <com.mvp.omnicure.utils.CustomGroupEditText
+                    <com.example.kotlinomnicure.utils.CustomGroupEditText
                         android:id="@+id/searchEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_30"
