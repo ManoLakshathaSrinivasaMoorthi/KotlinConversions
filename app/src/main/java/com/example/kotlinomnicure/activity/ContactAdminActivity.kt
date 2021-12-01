@@ -10,13 +10,15 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityContactAdminBinding
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.viewmodel.ContactAdminViewModel
 import omnicurekotlin.example.com.providerEndpoints.model.ContactAdminParams
-import omnicurekotlin.example.com.providerEndpoints.model.Provider
+
 
 class ContactAdminActivity : BaseActivity() {
     private val TAG = ContactAdminActivity::class.java.simpleName
@@ -28,7 +30,7 @@ class ContactAdminActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contact_admin)
-        viewModel = ViewModelProviders.of(this).get(ContactAdminViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ContactAdminViewModel::class.java)
         initToolbar()
         initViews()
     }
@@ -69,15 +71,17 @@ class ContactAdminActivity : BaseActivity() {
         params.setMessage(binding?.textAdmin?.getText().toString().trim())
         params.setAppVersion(getVersion())
         params.setUserDevice("android")
-        //        params.setUserType(strRole);
-        params.setEmail(email)
+
+        if (email != null) {
+            params.setEmail(email)
+        }
         params.setUserName(strUserName)
         if (strRole == "RD") {
             params.setSubUserType(strDesignation)
-            //            params.setHospitalName("");
+
         } else if (strRole == "BD") {
             params.setSubUserType("Bedside Provider")
-            //            params.setHospitalName(hospital);
+
         }
         if (getCurrentUser() != null) {
             if (!TextUtils.isEmpty(getCurrentUser()?.getLcpType()) &&
@@ -85,19 +89,19 @@ class ContactAdminActivity : BaseActivity() {
                     .equals(Constants.KeyHardcodeToken.LCP_TYPE_HOME)
             ) {
                 params.setSubUserType("Homecare Provider")
-                //                params.setHospitalName("");
+
             }
         }
         Log.d(TAG, "params contact admin$params")
         viewModel?.contactAdminEmail(params)?.observe(this) { response ->
             Log.d(TAG, "contact_admin_response $response")
             dismissProgressBar()
-            if (response != null && response.getStatus() != null && response.getStatus()!!) {
+            if (response != null && response.status != null && response.status!!) {
                 onSuccess()
             } else {
                 binding?.btnSubmit?.setEnabled(true)
                 var errMsg: String? = ErrorMessages().getErrorMessage(
-                    this@ContactAdminActivity,
+                    this,
                     response?.getErrorMessage(),
                     Constants.API.getDocBoxPatientList
                 )
@@ -138,7 +142,7 @@ class ContactAdminActivity : BaseActivity() {
         mHandler?.postDelayed({ view.isEnabled = true }, 500)
     }
 
-    override fun getVersion(): String? {
+    fun getVersion(): String? {
         var version = "0"
         try {
             val packageInfo = packageManager.getPackageInfo(packageName, 0)
@@ -151,8 +155,7 @@ class ContactAdminActivity : BaseActivity() {
 
     fun onSuccess() {
 
-//        CustomSnackBar.make(binding.idContainerLayout, this, CustomSnackBar.SUCCESS, getString(R.string.message_sent_successfully), CustomSnackBar.TOP, 3000, 1).show();
-        CustomSnackBar.make(
+       CustomSnackBar.make(
             binding?.idContainerLayout,
             this,
             CustomSnackBar.SUCCESS,
@@ -181,8 +184,7 @@ class ContactAdminActivity : BaseActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String?>,
-        grantResults: IntArray
-    ) {
+        grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == RecordAudioRequestCode && grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) Toast.makeText(
             this,

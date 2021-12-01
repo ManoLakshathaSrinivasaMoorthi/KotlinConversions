@@ -1,18 +1,20 @@
 package com.example.kotlinomnicure.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.AddNotificationDataRequest
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.databinding.ActivityCustomNotificationBinding
 
 import com.example.kotlinomnicure.helper.PBMessageHelper
-import com.example.kotlinomnicure.utils.Constants
-import com.example.kotlinomnicure.utils.CustomSnackBar
-import com.example.kotlinomnicure.utils.ErrorMessages
+import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
-import com.example.kotlinomnicure.utils.UtilityMethods
 
 class CustomNotificationActivity : BaseActivity(){
     // Variables
@@ -21,6 +23,7 @@ class CustomNotificationActivity : BaseActivity(){
     var providerId: Long = 0
     var uid: String? = null
     private var customNotificationBinding: ActivityCustomNotificationBinding? = null
+    public var context: Context =CustomNotificationActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +38,8 @@ class CustomNotificationActivity : BaseActivity(){
         initSwitchViews()
 
         // Getting the provider and uid from shared preference
-        providerId = PrefUtility.getLongInPref(this,
-            Constants.SharedPrefConstants.USER_ID_PRIMARY,
-            -1)
+        providerId = PrefUtility().getLongInPref(this,
+            Constants.SharedPrefConstants.USER_ID_PRIMARY, -1)
 
 
 
@@ -50,20 +52,20 @@ class CustomNotificationActivity : BaseActivity(){
      * Initiating the toolbar with title
      */
     private fun initToolbar() {
-        setSupportActionBar(customNotificationBinding.toolbar)
+        setSupportActionBar(customNotificationBinding?.toolbar)
         addBackButton()
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayShowTitleEnabled(false)
         }
-        customNotificationBinding.toolbar.setTitle(getString(R.string.notification_settings))
-        customNotificationBinding.toolbar.setNavigationIcon(R.drawable.ic_back)
+        customNotificationBinding?.toolbar?.setTitle(getString(R.string.notification_settings))
+        customNotificationBinding?.toolbar?.setNavigationIcon(R.drawable.ic_back)
     }
 
     /**
      * Initiating alerts switch views
      */
     private fun initSwitchViews() {
-        val role: String? = PrefUtility.getRole(this)
+        val role: String? = PrefUtility().getRole(this)
         if (role.equals(Constants.ProviderRole.RD.toString(), ignoreCase = true)) {
             customNotificationBinding?.txtNoNotification?.setVisibility(View.GONE)
             customNotificationBinding?.notificationItems?.idNotifyTitle?.setVisibility(View.VISIBLE)
@@ -76,7 +78,7 @@ class CustomNotificationActivity : BaseActivity(){
             customNotificationBinding?.txtNoNotification?.setVisibility(View.GONE)
         }
         // Acuity
-        customNotificationBinding.notificationItems.swAcutiy.setOnCheckedChangeListener(
+        customNotificationBinding?.notificationItems?.swAcutiy?.setOnCheckedChangeListener(
             SwitchCheckedChangeListener()
         )
 
@@ -84,22 +86,22 @@ class CustomNotificationActivity : BaseActivity(){
         val checkAcuity: Boolean
 
         // Getting value from shared preference for Acuity alert
-        checkAcuity = if (PrefUtility.getStringInPref(this,
+        checkAcuity = if (PrefUtility().getStringInPref(this,
                 Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
-                "") == null || PrefUtility.getStringInPref(this,
+                "") == null || PrefUtility().getStringInPref(this,
                 Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
                 "").isEmpty()
         ) {
             false
         } else {
-            java.lang.Boolean.parseBoolean(PrefUtility.getStringInPref(this,
+            java.lang.Boolean.parseBoolean(PrefUtility().getStringInPref(this,
                 Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
                 ""))
         }
 
 
         // Setting the switch status based on the saved value
-        customNotificationBinding?.notificationItems?.swAcutiy.setChecked(checkAcuity)
+        customNotificationBinding?.notificationItems?.swAcutiy?.setChecked(checkAcuity)
     }
 
     /**
@@ -110,22 +112,22 @@ class CustomNotificationActivity : BaseActivity(){
     private fun addOrUpdateProviderNotification(addNotificationDataRequest: AddNotificationDataRequest) {
         if (!UtilityMethods().isInternetConnected(this)!!) {
 
-            CustomSnackBar.make(customNotificationBinding.container,
+            CustomSnackBar.make(customNotificationBinding?.container,
                 this,
                 CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity),
                 CustomSnackBar.TOP,
                 3000,
-                0).show()
+                0)?.show()
             return
         }
         val gson = Gson()
 
         //Triggering the "addOrUpdateProviderNotification" API call
-        viewModel.addOrUpdateProviderNotification(addNotificationDataRequest)
-            .observe(this) { commonResponse ->
+        viewModel?.addOrUpdateProviderNotification(addNotificationDataRequest)
+            ?.observe(this) { commonResponse ->
 
-                if (commonResponse != null && commonResponse.status != null && commonResponse.status) {
+                if (commonResponse?.status != null && commonResponse.status!!) {
 
                     dismissProgressBar()
                     finish()
@@ -157,7 +159,7 @@ class CustomNotificationActivity : BaseActivity(){
 
 
         if (!UtilityMethods().isInternetConnected(this)!!) {
-            CustomSnackBar.make(customNotificationBinding.container,
+            CustomSnackBar.make(customNotificationBinding?.container,
                 this,
                 CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity),
@@ -172,12 +174,13 @@ class CustomNotificationActivity : BaseActivity(){
                 val gson = Gson()
 
                 // Saving the Id for addorupdateProviderNotification API
-                PrefUtility.saveStringInPref(this,
+                PrefUtility().saveStringInPref(this,
                     Constants.SharedPrefConstants.ALERT_NOTIFTY_ID,
                     java.lang.String.valueOf(notificationResponse.getNotificationSettings()
                         .id)
 
                 // Saving the current status of Acuity in shared preference
+
                 PrefUtility().saveStringInPref(this,
                     Constants.SharedPrefConstants.ALERT_ACUITY,
                     (notificationResponse.getNotificationRequests().get(0)
@@ -211,7 +214,7 @@ class CustomNotificationActivity : BaseActivity(){
 
     override fun onBackPressed() {
         //Calling the "AddOrUpdateProviderNotification" API
-        val role: String? = PrefUtility.getRole(this)
+        val role: String? = PrefUtility().getRole(this)
         if (role.equals(Constants.ProviderRole.RD.toString(), ignoreCase = true)) {
             addOrUpdateProviderNotificationAPI()
         } else {
@@ -225,22 +228,21 @@ class CustomNotificationActivity : BaseActivity(){
     private fun addOrUpdateProviderNotificationAPI() {
         showProgressBar(PBMessageHelper().getMessage(this,
             Constants.API.updateNotification.toString()))
-        val checkAcuity: Boolean
         // Getting value from shared preference for Acuity alert
-        checkAcuity = if (PrefUtility.getStringInPref(this,
+        val checkAcuity: Boolean = if (PrefUtility().getStringInPref(this,
                 Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
-                "") == null || PrefUtility.getStringInPref(this,
+                "") == null || PrefUtility().getStringInPref(this,
                 Constants.SharedPrefConstants.ALERT_ACUITY_STATUS,
                 "")?.isEmpty() == true
         ) {
             false
         } else {
-            java.lang.Boolean.parseBoolean(com.example.dailytasksamplepoc.kotlinomnicure.utils.PrefUtility
+            java.lang.Boolean.parseBoolean(PrefUtility()
                 .getStringInPref(this,
                 Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
                 ""))
         }
-        uid = com.example.dailytasksamplepoc.kotlinomnicure.utils.PrefUtility
+        uid = PrefUtility()
             .getStringInPref(this, Constants.SharedPrefConstants.ALERT_NOTIFTY_ID, "")
         // Adding the request object to call the "AddOrUpdateProviderNotification" API
         val addNotificationDataRequest = AddNotificationDataRequest()
@@ -257,7 +259,7 @@ class CustomNotificationActivity : BaseActivity(){
         //Action bar back button click listener
         if (item.itemId == android.R.id.home) {
             //Calling the "AddOrUpdateProviderNotification" API
-            val role: String? = PrefUtility.getRole(this)
+            val role: String? = PrefUtility().getRole(this)
             if (role.equals(Constants.ProviderRole.RD.toString(), ignoreCase = true)) {
                 addOrUpdateProviderNotificationAPI()
             } else {
@@ -276,7 +278,7 @@ class CustomNotificationActivity : BaseActivity(){
 
             if (buttonView.id == R.id.swAcutiy) {
 
-                PrefUtility.saveStringInPref(this,
+                PrefUtility().saveStringInPref(CustomNotificationActivity().context,
                     Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
                     isChecked.toString())
             }

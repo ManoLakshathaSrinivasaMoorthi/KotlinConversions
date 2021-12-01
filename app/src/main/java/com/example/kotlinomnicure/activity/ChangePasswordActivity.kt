@@ -21,7 +21,9 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.CommonResponse
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityChangePasswordBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
@@ -45,10 +47,10 @@ class ChangePasswordActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_password)
-        viewModel = ViewModelProviders.of(this).get(ChangePasswordViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ChangePasswordViewModel::class.java)
         initClickListener()
         initViews()
-//        Toast.makeText(this, "CHANGEPASSWORDPAGE", Toast.LENGTH_SHORT).show();
+
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -100,19 +102,18 @@ class ChangePasswordActivity : BaseActivity() {
         binding?.edtConfirmPassword?.setTypeface(Typeface.DEFAULT)
         Log.d(TAG, "ChangePasswordActivity : $emailID ----- $strFirstName ----- $strLastName")
 
-//        binding.edtNewPassword.addTextChangedListener(new GenericTextWatcher(binding.edtNewPassword));
-//        binding.edtConfirmPassword.addTextChangedListener(new GenericTextWatcher(binding.edtConfirmPassword));
+
         binding?.txtSavePassword?.setOnClickListener(View.OnClickListener { doResetPassword() })
         binding?.edtNewPassword?.addTextChangedListener(ValidationTextWatcher(binding!!.edtNewPassword))
         binding?.edtConfirmPassword?.addTextChangedListener(ValidationTextWatcher(binding!!.edtConfirmPassword))
         binding?.txtSavePassword?.setEnabled(false)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     private fun initClickListener() {
         binding?.alreadySigninText?.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "onClick: of already signin ")
-            val intent = Intent(this@ChangePasswordActivity, LoginActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         })
@@ -122,7 +123,7 @@ class ChangePasswordActivity : BaseActivity() {
                 strLastName?.let { it2 ->
                     emailID?.let { it3 ->
                         ValidationUtil().showPasswordValidationDialog(
-                            this@ChangePasswordActivity, binding!!.edtNewPassword.getText().toString(),
+                            this, binding!!.edtNewPassword.getText().toString(),
                             it1, it2, it3
                         )
                     }
@@ -134,7 +135,7 @@ class ChangePasswordActivity : BaseActivity() {
                 strLastName?.let { it2 ->
                     emailID?.let { it3 ->
                         ValidationUtil().showPasswordValidationDialog(
-                            this@ChangePasswordActivity, binding?.edtConfirmPassword?.getText().toString(),
+                            this, binding?.edtConfirmPassword?.getText().toString(),
                             it1, it2, it3
                         )
                     }
@@ -212,8 +213,8 @@ class ChangePasswordActivity : BaseActivity() {
         if (!isValid()) {
             return
         }
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(binding?.idContainerLayout, this, CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)?.show()
             return
@@ -223,9 +224,9 @@ class ChangePasswordActivity : BaseActivity() {
         if (emailAddress == "Email") {
             resetPasswordRequest.setEmail(emailID)
             resetPasswordRequest.setPasswordNew(binding?.edtNewPassword?.getText().toString())
-            //            resetPasswordRequest.setToken(Constants.KeyHardcodeToken.HARD_CODE_TOKEN);
+
             resetPasswordRequest.setToken(otpToken)
-            //            resetPasswordRequest.setValidateKey(Constants.ValidateKey.ValKeyZero);
+
         }
         if (emailAddress == "Phone") {
             resetPasswordRequest.setPhoneNumber(phoneNumber)
@@ -235,30 +236,30 @@ class ChangePasswordActivity : BaseActivity() {
             resetPasswordRequest.setToken(otpToken)
             //            resetPasswordRequest.setValidateKey(Constants.ValidateKey.ValKeyZero);
         }
-        viewModel?.changePassword(resetPasswordRequest).observe(this) { commonResponse ->
+        viewModel?.changePassword(resetPasswordRequest)?.observe(this) { commonResponse ->
             dismissProgressBar()
             Log.d(TAG, "Request " + Gson().toJson(resetPasswordRequest))
             Log.d(TAG, "Response " + Gson().toJson(commonResponse))
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
+            if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
                 val finerprintstate: Boolean = PrefUtility().getBooleanInPref(
-                    this@ChangePasswordActivity,
+                    this,
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     false
                 )
                 if (finerprintstate) {
                     val email: String? = PrefUtility().getStringInPref(
-                        this@ChangePasswordActivity,
+                        this,
                         Constants.SharedPrefConstants.EMAIL,
                         ""
                     )
                     if (email == emailID) {
-                        EncUtil.generateKey(this@ChangePasswordActivity)
-                        val encryptpassword: String = EncUtil.encrypt(
-                            this@ChangePasswordActivity,
-                            binding.edtNewPassword.getText().toString()
+                        EncUtil().generateKey(this)
+                        val encryptpassword: String? = EncUtil().encrypt(
+                            this,
+                            binding!!.edtNewPassword.getText().toString()
                         )
                         PrefUtility().saveStringInPref(
-                            this@ChangePasswordActivity,
+                            this,
                             Constants.SharedPrefConstants.PASSWORD,
                             encryptpassword
                         )
@@ -269,11 +270,11 @@ class ChangePasswordActivity : BaseActivity() {
             } else {
                 binding?.txtSavePassword?.setEnabled(true)
                 val errMsg: String? = ErrorMessages().getErrorMessage(
-                    this@ChangePasswordActivity,
-                    commonResponse.getErrorMessage(),
+                    this,
+                    commonResponse?.errorMessage,
                     Constants.API.register
                 )
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+
                 CustomSnackBar.make(
                     binding?.idContainerLayout,
                     this,
@@ -288,13 +289,13 @@ class ChangePasswordActivity : BaseActivity() {
     }
 
     fun onResetPasswordSuccessNew(response: CommonResponse?) {
-        val intent = Intent(this@ChangePasswordActivity, ResetSuccessActivity::class.java)
+        val intent = Intent(this, ResetSuccessActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 
     fun onResetPasswordSuccess(response: CommonResponse?) {
-        val builder = AlertDialog.Builder(this@ChangePasswordActivity, R.style.CustomAlertDialog)
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
         val viewGroup: ViewGroup = findViewById(android.R.id.content)
         val dialogView = LayoutInflater.from(applicationContext)
             .inflate(R.layout.custom_alert_dialog, viewGroup, false)
@@ -307,15 +308,16 @@ class ChangePasswordActivity : BaseActivity() {
         val alertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.setCanceledOnTouchOutside(false)
-        buttonOk.setOnClickListener { //                launchLoginActivity();
+        buttonOk.setOnClickListener {
             alertDialog.dismiss()
-            val intent = Intent(this@ChangePasswordActivity, LoginActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
         alertDialog.show()
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     fun checkNewPassword(showError: Boolean) {
         if (strFirstName?.let {
                 strLastName?.let { it1 ->
@@ -329,16 +331,18 @@ class ChangePasswordActivity : BaseActivity() {
             } != null
         ) {
             if (showError) {
-                binding?.edtNewPassword?.setErrorMessage(
-                    strLastName?.let {
-                        emailID?.let { it1 ->
-                            ValidationUtil().checkPassword(
-                                binding?.edtNewPassword?.getText().toString(), binding,
-                                strFirstName!!, it, it1
-                            )
-                        }
+                strLastName?.let {
+                    emailID?.let { it1 ->
+                        ValidationUtil().checkPassword(
+                            binding?.edtNewPassword?.getText().toString(), binding,
+                            strFirstName!!, it, it1
+                        )
                     }
-                )
+                }?.let {
+                    binding?.edtNewPassword?.setErrorMessage(
+                        it
+                    )
+                }
                 binding?.passwordLayout?.setBackground(resources.getDrawable(R.drawable.error_edittext_bg))
                 binding?.passwordInfo?.setVisibility(View.VISIBLE)
             }
@@ -365,16 +369,18 @@ class ChangePasswordActivity : BaseActivity() {
                 } != null
             ) {
                 if (showError) {
-                    binding?.edtConfirmPassword?.setErrorMessage(
-                        strLastName?.let {
-                            emailID?.let { it1 ->
-                                ValidationUtil().checkPassword(
-                                    binding?.edtConfirmPassword?.getText().toString(), binding,
-                                    strFirstName!!, it, it1
-                                )
-                            }
+                    strLastName?.let {
+                        emailID?.let { it1 ->
+                            ValidationUtil().checkPassword(
+                                binding?.edtConfirmPassword?.getText().toString(), binding,
+                                strFirstName!!, it, it1
+                            )
                         }
-                    )
+                    }?.let {
+                        binding?.edtConfirmPassword?.setErrorMessage(
+                            it
+                        )
+                    }
                     binding?.confirmPasswordLayout?.setBackground(resources.getDrawable(R.drawable.error_edittext_bg))
                     binding?.confirmPasswordInfo?.setVisibility(View.VISIBLE)
                 }
@@ -400,7 +406,7 @@ class ChangePasswordActivity : BaseActivity() {
     private fun isValid(): Boolean {
         val errMsg: String? = ValidationUtil().isValidate(binding!!)
         return if (!TextUtils.isEmpty(errMsg)) {
-            //            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+
             false
         } else true
     }

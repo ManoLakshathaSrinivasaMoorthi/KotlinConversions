@@ -46,6 +46,18 @@ class CommonResponse {
 
 
 
+
+    fun getErrorMessage(): String? {
+        return errorMessage
+    }
+
+    /**
+     * @param errorMessage errorMessage or `null` for none
+     */
+    fun setErrorMessage(errorMessage: String?): CommonResponse? {
+        this.errorMessage = errorMessage
+        return this
+    }
     fun getActiveList(): List<Patient?>? {
         return activeList
     }

@@ -30,15 +30,15 @@ class ContactAdminViewModel:ViewModel() {
 
     private fun contactAdmin(params: ContactAdminParams) {
         val errMsg = ""
-        ApiClient.getApiProviderEndpoints(true, true).sendContactAdminEmail(params)
-            .enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApiProviderEndpoints(true, true).sendContactAdminEmail(params)
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
                 ) {
                     if (response.isSuccessful()) {
                         Log.d("VerifyTags", "onResponse: " + response.code())
-                        val commonResponse: omnicure.mvp.com.providerEndpoints.model.CommonResponse? =
+                        val commonResponse:CommonResponse? =
                             response.body()
                         if (providerObservable == null) {
                             providerObservable = MutableLiveData<CommonResponse?>()
@@ -87,40 +87,7 @@ class ContactAdminViewModel:ViewModel() {
         }
     }
 
-    // old api
-    private fun contactAdmins(params: ContactAdminParams) {
-        Thread(object : Runnable {
-            var errMsg = ""
-            override fun run() {
-                try {
-                    val commonResponse: CommonResponse = EndPointBuilder.getProviderEndpoints()
-                        .sendAdminEmail(params)
-                        .execute()
-                    Handler(Looper.getMainLooper()).post {
-                        if (providerObservable == null) {
-                            providerObservable = MutableLiveData<CommonResponse?>()
-                        }
-                        providerObservable!!.setValue(commonResponse)
-                    }
-                } catch (e: SocketTimeoutException) {
-                    errMsg = Constants.APIErrorType.SocketTimeoutException.toString()
-                } catch (e: Exception) {
-//                    errMsg = Constants.APIErrorType.Exception.toString();
-                    errMsg = Constants.API_ERROR
-                }
-                if (!TextUtils.isEmpty(errMsg)) {
-                    Handler(Looper.getMainLooper()).post {
-                        val commonResponse = CommonResponse()
-                        commonResponse.setErrorMessage(errMsg)
-                        if (providerObservable == null) {
-                            providerObservable = MutableLiveData<CommonResponse?>()
-                        }
-                        providerObservable!!.setValue(commonResponse)
-                    }
-                }
-            }
-        }).start()
-    }
+
 
     override fun onCleared() {
         super.onCleared()

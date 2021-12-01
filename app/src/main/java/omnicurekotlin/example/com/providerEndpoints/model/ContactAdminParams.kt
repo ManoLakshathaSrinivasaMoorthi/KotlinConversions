@@ -9,9 +9,23 @@ class ContactAdminParams {
     private var appVersion: String? = null
     private var hospitalName: String? = null
     private var subUserType: String? = null
+    private var email: String? = null
 
     fun getProviderId(): Long? {
         return providerId
+    }
+    fun setEmail(email: String) {
+        email = email
+    }
+    private var userName: String? = null
+
+
+    fun getUserName(): String? {
+        return userName
+    }
+
+    fun setUserName(userName: String?) {
+        this.userName = userName
     }
 
     fun setProviderId(providerId: Long?) {
