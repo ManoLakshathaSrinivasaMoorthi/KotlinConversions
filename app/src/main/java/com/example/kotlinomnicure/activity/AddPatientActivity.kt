@@ -3,6 +3,7 @@ package com.example.kotlinomnicure.activity
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -46,6 +47,7 @@ class AddPatientActivity : BaseActivity() {
     private var wardListAdapter: ArrayAdapter<String>? = null
     private var phnNumber: String? = null
     private var strScreenCensus: String? = ""
+    private var context: Context =AddPatientActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,8 +98,7 @@ class AddPatientActivity : BaseActivity() {
         binding?.idSave?.setOnClickListener { onClickSaveButton() }
 
         //Setting the hospital name
-        val hospitalName: String? = PrefUtility().getStringInPref(this,
-            Constants.SharedPrefConstants.HOSPITAL_NAME, "")
+        val hospitalName: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.HOSPITAL_NAME, "")
         binding?.idHospitalLocation?.text = hospitalName
         // Setting the ward spinner
         setWardSpinner()
@@ -171,7 +172,7 @@ class AddPatientActivity : BaseActivity() {
                 val errMsg: String? = ErrorMessages().getErrorMessage(this, response.getErrorMessage(),
                     Constants.API.getDocBoxPatientList)
                 Log.d(TAG, "showDocBoxPatientList errMsg : $errMsg")
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+
                 errMsg?.let {
                     CustomSnackBar.make(binding?.idContainerLayout, this, CustomSnackBar.WARNING, it,
                         CustomSnackBar.TOP, 3000, 0)?.show()
@@ -544,8 +545,8 @@ class AddPatientActivity : BaseActivity() {
         if (!isValid()) {
             return
         }
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snack.LENGTH_LONG);
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(
                 binding?.idContainerLayout, this, CustomSnackBar.WARNING, getString(
                     R.string.no_internet_connectivity
@@ -555,19 +556,19 @@ class AddPatientActivity : BaseActivity() {
         }
         val patient: Patient = createPatientObject()
         if (System.currentTimeMillis() < patient.getDob()!! || patient.getDob()!! <= -3155692870000L) {
-//            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, getString(R.string.invalid_date), Snackbar.LENGTH_LONG);
+
             CustomSnackBar.make(
                 binding?.idContainerLayout, this, CustomSnackBar.WARNING, getString(
                     R.string.invalid_date
                 ), CustomSnackBar.TOP, 3000, 0
             )?.show()
 
-//            binding.idDob.setText("");
+
             return
         }
 
         // Directing the "AddPatientVitals" activity with required data
-        val intentVital = Intent(this@AddPatientActivity, AddPatientVitalsActivity::class.java)
+        val intentVital = Intent(this, AddPatientVitalsActivity::class.java)
         val bundle = Bundle()
         bundle.putString(Constants.IntentKeyConstants.FIRST_NAME, patient.getFname())
         bundle.putString(Constants.IntentKeyConstants.LAST_NAME, patient.getLname())
@@ -596,7 +597,7 @@ class AddPatientActivity : BaseActivity() {
     private fun isValid(): Boolean {
         val errMsg: String? = binding?.let { ValidationUtil().isValidate(it) }
         if (!TextUtils.isEmpty(errMsg)) {
-//            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snack.LENGTH_LONG);
+
             errMsg?.let { CustomSnackBar.make(
                 binding?.idContainerLayout,
                 this,
@@ -651,17 +652,15 @@ class AddPatientActivity : BaseActivity() {
      * Setting up the ward spinner by calling "getWardsList" API
      */
     private fun setWardSpinner() {
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
-            CustomSnackBar.make(
-                binding?.idContainerLayout, this, CustomSnackBar.WARNING, getString(
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
+            CustomSnackBar.make(binding?.idContainerLayout, this, CustomSnackBar.WARNING, getString(
                     R.string.no_internet_connectivity
-                ), CustomSnackBar.TOP, 3000, 0
-            )?.show()
+                ), CustomSnackBar.TOP, 3000, 0)?.show()
             return
         }
         val hospitalId: Long = PrefUtility().getLongInPref(
-            this@AddPatientActivity,
+            this,
             Constants.SharedPrefConstants.HOSPITAL_ID,
             0L
         )
@@ -681,8 +680,7 @@ class AddPatientActivity : BaseActivity() {
                 val errMsg: String? = ErrorMessages().getErrorMessage(
                     this, java.lang.String.valueOf(
                         response.getErrorId()
-                    ), Constants.API.getHospital
-                )
+                    ), Constants.API.getHospital)
                 errMsg?.let {
                     CustomSnackBar.make(
                         binding?.idContainerLayout,
@@ -725,7 +723,7 @@ class AddPatientActivity : BaseActivity() {
                             R.color.black
                         )
                         binding?.let { UtilityMethods().setDrawableBackground(
-                            this,
+                            context,
                             it.idSpinnerWard,
                             R.drawable.spinner_drawable_selected
                         ) }
@@ -736,7 +734,7 @@ class AddPatientActivity : BaseActivity() {
                             R.color.gray_500
                         )
                         binding?.let { UtilityMethods().setDrawableBackground(
-                            this,
+                           context ,
                             it.idSpinnerWard,
                             R.drawable.spinner_drawable
                         ) }

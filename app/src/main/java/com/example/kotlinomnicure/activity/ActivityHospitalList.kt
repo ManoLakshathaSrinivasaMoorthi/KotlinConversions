@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HospitalListViewModel
 
 import com.example.kotlinomnicure.adapter.HospitalListAdapter
 

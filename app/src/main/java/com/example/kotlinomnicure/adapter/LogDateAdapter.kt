@@ -12,7 +12,7 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.model.ENotesList
 
 
-class LogDateAdapter(applicationContext: Context, eNotesList: MutableList<ENotesList>) : RecyclerView.Adapter<LogDateAdapter.ViewHolder>() {
+class LogDateAdapter(applicationContext: Context, eNotesList: MutableList<ENotesList?>) : RecyclerView.Adapter<LogDateAdapter.ViewHolder>() {
     private var eNoteslist: List<ENotesList>? = null
     private var context: Context? = null
     val recycledViewPool = RecycledViewPool()

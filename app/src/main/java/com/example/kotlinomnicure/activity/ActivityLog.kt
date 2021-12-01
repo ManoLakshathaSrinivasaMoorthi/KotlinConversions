@@ -5,9 +5,10 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ENotesViewModel
 import com.example.kotlinomnicure.adapter.LogDateAdapter
 
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ENotesViewModel
+
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityLogBinding
 import com.example.kotlinomnicure.model.ENotesList
@@ -23,7 +24,7 @@ class ActivityLog : BaseActivity() {
     private var patient_name: String? = null
     private var viewModel: ENotesViewModel? = null
     private var adapter: LogDateAdapter? = null
-    private val eNotesList: MutableList<ENotesList> = ArrayList<ENotesList>()
+    private val eNotesList: MutableList<ENotesList?> = ArrayList<ENotesList?>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +65,7 @@ class ActivityLog : BaseActivity() {
 
             val erroMsg = ""
             if (listResponse != null && listResponse.status != null && listResponse.status!!) {
-                eNotesList.addAll(listResponse.geteNotesActivity())
+                listResponse.geteNotesActivity()?.let { eNotesList.addAll(it) }
                 setAdapter()
             }
             handleVisibility()

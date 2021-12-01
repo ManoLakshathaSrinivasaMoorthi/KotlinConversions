@@ -201,7 +201,7 @@ class EncUtil : AppCompatActivity() {
         return bytes
     }
 
-    fun decrypt(context: BiometricPrompt.AuthenticationCallback, text: String?): String? {
+    fun decrypt(context: Context, text: String?): String? {
         try {
             var d: ByteArray? = ByteArray(0)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

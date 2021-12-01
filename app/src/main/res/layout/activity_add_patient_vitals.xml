@@ -362,7 +362,7 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_heart_rate"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
@@ -383,7 +383,7 @@
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
                         android:textSize="@dimen/text_size_small" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_blood_pressure_systolic"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
@@ -404,7 +404,7 @@
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
                         android:textSize="@dimen/text_size_small" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_blood_pressure_diastolic"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
@@ -425,7 +425,7 @@
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
                         android:textSize="@dimen/text_size_small" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_sp02"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
@@ -446,7 +446,7 @@
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
                         android:textSize="@dimen/text_size_small" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_fi02"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
@@ -467,7 +467,7 @@
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
                         android:textSize="@dimen/text_size_small" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_respitory_rate"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"
@@ -488,7 +488,7 @@
                         android:textCursorDrawable="@drawable/edittext_cursor_color_gray"
                         android:textSize="@dimen/text_size_small" />
 
-                    <com.mvp.omnicure.utils.CustomErrorEditText
+                    <com.example.kotlinomnicure.utils.CustomErrorEditText
                         android:id="@+id/id_temperature"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_40"

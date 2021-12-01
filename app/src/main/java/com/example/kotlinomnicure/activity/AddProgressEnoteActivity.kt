@@ -16,6 +16,9 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageInputRequestModel
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ChatActivityViewModel
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
 
 
 import com.example.kotlinomnicure.R
@@ -58,7 +61,7 @@ class AddProgressEnoteActivity : BaseActivity() {
         val vals = ArrayList<String>()
         vals.add(getString(R.string.progress_text))
         val typeAdapter = ArrayAdapter(this, R.layout.spinner_disabled_text, vals)
-        //hospitalListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         binding!!.typeSpinner.setAdapter(typeAdapter)
         binding!!.typeSpinner.setEnabled(false)
         patientID = intent.getLongExtra("patient_id", 0)

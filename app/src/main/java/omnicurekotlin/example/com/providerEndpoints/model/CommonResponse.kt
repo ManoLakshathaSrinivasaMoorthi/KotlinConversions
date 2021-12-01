@@ -1,6 +1,7 @@
 package omnicurekotlin.example.com.providerEndpoints.model
 
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+import com.example.kotlinomnicure.model.ENotesList
 
 class CommonResponse {
 
@@ -13,6 +14,8 @@ class CommonResponse {
     private var errorId: Int? = null
 
     var errorMessage: String? = null
+
+    private val eNotesActivity: List<ENotesList>? = null
 
     private var title: String? = null
 
@@ -70,7 +73,9 @@ class CommonResponse {
     fun getDischargedList(): List<Patient?>? {
         return dischargedList
     }
-
+    fun geteNotesActivity(): List<ENotesList?>? {
+        return eNotesActivity
+    }
 
    /* fun getAuditId(): String? {
         return auditId

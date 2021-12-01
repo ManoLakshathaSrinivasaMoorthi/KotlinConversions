@@ -71,7 +71,7 @@ class ActivityENotesDetails : BaseActivity(), ENotesDetailsAdapter.DetailsClick 
     }
 
     private fun callReadApi() {
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods().isInternetConnected(this)!!) {
             CustomSnackBar.make(binding?.getRoot(),
                 this,
                 CustomSnackBar.WARNING,

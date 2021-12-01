@@ -309,8 +309,8 @@ class AddPatientVitalsActivity : BaseActivity() {
             binding?.idSave?.isEnabled = true
             return
         }
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(
                 binding?.idContainerLayout, this, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity),
                 CustomSnackBar.TOP, 3000, 0)?.show()
@@ -332,7 +332,7 @@ class AddPatientVitalsActivity : BaseActivity() {
                     } else if (!TextUtils.isEmpty(commonResponse?.getErrorMessage()) && commonResponse?.getErrorMessage() != null) {
                         binding?.idSave?.isEnabled = true
                         val errMsg: String? = ErrorMessages().getErrorMessage(this, commonResponse.getErrorMessage(), Constants.API.register)
-                        //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+
                         onAddPatientFailure(errMsg)
                     } else {
                         CustomSnackBar.make(binding?.idContainerLayout, this, CustomSnackBar.WARNING, getString(R.string.api_error),
@@ -361,7 +361,7 @@ class AddPatientVitalsActivity : BaseActivity() {
     private fun isValid(): Boolean {
         val errMsg: String? = binding?.let { ValidationUtil().isValidate(it) }
         if (!TextUtils.isEmpty(errMsg)) {
-//            UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+
             errMsg?.let {
                 CustomSnackBar.make(binding?.idContainerLayout, this,
                     CustomSnackBar.WARNING, it, CustomSnackBar.TOP, 3000, 0) }?.show()
