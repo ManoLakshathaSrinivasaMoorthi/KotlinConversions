@@ -1,6 +1,5 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model
+package omnicurekotlin.example.com.providerEndpoints.model
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageOutuputResponseModel
 import java.io.Serializable
 
 

@@ -1,9 +1,7 @@
 package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -12,7 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityContactAdminBinding
 import com.example.kotlinomnicure.utils.*

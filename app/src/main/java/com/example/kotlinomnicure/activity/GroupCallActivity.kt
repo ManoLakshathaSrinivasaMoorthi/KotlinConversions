@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.adapter.GroupListAdapter
 import com.example.kotlinomnicure.databinding.ActivityGroupsListBinding

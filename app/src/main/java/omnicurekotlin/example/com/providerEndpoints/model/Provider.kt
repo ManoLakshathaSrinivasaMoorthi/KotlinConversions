@@ -1,6 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model
-
-import omnicurekotlin.example.com.providerEndpoints.model.Role
+package omnicurekotlin.example.com.providerEndpoints.model
 
 class Provider {
 
