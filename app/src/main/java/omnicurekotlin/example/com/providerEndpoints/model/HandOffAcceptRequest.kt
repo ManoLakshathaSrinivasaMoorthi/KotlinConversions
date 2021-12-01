@@ -9,7 +9,7 @@ class HandOffAcceptRequest {
         return patientId
     }
 
-    fun setPatientId(patientId: String?) {
+    fun setPatientId(patientId: Long?): Unit {
         this.patientId = patientId
     }
 
@@ -17,7 +17,7 @@ class HandOffAcceptRequest {
         return providerId
     }
 
-    fun setProviderId(providerId: String?) {
+    fun setProviderId(providerId: Long): Unit {
         this.providerId = providerId
     }
 }

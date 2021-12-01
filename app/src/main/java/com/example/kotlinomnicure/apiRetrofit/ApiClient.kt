@@ -2,9 +2,9 @@ package com.example.kotlinomnicure.apiRetrofit
 
 import android.util.Log
 import com.example.kotlinomnicure.OmnicureApp
-import com.example.kotlinomnicure.utils.BuildConfigConstants
+
 import com.example.kotlinomnicure.utils.PrefUtility
-import com.google.gson.Gson
+
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -30,7 +30,7 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
+            builder.addInterceptor(EncryptionInterceptor(OmnicureApp().getAppContext()!!))
         }
         if (decrypt) {
             builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
@@ -45,10 +45,10 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
+            builder.addInterceptor(EncryptionInterceptor(OmnicureApp().getAppContext()!!))
         }
         if (decrypt) {
-            builder.addInterceptor(DecryptionInterceptor(OmnicureApp.getAppContext()))
+            builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
         }
         addInterceptors(builder)
         getRetrofit(builder)
@@ -60,7 +60,7 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
+            builder.addInterceptor(EncryptionInterceptor(OmnicureApp().getAppContext()!!))
         }
         if (decrypt) {
             builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
@@ -75,7 +75,7 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
+            builder.addInterceptor(EncryptionInterceptor(OmnicureApp().getAppContext()!!))
         }
         if (decrypt) {
             builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
@@ -90,7 +90,7 @@ class ApiClient {
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
         if (encrypt) {
-            builder.addInterceptor(OmnicureApp().getAppContext()?.let { EncryptionInterceptor(it) })
+            builder.addInterceptor(EncryptionInterceptor(OmnicureApp().getAppContext()!!))
         }
         if (decrypt) {
             builder.addInterceptor(DecryptionInterceptor(OmnicureApp().getAppContext()))
@@ -153,6 +153,3 @@ class ApiClient {
     }
 }
 
-private fun OkHttpClient.Builder.addInterceptor(let: EncryptionInterceptor?) {
-
-}
