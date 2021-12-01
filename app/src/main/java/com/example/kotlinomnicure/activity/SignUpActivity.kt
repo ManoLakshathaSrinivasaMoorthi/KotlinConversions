@@ -8,7 +8,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.example.dailytasksamplepoc.R
 import com.example.dailytasksamplepoc.databinding.ActivitySignupBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
+import com.example.kotlinomnicure.activity.BaseActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.activity.LoginActivity
 import com.example.kotlinomnicure.activity.PatientAppointmentActivity
 import com.example.dailytasksamplepoc.kotlinomnicure.utils.Buildconfic

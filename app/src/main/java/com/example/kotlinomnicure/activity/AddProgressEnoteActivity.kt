@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.app.Dialog
 import android.content.Context
@@ -17,9 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageInputRequestModel
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ChatActivityViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
+
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityAddProgressBinding
 import com.example.kotlinomnicure.utils.Constants
@@ -30,7 +28,7 @@ import java.lang.Exception
 import java.util.*
 
 class AddProgressEnoteActivity : BaseActivity() {
-    private val TAG: String =AddProgressEnoteActivity::class.java.getSimpleName()
+    private val TAG: String = AddProgressEnoteActivity::class.java.getSimpleName()
 
     // variables
     private var patientID: Long? = null

@@ -1,12 +1,7 @@
 package com.example.kotlinomnicure.apiRetrofit
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageInputRequestModel
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageOutuputResponseModel
-import com.example.kotlinomnicure.model.CommonResponseRetro
 import com.example.kotlinomnicure.model.HealthMonitoring
 import com.google.gson.JsonObject
-import com.mvp.omnicure.kotlinactivity.requestbodys.*
 import omnicurekotlin.example.com.providerEndpoints.model.*
 import retrofit2.Call
 import retrofit2.http.*

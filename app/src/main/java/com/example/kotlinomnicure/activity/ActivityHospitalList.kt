@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.app.SearchManager
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.kotlinomnicure.adapter.HospitalListAdapter
 
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HospitalListViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityHospitalListBinding
 import com.example.kotlinomnicure.utils.*

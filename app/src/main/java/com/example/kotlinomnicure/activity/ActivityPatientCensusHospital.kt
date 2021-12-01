@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.activity
+package com.example.kotlinomnicure.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,10 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityPatientCensusHospitalBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.CensusHospitalListAdapter
+
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages

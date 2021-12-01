@@ -10,9 +10,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.MyDashboardActivity
+import com.example.kotlinomnicure.activity.BaseActivity
+import com.example.kotlinomnicure.activity.MyDashboardActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
 import com.example.kotlinomnicure.databinding.ActivitySplashBinding

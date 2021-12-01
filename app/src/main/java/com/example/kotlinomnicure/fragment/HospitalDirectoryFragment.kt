@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.fragment
+package com.example.kotlinomnicure.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -35,7 +35,7 @@ class HospitalDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragm
     var filter:kotlin.String? = "all"
     var isPageVisible = false
     var hospitalDirectoryAdapter: HospitalDirectoryAdapter? = null
-    var addressFilterListener: HospitalDirectoryFragment.AddressFilterListener? =
+    var addressFilterListener: AddressFilterListener? =
         null
     private var viewModel: HomeViewModel? = null
 

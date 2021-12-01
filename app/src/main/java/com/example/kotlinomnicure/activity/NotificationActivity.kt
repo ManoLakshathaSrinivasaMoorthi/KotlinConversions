@@ -24,9 +24,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
-import com.example.dailytasksamplepoc.kotlinomnicure.customview.CustomProgressDialog
+import com.example.kotlinomnicure.customview.CustomProgressDialog
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.helper.LogoutHelper
 import com.example.kotlinomnicure.utils.*

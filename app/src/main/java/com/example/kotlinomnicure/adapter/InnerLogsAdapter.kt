@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
+import com.example.kotlinomnicure.activity.EncUtil
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.model.ENotesMessageList
 import com.example.kotlinomnicure.utils.AESUtils

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

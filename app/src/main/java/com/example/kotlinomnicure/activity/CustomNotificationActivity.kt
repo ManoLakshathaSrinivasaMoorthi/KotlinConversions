@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,11 +6,7 @@ import android.view.View
 import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityCustomNotificationBinding
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.AddNotificationDataRequest
-import com.example.dailytasksamplepoc.kotlinomnicure.utils.PrefUtility
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
@@ -81,7 +77,8 @@ class CustomNotificationActivity : BaseActivity(){
         }
         // Acuity
         customNotificationBinding.notificationItems.swAcutiy.setOnCheckedChangeListener(
-            SwitchCheckedChangeListener())
+            SwitchCheckedChangeListener()
+        )
 
         // Populate dynamic alert switch status
         val checkAcuity: Boolean

@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.fragment
+package com.example.kotlinomnicure.fragment
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -12,9 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.google.gson.Gson
-import com.mvp.omnicure.adapter.ProgressAdapter
-import com.mvp.omnicure.databinding.FragmentProgressBinding
-import com.mvp.omnicure.model.ConsultMessage
+
 import java.util.ArrayList
 
 class ProgressFragment(patient_id: Any?) : Fragment() {
@@ -136,7 +134,7 @@ class ProgressFragment(patient_id: Any?) : Fragment() {
 
     private fun isIncludeChat(consultMessage: ConsultMessage): Boolean {
         return consultMessage.type.equals(
-            ProgressFragment.MessageType.system.toString(),
+            MessageType.system.toString(),
             ignoreCase = true
         )
     }

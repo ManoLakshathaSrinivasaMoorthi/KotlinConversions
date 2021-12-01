@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -28,7 +28,7 @@ import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.CensusHospitalLis
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.CensusWardListViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.helper.NotificationHelper
-import com.example.kotlinomnicure.activity.RemoteProviderDirectoryActivity
+import com.example.kotlinomnicure.activity.*
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
@@ -38,8 +38,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.activity.ActivityConsultChart
-import com.mvp.omnicure.kotlinactivity.activity.ActivityPatientCensusHospital
 import com.example.kotlinomnicure.utils.UtilityMethods
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
 import java.lang.Exception

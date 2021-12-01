@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.customview
+package com.example.kotlinomnicure.customview
 
 import android.content.Context
 import android.graphics.*

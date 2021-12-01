@@ -1,8 +1,7 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.media
+package com.example.kotlinomnicure.media
 
 import android.text.format.DateFormat
 import android.util.Log
-import com.example.kotlinomnicure.media.PackableEx
 import org.ocpsoft.prettytime.PrettyTime
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException

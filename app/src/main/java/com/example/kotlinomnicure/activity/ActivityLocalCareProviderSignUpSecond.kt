@@ -17,8 +17,6 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.ActivityHospitalList
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.LocalCareProviderSignUpSecondViewModel
 import com.example.kotlinomnicure.R

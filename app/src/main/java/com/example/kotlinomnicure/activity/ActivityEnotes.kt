@@ -12,8 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityEnotesBinding
-import com.mvp.omnicure.kotlinactivity.fragment.HandoffFragment
-import com.mvp.omnicure.kotlinactivity.fragment.ProgressFragment
+
 
 
 class ActivityEnotes : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.mvp.omnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -43,22 +43,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityChatBinding
-import com.example.dailytasksamplepoc.databinding.ItemMessageBinding
-import com.example.kotlinomnicure.activity.ActivityAttachmentFilter
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.DrawerActivity
+
 import com.example.kotlinomnicure.adapter.PatientChatHistoryAdapter
 import com.example.kotlinomnicure.customview.ChatAttachmentPopup
-import com.example.dailytasksamplepoc.kotlinomnicure.customview.DownloadProgressDialog
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.ChatMessageStatusModel
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageInputRequestModel
-import com.example.dailytasksamplepoc.kotlinomnicure.interfaces.ChatEditTextListener
-import com.example.dailytasksamplepoc.kotlinomnicure.interfaces.OnPatientHistoryItemListener
-import com.example.dailytasksamplepoc.kotlinomnicure.model.ConsultMessage
-import com.example.dailytasksamplepoc.kotlinomnicure.model.ConsultProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.utils.CustomDialog
+
 import com.example.kotlinomnicure.utils.*
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -74,8 +62,7 @@ import com.google.firebase.storage.*
 import com.google.gson.Gson
 import omnicurekotlin.example.com.patientsEndpoints.model.PatientHistory
 import omnicurekotlin.example.com.providerEndpoints.model.Members
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ChatActivityViewModel
+
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.interfaces.OnPatientHistoryItemListener
 
@@ -88,7 +75,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ChatActivity() : DrawerActivity(), ChatEditTextListener,
-    OnPatientHistoryItemListener,BaseActivity(), OnPatientHistoryItemListener {
+    OnPatientHistoryItemListener, BaseActivity(), OnPatientHistoryItemListener {
 
     //variables
     private val membersList: MutableList<Members>? = ArrayList<Members>()

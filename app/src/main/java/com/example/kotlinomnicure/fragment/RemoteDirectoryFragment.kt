@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.fragment
+package com.example.kotlinomnicure.fragment
 
 import android.Manifest
 import android.content.Context
@@ -15,20 +15,16 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityRemoteProviderDirectoryBinding
-import com.example.dailytasksamplepoc.databinding.FragmentRemoteDirectoryBinding
+
 import com.example.kotlinomnicure.activity.RemoteProviderDirectoryActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.RemoteDirectoryAdapter
-import com.example.dailytasksamplepoc.kotlinomnicure.videocall.openvcall.model.ConstantApp
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
 import com.example.kotlinomnicure.utils.UtilityMethods
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+
 import java.util.*
 
 

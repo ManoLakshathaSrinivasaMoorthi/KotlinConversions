@@ -6,7 +6,6 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityTrainingMaterialBinding
 import com.example.kotlinomnicure.utils.Constants

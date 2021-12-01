@@ -196,7 +196,7 @@
             android:layout_below="@+id/id_appbar_layout"
             android:background="@color/bg_gray"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="com.mvp.omnicure.activity.ChatActivity">
+            tools:context=".activity.ChatActivity">
 
             <!--<androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/messageRecyclerView"

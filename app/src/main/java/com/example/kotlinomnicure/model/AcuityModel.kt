@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.model
+package com.example.kotlinomnicure.model
 
 import android.os.Build
 import androidx.annotation.RequiresApi

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
@@ -36,7 +36,7 @@ class PDFViewerActivity : AppCompatActivity(),OnPageChangeListener,
 
     var url: String? = null
     var pdfView: PDFView? = null
-    var ctx:Context?=PDFViewerActivity()
+    var ctx:Context?= PDFViewerActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

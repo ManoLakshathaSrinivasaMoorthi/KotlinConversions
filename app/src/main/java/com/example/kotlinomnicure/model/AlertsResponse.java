@@ -1,6 +1,6 @@
 package com.example.kotlinomnicure.model;
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.SystemAlerts;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

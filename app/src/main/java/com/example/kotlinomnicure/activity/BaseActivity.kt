@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.app.Activity
 import android.app.Dialog
@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.broadcast.InternetConnReceiver
 import com.example.kotlinomnicure.customview.CustomDialog
-import com.example.dailytasksamplepoc.kotlinomnicure.customview.CustomProgressDialog
+import com.example.kotlinomnicure.customview.CustomProgressDialog
 import com.example.kotlinomnicure.interfaces.OnInternetConnChangeListener
 import com.example.kotlinomnicure.interfaces.OnNetConnectedListener
 import com.example.kotlinomnicure.model.ConsultProvider

@@ -25,7 +25,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityLocalCareProviderSignUpFirstBinding
 import com.example.kotlinomnicure.helper.MobileNumberFormatter
@@ -33,8 +32,6 @@ import com.example.kotlinomnicure.utils.*
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 
-
-import com.mvp.omnicure.kotlinactivity.viewmodel.LocalCareProviderSignUpFirstViewModel
 import omnicurekotlin.example.com.userEndpoints.model.CountryCodeList
 import omnicurekotlin.example.com.userEndpoints.model.Provider
 

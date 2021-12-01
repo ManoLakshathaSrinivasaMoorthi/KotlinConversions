@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.adapter
+package com.example.kotlinomnicure.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 

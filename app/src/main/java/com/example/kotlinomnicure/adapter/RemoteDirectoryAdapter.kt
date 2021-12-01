@@ -24,10 +24,9 @@ import com.bumptech.glide.request.target.Target
 
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.UtilityMethods
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.RemoteDirectoryChildBinding
-import com.mvp.omnicure.activity.ChatActivity
+import com.example.kotlinomnicure.activity.ChatActivity
 
 class RemoteDirectoryAdapter(
     requireActivity: FragmentActivity,

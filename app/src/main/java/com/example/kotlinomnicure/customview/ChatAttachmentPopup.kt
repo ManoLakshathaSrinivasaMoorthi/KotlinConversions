@@ -17,7 +17,7 @@ import android.widget.TextView
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.utils.UtilityMethods
 
-import com.mvp.omnicure.activity.ChatActivity
+import com.example.kotlinomnicure.activity.ChatActivity
 
 import java.lang.Exception
 

@@ -1,11 +1,5 @@
 package com.example.kotlinomnicure.apiRetrofit
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.AddNotificationDataRequest
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.CommonResponseProviderNotification
-import com.mvp.omnicure.kotlinactivity.requestbodys.LoginDetailsRequestBody
-import com.mvp.omnicure.kotlinactivity.requestbodys.LogoutRequestBody
-import com.mvp.omnicure.kotlinactivity.requestbodys.ProviderNotificationDetailsRequestBody
-import com.mvp.omnicure.kotlinactivity.requestbodys.UpdateFcmkKeyRequestBody
 import omnicurekotlin.example.com.Model.ProviderNotificationResponse
 import omnicurekotlin.example.com.appointmentEndpoints.model.Appointment
 import omnicurekotlin.example.com.userEndpoints.model.CommonResponse

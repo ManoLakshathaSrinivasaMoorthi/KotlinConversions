@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.activity
+package com.example.kotlinomnicure.activity
 
 import android.app.Activity
 import android.app.Dialog
@@ -17,9 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.kotlinomnicure.activity.ActivityEnotes
-import com.example.kotlinomnicure.activity.RemoteCompleteActivity
-import com.example.kotlinomnicure.activity.TransferPatientActivity
 
 
 import com.example.kotlinomnicure.utils.Constants
@@ -31,14 +28,12 @@ import com.google.gson.Gson
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
 import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
 import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.activity.HomeActivity
 import com.example.kotlinomnicure.customview.CustomDialog
 import com.example.kotlinomnicure.databinding.ActivityEconsultChartBinding
 import com.example.kotlinomnicure.model.ConsultProvider
 import com.example.kotlinomnicure.utils.UtilityMethods
 import omnicurekotlin.example.com.providerEndpoints.model.Members
 import com.google.firebase.database.*
-import com.mvp.omnicure.activity.ChatActivity
 
 
 class ActivityConsultChart : AppCompatActivity() {
@@ -68,7 +63,7 @@ class ActivityConsultChart : AppCompatActivity() {
     private var mFirebaseDatabaseReference: DatabaseReference? = null
     private val strAcuityScore: String? = null
     private val strScreenCensus = ""
-    val ctx:Context=ActivityConsultChart()
+    val ctx:Context= ActivityConsultChart()
 
     // Unread message listener from firebase - Add Consult provider data from the snapshot
     var mUnreadMessageListener: ValueEventListener = object : ValueEventListener {

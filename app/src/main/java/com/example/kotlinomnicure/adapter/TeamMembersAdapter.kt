@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.MyVirtualTeamsActivity
+import com.example.kotlinomnicure.activity.MyVirtualTeamsActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.interfaces.OnAppointmentItemClick
 

@@ -16,7 +16,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
 import com.example.kotlinomnicure.R

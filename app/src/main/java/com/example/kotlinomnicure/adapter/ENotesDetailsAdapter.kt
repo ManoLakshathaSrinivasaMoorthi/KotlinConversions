@@ -11,8 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
-import com.example.dailytasksamplepoc.kotlinomnicure.media.Utils
+import com.example.kotlinomnicure.activity.EncUtil
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.EnotesDetailsItemBinding
 import com.example.kotlinomnicure.model.HandOffList

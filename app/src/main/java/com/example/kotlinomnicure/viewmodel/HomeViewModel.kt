@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.AddNotificationDataRequest
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.CommonResponseProviderNotification
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.ProviderNotificationResponse
-import com.example.dailytasksamplepoc.kotlinomnicure.requestbodys.CommonIdRequestBody
+import com.example.kotlinomnicure.requestbodys.CommonIdRequestBody
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.GetProviderByIdRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.GetProviderListRequestBody

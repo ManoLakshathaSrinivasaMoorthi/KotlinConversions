@@ -1,6 +1,5 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.model
+package com.example.kotlinomnicure.model
 
-import com.example.dailytasksamplepoc.kotlinomnicure.model.CountryDto
 import android.graphics.Bitmap
 
 class CountryDto : Comparable<CountryDto> {

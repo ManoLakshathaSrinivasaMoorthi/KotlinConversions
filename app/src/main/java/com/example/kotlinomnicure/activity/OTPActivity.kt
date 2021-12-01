@@ -8,7 +8,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.customview.PinEntryView
 import com.example.kotlinomnicure.databinding.ActivityOtpBinding

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.customview
+package com.example.kotlinomnicure.customview
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -12,7 +12,6 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
-import com.example.dailytasksamplepoc.R
 import java.lang.Exception
 
 class DownloadProgressDialog(context: Context) : Dialog(context) {

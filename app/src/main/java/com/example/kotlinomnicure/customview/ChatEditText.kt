@@ -1,13 +1,12 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.customview
+package com.example.kotlinomnicure.customview
 
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
-import android.widget.EditText
-import com.example.dailytasksamplepoc.kotlinomnicure.interfaces.ChatEditTextListener
-import com.mvp.omnicure.activity.ChatActivity
+
+import com.example.kotlinomnicure.activity.ChatActivity
 
 
 class ChatEditText :androidx.appcompat.widget.AppCompatEditText {

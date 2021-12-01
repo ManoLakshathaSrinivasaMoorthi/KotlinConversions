@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.CommonResponse
+import com.example.kotlinomnicure.activity.BaseActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.LoginActivity
 import com.example.kotlinomnicure.activity.NotificationActivity

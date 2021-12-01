@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dailytasksamplepoc.kotlinomnicure.adapter.TeamListAdapter
+import com.example.kotlinomnicure.adapter.TeamListAdapter
 
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.MyVirtualViewModel
@@ -24,8 +24,6 @@ import com.google.gson.Gson
 import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
 import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.activity.CallActivity
-import com.example.kotlinomnicure.activity.GroupCallActivity
 import com.example.kotlinomnicure.databinding.ActivityMyVirtualWardBinding
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import org.json.JSONException

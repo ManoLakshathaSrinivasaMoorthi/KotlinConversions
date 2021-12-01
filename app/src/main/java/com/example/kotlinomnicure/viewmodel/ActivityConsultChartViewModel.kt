@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
 import androidx.lifecycle.ViewModel
 

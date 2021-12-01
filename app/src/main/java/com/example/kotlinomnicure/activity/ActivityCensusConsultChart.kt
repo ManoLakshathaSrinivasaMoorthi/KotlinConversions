@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar
 
 import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
-import com.example.dailytasksamplepoc.kotlinomnicure.media.Utils
+import com.example.kotlinomnicure.media.Utils
 
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityCensusEconsultChartBinding

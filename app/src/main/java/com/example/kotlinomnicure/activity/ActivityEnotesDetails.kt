@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.EncUtil
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ENotesViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.adapter.ENotesDetailsAdapter

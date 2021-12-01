@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlinomnicure.utils.Constants
-import com.mvp.omnicure.kotlinactivity.requestbodys.CommonPatientIdRequestBody
+import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
 
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
 import com.example.kotlinomnicure.apiRetrofit.ApiClient

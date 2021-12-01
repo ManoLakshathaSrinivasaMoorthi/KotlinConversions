@@ -18,8 +18,6 @@
  */
 package com.example.kotlinomnicure.model
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.ChatMessageStatusModel
-
 
 class HandOffList  {
     var id: String? = null

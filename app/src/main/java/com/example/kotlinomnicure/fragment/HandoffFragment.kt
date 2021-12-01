@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.fragment
+package com.example.kotlinomnicure.fragment
 
 import android.app.Dialog
 import android.content.Context
@@ -11,9 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.google.gson.Gson
-import com.mvp.omnicure.adapter.HandoffAdapter
-import com.mvp.omnicure.databinding.FragmentHandoffBinding
-import com.mvp.omnicure.model.ConsultMessage
+
 import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.media
+package com.example.kotlinomnicure.media
 
 import java.nio.ByteBuffer
 import java.nio.ByteOrder

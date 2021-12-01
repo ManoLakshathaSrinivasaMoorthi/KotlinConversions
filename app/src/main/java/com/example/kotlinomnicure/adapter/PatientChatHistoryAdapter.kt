@@ -14,7 +14,7 @@ import com.example.kotlinomnicure.R
 
 import com.example.kotlinomnicure.interfaces.OnPatientHistoryItemListener
 import com.example.kotlinomnicure.utils.ChatUtils
-import com.mvp.omnicure.activity.ChatActivity
+import com.example.kotlinomnicure.activity.ChatActivity
 import omnicurekotlin.example.com.patientsEndpoints.model.PatientHistory
 
 class PatientChatHistoryAdapter : RecyclerView.Adapter<PatientChatHistoryAdapter.ViewHolder>() {

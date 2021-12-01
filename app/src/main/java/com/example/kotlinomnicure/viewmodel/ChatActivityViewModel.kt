@@ -10,7 +10,7 @@ import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageOutuputResponseModel
 import com.example.dailytasksamplepoc.kotlinomnicure.model.SOSResponse
 import com.example.kotlinomnicure.utils.Constants
-import com.mvp.omnicure.kotlinactivity.requestbodys.CommonPatientIdRequestBody
+import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
 import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail

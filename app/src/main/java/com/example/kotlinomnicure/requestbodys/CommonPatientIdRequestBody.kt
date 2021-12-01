@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.requestbodys
+package com.example.kotlinomnicure.requestbodys
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
