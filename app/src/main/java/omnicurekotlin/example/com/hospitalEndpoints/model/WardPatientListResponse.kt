@@ -55,7 +55,7 @@ class WardPatientListResponse {
         return wardPatientList
     }
 
-    fun setWardPatientList(wardPatientList: List<WardPatientList?>?): WardPatientListResponse? {
+    fun setWardPatientList(wardPatientList: List<WardPatientList?>?): WardPatientListResponse {
         this.wardPatientList = wardPatientList
         return this
     }

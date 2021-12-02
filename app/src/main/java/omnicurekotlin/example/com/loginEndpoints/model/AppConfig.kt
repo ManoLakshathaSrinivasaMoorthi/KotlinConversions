@@ -1,5 +1,5 @@
 
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model
+package omnicurekotlin.example.com.loginEndpoints.model
 
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose

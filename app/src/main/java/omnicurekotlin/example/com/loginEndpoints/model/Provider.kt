@@ -1,388 +1,57 @@
 
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model
+package omnicurekotlin.example.com.loginEndpoints.model
 
 import java.io.Serializable
 
 
 class Provider : Serializable {
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+
+
     var access: List<String>? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var activeHour: Float? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var activeHour: Float? = null
     var address: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var consultationFee: Float? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var consultationFee: Float? = null
     var countryCode: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var designation: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-
     var dob: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var email: String? = null
-        private set
-
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var providerType: String? = null
-
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var lcpType: String? = null
-
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var remoteProviderId: Long? = null
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var emailOtp: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var emailOtpVerified: Boolean? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var experience: Float? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var emailOtp: String? = null
+    private var emailOtpVerified: Boolean? = null
+    private var experience: Float? = null
     var fcmKey: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var firebaseUid: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var firebaseUid: String? = null
     var fname: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var gender: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var healthMonitoringTime: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var hospital: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var hospitalId: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var id: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var userId: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var joiningTime: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var lname: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var name: String? = null
-        private set
-
-    //com.google.api.client.util.Key
     var remoteProviderType: String? = null
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var npiNumber: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var numberOfPatient: Int? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var npiNumber: String? = null
+    private var numberOfPatient: Int? = null
     var osType: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var otp: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var password: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var phone: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var profilePicUrl: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var qualification: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var qualification: String? = null
     var role: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var roles: List<Role>? = null
-        private set
-
-
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var roles: List<Role>? = null
     var screenName: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var smsOtpVerified: Boolean? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var specialization: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var smsOtpVerified: Boolean? = null
+    private var specialization: String? = null
     var status: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var token: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var voipToken: String? = null
-        private set
+    private var voipToken: String? = null
 
-    /**
-     * @param access access or `null` for none
-     */
+
     fun setAccess(access: List<String>?): Provider {
         this.access = access
         return this

@@ -15,7 +15,8 @@
  * on 2020-07-20 at 06:48:21 UTC
  * Modify at your own risk.
  */
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model
+package omnicurekotlin.example.com.loginEndpoints.model
+
 
 import java.io.Serializable
 
@@ -47,14 +48,14 @@ class CommonResponse : Serializable {
      */
     //com.google.api.client.util.Key
     var dischargedList: List<Patient>? = null
-        private set
+
 
     /**
      * The value may be `null`.
      */
     //com.google.api.client.util.Key
     var errorId: Int? = null
-        private set
+
     /**
      * @return value or `null` for none
      */
@@ -63,7 +64,7 @@ class CommonResponse : Serializable {
      */
     //com.google.api.client.util.Key
     var errorMessage: String? = null
-        private set
+
 
     //com.google.api.client.util.Key
     var feedbackForm: String? = null
@@ -87,7 +88,7 @@ class CommonResponse : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key
-    var pendingList: List<Patient>? = null
+    private var pendingList: List<Patient>? = null
         private set
     /**
      * @return value or `null` for none
@@ -160,7 +161,7 @@ class CommonResponse : Serializable {
      */
     //com.google.api.client.util.Key
     var ward: Ward? = null
-        private set
+
 
     /**
      * @param activeList activeList or `null` for none

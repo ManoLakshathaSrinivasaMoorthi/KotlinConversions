@@ -4,157 +4,25 @@ package omnicurekotlin.example.com.appointmentEndpoints.model
 import java.io.Serializable
 
 class Patient : Serializable {
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var acceptTime: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+
+    private var acceptTime: Long? = null
+
     var address: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var appointmentId: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+    private var appointmentId: String? = null
     var arterialBloodPressureSystolic: Double? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var athenaDeviceId: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
+    private var athenaDeviceId: String? = null
     var bdProviderId: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var bdProviderName: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var bed: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var countryCode: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var dischargeMessage: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
+    private var dischargeMessage: String? = null
     var dischargeTime: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var dob: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var dobDay: Int? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var dobMonth: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var dobYear: Int? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var docBoxManagerId: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+
     var docBoxPatientId: String? = null
         private set
     /**
@@ -237,23 +105,9 @@ class Patient : Serializable {
      */
     //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var joiningTime: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var lastMessageTime: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+
+    private var lastMessageTime: Long? = null
+
     var lname: String? = null
         private set
     /**

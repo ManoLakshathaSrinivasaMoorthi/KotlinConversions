@@ -30,7 +30,7 @@ class Appointment {
     }
 
 
-    fun setAddress(address: String?): Appointment? {
+    fun setAddress(address: String?): Appointment {
         this.address = address
         return this
     }
@@ -40,7 +40,7 @@ class Appointment {
         return countryCode
     }
 
-    fun setCountryCode(countryCode: String?): Appointment? {
+    fun setCountryCode(countryCode: String?): Appointment {
         this.countryCode = countryCode
         return this
     }
@@ -50,7 +50,7 @@ class Appointment {
         return dob
     }
 
-    fun setDob(dob: Long?): Appointment? {
+    fun setDob(dob: Long?): Appointment {
         this.dob = dob
         return this
     }
@@ -62,7 +62,7 @@ class Appointment {
         return dobDay
     }
 
-    fun setDobDay(dobDay: Int?): Appointment? {
+    fun setDobDay(dobDay: Int?): Appointment {
         this.dobDay = dobDay
         return this
     }
@@ -71,7 +71,7 @@ class Appointment {
         return dobMonth
     }
 
-    fun setDobMonth(dobMonth: String?): Appointment? {
+    fun setDobMonth(dobMonth: String?): Appointment {
         this.dobMonth = dobMonth
         return this
     }
@@ -80,7 +80,7 @@ class Appointment {
         return dobYear
     }
 
-    fun setDobYear(dobYear: Int?): Appointment? {
+    fun setDobYear(dobYear: Int?): Appointment {
         this.dobYear = dobYear
         return this
     }
@@ -89,7 +89,7 @@ class Appointment {
         return email
     }
 
-    fun setEmail(email: String?): Appointment? {
+    fun setEmail(email: String?): Appointment {
         this.email = email
         return this
     }
@@ -139,7 +139,7 @@ class Appointment {
     }
 
 
-    fun setFname(fname: String?): Appointment? {
+    fun setFname(fname: String?): Appointment {
         this.fname = fname
         return this
     }
@@ -149,7 +149,7 @@ class Appointment {
     }
 
 
-    fun setGender(gender: String?): Appointment? {
+    fun setGender(gender: String?): Appointment {
         this.gender = gender
         return this
     }
@@ -158,7 +158,7 @@ class Appointment {
         return id
     }
 
-    fun setId(id: Long?): Appointment? {
+    fun setId(id: Long?): Appointment {
         this.id = id
         return this
     }
@@ -167,7 +167,7 @@ class Appointment {
         return joiningTime
     }
 
-    fun setJoiningTime(joiningTime: Long?): Appointment? {
+    fun setJoiningTime(joiningTime: Long?): Appointment {
         this.joiningTime = joiningTime
         return this
     }
@@ -176,7 +176,7 @@ class Appointment {
         return lname
     }
 
-    fun setLname(lname: String?): Appointment? {
+    fun setLname(lname: String?): Appointment {
         this.lname = lname
         return this
     }
@@ -185,7 +185,7 @@ class Appointment {
         return name
     }
 
-    fun setName(name: String?): Appointment? {
+    fun setName(name: String?): Appointment {
         this.name = name
         return this
     }
@@ -194,7 +194,7 @@ class Appointment {
         return note
     }
 
-    fun setNote(note: String?): Appointment? {
+    fun setNote(note: String?): Appointment {
         this.note = note
         return this
     }
@@ -203,7 +203,7 @@ class Appointment {
         return phone
     }
 
-    fun setPhone(phone: String?): Appointment? {
+    fun setPhone(phone: String?): Appointment {
         this.phone = phone
         return this
     }
@@ -212,7 +212,7 @@ class Appointment {
         return status
     }
 
-    fun setStatus(status: String?): Appointment? {
+    fun setStatus(status: String?): Appointment {
         this.status = status
         return this
     }

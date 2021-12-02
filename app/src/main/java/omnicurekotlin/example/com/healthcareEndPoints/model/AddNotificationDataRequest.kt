@@ -1,8 +1,7 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model
+package omnicurekotlin.example.com.healthcareEndPoints.model
 
 import java.io.Serializable
 
-//public class AddNotificationDataRequest  extends com.google.api.client.json.GenericJson {
 class AddNotificationDataRequest : Serializable {
 
     //com.google.api.client.util.Key

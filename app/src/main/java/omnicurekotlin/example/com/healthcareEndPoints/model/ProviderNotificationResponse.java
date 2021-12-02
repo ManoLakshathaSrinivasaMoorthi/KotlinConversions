@@ -1,7 +1,5 @@
-package omnicurekotlin.example.com.Model;
+package omnicurekotlin.example.com.healthcareEndPoints.model;
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.NotificationSettingsRequest;
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.ProviderNotificationInputResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

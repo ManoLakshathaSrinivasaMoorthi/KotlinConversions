@@ -6,12 +6,7 @@ import java.io.Serializable
 
 
 class Room : Serializable {
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
+
 
     var hospital: String? = null
         private set
@@ -94,8 +89,7 @@ class Room : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var wardId: Long? = null
-        private set
+    private var wardId: Long? = null
 
     /**
      * @param hospital hospital or `null` for none

@@ -57,8 +57,7 @@ class Ward : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key
-    var occupiedBeds: Int? = null
-        private set
+    private var occupiedBeds: Int? = null
     /**
      * @return value or `null` for none
      */
@@ -102,8 +101,7 @@ class Ward : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key
-    var virtual: Boolean? = null
-        private set
+    private var virtual: Boolean? = null
 
     /**
      * @param hospital hospital or `null` for none
