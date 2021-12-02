@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.google.gson.Gson
 import omnicurekotlin.example.com.userEndpoints.model.TermsAndConditionsResponse
@@ -30,7 +31,7 @@ class TermsAndConditionsViewModel:ViewModel(){
 //                    final TermsAndConditionsResponse remoteProviderListResponse = EndPointBuilder.getUserEndpoints()
 //                            .getTerms()
 //                            .execute();
-        ApiClient.getApiUserEndpoints(true, true).getTermsAndConditions()
+        ApiClient().getApiUserEndpoints(true, true)?.getTermsAndConditions()
             .enqueue(object : Callback<TermsAndConditionsResponse> {
                 override fun onResponse(
                     call: Call<TermsAndConditionsResponse>,

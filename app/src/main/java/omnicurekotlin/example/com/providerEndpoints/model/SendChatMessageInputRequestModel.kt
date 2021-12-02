@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model
+package omnicurekotlin.example.com.providerEndpoints.model
 
 import java.io.Serializable
 

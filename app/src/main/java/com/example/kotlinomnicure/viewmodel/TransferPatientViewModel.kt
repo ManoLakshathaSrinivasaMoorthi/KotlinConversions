@@ -8,10 +8,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
+import com.example.kotlinomnicure.backend.EndPointBuilder
+import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
+import com.example.kotlinomnicure.utils.Constants
 import com.google.gson.Gson
 
 import omnicurekotlin.example.com.hospitalEndpoints.model.AddNewPatientWardResponse
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
+import omnicurekotlin.example.com.patientsEndpoints.model.PatientTransferRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,7 +62,7 @@ class TransferPatientViewModel : ViewModel() {
                 call: Call<AddNewPatientWardResponse?>,
                 response: Response<AddNewPatientWardResponse?>
             ) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     if (wardResponseObservable == null) {
                         wardResponseObservable = MutableLiveData<AddNewPatientWardResponse?>()
                     }
@@ -129,14 +133,14 @@ class TransferPatientViewModel : ViewModel() {
         val requestBody = CommonPatientIdRequestBody(java.lang.Long.valueOf(patientId))
 
 //        ApiClient.getApiPatientEndpoints(false, false).GetTransferHospitalList(token, patientId).enqueue(new Callback<CommonResponse>() {
-        ApiClient.getApiPatientEndpoints(true, true).GetTransferHospitalList(requestBody)
-            .enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApiPatientEndpoints(true, true)?.GetTransferHospitalList(requestBody)
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
                 ) {
                     Log.d(TAG, "onResponse: GetTransferHospitalList " + response.code())
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val hospitalListResponse: CommonResponse? = response.body()
                         if (hospitalListResponseObservable == null) {
                             hospitalListResponseObservable = MutableLiveData<CommonResponse?>()
@@ -167,7 +171,7 @@ class TransferPatientViewModel : ViewModel() {
                 try {
                     Log.d(TAG, "token : $token")
                     Log.d(TAG, "patientId : $patientId")
-                    val hospitalListResponse: CommonResponse = EndPointBuilder.getPatientEndpoints()
+                    val hospitalListResponse: CommonResponse = EndPointBuilder().getPatientEndpoints()
                         .getTransferHospitalList(token, patientId) //.getHospitalListSample()
                         .execute()
                     Handler(Looper.getMainLooper()).post {
@@ -206,45 +210,25 @@ class TransferPatientViewModel : ViewModel() {
         val bodyValues = HashMap<String, String>()
         bodyValues["hospitalId"] = hospitalId.toString()
         bodyValues["providerId"] = providerId.toString()
-        ApiClient.getApiPatientEndpoints(
-            true,
-            true
-        ).getTransferHospitalProviderListApi //                getTransferHospitalProviderListApi(hospitalId.toString(), providerId.toString())
-        bodyValues
-            .enqueue(object : Callback<omnicure.mvp.com.patientEndpoints.model.CommonResponse?> {
-                override fun onResponse(
-                    call: Call<omnicure.mvp.com.patientEndpoints.model.CommonResponse?>,
-                    response: Response<omnicure.mvp.com.patientEndpoints.model.CommonResponse?>
-                ) {
-                    if (response.isSuccessful()) {
-                        Log.d("discharge", "onResponse: $response")
-                        val commonResponse: omnicure.mvp.com.patientEndpoints.model.CommonResponse? =
-                            response.body()
-                        if (providerListResponseObservable == null) {
-                            providerListResponseObservable = MutableLiveData<CommonResponse?>()
-                        }
-                        providerListResponseObservable!!.setValue(commonResponse)
-                    } else {
-                        Log.d("discharge", "onResponse: $response")
-                        errMsg[0] = Constants.API_ERROR
-                        Handler(Looper.getMainLooper()).post {
-                            val commonResponse: omnicure.mvp.com.patientEndpoints.model.CommonResponse =
-                                CommonResponse()
-                            commonResponse.setErrorMessage(errMsg[0])
-                            if (providerListResponseObservable == null) {
-                                providerListResponseObservable = MutableLiveData<CommonResponse?>()
-                            }
-                            providerListResponseObservable!!.setValue(commonResponse)
-                        }
+        ApiClient().getApiPatientEndpoints(true, true)?.getTransferHospitalProviderListApi() //                getTransferHospitalProviderListApi(hospitalId.toString(), providerId.toString())
+        bodyValues?.enqueue(object : Callback<CommonResponse?> {
+            override fun onResponse(
+                call: Call<CommonResponse?>,
+                response: Response<CommonResponse?>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("discharge", "onResponse: $response")
+                    val commonResponse: CommonResponse? =
+                        response.body()
+                    if (providerListResponseObservable == null) {
+                        providerListResponseObservable = MutableLiveData<CommonResponse?>()
                     }
-                }
-
-                override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
-                    Log.d("discharge", "onFailure: $t")
+                    providerListResponseObservable!!.setValue(commonResponse)
+                } else {
+                    Log.d("discharge", "onResponse: $response")
                     errMsg[0] = Constants.API_ERROR
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: omnicure.mvp.com.patientEndpoints.model.CommonResponse =
-                            CommonResponse()
+                        val commonResponse: CommonResponse = CommonResponse()
                         commonResponse.setErrorMessage(errMsg[0])
                         if (providerListResponseObservable == null) {
                             providerListResponseObservable = MutableLiveData<CommonResponse?>()
@@ -252,7 +236,21 @@ class TransferPatientViewModel : ViewModel() {
                         providerListResponseObservable!!.setValue(commonResponse)
                     }
                 }
-            })
+            }
+
+            override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
+                Log.d("discharge", "onFailure: $t")
+                errMsg[0] = Constants.API_ERROR
+                Handler(Looper.getMainLooper()).post {
+                    val commonResponse: CommonResponse = CommonResponse()
+                    commonResponse.setErrorMessage(errMsg[0])
+                    if (providerListResponseObservable == null) {
+                        providerListResponseObservable = MutableLiveData<CommonResponse?>()
+                    }
+                    providerListResponseObservable!!.setValue(commonResponse)
+                }
+            }
+        })
         if (!TextUtils.isEmpty(errMsg[0])) {
             val finalErrMsg = errMsg[0]
             Handler(Looper.getMainLooper()).post {
@@ -332,9 +330,8 @@ class TransferPatientViewModel : ViewModel() {
         patientTransferRequest: PatientTransferRequest
     ) {
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient.getApiPatientEndpoints(true, true)
-            .doTransferWithinHospital(patientTransferRequest)
-            .enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApiPatientEndpoints(true, true)?.doTransferWithinHospital(patientTransferRequest)
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
@@ -349,8 +346,7 @@ class TransferPatientViewModel : ViewModel() {
                     } else {
                         Log.d("transferTag", "onResponse: $response")
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: omnicure.mvp.com.patientEndpoints.model.CommonResponse =
-                                CommonResponse()
+                            val commonResponse: CommonResponse = CommonResponse()
                             commonResponse.setErrorMessage(errMsg[0])
                             if (sendTransferResponseObservable == null) {
                                 sendTransferResponseObservable = MutableLiveData<CommonResponse?>()
@@ -363,8 +359,7 @@ class TransferPatientViewModel : ViewModel() {
                 override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
                     Log.d("transferTag", "onFailure: $t")
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: omnicure.mvp.com.patientEndpoints.model.CommonResponse =
-                            CommonResponse()
+                        val commonResponse: CommonResponse = CommonResponse()
                         commonResponse.setErrorMessage(errMsg[0])
                         if (sendTransferResponseObservable == null) {
                             sendTransferResponseObservable = MutableLiveData<CommonResponse?>()
@@ -383,7 +378,7 @@ class TransferPatientViewModel : ViewModel() {
             var errMsg = ""
             override fun run() {
                 try {
-                    val wardListResponse: CommonResponse = EndPointBuilder.getPatientEndpoints()
+                    val wardListResponse: CommonResponse = EndPointBuilder().getPatientEndpoints()
                         .doTransferWithinHospital(token, patientTransferRequest)
                         .execute()
                     Handler(Looper.getMainLooper()).post {
@@ -411,20 +406,14 @@ class TransferPatientViewModel : ViewModel() {
         }).start()
     }
 
-    private fun sendTransferPatientToAnotherHospital(
-        token: String,
-        patientTransferRequest: PatientTransferRequest
-    ) {
+    private fun sendTransferPatientToAnotherHospital(token: String, patientTransferRequest: PatientTransferRequest) {
         val errMsg = arrayOfNulls<String>(1)
         //        Call<CommonResponse> call = ApiClient.getApiPatientEndpoints(false, false).sendTransferPatientToAnotherHospital(token, patientTransferRequest);
-        val call: Call<CommonResponse> = ApiClient.getApiPatientEndpoints(true, true)
-            .sendTransferPatientToAnotherHospital(patientTransferRequest)
-        call.enqueue(object : Callback<CommonResponse?> {
-            override fun onResponse(
-                call: Call<CommonResponse?>,
-                response: Response<CommonResponse?>
-            ) {
-                if (response.isSuccessful()) {
+        val call: Call<CommonResponse?>? = ApiClient().getApiPatientEndpoints(true, true)
+            ?.sendTransferPatientToAnotherHospital(patientTransferRequest)
+        call?.enqueue(object : Callback<CommonResponse?> {
+            override fun onResponse(call: Call<CommonResponse?>, response: Response<CommonResponse?>) {
+                if (response.isSuccessful) {
                     Log.i(TAG, "onResponse: SUCCESS")
                     if (sendTransferResponseObservable == null) {
                         sendTransferResponseObservable = MutableLiveData<CommonResponse?>()

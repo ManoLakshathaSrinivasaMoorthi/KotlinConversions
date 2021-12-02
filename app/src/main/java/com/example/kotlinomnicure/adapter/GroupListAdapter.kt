@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.GroupCallActivity
 import java.util.ArrayList

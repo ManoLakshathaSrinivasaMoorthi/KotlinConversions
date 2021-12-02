@@ -5,11 +5,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
+import com.example.kotlinomnicure.utils.Constants
 import com.google.gson.Gson
-import com.mvp.omnicure.apiRetrofit.ApiClient
-import com.mvp.omnicure.apiRetrofit.RequestBodys.CommonProviderIdBody
-import com.mvp.omnicure.utils.Constants
-import omnicure.mvp.com.providerEndpoints.model.SystemAlerts
+import com.mvp.omnicure.kotlinactivity.requestbodys.CommonProviderIdBody
+import omnicurekotlin.example.com.providerEndpoints.model.SystemAlerts
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,9 +27,9 @@ class SystemAlertViewModel: ViewModel() {
 
     private fun systemAlertsRetro(providerId: Long) {
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient.getApiProviderEndpoints(true, true)
-            .getalertsreponse(CommonProviderIdBody(providerId))
-            .enqueue(object : Callback<SystemAlerts?> {
+        ApiClient().getApiProviderEndpoints(true, true)
+            ?.getalertsreponse(CommonProviderIdBody(providerId))
+            ?.enqueue(object : Callback<SystemAlerts?> {
                 override fun onResponse(
                     call: Call<SystemAlerts?>,
                     response: Response<SystemAlerts?>
