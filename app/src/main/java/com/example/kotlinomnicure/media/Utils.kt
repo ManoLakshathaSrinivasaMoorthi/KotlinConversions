@@ -1,7 +1,6 @@
 package com.example.kotlinomnicure.media
 
 import android.text.format.DateFormat
-import android.util.Log
 import org.ocpsoft.prettytime.PrettyTime
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
@@ -31,14 +30,14 @@ class Utils {
     }
 
     fun pack(packableEx: PackableEx): ByteArray? {
-        val buffer = ByteBuf()
+        val buffer = ByteBuf(rawContent)
         packableEx.marshal(buffer)
         return buffer.asBytes()
     }
 
     fun unpack(data: ByteArray?, packableEx: PackableEx) {
-      /*  val buffer = ByteBuf(data)
-        packableEx.unmarshal(buffer)*/
+        val buffer = data?.let { ByteBuf(it) }
+        packableEx.unmarshal(buffer)
     }
 
     fun getTimeAgo1(time: Long): String? {
@@ -47,11 +46,11 @@ class Utils {
             val dateFormat = SimpleDateFormat("MM-dd-yy hh:mma")
             val objDate = dateFormat.parse(strDate)
             val p = PrettyTime()
-            println("pretty time " + objDate + " " + p.format(objDate))
+            //            System.out.println("pretty time " + objDate + " " + p.format(objDate));
             val timeAgo = p.format(objDate)
             timeAgo.replace("moments", "a moment")
         } catch (e: ParseException) {
-            Log.e(TAG, "Exception:", e.cause)
+            //            Log.e(TAG, "Exception:", e.getCause());
             timestampToDate(time)
         }
     }
@@ -90,8 +89,8 @@ class Utils {
                 convTime = day.toString() + " day" + (if (day > 1) "s " else " ") + suffix
             }
         } catch (e: ParseException) {
-            Log.e(TAG, "Exception:", e.cause)
-            Log.e("ConvTimeE", e.message!!)
+//            Log.e(TAG, "Exception:", e.getCause());
+//            Log.e("ConvTimeE", e.getMessage());
         }
         return convTime
     }
@@ -104,14 +103,22 @@ class Utils {
         return date
     }
 
-   /* fun base64Encode(data: ByteArray?): String? {
-       // val encodedBytes: ByteArray = Base64.encodeBase64(data)
-       // return String(encodedBytes)
+    fun timestampToDateYYYY(timeStamp: Long): String? {
+        val cal = Calendar.getInstance(Locale.ENGLISH)
+        cal.timeInMillis = timeStamp
+        var date = DateFormat.format("MM-dd-yyyy hh:mma", cal).toString()
+        date = date.replace("AM", "am").replace("PM", "pm")
+        return date
+    }
+
+    fun base64Encode(data: ByteArray?): String? {
+        val encodedBytes: ByteArray = Base64().encodeBase64(data)
+        return String(encodedBytes)
     }
 
     fun base64Decode(data: String): ByteArray? {
-       // return Base64.decodeBase64(data.toByteArray())
-    }*/
+        return Base64().decodeBase64(data.toByteArray())
+    }
 
     fun crc32(data: String): Int {
         // get bytes from string
@@ -135,14 +142,13 @@ class Utils {
 
     fun isUUID(uuid: String): Boolean {
         return if (uuid.length != 32) {
-            false
-        } else uuid.matches("\\p{XDigit}+".toRegex())
+            val b = false
+            b
+        } else uuid.matches("\\p{XDigit}+")
+
     }
-    fun timestampToDateYYYY(timeStamp: Long): String? {
-        val cal = Calendar.getInstance(Locale.ENGLISH)
-        cal.timeInMillis = timeStamp
-        var date = DateFormat.format("MM-dd-yyyy hh:mma", cal).toString()
-        date = date.replace("AM", "am").replace("PM", "pm")
-        return date
+
+    private fun String.matches(regex: String): Boolean {
+
     }
 }

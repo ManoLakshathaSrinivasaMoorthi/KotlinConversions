@@ -4,10 +4,10 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.*
 
-class ByteBuf() {
+class ByteBuf(rawContent: ByteArray) {
     var buffer = ByteBuffer.allocate(1024).order(ByteOrder.LITTLE_ENDIAN)
 
-
+    fun ByteBuf() {}
 
     fun ByteBuf(bytes: ByteArray?) {
         buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)

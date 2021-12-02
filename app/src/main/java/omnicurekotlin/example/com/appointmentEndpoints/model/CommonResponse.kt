@@ -6,12 +6,7 @@ class CommonResponse {
 
     var activeList: List<Patient>? = null
         private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
+
 
     var dischargedCount: Int? = null
         private set
@@ -22,7 +17,7 @@ class CommonResponse {
      * The value may be `null`.
      */
 
-    var dischargedList: List<Patient>? = null
+    private var dischargedList: List<Patient>? = null
         private set
     /**
      * @return value or `null` for none

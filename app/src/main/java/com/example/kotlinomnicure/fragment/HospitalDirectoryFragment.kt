@@ -14,7 +14,7 @@ import com.example.dailytasksamplepoc.databinding.ActivityRemoteProviderDirector
 import com.example.dailytasksamplepoc.databinding.FragmentHospitalDirectoryBinding
 import com.example.kotlinomnicure.activity.RemoteProviderDirectoryActivity
 import com.example.kotlinomnicure.adapter.HospitalDirectoryAdapter
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
