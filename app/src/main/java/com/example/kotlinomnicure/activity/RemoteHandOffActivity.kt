@@ -22,7 +22,7 @@ import com.example.kotlinomnicure.utils.CustomSnackBar
 import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
 import java.util.ArrayList
 
-class RemoteHandOffActivity {
+class RemoteHandOffActivity :App{
     // Variables
     private var patientID: String? = null
     private var patientName: String? = null
