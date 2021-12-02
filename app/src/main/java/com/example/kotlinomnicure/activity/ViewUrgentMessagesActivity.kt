@@ -300,7 +300,7 @@ class ViewUrgentMessagesActivity : BaseActivity() {
         return isTypeIncluded && consultMessage?.isUrgent() == true
     }
 
-    protected fun addBackButton() {
+    protected override fun addBackButton() {
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)
