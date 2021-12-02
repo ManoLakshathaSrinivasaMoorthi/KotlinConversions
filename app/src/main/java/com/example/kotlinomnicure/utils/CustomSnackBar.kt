@@ -2,7 +2,6 @@ package com.example.kotlinomnicure.utils
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.util.Log
@@ -13,9 +12,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.biometric.BiometricPrompt
+import androidx.fragment.app.FragmentActivity
 import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.activity.HomeActivity
 
 class CustomSnackBar {
     private lateinit var patientStatus: String
@@ -290,7 +288,7 @@ class CustomSnackBar {
          */
         fun make(
             view: View?,
-            activity: Activity,
+            activity: FragmentActivity?.() -> Unit,
             snackBarType: Int,
             message: String?,
             position: Int,

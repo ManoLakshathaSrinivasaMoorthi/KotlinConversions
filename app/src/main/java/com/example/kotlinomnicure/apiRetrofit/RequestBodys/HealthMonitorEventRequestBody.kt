@@ -16,7 +16,7 @@ class HealthMonitorEventRequestBody {
     @SerializedName("providerId")
     private var providerId: String? = null
 
-    fun HealthMonitorEventRequestBody(screenName: String?, token: String?, providerId: String?) {
+    constructor(screenName: String?, token: String?, providerId: String?) {
         this.screenName = screenName
         this.token = token
         this.providerId = providerId

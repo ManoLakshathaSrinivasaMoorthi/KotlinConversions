@@ -5,14 +5,16 @@ import android.app.*
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.kotlinomnicure.R
 
-class NotificationHelper(activity: Activity?, base: Context?, ): ContextWrapper(base) {
+class NotificationHelper: ContextWrapper {
     private var notificationManager: NotificationManager? = null
     private val PRIMARY_CHANNEL = "com.mvp.omnicure.ANDROID"
     private var smallIcon = 0
@@ -20,16 +22,24 @@ class NotificationHelper(activity: Activity?, base: Context?, ): ContextWrapper(
     private var soundUri: Uri? = null
     private var isAutoCancel = false
 
+    constructor(context: Context) :super(context){
 
+        notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        smallIcon = R.drawable.ic_notification
+        largeIcon =
+            BitmapFactory.decodeResource(context.resources, R.drawable.ic_notification_color)
+        soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        isAutoCancel = true
+    }
 
     private fun getNotificationIcon(): Int {
         val useWhiteIcon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-        return if (useWhiteIcon) R.mipmap.ic_launcher else R.mipmap.ic_launcher
+        //returning the same icons
+//        return useWhiteIcon ? R.mipmap.ic_launcher : R.mipmap.ic_launcher;
+        return R.mipmap.ic_launcher
     }
 
-    /**
-     * Registers notification channels, which can be used later by individual notifications.
-     */
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     fun registerNotificationChannel() {
         @SuppressLint("WrongConstant") val chan1 = NotificationChannel(
@@ -56,19 +66,8 @@ class NotificationHelper(activity: Activity?, base: Context?, ): ContextWrapper(
         return notificationManager
     }
 
-    /**
-     * Get Notification builder for below oreo version
-     *
-     * @param title         - title
-     * @param message       - message
-     * @param pendingIntent - pending intent
-     * @return - notification builder object for below orer version
-     */
-    fun getNotification(
-        title: String?,
-        message: String?,
-        pendingIntent: PendingIntent?
-    ): NotificationCompat.Builder {
+
+    private fun getNotification(title: String?, message: String?, pendingIntent: PendingIntent?): NotificationCompat.Builder {
         return NotificationCompat.Builder(this, PRIMARY_CHANNEL)
             .setSmallIcon(smallIcon)
             .setLargeIcon(largeIcon)
@@ -81,14 +80,7 @@ class NotificationHelper(activity: Activity?, base: Context?, ): ContextWrapper(
             .setContentIntent(pendingIntent)
     }
 
-    /**
-     * To send notification
-     *
-     * @param pendingIntent - pending intent
-     * @param title         - title of notificaiton
-     * @param message       - message
-     * @param id            - id of the notification
-     */
+
     fun sendNotification(pendingIntent: PendingIntent?, title: String?, message: String?, id: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannel()
@@ -110,12 +102,7 @@ class NotificationHelper(activity: Activity?, base: Context?, ): ContextWrapper(
         this.largeIcon = largeIcon
     }
 
-    /**
-     * Send a notification.
-     *
-     * @param id           The ID of the notification
-     * @param notification The notification object
-     */
+
     private fun notfiy(id: Int, notification: NotificationCompat.Builder) {
         getManager()!!.notify(id, notification.build())
     }
@@ -129,5 +116,4 @@ class NotificationHelper(activity: Activity?, base: Context?, ): ContextWrapper(
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancelAll()
     }
-
 }
