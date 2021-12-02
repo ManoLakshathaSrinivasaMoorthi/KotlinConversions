@@ -36,6 +36,8 @@ class RemoteCompleteActivity : BaseActivity(){
     private var viewModel: RemoteHandOffViewModel? = null
     private var strScreenCensus: String? = ""
     var alertDialog: AlertDialog? = null
+    private var patientID: String? = null
+    private  var patientName:kotlin.String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,46 +157,50 @@ class RemoteCompleteActivity : BaseActivity(){
             ""
         )
         // DischargePatient API call
-        PatientDetailViewModel().dischargePatient(providerID, token, patientID!!.toLong(), notes)
-            .observe(this) { commonResponse ->
-                dismissProgressBar()
-                println("response for discharge $commonResponse")
-                if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                    val providerName: String? = PrefUtility().getStringInPref(
-                        this,
-                        Constants.SharedPrefConstants.NAME,
-                        ""
-                    )
-                    val role: String? = PrefUtility().getStringInPref(
-                        this,
-                        Constants.SharedPrefConstants.R_PROVIDER_TYPE,
-                        ""
-                    )
-                    FirebaseDatabase.getInstance().reference.child("providers")
-                        .child(providerID.toString()).child("active").child(patientID.toString())
-                        .child("completed_by").setValue("$providerName, $role")
-                    startActivity(
-                        Intent(this, HomeActivity::class.java)
-                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            .putExtra(Constants.IntentKeyConstants.TARGET_PAGE, "completed")
-                    )
-                    finish()
-                } else {
-                    binding?.btnComplete?.setEnabled(true)
-                    val errMsg: String? = ErrorMessages().getErrorMessage(
-                        this,
-                        commonResponse.getErrorMessage(),
-                        Constants.API.register
-                    )
+        if (providerID != null) {
+            if (token != null) {
+                PatientDetailViewModel().dischargePatient(providerID, token, patientID!!.toLong(), notes)
+                    ?.observe(this) { commonResponse ->
+                        dismissProgressBar()
+                        println("response for discharge $commonResponse")
+                        if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
+                            val providerName: String? = PrefUtility().getStringInPref(
+                                this,
+                                Constants.SharedPrefConstants.NAME,
+                                ""
+                            )
+                            val role: String? = PrefUtility().getStringInPref(
+                                this,
+                                Constants.SharedPrefConstants.R_PROVIDER_TYPE,
+                                ""
+                            )
+                            FirebaseDatabase.getInstance().reference.child("providers")
+                                .child(providerID.toString()).child("active").child(patientID.toString())
+                                .child("completed_by").setValue("$providerName, $role")
+                            startActivity(
+                                Intent(this, HomeActivity::class.java)
+                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    .putExtra(Constants.IntentKeyConstants.TARGET_PAGE, "completed")
+                            )
+                            finish()
+                        } else {
+                            binding?.btnComplete?.setEnabled(true)
+                            val errMsg: String? = ErrorMessages().getErrorMessage(
+                                this,
+                                commonResponse?.getErrorMessage(),
+                                Constants.API.register
+                            )
 
-                    if (errMsg != null) {
-                        CustomSnackBar.make(
-                            binding?.idContainerLayout, this,
-                            CustomSnackBar.WARNING, errMsg, CustomSnackBar.TOP, 3000, 0
-                        )?.show()
+                            if (errMsg != null) {
+                                CustomSnackBar.make(
+                                    binding?.idContainerLayout, this,
+                                    CustomSnackBar.WARNING, errMsg, CustomSnackBar.TOP, 3000, 0
+                                )?.show()
+                            }
+                        }
                     }
-                }
             }
+        }
     }
 
     private class ValidationTextWatcher(private val view: EditText) : TextWatcher {

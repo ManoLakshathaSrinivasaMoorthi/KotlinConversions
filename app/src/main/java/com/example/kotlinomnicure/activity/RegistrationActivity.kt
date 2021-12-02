@@ -2,6 +2,7 @@ package com.example.kotlinomnicure.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
@@ -44,6 +45,7 @@ class RegistrationActivity : BaseActivity() {
     private var viewModel: RegistrationViewModel? = null
     private var providerType: String? = null
     private var remoteProvideId: String? = null
+    private var context: Context =RegistrationActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,8 +169,8 @@ class RegistrationActivity : BaseActivity() {
     }
 
     private fun setLocalCareProviderSpinner() {
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(
                 binding?.idContainerLayout, this, CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0
@@ -194,7 +196,7 @@ class RegistrationActivity : BaseActivity() {
                 spinnerText.maxLines = 1
                 if (position != 0) {
                     UtilityMethods().setTextViewColor(RegistrationActivity(), spinnerText, R.color.white)
-                    UtilityMethods().setDrawableBackground(this, binding?.idLcpProviderTypeSpinner!!, R.drawable.spinner_drawable_selected)
+                    UtilityMethods().setDrawableBackground(context, binding?.idLcpProviderTypeSpinner!!, R.drawable.spinner_drawable_selected)
                 } else {
                     UtilityMethods().setTextViewColor(
                         RegistrationActivity(),
@@ -202,7 +204,7 @@ class RegistrationActivity : BaseActivity() {
                         R.color.gray_500
                     )
                     UtilityMethods().setDrawableBackground(
-                        this,
+                        context,
                         binding?.idLcpProviderTypeSpinner!!, R.drawable.spinner_drawable
                     )
                 }
@@ -218,8 +220,8 @@ class RegistrationActivity : BaseActivity() {
     }
 
     private fun setHospitalsSpinner() {
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.idContainerLayout, Snackbar.LENGTH_LONG);
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(
                 binding?.idContainerLayout, this, CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0
@@ -245,7 +247,7 @@ class RegistrationActivity : BaseActivity() {
                     this,
                     response?.getErrorMessage(), Constants.API.getHospital
                 )
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+
                 errMsg?.let {
                     CustomSnackBar.make(
                         binding?.idContainerLayout,
@@ -284,7 +286,7 @@ class RegistrationActivity : BaseActivity() {
                             R.color.white
                         )
                         UtilityMethods().setDrawableBackground(
-                            this, binding?.idSpinnerHospital!!,
+                            context, binding?.idSpinnerHospital!!,
                             R.drawable.spinner_drawable_selected
                         )
                     } else {
@@ -292,7 +294,7 @@ class RegistrationActivity : BaseActivity() {
                             RegistrationActivity(), spinnerText, R.color.gray_500
                         )
                         UtilityMethods().setDrawableBackground(
-                            this,
+                            context,
                             binding!!.idSpinnerHospital, R.drawable.spinner_drawable
                         )
                     }
@@ -306,7 +308,7 @@ class RegistrationActivity : BaseActivity() {
     }
 
     private fun setRemoteProviderSpinner() {
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods().isInternetConnected(this)!!) {
             CustomSnackBar.make(
                 binding?.idContainerLayout,
                 this,
@@ -335,9 +337,8 @@ class RegistrationActivity : BaseActivity() {
             } else {
                 val errMsg: String? = ErrorMessages().getErrorMessage(
                     this,
-                    java.lang.String.valueOf(response?.getErrorId()), Constants.API.getHospital
-                )
-                //                UtilityMethods.showErrorSnackBar(binding.idContainerLayout, errMsg, Snackbar.LENGTH_LONG);
+                    java.lang.String.valueOf(response?.getErrorId()), Constants.API.getHospital)
+
                 errMsg?.let {
                     CustomSnackBar.make(
                         binding?.idContainerLayout,
@@ -371,7 +372,7 @@ class RegistrationActivity : BaseActivity() {
                             R.color.white
                         )
                         UtilityMethods().setDrawableBackground(
-                            this, binding?.idRemoteProviderSpinner!!,
+                            context, binding?.idRemoteProviderSpinner!!,
                             R.drawable.spinner_drawable_selected
                         )
                     } else {
@@ -381,7 +382,7 @@ class RegistrationActivity : BaseActivity() {
                             R.color.gray_500
                         )
                         UtilityMethods().setDrawableBackground(
-                            this, binding!!.idRemoteProviderSpinner,
+                            context, binding!!.idRemoteProviderSpinner,
                             R.drawable.spinner_drawable
                         )
                     }
@@ -442,7 +443,7 @@ class RegistrationActivity : BaseActivity() {
             provider.setRemoteProviderId(java.lang.Long.valueOf(remoteProvideId))
 
             provider.setPassword(binding?.idPassword?.text.toString().trim())
-            if (!UtilityMethods().isInternetConnected(this)) {
+            if (!UtilityMethods().isInternetConnected(this)!!) {
 
                 CustomSnackBar.make(
                     binding?.idContainerLayout, this,

@@ -155,11 +155,39 @@ class ValidationUtil {
             return context.getString(R.string.confirm_passowod_invalid);
         }*/return error
     }
+    fun checkEmail(binding: ActivityForgotPasswordBinding): String? {
+        val context = binding.root.context
+        if (binding.edtEmailAddress == null || TextUtils.isEmpty(binding.edtEmailAddress.text.toString()
+                .trim())
+        ) {
+            return context.getString(R.string.invalid_emailid_try_again)
+        } else if (!UtilityMethods().isValidEmail(binding.edtEmailAddress.text.toString())) {
+            return context.getString(R.string.invalid_emailid_try_again)
+        }
+        return null
+    }
+
+    fun checkPhoneNo(binding: ActivityForgotPasswordBinding): String? {
+        val context = binding.root.context
+        if (binding.edtPhoneNumber == null || TextUtils.isEmpty(binding.edtPhoneNumber.text.toString()
+                .trim())
+        ) {
+            return context.getString(R.string.invalid_phone_no_try_again)
+        } else if (binding.edtPhoneNumber.text.toString().startsWith("0")) {
+            return context.getString(R.string.invalid_phone_no_try_again)
+        } else if (binding.edtPhoneNumber.text.toString().replace("-", "")
+                .matches(Constants.PHONE_PATTERN)
+            && binding.edtPhoneNumber.text.toString().replace("-", "").length < 10
+        ) {
+            return context.getString(R.string.invalid_phone_no_try_again)
+        }
+        return null
+    }
 
     fun isPassSpecialCharValid(str: String?): Boolean {
         val specialCharPattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE)
         val UpperCasePattern = Pattern.compile("[A-Z ]")
-        val lowerCasePattern = Pattern.compile("[a-z ]")
+        Pattern.compile("[a-z ]")
         val digitCasePattern = Pattern.compile("[0-9 ]")
         return if (specialCharPattern.matcher(str).find()) {
             true
@@ -206,7 +234,8 @@ class ValidationUtil {
 
     fun checkPassword(
         str: String, binding: ActivityChangePasswordBinding?,
-        strFirstName: String, strLastName: String, strEmail: String): String? {
+        strFirstName: String, strLastName: String, strEmail: String,
+    ): String? {
         var str = str
         var strFirstName = strFirstName
         var strLastName = strLastName
@@ -561,8 +590,10 @@ class ValidationUtil {
     //    public static void showPasswordValidationDialog(Context context, String str) {
     //        showPasswordValidationDialog(context, str, null);
     //    }
-    fun showPasswordValidationDialog(context: Context?, str: String, strFirstName: String,
-                                     strLastName: String, strEmail: String) {
+    fun showPasswordValidationDialog(
+        context: Context?, str: String, strFirstName: String,
+        strLastName: String, strEmail: String,
+    ) {
         var str = str
         var strFirstName = strFirstName
         var strLastName = strLastName
@@ -703,7 +734,7 @@ class ValidationUtil {
     }
     fun checkPasswordValidation(
         str: String, binding: ActivityResetPasswordBinding,
-        strFirstName: String, strLastName: String, strEmail: String
+        strFirstName: String, strLastName: String, strEmail: String,
     ): String? {
         var str = str
         var strFirstName = strFirstName
