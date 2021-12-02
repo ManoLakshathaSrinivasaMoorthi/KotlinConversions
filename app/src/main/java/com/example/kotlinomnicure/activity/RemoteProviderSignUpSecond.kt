@@ -152,7 +152,7 @@ class RemoteProviderSignUpSecond : BaseActivity() {
         Log.d("RemotePROVIDER", Gson().toJson(provider))
         showProgressBar(PBMessageHelper().getMessage(this, Constants.API.register.toString()))
 
-        viewModel!!.registerProvider(provider).observe(this) { commonResponse: CommonResponse? ->
+        viewModel!!.registerProvider(provider)?.observe(this) { commonResponse: CommonResponse? ->
             dismissProgressBar()
             if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
                 PrefUtility().saveStringInPref(
@@ -242,7 +242,7 @@ class RemoteProviderSignUpSecond : BaseActivity() {
         val remoteProvider = ArrayList<String?>()
         val providerMap = LinkedHashMap<String?, String>()
         remoteProvider.add(getString(R.string.select_provider_types))
-        viewModel!!.remoteProviderList.observe(this) { response: RemoteProviderListResponse? ->
+        viewModel!!.getRemoteProviderList()?.observe(this) { response: RemoteProviderListResponse? ->
             dismissProgressBar()
             Log.d(TAG, "remote provider data$response")
             if (response != null && response.status != null && response.status!!) {

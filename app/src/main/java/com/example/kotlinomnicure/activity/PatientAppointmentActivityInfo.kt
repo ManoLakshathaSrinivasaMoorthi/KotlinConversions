@@ -9,7 +9,7 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.AppointmentInfoViewModel
+import com.example.kotlinomnicure.viewmodel.AppointmentInfoViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityPatientAppointmentInfoBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper

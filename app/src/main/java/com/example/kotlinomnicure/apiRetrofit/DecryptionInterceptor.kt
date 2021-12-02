@@ -65,7 +65,10 @@ class DecryptionInterceptor(appContext: Context?) : Interceptor {
                 )
                 Log.d(TAG, " encrypted " + commonResponse.getEncryptedValue())
                 Log.d(TAG, " decrypted $decrypted")
-                newResponse.body(RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), decrypted))
+                newResponse.body(decrypted?.let {
+                    ResponseBody.create("application/json; charset=utf-8".toMediaTypeOrNull(),
+                        it)
+                })
                 return newResponse.build()
             }
         }

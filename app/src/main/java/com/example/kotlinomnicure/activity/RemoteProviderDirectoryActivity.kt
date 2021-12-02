@@ -886,24 +886,7 @@ class RemoteProviderDirectoryActivity : BaseActivity(),
         }
 
 
-        class TAB {
-            Remote, Bedside
-        }
 
-        interface FragmentSearchListener {
-            fun onSearchFilter(search: String?, filter: String?)
-            fun onTabSelected()
-        }
-
-        interface HospitalSearchListener {
-            fun onSearchFilter(search: String?, filter: String?)
-        }
-
-        interface BedsideSearchListener {
-            fun sendHospitalId(hospitalId: String?)
-            fun onSearchFilter(search: String?, filter: String?)
-            fun onTabSelected()
-        }
 
         class ViewPagerAdapter(fm: FragmentManager?) :
             FragmentPagerAdapter(fm!!) {
@@ -934,5 +917,23 @@ class RemoteProviderDirectoryActivity : BaseActivity(),
             }
 
         }
+
+    class TAB {
+        Remote, Bedside
+    }
+
+    interface FragmentSearchListener {
+        fun onSearchFilter(search: String?, filter: String?)
+        fun onTabSelected()
+    }
+
+    interface HospitalSearchListener {
+        fun onSearchFilter(search: String?, filter: String?)
+    }
+
+    interface BedsideSearchListener {
+        fun sendHospitalId(hospitalId: String?)
+        fun onSearchFilter(search: String?, filter: String?)
+        fun onTabSelected()
     }
 

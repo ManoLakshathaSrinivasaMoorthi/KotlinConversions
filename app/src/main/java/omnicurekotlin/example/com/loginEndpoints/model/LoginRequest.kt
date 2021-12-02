@@ -77,7 +77,7 @@ class LoginRequest : Serializable {
     //com.google.api.client.util.Key
     var overrride: Boolean? = null
 
-    //com.google.api.client.util.Key
+
     var loginStatus: Boolean? = null
 
     /**
@@ -118,7 +118,17 @@ class LoginRequest : Serializable {
     fun setPhone(phone: String?): LoginRequest {
         this.phone = phone
         return this
-    } //  @Override
+    }
+    @JvmName("getToken1")
+    fun getToken(): String? {
+        return token
+    }
+
+    @JvmName("setToken1")
+    fun setToken(token: String?) {
+        this.token = token
+    }
+//  @Override
     //  public LoginRequest set(String fieldName, Object value) {
     //    return (LoginRequest) super.set(fieldName, value);
     //  }

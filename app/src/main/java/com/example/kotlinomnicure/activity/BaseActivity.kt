@@ -28,6 +28,7 @@ import com.example.kotlinomnicure.interfaces.OnInternetConnChangeListener
 import com.example.kotlinomnicure.interfaces.OnNetConnectedListener
 import com.example.kotlinomnicure.model.ConsultProvider
 import com.example.kotlinomnicure.utils.*
+import com.example.kotlinomnicure.viewmodel.SplashViewModel
 import omnicurekotlin.example.com.providerEndpoints.model.Members
 import java.io.File
 import java.io.IOException
@@ -62,7 +63,25 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
         }
     }
 
-
+    open fun getFirebaseIdToken(encKey: String?) {
+        val refreshToken: String? = PrefUtility().getStringInPref(this,
+            Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
+            "")
+        SplashViewModel().renewToken(refreshToken).observe(this) { commonResponse ->
+//            Log.d(TAG, "Redirect Response: " + new Gson().toJson(commonResponse));
+            if (commonResponse?.getIdToken() != null) {
+//                System.out.println("refreshedIDToken "+AESUtils.decryptData(commonResponse.getIdToken(),encKey ));
+                PrefUtility().saveStringInPref(this,
+                    Constants.SharedPrefConstants.FIREBASE_IDTOKEN,
+                    encKey?.let { AESUtils().decryptData(commonResponse.getIdToken()!!, it) })
+            }
+            if (commonResponse?.getRefreshToken() != null) {
+                PrefUtility().saveStringInPref(this,
+                    Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
+                    commonResponse.getRefreshToken())
+            }
+        }
+    }
     fun deleteExternalCache(context: Context) {
         try {
             val cache = context.externalCacheDir
@@ -262,7 +281,7 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
     fun showTeamMembersDialog(
         context: Context?,
         members: List<Members?>?,
-        consultProvider: ConsultProvider
+        consultProvider: ConsultProvider,
     ) {
         val dialog = Dialog(context!!, R.style.Theme_Dialog)
         val inflater = this.layoutInflater

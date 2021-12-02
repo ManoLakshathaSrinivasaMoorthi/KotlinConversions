@@ -24,7 +24,7 @@ class CensusHospitalListViewModel : ViewModel() {
 
     fun getHospitalList(id: Long): LiveData<HospitalListResponse?>? {
         hospitalListObservable = MutableLiveData()
-        //        getHospitals(id);
+
         getHospitalsRetro(id)
         return hospitalListObservable
     }

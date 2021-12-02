@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.activity
+package com.example.kotlinomnicure.activity
 
 import android.content.Intent
 import android.os.Build
@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.gson.Gson
 
-import com.mvp.omnicure.activity.*
+
 import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.userEndpoints.model.RedirectRequest
 import omnicurekotlin.example.com.userEndpoints.model.User
@@ -231,7 +231,7 @@ class SplashActivity : BaseActivity(){
     fun onConnected() {
         isConnectedCalled = true
         Log.i(TAG, "onConnected: $strEmail $strPassword")
-        mHandler.postDelayed(Runnable {
+        mHandler?.postDelayed(Runnable {
             if (!TextUtils.isEmpty(strEmail) && !TextUtils.isEmpty(strPassword)) {
                 Log.e(TAG, "run:onConnected RedirectPageNavigation")
                 RedirectPageNavigation()
@@ -246,19 +246,18 @@ class SplashActivity : BaseActivity(){
         if (!UtilityMethods().isInternetConnected(this)!!) {
             return
         }
-        viewModel!!.versionInfo.observe(this, { versionInfoResponse: VersionInfoResponse? ->
+        viewModel?.getVersionInfo()?.observe(this) { versionInfoResponse: VersionInfoResponse? ->
             Log.i(TAG, "getversioninfo response " + Gson().toJson(versionInfoResponse))
-            if (versionInfoResponse != null && versionInfoResponse.status != null && versionInfoResponse.status) {
+            if (versionInfoResponse != null && versionInfoResponse.status != null && versionInfoResponse.status!!) {
                 onSuccessVersionInfoAPI(versionInfoResponse)
             } else {
                 val errMsg = ErrorMessages().getErrorMessage(
                     this,
                     versionInfoResponse!!.errorMessage,
-                    Constants.API.getVersionInfo
-                )
+                    Constants.API.getVersionInfo)
                 Log.i(TAG, "getAppConfig Error : $errMsg")
             }
-        })
+        }
     }
 
     private fun onSuccessVersionInfoAPI(response: VersionInfoResponse) {
@@ -308,7 +307,7 @@ class SplashActivity : BaseActivity(){
     }
 
     fun setView() {
-        TODO("Not yet implemented")
+
     }
 
 
@@ -332,7 +331,7 @@ class SplashActivity : BaseActivity(){
         val redirectRequest = RedirectRequest()
         redirectRequest.email = strEmail
         redirectRequest.password = strPassword
-        viewModel!!.redirectPage(redirectRequest).observe(this) { commonResponse: CommonResponse? ->
+        viewModel!!.redirectPage(redirectRequest)?.observe(this) { commonResponse: CommonResponse? ->
             Log.d(TAG, "Redirect Request: " + Gson().toJson(redirectRequest))
             Log.d(TAG, "Redirect Response: " + Gson().toJson(commonResponse))
             dismissProgressBar()
@@ -392,7 +391,7 @@ class SplashActivity : BaseActivity(){
             intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.id)
             intent.putExtra(Constants.IntentKeyConstants.MOBILE_NO, provider.phone)
             intent.putExtra(Constants.IntentKeyConstants.COUNTRY_CODE, provider.countryCode)
-            Intent.putExtra(Constants.IntentKeyConstants.FROM_PAGE, "splash")
+            intent.putExtra(Constants.IntentKeyConstants.FROM_PAGE, "splash")
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         } else if (errorId == 102) {

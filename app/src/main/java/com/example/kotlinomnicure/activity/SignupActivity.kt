@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.activity
+package com.example.kotlinomnicure.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,13 +6,13 @@ import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivitySignupBinding
+import com.example.kotlinomnicure.R
+
 import com.example.kotlinomnicure.activity.BaseActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.activity.LoginActivity
+
 import com.example.kotlinomnicure.activity.PatientAppointmentActivity
-import com.example.dailytasksamplepoc.kotlinomnicure.utils.Buildconfic
-import com.example.kotlinomnicure.activity.ActivityLocalCareProviderSignUpFirst
+import com.example.kotlinomnicure.databinding.ActivitySignupBinding
+
 import com.example.kotlinomnicure.utils.Constants
 
 

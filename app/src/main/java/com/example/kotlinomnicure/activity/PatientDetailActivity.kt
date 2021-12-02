@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
+
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
@@ -20,6 +20,7 @@ import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityPatientDetailBinding
+import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -64,7 +65,7 @@ class PatientDetailActivity : BaseActivity() {
             } else {
                 val errMsg: String? = ErrorMessages().getErrorMessage(
                     this,
-                    java.lang.String.valueOf(response.getErrorId()),
+                    response?.let { java.lang.String.valueOf(it.getErrorId()) },
                     Constants.API.getHospital
                 )
 

@@ -32,6 +32,12 @@
         android:theme="@style/Theme.KotlinOmniCure"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.ActivityLocalCareProviderSignUpSecond"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ActivityLocalCareProviderSignUpFirst"
+            android:exported="false" />
+        <activity
             android:name=".activity.ExpirePasswordActivity"
             android:exported="false" />
         <activity
@@ -70,11 +76,9 @@
         <activity android:name=".activity.MyDashboardActivity" />
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.RegistrationSuccessActivity" />
-        <activity android:name=".activity.ActivityLocalCareProviderSignUpSecond" />
         <activity android:name=".activity.OTPActivity" />
         <activity android:name=".activity.EmailOTPActivity" />
         <activity android:name=".activity.TermsAndConditionsActivity" />
-        <activity android:name=".activity.ActivityLocalCareProviderSignUpFirst" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.PatientAppointmentActivity" />
         <activity android:name=".activity.ActivityConsultChart" />

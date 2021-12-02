@@ -6,20 +6,14 @@ class VersionInfoResponse {
   var appConfig: Int? = null
 
   private var errorId: Int? = null
-  private var errorMessage: String? = null
+  var errorMessage: String? = null
   private var id: Long? = null
-  private var status: Boolean? = null
+  var status: Boolean? = null
+  val aesKey: String? = null
 
-
- /* fun getAppConfig(): JsonMap? {
-    return appConfig
+  fun getAesKey(): String? {
+    return aesKey
   }
-
-
-  fun setAppConfig(appConfig: JsonMap?): VersionInfoResponse? {
-    this.appConfig = appConfig
-    return this
-  }*/
 
   fun getErrorId(): Int? {
     return errorId
@@ -50,6 +44,7 @@ class VersionInfoResponse {
     return this
   }
 
+  @JvmName("getStatus1")
   fun getStatus(): Boolean? {
     return status
   }

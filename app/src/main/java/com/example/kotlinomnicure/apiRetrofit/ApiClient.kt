@@ -40,7 +40,7 @@ class ApiClient {
         return retrofit!!.create(ApiEndpoints::class.java)
     }
 
-    fun getApiUserEndpoints(encrypt: Boolean, decrypt: Boolean): ApiEndpoints? {
+    fun getApiUserEndpoints(encrypt: Boolean, decrypt: Boolean): UserEndpoints? {
         getLoggingInterceptor()
         val builder: OkHttpClient.Builder = getOkHttpBuilder()
         loggingInterceptor?.let { builder.addNetworkInterceptor(it) }
@@ -52,7 +52,7 @@ class ApiClient {
         }
         addInterceptors(builder)
         getRetrofit(builder)
-        return retrofit!!.create(ApiEndpoints::class.java)
+        return retrofit!!.create(UserEndpoints::class.java)
     }
 
     fun getApiPatientEndpoints(encrypt: Boolean, decrypt: Boolean): PatientEndpoints? {

@@ -40,10 +40,10 @@ class OTPActivity : BaseActivity() {
         val mobile = intent.getStringExtra(Constants.IntentKeyConstants.MOBILE_NO)
         val otpMsg = getString(R.string.otp_msg)
         binding?.idChangeNumberTxt?.text = mobile
-        //        SpannableStringBuilder builder = TextSpanBuilder.getPartialBoldText(otpMsg, otpMsg.length() - mobile.length(), otpMsg.length());
+
         binding?.otpMsg?.text = otpMsg
         val titleStr = getString(R.string.enter_phone_otp)
-        //        builder = TextSpanBuilder.getPartialBoldText(titleStr, 5, titleStr.length());
+
         startResetTimer()
     }
 
@@ -95,7 +95,7 @@ class OTPActivity : BaseActivity() {
             if (id == EditorInfo.IME_ACTION_DONE) {
                 val pin = binding?.pinEntryBorder?.getText().toString()
                 if (pin.length < 4) {
-//                        UtilityMethods.showErrorSnackBar(binding.getRoot(), getString(R.string.invalid_otp), Snackbar.LENGTH_LONG);
+//
                     CustomSnackBar.make(binding?.root, this@OTPActivity, CustomSnackBar.WARNING, getString(R.string.invalid_otp), CustomSnackBar.TOP, 3000, 0)?.show()
                     return@OnEditorActionListener false
                 }
@@ -109,7 +109,7 @@ class OTPActivity : BaseActivity() {
 
     private fun onSubmitOTP(uid: Long, pin: String) {
         if (!UtilityMethods().isInternetConnected(this)!!) {
-//            UtilityMethods.showInternetError(binding.getRoot(), Snackbar.LENGTH_LONG);
+//
             CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)?.show()
             return
         }
@@ -124,8 +124,8 @@ class OTPActivity : BaseActivity() {
                 commonResponse.getUser()?.let { onOTPSuccessVerify(it) }
             } else {
                 val errMsg: String? = ErrorMessages().getErrorMessage(this, commonResponse?.getErrorMessage(), Constants.API.verifyOTP)
-                //                    UtilityMethods.showErrorSnackBar(binding.getRoot(), errMsg, Snackbar.LENGTH_LONG);
-                errMsg?.let { CustomSnackBar.make(binding!!.root, this@OTPActivity, CustomSnackBar.WARNING, it, CustomSnackBar.TOP, 3000, 0) }!!.show()
+
+                errMsg?.let { CustomSnackBar.make(binding!!.root, this, CustomSnackBar.WARNING, it, CustomSnackBar.TOP, 3000, 0) }!!.show()
             }
         })
     }
@@ -133,7 +133,7 @@ class OTPActivity : BaseActivity() {
     private fun onResendOTP() {
         if (!UtilityMethods().isInternetConnected(this)!!) {
 //            UtilityMethods.showInternetError(binding.getRoot(), Snackbar.LENGTH_LONG);
-            CustomSnackBar.make(binding?.root, this@OTPActivity, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)!!.show()
+            CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0)!!.show()
             return
         }
         showProgressBar(getString(R.string.sending_otp_msg))
@@ -150,7 +150,7 @@ class OTPActivity : BaseActivity() {
                     startResetTimer()
                 } else {
                     val errMsg: String? = ErrorMessages().getErrorMessage(this, commonResponse!!.getErrorMessage(), Constants.API.registrationPhoneOTP)
-                    //                UtilityMethods.showErrorSnackBar(binding.getRoot(), errMsg, Snackbar.LENGTH_LONG);
+
                     errMsg?.let { CustomSnackBar.make(binding!!.root, this, CustomSnackBar.WARNING, it, CustomSnackBar.TOP, 3000, 0) }!!.show()
                 }
             })
