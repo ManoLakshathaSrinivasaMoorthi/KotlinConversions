@@ -1,8 +1,9 @@
 package com.example.kotlinomnicure.apiRetrofit
 
 
+import omnicurekotlin.example.com.patientsEndpoints.model.PatientDetail
 import com.example.kotlinomnicure.model.SOSResponse
-import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.CommonPatientIdRequestBody
 import com.google.gson.JsonObject
 
 import com.mvp.omnicure.kotlinactivity.requestbodys.InviteProviderRequestBody
@@ -81,11 +82,11 @@ interface PatientEndpoints {
 
 
     @POST("patientEndpoints/v1/sendSOSMessage")
-    fun startSOSAPIs(@Body jsonObject: JsonObject?): Call<SOSResponse?>?
+    fun startSOSAPI(@Body jsonObject: JsonObject?): Call<SOSResponse?>?
 
 
     @POST("patientEndpoints/v1/sendSOSMessage")
-    fun startSOSAPI(@Body bodyValues: HashMap<String, String>): Call<SOSResponse?>?
+    fun startSOSAPI(@Body bodyValues: HashMap<String?, String?>?): Call<SOSResponse?>?
 
 
     @POST("patientEndpoints/v1/dischargePatient")

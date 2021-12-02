@@ -12,6 +12,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import com.example.kotlinomnicure.R
 import java.lang.Exception
 
 class DownloadProgressDialog(context: Context) : Dialog(context) {
@@ -23,12 +24,12 @@ class DownloadProgressDialog(context: Context) : Dialog(context) {
       // super(activity)
         this.activity = activity
         setContentView(R.layout.download_progress)
-        getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val wlmp: WindowManager.LayoutParams? = getWindow()?.getAttributes()
-        val width = (getContext().getResources().getDisplayMetrics().widthPixels * 0.75) as Int
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val wlmp: WindowManager.LayoutParams? = window?.attributes
+        val width = (context.resources.displayMetrics.widthPixels * 0.75).toInt()
         wlmp?.width = width
         wlmp?.gravity = Gravity.CENTER
-        getWindow()?.setAttributes(wlmp)
+        window?.attributes = wlmp
         setTitle(null)
         setCancelable(false)
     }
@@ -39,7 +40,7 @@ class DownloadProgressDialog(context: Context) : Dialog(context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 isDestroyed = activity!!.isDestroyed
             }
-            if (!activity!!.isFinishing && !isDestroyed && !this.isShowing()) {
+            if (!activity!!.isFinishing && !isDestroyed && !this.isShowing) {
                 super.show()
             }
         } catch (e: Exception) {
@@ -48,18 +49,18 @@ class DownloadProgressDialog(context: Context) : Dialog(context) {
     }
 
     fun setText(text: String?) {
-        val textView: TextView = findViewById<TextView>(R.id.id_pb_txt)
+        val textView: TextView = findViewById(R.id.id_pb_txt)
         textView.text = text
     }
 
     @SuppressLint("SetTextI18n")
     fun setProgress(progress: Int) {
-        val percentTxt: TextView = findViewById<TextView>(R.id.id_percent)
+        val percentTxt: TextView = findViewById(R.id.id_percent)
         percentTxt.text = "$progress%"
     }
 
     fun setCancelBtnListener(onClickListener: View.OnClickListener?) {
-        val cancelBtn: Button = findViewById<Button>(R.id.cancel)
+        val cancelBtn: Button = findViewById(R.id.cancel)
         cancelBtn.setOnClickListener(onClickListener)
     }
 }

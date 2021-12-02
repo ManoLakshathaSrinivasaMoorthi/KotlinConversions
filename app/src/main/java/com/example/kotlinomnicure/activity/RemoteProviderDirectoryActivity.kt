@@ -30,12 +30,12 @@ import com.example.kotlinomnicure.fragment.BedsideDirectoryFragment
 import com.example.kotlinomnicure.fragment.HospitalDirectoryFragment
 import com.example.kotlinomnicure.fragment.RemoteDirectoryFragment
 
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.Behavior.DragCallback
 import com.google.gson.Gson
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityRemoteProviderDirectoryBinding
 import com.example.kotlinomnicure.utils.*

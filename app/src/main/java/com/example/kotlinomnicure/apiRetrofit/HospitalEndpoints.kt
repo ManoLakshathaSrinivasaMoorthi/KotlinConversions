@@ -1,6 +1,6 @@
 package com.example.kotlinomnicure.apiRetrofit
 
-import com.example.kotlinomnicure.requestbodys.CommonIdRequestBody
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.CommonIdRequestBody
 import com.google.gson.JsonObject
 import com.mvp.omnicure.kotlinactivity.requestbodys.HospitalIdRequestBody
 import omnicurekotlin.example.com.hospitalEndpoints.model.AddNewPatientWardResponse

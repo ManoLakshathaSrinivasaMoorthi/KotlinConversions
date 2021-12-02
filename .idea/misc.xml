@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/chat_bottom_dialog.xml" value="0.1" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/black_border_drawable_bg.xml" value="0.20512820512820512" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/error_edittext_bg.xml" value="0.20833333333333334" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/ic_back_arrow.xml" value="0.20833333333333334" />

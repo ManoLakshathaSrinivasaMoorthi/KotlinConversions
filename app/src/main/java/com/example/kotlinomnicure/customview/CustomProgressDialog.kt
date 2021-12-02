@@ -4,22 +4,19 @@ import android.app.Activity
 import android.app.Dialog
 import android.view.Gravity
 import android.widget.TextView
+import com.example.kotlinomnicure.R
 
 
+class CustomProgressDialog(context: Activity) : Dialog(context) {
+    private var activity: Activity? = context
 
-class CustomProgressDialog: Dialog{
-    private var activity: Activity? = null
-
-    constructor(context: Activity):super(context) {
-        //super(context, R.style.TransparentProgressDialog);
+    init {
         val wlmp = window!!.attributes
-        activity = context
         wlmp.gravity = Gravity.CENTER
         window!!.attributes = wlmp
         setTitle(null)
         setCancelable(false)
         setContentView(R.layout.custom_progress)
-        //getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
 

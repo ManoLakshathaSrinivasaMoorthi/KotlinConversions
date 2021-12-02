@@ -10,13 +10,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.view.*
 import android.view.View.OnTouchListener
-
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.utils.UtilityMethods
-
 import com.example.kotlinomnicure.activity.ChatActivity
 
 import java.lang.Exception
@@ -28,16 +26,15 @@ class ChatAttachmentPopup(context: Context?) : PopupWindow(context) {
     private var rootView: View? = null
     private var isKeyboardShowing = false
     private var height_ = 0
-    private  var width_:kotlin.Int = 0
+    private  var width_:Int = 0
     private var popupWidth = 0
-    private  var popupHeight:kotlin.Int = 0
+    private  var popupHeight:Int = 0
     private var xOffset = 0
-    private  var yOffset:kotlin.Int = 0
-    private var documentClickListener: View.OnClickListener? =
-        null
-    private  var cameraClickListener:android.view.View.OnClickListener? = null
-    private  var galleryClickListener:android.view.View.OnClickListener? = null
-    private  var videoClickListener:android.view.View.OnClickListener? = null
+    private  var yOffset:Int = 0
+    private var documentClickListener: View.OnClickListener? = null
+    private  var cameraClickListener:View.OnClickListener? = null
+    private  var galleryClickListener:View.OnClickListener? = null
+    private  var videoClickListener:View.OnClickListener? = null
     private var statusBarHeight = 0
     private var keypadHeight = 0
     private var isDismissed = false
@@ -48,16 +45,12 @@ class ChatAttachmentPopup(context: Context?) : PopupWindow(context) {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     fun initConfig() {
-        val layout = activity!!.layoutInflater.inflate(
-            R.layout.chat_bottom_dialog,
-            null,
-            false
-        ) as LinearLayout
+        val layout = activity!!.layoutInflater.inflate(R.layout.chat_bottom_dialog, null, false) as LinearLayout
         isFocusable = false
         setBackgroundDrawable(BitmapDrawable())
         isTouchable = true
         isOutsideTouchable = true
-        val screenWidth = (activity!!.resources.displayMetrics.widthPixels * 0.95).toInt()
+        val screenWidth = (activity?.resources?.displayMetrics?.widthPixels!! * 0.95).toInt()
         if (screenWidth != 0) {
             width = screenWidth
         }
@@ -188,7 +181,7 @@ class ChatAttachmentPopup(context: Context?) : PopupWindow(context) {
             } else {
                 if (!isDismissed && isShowing) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (ChatActivity.isIsKeyboardShowing) {
+                        if (ChatActivity().isIsKeyboardShowing) {
                             val anim = ViewAnimationUtils.createCircularReveal(
                                 contentView, width - 60, keypadHeight, maxRadius, 60f
                             )
@@ -233,8 +226,8 @@ class ChatAttachmentPopup(context: Context?) : PopupWindow(context) {
             navBarHeight = UtilityMethods().getSoftNavBarHeight()
         }
         val margin = 10
-        if (ChatActivity.isIsKeyboardShowing) {
-            var height = ChatActivity.getKeypadHeight() - margin
+        if (ChatActivity().isIsKeyboardShowing) {
+            var height = ChatActivity().getKeypadHeight() - margin
             if (isSoftNavBar) {
                 height = height - navBarHeight
             }

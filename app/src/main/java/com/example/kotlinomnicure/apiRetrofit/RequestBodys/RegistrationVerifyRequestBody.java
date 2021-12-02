@@ -1,4 +1,4 @@
-package com.example.kotlinomnicure.requestbodys;
+package com.example.kotlinomnicure.apiRetrofit.RequestBodys;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

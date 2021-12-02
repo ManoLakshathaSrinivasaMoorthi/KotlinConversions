@@ -11,9 +11,9 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.kotlinomnicure.R
 
-class CustomDialog: Dialog {
+class CustomDialog(context: Context?) : Dialog(context!!) {
     private var positive: Button? = null
-    private  var negative:android.widget.Button? = null
+    private  var negative: Button? = null
     private var titleMsgView: TextView? = null
     private  var msgView:TextView? = null
     private var mTitleId = -1
@@ -23,16 +23,14 @@ class CustomDialog: Dialog {
     private var positiveListener: View.OnClickListener? = null
     private var negativeTextId = -1
     private var negetiveListener: View.OnClickListener? = null
-    var positiveButtonColor = -1
+    private var positiveButtonColor = -1
 
-    constructor(context: Context?):   super(context!!)
-
-    protected override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.custom_dialog)
-        getWindow()?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
-        getWindow()?.setDimAmount(1f)
+        window?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        window?.setDimAmount(1f)
 
 //        WindowManager.LayoutParams lp = getWindow().getAttributes();
 //        lp.dimAmount=0.7f;
@@ -40,37 +38,37 @@ class CustomDialog: Dialog {
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         titleMsgView = findViewById(R.id.id_custom_dialog_title_text)
         msgView = findViewById(R.id.id_custom_dialog_msg_text)
-        val width = (getContext().getResources().getDisplayMetrics().widthPixels * 0.75) as Int
-        msgView!!.getLayoutParams().width = width
+        val width = (context.resources.displayMetrics.widthPixels * 0.75).toInt()
+        msgView!!.layoutParams.width = width
         positive = findViewById(R.id.id_custom_dialog_positive_btn)
         negative = findViewById(R.id.id_custom_dialog_negative_btn)
-        val line: View = findViewById<View>(R.id.id_line)
+        val line: View = findViewById(R.id.id_line)
         if (mTitleId != -1) {
-            titleMsgView!!.setText(mTitleId)
+            titleMsgView?.setText(mTitleId)
         }
         if (title != null) {
-            titleMsgView!!.text = title
+            titleMsgView?.text = title
         }
         if (msg != null) {
-            msgView!!.setText(msg)
+            msgView?.text = msg
         }
         if (positivetextId != -1) {
-            positive!!.setText(positivetextId)
-            positive!!.setOnClickListener(positiveListener)
-            positive!!.visibility = View.VISIBLE
+            positive?.setText(positivetextId)
+            positive?.setOnClickListener(positiveListener)
+            positive?.visibility = View.VISIBLE
         }
         if (negativeTextId != -1) {
-            negative!!.setText(negativeTextId)
-            negative!!.setOnClickListener(negetiveListener)
-            negative!!.setVisibility(View.VISIBLE)
+            negative?.setText(negativeTextId)
+            negative?.setOnClickListener(negetiveListener)
+            negative?.visibility = View.VISIBLE
         }
         if (positivetextId == -1 || negativeTextId == -1) {
             //line.setVisibility(View.GONE);
-            positive!!.setBackgroundResource(R.drawable.signin_selector_btn_bg)
-            negative!!.setBackgroundResource(R.drawable.signin_selector_btn_bg)
+            positive?.setBackgroundResource(R.drawable.signin_selector_btn_bg)
+            negative?.setBackgroundResource(R.drawable.signin_selector_btn_bg)
         }
         if (positiveButtonColor != -1) {
-            positive!!.setTextColor(positiveButtonColor)
+            positive?.setTextColor(positiveButtonColor)
         }
         //customDialogView.setVisibility(View.VISIBLE);
     }

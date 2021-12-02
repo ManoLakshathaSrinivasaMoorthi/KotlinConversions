@@ -10,46 +10,47 @@ import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import com.example.dailytasksamplepoc.R
+import androidx.appcompat.widget.AppCompatImageView
+import com.example.kotlinomnicure.R
 
 
-class CircularImageView  {
+class CircularImageView : AppCompatImageView  {
 
-
-
+    private val SCALE_TYPE = ScaleType.CENTER_CROP
+    private val BITMAP_CONFIG = Bitmap.Config.ARGB_8888
+    private val COLORDRAWABLE_DIMENSION = 2
+    private val DEFAULT_BORDER_WIDTH = 0
+    private val DEFAULT_BORDER_COLOR = Color.WHITE
+    private val DEFAULT_FILL_COLOR = Color.TRANSPARENT
+    private val DEFAULT_BORDER_OVERLAY = false
+    private val DEFAULT_SHADOW = false
+    private val TAG = "CircularImage"
     private val mDrawableRect = RectF()
     private val mBorderRect = RectF()
     private val mShaderMatrix = Matrix()
     private val mBitmapPaint = Paint()
     private val mBorderPaint = Paint()
     private val mFillPaint = Paint()
-
-    private var mBorderColor: Int = DEFAULT_BORDER_COLOR
-    private var mBorderWidth: Int = DEFAULT_BORDER_WIDTH
-    private var mFillColor: Int = DEFAULT_FILL_COLOR
-
+    private var mBorderColor = DEFAULT_BORDER_COLOR
+    private var mBorderWidth = DEFAULT_BORDER_WIDTH
+    private var mFillColor = DEFAULT_FILL_COLOR
     private var mBitmap: Bitmap? = null
     private var mBitmapShader: BitmapShader? = null
     private var mBitmapWidth = 0
     private var mBitmapHeight = 0
-
     private var mDrawableRadius = 0f
     private var mBorderRadius = 0f
-
     private var mColorFilter: ColorFilter? = null
-
     private var mReady = false
     private var mSetupPending = false
     private var mBorderOverlay = false
     private var mShadow = false
 
-    constructor(context: Context?):super(context!!){
-    init()
-      }
+    constructor(context: Context?):this(context, null){init()}
 
-    constructor(context: Context?, attrs: AttributeSet?) : this(context,attrs,0)
+    constructor(context: Context?, attrs: AttributeSet?):    this(context, attrs, 0)
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) :super(context!!, attrs, defStyle){
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int):  super(context!!, attrs, defStyle){
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.CircularImageView, defStyle, 0)
         mBorderWidth = a.getDimensionPixelSize(R.styleable.CircularImageView_border_width, DEFAULT_BORDER_WIDTH)
@@ -61,14 +62,13 @@ class CircularImageView  {
         init()
     }
 
-     private fun init() {
-         super.setScaleType(SCALE_TYPE)
-         mReady = true
-
-         if (mSetupPending) {
-             setup()
-             mSetupPending = false
-         }
+    private fun init() {
+        super.setScaleType(SCALE_TYPE)
+        mReady = true
+        if (mSetupPending) {
+            setup()
+            mSetupPending = false
+        }
     }
 
     override fun getScaleType(): ScaleType {
@@ -76,9 +76,7 @@ class CircularImageView  {
     }
 
     override fun setScaleType(scaleType: ScaleType) {
-        require(scaleType == SCALE_TYPE) {
-            String.format("ScaleType %s not supported.", scaleType)
-        }
+        require(scaleType == SCALE_TYPE) { String.format("ScaleType %s not supported.", scaleType) }
     }
 
     override fun setAdjustViewBounds(adjustViewBounds: Boolean) {
@@ -135,7 +133,7 @@ class CircularImageView  {
     }
 
     fun setFillColorResource(@ColorRes fillColorRes: Int) {
-        setFillColor(getContext().resources.getColor(fillColorRes))
+        setFillColor(getContext().getResources().getColor(fillColorRes))
     }
 
     fun getBorderWidth(): Int {
@@ -162,7 +160,7 @@ class CircularImageView  {
         setup()
     }
 
-    override fun setImageBitmap(bm: Bitmap) {
+    override fun setImageBitmap(bm: Bitmap?) {
         super.setImageBitmap(bm)
         mBitmap = bm
         setup()
@@ -212,7 +210,7 @@ class CircularImageView  {
             drawable.draw(canvas)
             bitmap
         } catch (e: Exception) {
-            e.printStackTrace()
+            //			Log.e(TAG, "Exception:", e.getCause());
             null
         }
     }
@@ -242,8 +240,7 @@ class CircularImageView  {
         mBitmapHeight = mBitmap!!.height
         mBitmapWidth = mBitmap!!.width
         mBorderRect[0f, 0f, width.toFloat()] = height.toFloat()
-        mBorderRadius =
-            ((mBorderRect.height() - mBorderWidth) / 2.0f).coerceAtMost((mBorderRect.width() - mBorderWidth) / 2.0f)
+        mBorderRadius = ((mBorderRect.height() - mBorderWidth) / 2.0f).coerceAtMost((mBorderRect.width() - mBorderWidth) / 2.0f)
         mDrawableRect.set(mBorderRect)
         if (!mBorderOverlay) {
             mDrawableRect.inset(mBorderWidth.toFloat(), mBorderWidth.toFloat())
@@ -272,15 +269,4 @@ class CircularImageView  {
         )
         mBitmapShader!!.setLocalMatrix(mShaderMatrix)
     }
-
-    companion object {
-        private const val DEFAULT_BORDER_OVERLAY = false
-        private const val COLORDRAWABLE_DIMENSION = 2
-        private const val DEFAULT_BORDER_WIDTH = 0
-        private val SCALE_TYPE = ScaleType.CENTER_CROP
-        private val BITMAP_CONFIG = Bitmap.Config.ARGB_8888
-        private const val DEFAULT_BORDER_COLOR = Color.WHITE
-        private const val DEFAULT_FILL_COLOR = Color.TRANSPARENT
-        private const val DEFAULT_SHADOW = false
-    }*/
 }
