@@ -14,6 +14,8 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityEnotesBinding
 import com.example.kotlinomnicure.fragment.HandoffFragment
 import com.example.kotlinomnicure.fragment.ProgressFragment
+import com.example.kotlinomnicure.model.HandOffList
+import java.util.ArrayList
 
 
 class ActivityEnotes : AppCompatActivity() {
@@ -50,7 +52,7 @@ class ActivityEnotes : AppCompatActivity() {
         binding!!.back.setOnClickListener(View.OnClickListener { finish() })
     }
 
-    fun detailsClick(position: Int) {
+    fun detailsClick(position: Int, readStatusArr: ArrayList<Boolean>, messages: List<HandOffList>) {
             val intent = Intent(this, ActivityENotesDetails::class.java)
         intent.putExtra("patient_name", patient_name)
         val fragment1 =
