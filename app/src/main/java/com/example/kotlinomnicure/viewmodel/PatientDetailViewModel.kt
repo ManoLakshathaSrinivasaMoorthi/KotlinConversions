@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
+
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.model.SOSResponse
 import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
@@ -15,6 +15,7 @@ import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.TeamDetailsByNameRequestBody
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.patientsEndpoints.model.DischargePatientRequest
+import omnicurekotlin.example.com.patientsEndpoints.model.PatientDetail
 import omnicurekotlin.example.com.providerEndpoints.model.TeamsDetailListResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -120,10 +121,10 @@ class PatientDetailViewModel: ViewModel() {
         bodyValues["patientId"] = patientId.toString()
 
 
-        val call: Call<SOSResponse> =
-            ApiClient().getApiPatientEndpoints(true, true)!!.startSOSAPI(bodyValues)
+        val call: Call<SOSResponse?>? =
+            ApiClient().getApiPatientEndpoints(true, true)?.startSOSAPI(bodyValues)
 
-        call.enqueue(object : Callback<SOSResponse?> {
+        call?.enqueue(object : Callback<SOSResponse?> {
             override fun onResponse(call: Call<SOSResponse?>, response: Response<SOSResponse?>) {
                 if (response.code() == 200) {
                     if (startSOSObservable == null) {

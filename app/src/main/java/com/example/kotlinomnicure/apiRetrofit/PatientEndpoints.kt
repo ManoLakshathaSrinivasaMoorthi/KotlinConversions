@@ -1,7 +1,6 @@
 package com.example.kotlinomnicure.apiRetrofit
 
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
 import com.example.kotlinomnicure.model.SOSResponse
 import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
 import com.google.gson.JsonObject
@@ -82,11 +81,11 @@ interface PatientEndpoints {
 
 
     @POST("patientEndpoints/v1/sendSOSMessage")
-    fun startSOSAPI(@Body jsonObject: JsonObject?): Call<SOSResponse?>?
+    fun startSOSAPIs(@Body jsonObject: JsonObject?): Call<SOSResponse?>?
 
 
     @POST("patientEndpoints/v1/sendSOSMessage")
-    fun startSOSAPI(@Body bodyValues: HashMap<String?, String?>?): Call<SOSResponse?>?
+    fun startSOSAPI(@Body bodyValues: HashMap<String, String>): Call<SOSResponse?>?
 
 
     @POST("patientEndpoints/v1/dischargePatient")

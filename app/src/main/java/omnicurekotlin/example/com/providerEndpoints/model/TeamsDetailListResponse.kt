@@ -5,7 +5,7 @@ class TeamsDetailListResponse {
     private var status: Boolean? = null
     private var errorId: Double? = null
     private var errorMessage: String? = null
-    private var teamDetails: TeamMemberResponse? = null
+ var teamDetails: TeamMemberResponse? = null
 
     fun getStatus(): Boolean? {
         return status
@@ -23,10 +23,12 @@ class TeamsDetailListResponse {
         this.errorId = errorId
     }
 
+    @JvmName("getTeamDetails1")
     fun getTeamDetails(): TeamMemberResponse? {
         return teamDetails
     }
 
+    @JvmName("setTeamDetails1")
     fun setTeamDetails(teamDetails: TeamMemberResponse?) {
         this.teamDetails = teamDetails
     }

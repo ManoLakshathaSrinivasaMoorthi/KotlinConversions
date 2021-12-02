@@ -4898,7 +4898,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
         }
     }
 
-    private fun getTeamMemberDetails(patientId: Long, teamName: String?) {
+    fun getTeamMemberDetails(patientId: Long, teamName: String?) {
         membersList!!.clear()
 
         chatViewModel.getMemberList(patientId, teamName).observe(this) { response ->
