@@ -15,79 +15,21 @@
  * on 2020-07-20 at 06:48:21 UTC 
  * Modify at your own risk.
  */
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model
+package omnicurekotlin.example.com.loginEndpoints.model
 
 import java.io.Serializable
 
 
 class Role : Serializable {
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var accessType: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var id: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var providerId: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var roleType: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var time: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var typeId: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var typeName: String? = null
-        private set
 
-    /**
-     * @param accessType accessType or `null` for none
-     */
+    private var accessType: String? = null
+    var id: Long? = null
+    var providerId: Long? = null
+    var roleType: String? = null
+    var time: Long? = null
+    private var typeId: String? = null
+    var typeName: String? = null
+
     fun setAccessType(accessType: String?): Role {
         this.accessType = accessType
         return this

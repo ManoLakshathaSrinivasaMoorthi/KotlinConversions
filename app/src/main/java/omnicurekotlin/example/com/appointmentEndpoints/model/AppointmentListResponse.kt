@@ -14,7 +14,7 @@ class AppointmentListResponse {
         return appointmentList
     }
 
-    fun setAppointmentList(appointmentList: List<Appointment?>?): AppointmentListResponse? {
+    fun setAppointmentList(appointmentList: List<Appointment?>?): AppointmentListResponse {
         this.appointmentList = appointmentList
         return this
     }
@@ -25,7 +25,7 @@ class AppointmentListResponse {
     }
 
 
-    fun setCount(count: Int?): AppointmentListResponse? {
+    fun setCount(count: Int?): AppointmentListResponse {
         this.count = count
         return this
     }
@@ -35,7 +35,7 @@ class AppointmentListResponse {
     }
 
 
-    fun setErrorId(errorId: Int?): AppointmentListResponse? {
+    fun setErrorId(errorId: Int?): AppointmentListResponse {
         this.errorId = errorId
         return this
     }
@@ -44,7 +44,7 @@ class AppointmentListResponse {
     }
 
 
-    fun setErrorMessage(errorMessage: String?): AppointmentListResponse? {
+    fun setErrorMessage(errorMessage: String?): AppointmentListResponse {
         this.errorMessage = errorMessage
         return this
     }
@@ -55,7 +55,7 @@ class AppointmentListResponse {
     }
 
 
-    fun setId(id: Long?): AppointmentListResponse? {
+    fun setId(id: Long?): AppointmentListResponse {
         this.id = id
         return this
     }
@@ -66,7 +66,7 @@ class AppointmentListResponse {
     }
 
 
-    fun setStatus(status: Boolean?): AppointmentListResponse? {
+    fun setStatus(status: Boolean?): AppointmentListResponse {
         this.status = status
         return this
     }

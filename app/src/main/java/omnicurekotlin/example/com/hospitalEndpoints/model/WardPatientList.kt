@@ -11,7 +11,7 @@ class WardPatientList {
         return wardName
     }
 
-    fun setWardName(wardName: String?): WardPatientList? {
+    fun setWardName(wardName: String?): WardPatientList {
         this.wardName = wardName
         return this
     }
@@ -20,7 +20,7 @@ class WardPatientList {
         return count
     }
 
-    fun setCount(count: Int?): WardPatientList? {
+    fun setCount(count: Int?): WardPatientList {
         this.count = count
         return this
     }
@@ -29,7 +29,7 @@ class WardPatientList {
         return patientList
     }
 
-    fun setPatientList(patientList: List<Patient?>?): WardPatientList? {
+    fun setPatientList(patientList: List<Patient?>?): WardPatientList {
         this.patientList = patientList
         return this
     }

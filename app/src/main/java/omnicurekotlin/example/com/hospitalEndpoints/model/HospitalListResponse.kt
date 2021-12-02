@@ -43,7 +43,7 @@ class HospitalListResponse {
 
 
     fun setHospitalList(hospitalList: List<Hospital?>?): HospitalListResponse {
-        this.hospitalList = hospitalList
+        this.hospitalList = hospitalList as List<Hospital>?
         return this
     }
 

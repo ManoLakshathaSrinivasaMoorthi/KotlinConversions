@@ -74,7 +74,7 @@ class Unit : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key
-    var totalNumberOfWards: Int? = null
+    private var totalNumberOfWards: Int? = null
         private set
 
     /**

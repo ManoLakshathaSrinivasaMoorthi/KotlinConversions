@@ -15,11 +15,11 @@ class Hospital {
     private var doctorCount: Long? = null
     private var email: String? = null
     private var experience: String? = null
-    var id: Long? = null
+    private var id: Long? = null
     private var joiningTime: Long? = null
     private var lat: Double? = null
     private var lng: Double? = null
-    var name: String? = null
+    private var name: String? = null
     private var occupiedBeds: Int? = null
     private var phone: String? = null
     private var picUrl: String? = null
@@ -40,7 +40,7 @@ class Hospital {
     }
 
 
-    fun setAddress(address: String?): Hospital? {
+    fun setAddress(address: String?): Hospital {
         this.address = address
         return this
     }
@@ -49,7 +49,7 @@ class Hospital {
         return bdDoctorCount
     }
 
-    fun setBdDoctorCount(bdDoctorCount: Long?): Hospital? {
+    fun setBdDoctorCount(bdDoctorCount: Long?): Hospital {
         this.bdDoctorCount = bdDoctorCount
         return this
     }
@@ -58,7 +58,7 @@ class Hospital {
         return bothDoctorCount
     }
 
-    fun setBothDoctorCount(bothDoctorCount: Long?): Hospital? {
+    fun setBothDoctorCount(bothDoctorCount: Long?): Hospital {
         this.bothDoctorCount = bothDoctorCount
         return this
     }
@@ -67,7 +67,7 @@ class Hospital {
         return city
     }
 
-    fun setCity(city: String?): Hospital? {
+    fun setCity(city: String?): Hospital {
         this.city = city
         return this
     }
@@ -84,7 +84,7 @@ class Hospital {
         return contactDesignation
     }
 
-    fun setContactDesignation(contactDesignation: String?): Hospital? {
+    fun setContactDesignation(contactDesignation: String?): Hospital {
         this.contactDesignation = contactDesignation
         return this
     }
@@ -94,7 +94,7 @@ class Hospital {
     }
 
 
-    fun setContactName(contactName: String?): Hospital? {
+    fun setContactName(contactName: String?): Hospital {
         this.contactName = contactName
         return this
     }
@@ -104,7 +104,7 @@ class Hospital {
     }
 
 
-    fun setContactPhone(contactPhone: String?): Hospital? {
+    fun setContactPhone(contactPhone: String?): Hospital {
         this.contactPhone = contactPhone
         return this
     }
@@ -114,7 +114,7 @@ class Hospital {
         return country
     }
 
-    fun setCountry(country: String?): Hospital? {
+    fun setCountry(country: String?): Hospital {
         this.country = country
         return this
     }
@@ -123,7 +123,7 @@ class Hospital {
         return doctorCount
     }
 
-    fun setDoctorCount(doctorCount: Long?): Hospital? {
+    fun setDoctorCount(doctorCount: Long?): Hospital {
         this.doctorCount = doctorCount
         return this
     }
@@ -132,7 +132,7 @@ class Hospital {
         return email
     }
 
-    fun setEmail(email: String?): Hospital? {
+    fun setEmail(email: String?): Hospital {
         this.email = email
         return this
     }
@@ -141,7 +141,7 @@ class Hospital {
         return experience
     }
 
-    fun setExperience(experience: String?): Hospital? {
+    fun setExperience(experience: String?): Hospital {
         this.experience = experience
         return this
     }
@@ -150,7 +150,7 @@ class Hospital {
         return id
     }
 
-    fun setId(id: Long?): Hospital? {
+    fun setId(id: Long?): Hospital {
         this.id = id
         return this
     }
@@ -159,7 +159,7 @@ class Hospital {
         return joiningTime
     }
 
-    fun setJoiningTime(joiningTime: Long?): Hospital? {
+    fun setJoiningTime(joiningTime: Long?): Hospital {
         this.joiningTime = joiningTime
         return this
     }
@@ -168,7 +168,7 @@ class Hospital {
         return lat
     }
 
-    fun setLat(lat: Double?): Hospital? {
+    fun setLat(lat: Double?): Hospital {
         this.lat = lat
         return this
     }
@@ -177,7 +177,7 @@ class Hospital {
         return lng
     }
 
-    fun setLng(lng: Double?): Hospital? {
+    fun setLng(lng: Double?): Hospital {
         this.lng = lng
         return this
     }
@@ -186,7 +186,7 @@ class Hospital {
         return name
     }
 
-    fun setName(name: String?): Hospital? {
+    fun setName(name: String?): Hospital {
         this.name = name
         return this
     }
@@ -195,7 +195,7 @@ class Hospital {
         return occupiedBeds
     }
 
-    fun setOccupiedBeds(occupiedBeds: Int?): Hospital? {
+    fun setOccupiedBeds(occupiedBeds: Int?): Hospital {
         this.occupiedBeds = occupiedBeds
         return this
     }
@@ -206,7 +206,7 @@ class Hospital {
     }
 
 
-    fun setPhone(phone: String?): Hospital? {
+    fun setPhone(phone: String?): Hospital {
         this.phone = phone
         return this
     }
@@ -216,7 +216,7 @@ class Hospital {
         return picUrl
     }
 
-    fun setPicUrl(picUrl: String?): Hospital? {
+    fun setPicUrl(picUrl: String?): Hospital {
         this.picUrl = picUrl
         return this
     }
@@ -226,7 +226,7 @@ class Hospital {
         return pinCode
     }
 
-    fun setPinCode(pinCode: Long?): Hospital? {
+    fun setPinCode(pinCode: Long?): Hospital {
         this.pinCode = pinCode
         return this
     }
@@ -235,7 +235,7 @@ class Hospital {
         return rdDoctorCount
     }
 
-    fun setRdDoctorCount(rdDoctorCount: Long?): Hospital? {
+    fun setRdDoctorCount(rdDoctorCount: Long?): Hospital {
         this.rdDoctorCount = rdDoctorCount
         return this
     }
@@ -246,7 +246,7 @@ class Hospital {
     }
 
 
-    fun setSearchNameInUp(searchNameInUp: String?): Hospital? {
+    fun setSearchNameInUp(searchNameInUp: String?): Hospital {
         this.searchNameInUp = searchNameInUp
         return this
     }
@@ -255,7 +255,7 @@ class Hospital {
         return state
     }
 
-    fun setState(state: String?): Hospital? {
+    fun setState(state: String?): Hospital {
         this.state = state
         return this
     }
@@ -264,7 +264,7 @@ class Hospital {
         return status
     }
 
-    fun setStatus(status: String?): Hospital? {
+    fun setStatus(status: String?): Hospital {
         this.status = status
         return this
     }
@@ -273,7 +273,7 @@ class Hospital {
         return street
     }
 
-    fun setStreet(street: String?): Hospital? {
+    fun setStreet(street: String?): Hospital {
         this.street = street
         return this
     }
@@ -285,7 +285,7 @@ class Hospital {
         return totalNumberOfBeds
     }
 
-    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?): Hospital? {
+    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?): Hospital {
         this.totalNumberOfBeds = totalNumberOfBeds
         return this
     }
@@ -294,7 +294,7 @@ class Hospital {
         return totalNumberOfWards
     }
 
-    fun setTotalNumberOfWards(totalNumberOfWards: Int?): Hospital? {
+    fun setTotalNumberOfWards(totalNumberOfWards: Int?): Hospital {
         this.totalNumberOfWards = totalNumberOfWards
         return this
     }
@@ -303,7 +303,7 @@ class Hospital {
         return virtualHospital
     }
 
-    fun setVirtualHospital(virtualHospital: Boolean?): Hospital? {
+    fun setVirtualHospital(virtualHospital: Boolean?): Hospital {
         this.virtualHospital = virtualHospital
         return this
     }
@@ -313,7 +313,7 @@ class Hospital {
         return zipCode
     }
 
-    fun setZipCode(zipCode: String?): Hospital? {
+    fun setZipCode(zipCode: String?): Hospital {
         this.zipCode = zipCode
         return this
     }
@@ -324,7 +324,7 @@ class Hospital {
     }
 
 
-    fun setZone(zone: String?): Hospital? {
+    fun setZone(zone: String?): Hospital {
         this.zone = zone
         return this
     }

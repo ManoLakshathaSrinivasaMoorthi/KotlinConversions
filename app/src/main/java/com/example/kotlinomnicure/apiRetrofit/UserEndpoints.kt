@@ -1,6 +1,6 @@
 package com.example.kotlinomnicure.apiRetrofit
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.LoginRequest
+import omnicurekotlin.example.com.loginEndpoints.model.LoginRequest
 import com.example.dailytasksamplepoc.kotlinomnicure.requestbodys.RegistrationEmailOtpRequestBody
 import com.example.dailytasksamplepoc.kotlinomnicure.requestbodys.RegistrationPhoneOtpRequestBody
 import com.example.kotlinomnicure.model.CommonResponseRetro

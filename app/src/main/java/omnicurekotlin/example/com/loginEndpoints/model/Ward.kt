@@ -1,113 +1,23 @@
 
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model
+package omnicurekotlin.example.com.loginEndpoints.model
 
 import java.io.Serializable
 
 
 class Ward : Serializable {
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var hospital: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var hospitalId: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var id: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var joiningTime: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var name: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var occupiedBeds: Int? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var totalNumberOfBeds: Int? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var totalNumberOfRooms: Int? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var unitId: Long? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var unitName: String? = null
-        private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
-    var virtual: Boolean? = null
-        private set
 
-    /**
-     * @param hospital hospital or `null` for none
-     */
+    var hospital: String? = null
+    var hospitalId: Long? = null
+    var id: Long? = null
+    var joiningTime: Long? = null
+    var name: String? = null
+    private var occupiedBeds: Int? = null
+    var totalNumberOfBeds: Int? = null
+    var totalNumberOfRooms: Int? = null
+    var unitId: Long? = null
+    var unitName: String? = null
+    private var virtual: Boolean? = null
+
     fun setHospital(hospital: String?): Ward {
         this.hospital = hospital
         return this

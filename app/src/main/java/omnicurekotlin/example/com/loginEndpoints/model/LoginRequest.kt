@@ -15,9 +15,8 @@
  * on 2020-07-20 at 06:48:21 UTC 
  * Modify at your own risk.
  */
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model
+package omnicurekotlin.example.com.loginEndpoints.model
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.LoginRequest
 import java.io.Serializable
 
 

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model
+package omnicurekotlin.example.com.healthcareEndPoints.model
 
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose

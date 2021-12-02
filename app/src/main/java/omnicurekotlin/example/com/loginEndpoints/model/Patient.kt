@@ -15,7 +15,7 @@
  * on 2020-07-20 at 06:48:21 UTC 
  * Modify at your own risk.
  */
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model
+package omnicurekotlin.example.com.loginEndpoints.model
 
 import java.io.Serializable
 
@@ -28,8 +28,7 @@ class Patient : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var acceptTime: Long? = null
-        private set
+    private var acceptTime: Long? = null
     /**
      * @return value or `null` for none
      */
@@ -46,7 +45,7 @@ class Patient : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var appointmentId: Long? = null
+    private var appointmentId: Long? = null
         private set
     /**
      * @return value or `null` for none
@@ -64,8 +63,7 @@ class Patient : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key
-    var athenaDeviceId: String? = null
-        private set
+    private var athenaDeviceId: String? = null
     /**
      * @return value or `null` for none
      */
@@ -109,7 +107,7 @@ class Patient : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key
-    var dischargeMessage: String? = null
+    private var dischargeMessage: String? = null
         private set
     /**
      * @return value or `null` for none
@@ -262,7 +260,7 @@ class Patient : Serializable {
      * The value may be `null`.
      */
     //com.google.api.client.util.Key @com.google.api.client.json.JsonString
-    var lastMessageTime: Long? = null
+    private var lastMessageTime: Long? = null
         private set
     /**
      * @return value or `null` for none

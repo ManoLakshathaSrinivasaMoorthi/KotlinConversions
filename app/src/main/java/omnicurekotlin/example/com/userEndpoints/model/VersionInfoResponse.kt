@@ -1,5 +1,7 @@
 package omnicurekotlin.example.com.userEndpoints.model
 
+import omnicurekotlin.example.com.loginEndpoints.model.AppConfig
+
 
 class VersionInfoResponse {
 
