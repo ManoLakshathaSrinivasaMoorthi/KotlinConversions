@@ -1,7 +1,6 @@
 package com.example.kotlinomnicure.activity
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
@@ -139,7 +138,7 @@ class ViewUrgentMessagesActivity : BaseActivity() {
         mFirebaseAuth = FirebaseAuth.getInstance()
         // Getting the current user from firebase
         mFirebaseUser = mFirebaseAuth!!.currentUser
-        context = this@ViewUrgentMessagesActivity
+        context = this
 
 //        MESSAGES_CHILD = getIntent().getStringExtra("path");
         MESSAGES_CHILD = intent.getStringExtra("path").toString() + "/messages"

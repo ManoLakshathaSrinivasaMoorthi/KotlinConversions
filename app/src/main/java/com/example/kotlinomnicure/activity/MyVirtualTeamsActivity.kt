@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlinomnicure.adapter.TeamListAdapter
 
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.MyVirtualViewModel
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages

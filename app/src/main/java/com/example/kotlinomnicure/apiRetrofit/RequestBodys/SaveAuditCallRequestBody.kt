@@ -3,7 +3,7 @@ package com.mvp.omnicure.kotlinactivity.requestbodys
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class SaveAuditCallRequestBody {
+class SaveAuditCallRequestBody(auditId: String, callStatus: Boolean, type: String, pid: String) {
     @Expose
     @SerializedName("auditId")
     private var auditId: String? = null

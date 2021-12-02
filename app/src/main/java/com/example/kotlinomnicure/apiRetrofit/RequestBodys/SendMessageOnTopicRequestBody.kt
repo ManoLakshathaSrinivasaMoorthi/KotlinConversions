@@ -3,7 +3,7 @@ package com.mvp.omnicure.kotlinactivity.requestbodys
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class SendMessageOnTopicRequestBody {
+class SendMessageOnTopicRequestBody(callerId: Long, token: String, channel: String, type: String) {
     @Expose
     @SerializedName("patientsId")
     private var patientsId: String? = null

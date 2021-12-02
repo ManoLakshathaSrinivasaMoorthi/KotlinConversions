@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinomnicure.activity.EncUtil
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.EnotesDetailsItemBinding
+import com.example.kotlinomnicure.media.Utils
 import com.example.kotlinomnicure.model.HandOffList
 import com.example.kotlinomnicure.utils.AESUtils
 import com.example.kotlinomnicure.utils.Constants
@@ -118,7 +119,7 @@ class ENotesDetailsAdapter(
         } else {
             holder.itemBinding.txtMRNNumber.setText("MRN ")
         }
-        holder.itemBinding.sender.setText(message.senderName)
+        holder.itemBinding.sender.text = message.senderName
         holder.itemBinding.txtTime.setText(message.time?.let { Utils().timestampToDateYYYY(it) })
         holder.itemBinding.assessmentLayout.setVisibility(View.VISIBLE)
         holder.itemBinding.planLayout.setVisibility(View.VISIBLE)

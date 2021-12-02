@@ -103,7 +103,7 @@ class MembersDialogAdapter: RecyclerView.Adapter<MembersDialogAdapter.ViewHolder
                         return true
                     }
                 })
-                .into<Target<Drawable>>(holder.itemBinding.profileImg)
+                .into(holder.itemBinding.profileImg)
         } else {
             holder.itemBinding.defautlImg.setVisibility(View.VISIBLE)
             holder.itemBinding.defautlImg.setText(member.getProviderName()?.let {
