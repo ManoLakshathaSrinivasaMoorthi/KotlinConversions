@@ -7,11 +7,11 @@ class User {
     private var userType: String? = null
     private var userSubType: String? = null
     private var consultationFee: Float? = null
-    var countryCode: String? = null
+    private var countryCode: String? = null
     private var designation: String? = null
     private var remoteProviderType: String? = null
     private var dob: Long? = null
-    var email: String? = null
+    private var email: String? = null
     private var emailOtp: String? = null
     private var emailOtpVerified: Boolean? = null
     private var experience: Float? = null
@@ -22,7 +22,7 @@ class User {
     private var healthMonitoringTime: Long? = null
     private var hospital: String? = null
     private var hospitalId: Long? = null
-    var id: Long? = null
+    private var id: Long? = null
     private var joiningTime: Long? = null
     private var lname: String? = null
     private var name: String? = null
@@ -31,7 +31,7 @@ class User {
     private var osType: String? = null
     private var otp: String? = null
     private var password: String? = null
-    var phone: String? = null
+    private var phone: String? = null
     private var profilePicUrl: String? = null
     private var qualification: String? = null
     private var role: String? = null
@@ -178,7 +178,7 @@ class User {
         return fname
     }
 
-    fun setFname(fname: String?): User? {
+    fun setFname(fname: String?): User {
         this.fname = fname
         return this
     }
@@ -203,7 +203,7 @@ class User {
         return gender
     }
 
-    fun setGender(gender: String?): User? {
+    fun setGender(gender: String?): User {
         this.gender = gender
         return this
     }
@@ -213,7 +213,7 @@ class User {
         return healthMonitoringTime
     }
 
-    fun setHealthMonitoringTime(healthMonitoringTime: Long?): User? {
+    fun setHealthMonitoringTime(healthMonitoringTime: Long?): User {
         this.healthMonitoringTime = healthMonitoringTime
         return this
     }
@@ -225,7 +225,7 @@ class User {
         return hospital
     }
 
-    fun setHospital(hospital: String?): User? {
+    fun setHospital(hospital: String?): User {
         this.hospital = hospital
         return this
     }
@@ -235,7 +235,7 @@ class User {
         return hospitalId
     }
 
-    fun setHospitalId(hospitalId: Long?): User? {
+    fun setHospitalId(hospitalId: Long?): User {
         this.hospitalId = hospitalId
         return this
     }
@@ -278,7 +278,7 @@ class User {
     }
 
 
-    fun setLname(lname: String?): User? {
+    fun setLname(lname: String?): User {
         this.lname = lname
         return this
     }
@@ -288,7 +288,7 @@ class User {
         return name
     }
 
-    fun setName(name: String?): User? {
+    fun setName(name: String?): User {
         this.name = name
         return this
     }
@@ -299,7 +299,7 @@ class User {
     }
 
 
-    fun setNpiNumber(npiNumber: String?): User? {
+    fun setNpiNumber(npiNumber: String?): User {
         this.npiNumber = npiNumber
         return this
     }
@@ -308,7 +308,7 @@ class User {
         return numberOfPatient
     }
 
-    fun setNumberOfPatient(numberOfPatient: Int?): User? {
+    fun setNumberOfPatient(numberOfPatient: Int?): User {
         this.numberOfPatient = numberOfPatient
         return this
     }
@@ -346,7 +346,7 @@ class User {
         return phone
     }
 
-    fun setPhone(phone: String?): User? {
+    fun setPhone(phone: String?): User {
         this.phone = phone
         return this
     }
@@ -356,7 +356,7 @@ class User {
         return profilePicUrl
     }
 
-    fun setProfilePicUrl(profilePicUrl: String?): User? {
+    fun setProfilePicUrl(profilePicUrl: String?): User {
         this.profilePicUrl = profilePicUrl
         return this
     }
@@ -386,7 +386,7 @@ class User {
     }
 
 
-    fun setRoles(roles: List<Role?>?): User? {
+    fun setRoles(roles: List<Role?>?): User {
         this.roles = roles
         return this
     }
@@ -396,7 +396,7 @@ class User {
         return screenName
     }
 
-    fun setScreenName(screenName: String?): User? {
+    fun setScreenName(screenName: String?): User {
         this.screenName = screenName
         return this
     }
@@ -406,7 +406,7 @@ class User {
         return smsOtpVerified
     }
 
-    fun setSmsOtpVerified(smsOtpVerified: Boolean?): User? {
+    fun setSmsOtpVerified(smsOtpVerified: Boolean?): User {
         this.smsOtpVerified = smsOtpVerified
         return this
     }
@@ -416,7 +416,7 @@ class User {
         return specialization
     }
 
-    fun setSpecialization(specialization: String?): User? {
+    fun setSpecialization(specialization: String?): User {
         this.specialization = specialization
         return this
     }
@@ -427,7 +427,7 @@ class User {
     }
 
 
-    fun setStatus(status: String?): User? {
+    fun setStatus(status: String?): User {
         this.status = status
         return this
     }
@@ -437,7 +437,7 @@ class User {
         return token
     }
 
-    fun setToken(token: String?): User? {
+    fun setToken(token: String?): User {
         this.token = token
         return this
     }
@@ -448,7 +448,7 @@ class User {
     }
 
 
-    fun setVoipToken(voipToken: String?): User? {
+    fun setVoipToken(voipToken: String?): User {
         this.voipToken = voipToken
         return this
     }

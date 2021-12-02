@@ -48,7 +48,7 @@ class Provider {
     }
 
 
-    fun setAccess(access: List<String?>?):Provider? {
+    fun setAccess(access: List<String?>?):Provider {
         this.access = access
         return this
     }
@@ -59,7 +59,7 @@ class Provider {
     }
 
 
-    fun setActiveHour(activeHour: Float?):Provider? {
+    fun setActiveHour(activeHour: Float?):Provider {
         this.activeHour = activeHour
         return this
     }
@@ -70,7 +70,7 @@ class Provider {
     }
 
 
-    fun setAddress(address: String?):Provider? {
+    fun setAddress(address: String?):Provider {
         this.address = address
         return this
     }
@@ -81,7 +81,7 @@ class Provider {
     }
 
 
-    fun setConsultationFee(consultationFee: Float?): Provider? {
+    fun setConsultationFee(consultationFee: Float?): Provider {
         this.consultationFee = consultationFee
         return this
     }
@@ -91,7 +91,7 @@ class Provider {
         return countryCode
     }
 
-    fun setCountryCode(countryCode: String?): Provider? {
+    fun setCountryCode(countryCode: String?): Provider {
         this.countryCode = countryCode
         return this
     }
@@ -102,7 +102,7 @@ class Provider {
     }
 
 
-    fun setDesignation(designation: String?): Provider? {
+    fun setDesignation(designation: String?): Provider {
         this.designation = designation
         return this
     }
@@ -113,7 +113,7 @@ class Provider {
     }
 
 
-    fun setDob(dob: Long?): Provider? {
+    fun setDob(dob: Long?): Provider {
         this.dob = dob
         return this
     }
@@ -123,7 +123,7 @@ class Provider {
         return email
     }
 
-    fun setEmail(email: String?):Provider? {
+    fun setEmail(email: String?):Provider {
         this.email = email
         return this
     }
@@ -134,7 +134,7 @@ class Provider {
     }
 
 
-    fun setExperience(experience: Float?): Provider? {
+    fun setExperience(experience: Float?): Provider {
         this.experience = experience
         return this
     }
@@ -145,7 +145,7 @@ class Provider {
     }
 
 
-    fun setFcmKey(fcmKey: String?): Provider? {
+    fun setFcmKey(fcmKey: String?): Provider {
         this.fcmKey = fcmKey
         return this
     }
@@ -156,7 +156,7 @@ class Provider {
     }
 
 
-    fun setFirebaseUid(firebaseUid: String?): Provider? {
+    fun setFirebaseUid(firebaseUid: String?): Provider {
         this.firebaseUid = firebaseUid
         return this
     }
@@ -167,7 +167,7 @@ class Provider {
     }
 
 
-    fun setFname(fname: String?): Provider? {
+    fun setFname(fname: String?): Provider {
         this.fname = fname
         return this
     }
@@ -182,7 +182,7 @@ class Provider {
     /**
      * @param gender gender or `null` for none
      */
-    fun setGender(gender: String?):Provider? {
+    fun setGender(gender: String?):Provider {
         this.gender = gender
         return this
     }
@@ -197,7 +197,7 @@ class Provider {
     /**
      * @param healthMonitoringTime healthMonitoringTime or `null` for none
      */
-    fun setHealthMonitoringTime(healthMonitoringTime: Long?): Provider? {
+    fun setHealthMonitoringTime(healthMonitoringTime: Long?): Provider {
         this.healthMonitoringTime = healthMonitoringTime
         return this
     }
@@ -212,7 +212,7 @@ class Provider {
     /**
      * @param hospital hospital or `null` for none
      */
-    fun setHospital(hospital: String?): Provider? {
+    fun setHospital(hospital: String?): Provider {
         this.hospital = hospital
         return this
     }
@@ -227,7 +227,7 @@ class Provider {
     /**
      * @param hospitalId hospitalId or `null` for none
      */
-    fun setHospitalId(hospitalId: Long?): Provider? {
+    fun setHospitalId(hospitalId: Long?): Provider {
         this.hospitalId = hospitalId
         return this
     }
@@ -242,7 +242,7 @@ class Provider {
     /**
      * @param id id or `null` for none
      */
-    fun setId(id: Long?): Provider? {
+    fun setId(id: Long?): Provider {
         this.id = id
         return this
     }
@@ -257,7 +257,7 @@ class Provider {
     /**
      * @param joiningTime joiningTime or `null` for none
      */
-    fun setJoiningTime(joiningTime: Long?): Provider? {
+    fun setJoiningTime(joiningTime: Long?): Provider {
         this.joiningTime = joiningTime
         return this
     }
@@ -272,7 +272,7 @@ class Provider {
     /**
      * @param lname lname or `null` for none
      */
-    fun setLname(lname: String?): Provider? {
+    fun setLname(lname: String?): Provider {
         this.lname = lname
         return this
     }
@@ -287,7 +287,7 @@ class Provider {
     /**
      * @param name name or `null` for none
      */
-    fun setName(name: String?): Provider? {
+    fun setName(name: String?): Provider {
         this.name = name
         return this
     }
@@ -302,7 +302,7 @@ class Provider {
     /**
      * @param npiNumber npiNumber or `null` for none
      */
-    fun setNpiNumber(npiNumber: String?): Provider? {
+    fun setNpiNumber(npiNumber: String?): Provider {
         this.npiNumber = npiNumber
         return this
     }
@@ -317,7 +317,7 @@ class Provider {
     /**
      * @param numberOfPatient numberOfPatient or `null` for none
      */
-    fun setNumberOfPatient(numberOfPatient: Int?): Provider? {
+    fun setNumberOfPatient(numberOfPatient: Int?): Provider {
         this.numberOfPatient = numberOfPatient
         return this
     }
@@ -332,7 +332,7 @@ class Provider {
     /**
      * @param osType osType or `null` for none
      */
-    fun setOsType(osType: String?): Provider? {
+    fun setOsType(osType: String?): Provider {
         this.osType = osType
         return this
     }
@@ -347,7 +347,7 @@ class Provider {
     /**
      * @param otp otp or `null` for none
      */
-    fun setOtp(otp: String?): Provider? {
+    fun setOtp(otp: String?): Provider {
         this.otp = otp
         return this
     }
@@ -360,7 +360,7 @@ class Provider {
     }
 
 
-    fun setPassword(password: String?): Provider? {
+    fun setPassword(password: String?): Provider {
         this.password = password
         return this
     }
@@ -375,7 +375,7 @@ class Provider {
     /**
      * @param phone phone or `null` for none
      */
-    fun setPhone(phone: String?): Provider? {
+    fun setPhone(phone: String?): Provider {
         this.phone = phone
         return this
     }
@@ -390,7 +390,7 @@ class Provider {
     /**
      * @param profilePicUrl profilePicUrl or `null` for none
      */
-    fun setProfilePicUrl(profilePicUrl: String?): Provider? {
+    fun setProfilePicUrl(profilePicUrl: String?): Provider {
         this.profilePicUrl = profilePicUrl
         return this
     }
@@ -405,7 +405,7 @@ class Provider {
     /**
      * @param qualification qualification or `null` for none
      */
-    fun setQualification(qualification: String?): Provider? {
+    fun setQualification(qualification: String?): Provider {
         this.qualification = qualification
         return this
     }
@@ -420,7 +420,7 @@ class Provider {
     /**
      * @param role role or `null` for none
      */
-    fun setRole(role: String?):Provider? {
+    fun setRole(role: String?):Provider {
         this.role = role
         return this
     }
@@ -435,7 +435,7 @@ class Provider {
     /**
      * @param roles roles or `null` for none
      */
-    fun setRoles(roles: List<Role?>?): Provider? {
+    fun setRoles(roles: List<Role?>?): Provider {
         this.roles = roles
         return this
     }
@@ -450,7 +450,7 @@ class Provider {
     /**
      * @param screenName screenName or `null` for none
      */
-    fun setScreenName(screenName: String?): Provider? {
+    fun setScreenName(screenName: String?): Provider {
         this.screenName = screenName
         return this
     }
@@ -465,7 +465,7 @@ class Provider {
     /**
      * @param specialization specialization or `null` for none
      */
-    fun setSpecialization(specialization: String?): Provider? {
+    fun setSpecialization(specialization: String?): Provider {
         this.specialization = specialization
         return this
     }
@@ -480,7 +480,7 @@ class Provider {
     /**
      * @param status status or `null` for none
      */
-    fun setStatus(status: String?):Provider? {
+    fun setStatus(status: String?):Provider {
         this.status = status
         return this
     }
@@ -495,7 +495,7 @@ class Provider {
     /**
      * @param token token or `null` for none
      */
-    fun setToken(token: String?):Provider? {
+    fun setToken(token: String?):Provider {
         this.token = token
         return this
     }
@@ -510,7 +510,7 @@ class Provider {
     /**
      * @param voipToken voipToken or `null` for none
      */
-    fun setVoipToken(voipToken: String?): Provider? {
+    fun setVoipToken(voipToken: String?): Provider {
         this.voipToken = voipToken
         return this
     }

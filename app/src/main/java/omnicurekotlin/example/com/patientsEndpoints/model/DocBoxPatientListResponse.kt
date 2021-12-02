@@ -18,7 +18,7 @@ class DocBoxPatientListResponse {
     }
 
 
-    fun setAthenaDeviceDataList(athenaDeviceDataList: List<AthenaDeviceData?>?): DocBoxPatientListResponse? {
+    fun setAthenaDeviceDataList(athenaDeviceDataList: List<AthenaDeviceData?>?): DocBoxPatientListResponse {
         this.athenaDeviceDataList = athenaDeviceDataList
         return this
     }
@@ -28,7 +28,7 @@ class DocBoxPatientListResponse {
     }
 
 
-    fun setDocBoxPatientList(docBoxPatientList: List<DocBoxPatient?>?): DocBoxPatientListResponse? {
+    fun setDocBoxPatientList(docBoxPatientList: List<DocBoxPatient?>?): DocBoxPatientListResponse {
         this.docBoxPatientList = docBoxPatientList
         return this
     }
@@ -39,7 +39,7 @@ class DocBoxPatientListResponse {
     }
 
 
-    fun setErrorId(errorId: Int?): DocBoxPatientListResponse? {
+    fun setErrorId(errorId: Int?): DocBoxPatientListResponse {
         this.errorId = errorId
         return this
     }
@@ -49,7 +49,7 @@ class DocBoxPatientListResponse {
     }
 
 
-    fun setErrorMessage(errorMessage: String?): DocBoxPatientListResponse? {
+    fun setErrorMessage(errorMessage: String?): DocBoxPatientListResponse {
         this.errorMessage = errorMessage
         return this
     }
@@ -59,7 +59,7 @@ class DocBoxPatientListResponse {
         return id
     }
 
-    fun setId(id: Long?): DocBoxPatientListResponse? {
+    fun setId(id: Long?): DocBoxPatientListResponse {
         this.id = id
         return this
     }
@@ -68,7 +68,7 @@ class DocBoxPatientListResponse {
         return status
     }
 
-    fun setStatus(status: Boolean?): DocBoxPatientListResponse? {
+    fun setStatus(status: Boolean?): DocBoxPatientListResponse {
         this.status = status
         return this
     }

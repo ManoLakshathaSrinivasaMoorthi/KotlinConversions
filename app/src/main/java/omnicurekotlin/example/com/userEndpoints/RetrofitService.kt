@@ -7,7 +7,6 @@ import omnicurekotlin.example.com.hospitalEndpoints.model.AddNewPatientWardRespo
 import omnicurekotlin.example.com.hospitalEndpoints.model.WardPatientListResponse
 import omnicurekotlin.example.com.patientsEndpoints.model.*
 import omnicurekotlin.example.com.patientsEndpoints.model.Patient
-import omnicurekotlin.example.com.providerEndpoints.model.CountryCodeList
 import omnicurekotlin.example.com.providerEndpoints.model.OtherRebroadcastRequest
 import omnicurekotlin.example.com.providerEndpoints.model.PatientHandOffRequest
 import omnicurekotlin.example.com.providerEndpoints.model.TeamsDetailListResponse

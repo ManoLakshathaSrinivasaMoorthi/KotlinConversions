@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model
+package omnicurekotlin.example.com.patientsEndpoints.model
 
 class PatientDetail {
 
@@ -6,7 +6,7 @@ class PatientDetail {
 
     private var status = false
     private var errorId = 0
-    var errorMsg: String? =null
+    private var errorMsg: String? =null
 
 
     fun getStatus(): Boolean {

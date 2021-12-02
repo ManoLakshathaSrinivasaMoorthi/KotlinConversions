@@ -2,15 +2,10 @@ package omnicurekotlin.example.com.userEndpoints.model
 
 class CountryCodeListResponse {
 
-
-
-    var status: Boolean? = null
-
+    private var status: Boolean? = null
     private var errorId: Int? = null
-
-    var errorMessage: String? = null
-
-    var countryCodeResponseList: List<CountryCodeList?>? = null
+    private var errorMessage: String? = null
+    private var countryCodeResponseList: List<CountryCodeList?>? = null
 
     fun getErrorMessage(): String? {
         return errorMessage
@@ -44,13 +39,14 @@ class CountryCodeListResponse {
         this.countryCodeResponseList = countryCodeResponseList
     }
 
-    constructor(fieldName: String?, value: Any?):super()  {
-        return
-    }
-
-    constructor():super() {
-        return
-    }
-
+//    @Override
+//    public CountryCodeListResponse set(String fieldName, Object value) {
+//        return (CountryCodeListResponse) super.set(fieldName, value);
+//    }
+//
+//    @Override
+//    public CountryCodeListResponse clone() {
+//        return (CountryCodeListResponse) super.clone();
+//    }
 
 }

@@ -20,7 +20,7 @@ class Ward {
     }
 
 
-    fun setHospital(hospital: String?):Ward? {
+    fun setHospital(hospital: String?):Ward {
         this.hospital = hospital
         return this
     }
@@ -31,7 +31,7 @@ class Ward {
     }
 
 
-    fun setHospitalId(hospitalId: Long?): Ward? {
+    fun setHospitalId(hospitalId: Long?): Ward {
         this.hospitalId = hospitalId
         return this
     }
@@ -42,7 +42,7 @@ class Ward {
     }
 
 
-    fun setId(id: Long?): Ward? {
+    fun setId(id: Long?): Ward {
         this.id = id
         return this
     }
@@ -53,7 +53,7 @@ class Ward {
     }
 
 
-    fun setJoiningTime(joiningTime: Long?): Ward? {
+    fun setJoiningTime(joiningTime: Long?): Ward {
         this.joiningTime = joiningTime
         return this
     }
@@ -64,7 +64,7 @@ class Ward {
     }
 
 
-    fun setName(name: String?): Ward? {
+    fun setName(name: String?): Ward {
         this.name = name
         return this
     }
@@ -75,7 +75,7 @@ class Ward {
     }
 
 
-    fun setOccupiedBeds(occupiedBeds: Int?): Ward? {
+    fun setOccupiedBeds(occupiedBeds: Int?): Ward {
         this.occupiedBeds = occupiedBeds
         return this
     }
@@ -86,7 +86,7 @@ class Ward {
     }
 
 
-    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?):Ward? {
+    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?):Ward {
         this.totalNumberOfBeds = totalNumberOfBeds
         return this
     }
@@ -97,7 +97,7 @@ class Ward {
     }
 
 
-    fun setTotalNumberOfRooms(totalNumberOfRooms: Int?): Ward? {
+    fun setTotalNumberOfRooms(totalNumberOfRooms: Int?): Ward {
         this.totalNumberOfRooms = totalNumberOfRooms
         return this
     }
@@ -108,7 +108,7 @@ class Ward {
     }
 
 
-    fun setUnitId(unitId: Long?): Ward? {
+    fun setUnitId(unitId: Long?): Ward {
         this.unitId = unitId
         return this
     }
@@ -119,7 +119,7 @@ class Ward {
     }
 
 
-    fun setUnitName(unitName: String?): Ward? {
+    fun setUnitName(unitName: String?): Ward {
         this.unitName = unitName
         return this
     }
@@ -129,7 +129,7 @@ class Ward {
         return virtual
     }
 
-    fun setVirtual(virtual: Boolean?):Ward? {
+    fun setVirtual(virtual: Boolean?):Ward {
         this.virtual = virtual
         return this
     }

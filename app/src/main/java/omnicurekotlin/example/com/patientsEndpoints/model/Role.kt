@@ -20,7 +20,7 @@ class Role {
     /**
      * @param accessType accessType or `null` for none
      */
-    fun setAccessType(accessType: String?):Role? {
+    fun setAccessType(accessType: String?):Role {
         this.accessType = accessType
         return this
     }
@@ -31,7 +31,7 @@ class Role {
     }
 
 
-    fun setId(id: Long?): Role? {
+    fun setId(id: Long?): Role {
         this.id = id
         return this
     }
@@ -44,7 +44,7 @@ class Role {
     }
 
 
-    fun setProviderId(providerId: Long?): Role? {
+    fun setProviderId(providerId: Long?): Role {
         this.providerId = providerId
         return this
     }
@@ -54,7 +54,7 @@ class Role {
     }
 
 
-    fun setRoleType(roleType: String?): Role? {
+    fun setRoleType(roleType: String?): Role {
         this.roleType = roleType
         return this
     }
@@ -65,7 +65,7 @@ class Role {
     }
 
 
-    fun setTime(time: Long?): Role? {
+    fun setTime(time: Long?): Role {
         this.time = time
         return this
     }
@@ -75,7 +75,7 @@ class Role {
         return typeId
     }
 
-    fun setTypeId(typeId: String?): Role? {
+    fun setTypeId(typeId: String?): Role {
         this.typeId = typeId
         return this
     }
@@ -86,7 +86,7 @@ class Role {
     }
 
 
-    fun setTypeName(typeName: String?): Role? {
+    fun setTypeName(typeName: String?): Role {
         this.typeName = typeName
         return this
     }

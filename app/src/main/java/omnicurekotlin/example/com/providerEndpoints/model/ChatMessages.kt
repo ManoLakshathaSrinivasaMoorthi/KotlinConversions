@@ -2,9 +2,8 @@ package omnicurekotlin.example.com.providerEndpoints.model
 
 import java.io.Serializable
 
-//public class ChatMessages extends com.google.api.client.json.GenericJson {
 class ChatMessages : Serializable {
-    //@com.google.api.client.util.Key
+
     var id: String? = null
 
     //@com.google.api.client.util.Key

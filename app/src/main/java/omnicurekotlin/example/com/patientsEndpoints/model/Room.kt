@@ -19,7 +19,7 @@ class Room {
     }
 
 
-    fun setHospital(hospital: String?): Room? {
+    fun setHospital(hospital: String?): Room {
         this.hospital = hospital
         return this
     }
@@ -30,7 +30,7 @@ class Room {
     }
 
 
-    fun setHospitalId(hospitalId: Long?):Room? {
+    fun setHospitalId(hospitalId: Long?):Room {
         this.hospitalId = hospitalId
         return this
     }
@@ -41,7 +41,7 @@ class Room {
     }
 
 
-    fun setId(id: Long?):Room? {
+    fun setId(id: Long?):Room {
         this.id = id
         return this
     }
@@ -52,7 +52,7 @@ class Room {
     }
 
 
-    fun setJoiningTime(joiningTime: Long?): Room? {
+    fun setJoiningTime(joiningTime: Long?): Room {
         this.joiningTime = joiningTime
         return this
     }
@@ -62,7 +62,7 @@ class Room {
     }
 
 
-    fun setName(name: String?): Room? {
+    fun setName(name: String?): Room {
         this.name = name
         return this
     }
@@ -71,7 +71,7 @@ class Room {
         return totalNumberOfBeds
     }
 
-    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?): Room? {
+    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?): Room {
         this.totalNumberOfBeds = totalNumberOfBeds
         return this
     }
@@ -82,7 +82,7 @@ class Room {
     }
 
 
-    fun setUnitId(unitId: Long?): Room? {
+    fun setUnitId(unitId: Long?): Room {
         this.unitId = unitId
         return this
     }
@@ -93,7 +93,7 @@ class Room {
     }
 
 
-    fun setUnitName(unitName: String?): Room? {
+    fun setUnitName(unitName: String?): Room {
         this.unitName = unitName
         return this
     }
@@ -104,7 +104,7 @@ class Room {
     }
 
 
-    fun setWard(ward: String?): Room? {
+    fun setWard(ward: String?): Room {
         this.ward = ward
         return this
     }
@@ -114,7 +114,7 @@ class Room {
         return wardId
     }
 
-    fun setWardId(wardId: Long?): Room? {
+    fun setWardId(wardId: Long?): Room {
         this.wardId = wardId
         return this
     }

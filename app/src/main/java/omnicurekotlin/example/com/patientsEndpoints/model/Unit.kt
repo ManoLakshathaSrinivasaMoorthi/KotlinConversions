@@ -17,7 +17,7 @@ class Unit {
     }
 
 
-    fun setHospital(hospital: String?): Unit? {
+    fun setHospital(hospital: String?): Unit {
         this.hospital = hospital
         return this
     }
@@ -28,7 +28,7 @@ class Unit {
     }
 
 
-    fun setHospitalId(hospitalId: Long?): Unit? {
+    fun setHospitalId(hospitalId: Long?): Unit {
         this.hospitalId = hospitalId
         return this
     }
@@ -39,7 +39,7 @@ class Unit {
     }
 
 
-    fun setId(id: Long?): Unit? {
+    fun setId(id: Long?): Unit {
         this.id = id
         return this
     }
@@ -50,7 +50,7 @@ class Unit {
     }
 
 
-    fun setJoiningTime(joiningTime: Long?): Unit? {
+    fun setJoiningTime(joiningTime: Long?): Unit {
         this.joiningTime = joiningTime
         return this
     }
@@ -61,7 +61,7 @@ class Unit {
     }
 
 
-    fun setName(name: String?):Unit? {
+    fun setName(name: String?):Unit {
         this.name = name
         return this
     }
@@ -72,7 +72,7 @@ class Unit {
     }
 
 
-    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?): Unit? {
+    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?): Unit {
         this.totalNumberOfBeds = totalNumberOfBeds
         return this
     }
@@ -83,7 +83,7 @@ class Unit {
     }
 
 
-    fun setTotalNumberOfRooms(totalNumberOfRooms: Int?):Unit? {
+    fun setTotalNumberOfRooms(totalNumberOfRooms: Int?):Unit {
         this.totalNumberOfRooms = totalNumberOfRooms
         return this
     }
@@ -94,7 +94,7 @@ class Unit {
     }
 
 
-    fun setTotalNumberOfWards(totalNumberOfWards: Int?):Unit? {
+    fun setTotalNumberOfWards(totalNumberOfWards: Int?):Unit {
         this.totalNumberOfWards = totalNumberOfWards
         return this
     }

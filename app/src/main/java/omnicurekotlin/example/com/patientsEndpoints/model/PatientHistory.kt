@@ -51,7 +51,7 @@ class PatientHistory {
     /**
      * @param acceptTime acceptTime or `null` for none
      */
-    fun setAcceptTime(acceptTime: Long?): PatientHistory? {
+    fun setAcceptTime(acceptTime: Long?): PatientHistory {
         this.acceptTime = acceptTime
         return this
     }
@@ -66,7 +66,7 @@ class PatientHistory {
     /**
      * @param address address or `null` for none
      */
-    fun setAddress(address: String?): PatientHistory? {
+    fun setAddress(address: String?): PatientHistory {
         this.address = address
         return this
     }
@@ -81,7 +81,7 @@ class PatientHistory {
     /**
      * @param arterialBloodPressureSystolic arterialBloodPressureSystolic or `null` for none
      */
-    fun setArterialBloodPressureSystolic(arterialBloodPressureSystolic: Double?): PatientHistory? {
+    fun setArterialBloodPressureSystolic(arterialBloodPressureSystolic: Double?): PatientHistory {
         this.arterialBloodPressureSystolic = arterialBloodPressureSystolic
         return this
     }
@@ -96,7 +96,7 @@ class PatientHistory {
     /**
      * @param athenaDeviceId athenaDeviceId or `null` for none
      */
-    fun setAthenaDeviceId(athenaDeviceId: String?): PatientHistory? {
+    fun setAthenaDeviceId(athenaDeviceId: String?): PatientHistory {
         this.athenaDeviceId = athenaDeviceId
         return this
     }
@@ -111,7 +111,7 @@ class PatientHistory {
     /**
      * @param bdProviderId bdProviderId or `null` for none
      */
-    fun setBdProviderId(bdProviderId: Long?): PatientHistory? {
+    fun setBdProviderId(bdProviderId: Long?): PatientHistory {
         this.bdProviderId = bdProviderId
         return this
     }
@@ -126,7 +126,7 @@ class PatientHistory {
     /**
      * @param bdProviderName bdProviderName or `null` for none
      */
-    fun setBdProviderName(bdProviderName: String?): PatientHistory? {
+    fun setBdProviderName(bdProviderName: String?): PatientHistory {
         this.bdProviderName = bdProviderName
         return this
     }
@@ -141,7 +141,7 @@ class PatientHistory {
     /**
      * @param bed bed or `null` for none
      */
-    fun setBed(bed: String?): PatientHistory? {
+    fun setBed(bed: String?): PatientHistory {
         this.bed = bed
         return this
     }
@@ -156,7 +156,7 @@ class PatientHistory {
     /**
      * @param countryCode countryCode or `null` for none
      */
-    fun setCountryCode(countryCode: String?): PatientHistory? {
+    fun setCountryCode(countryCode: String?): PatientHistory {
         this.countryCode = countryCode
         return this
     }
@@ -171,7 +171,7 @@ class PatientHistory {
     /**
      * @param dischargeMessage dischargeMessage or `null` for none
      */
-    fun setDischargeMessage(dischargeMessage: String?): PatientHistory? {
+    fun setDischargeMessage(dischargeMessage: String?): PatientHistory {
         this.dischargeMessage = dischargeMessage
         return this
     }
@@ -186,7 +186,7 @@ class PatientHistory {
     /**
      * @param dischargeTime dischargeTime or `null` for none
      */
-    fun setDischargeTime(dischargeTime: Long?): PatientHistory? {
+    fun setDischargeTime(dischargeTime: Long?): PatientHistory {
         this.dischargeTime = dischargeTime
         return this
     }
@@ -201,7 +201,7 @@ class PatientHistory {
     /**
      * @param dob dob or `null` for none
      */
-    fun setDob(dob: Long?): PatientHistory? {
+    fun setDob(dob: Long?): PatientHistory {
         this.dob = dob
         return this
     }
@@ -216,7 +216,7 @@ class PatientHistory {
     /**
      * @param docBoxManagerId docBoxManagerId or `null` for none
      */
-    fun setDocBoxManagerId(docBoxManagerId: String?): PatientHistory? {
+    fun setDocBoxManagerId(docBoxManagerId: String?): PatientHistory {
         this.docBoxManagerId = docBoxManagerId
         return this
     }
@@ -231,7 +231,7 @@ class PatientHistory {
     /**
      * @param docBoxPatientId docBoxPatientId or `null` for none
      */
-    fun setDocBoxPatientId(docBoxPatientId: String?): PatientHistory? {
+    fun setDocBoxPatientId(docBoxPatientId: String?): PatientHistory {
         this.docBoxPatientId = docBoxPatientId
         return this
     }
@@ -246,7 +246,7 @@ class PatientHistory {
     /**
      * @param email email or `null` for none
      */
-    fun setEmail(email: String?): PatientHistory? {
+    fun setEmail(email: String?): PatientHistory {
         this.email = email
         return this
     }
@@ -261,7 +261,7 @@ class PatientHistory {
     /**
      * @param fname fname or `null` for none
      */
-    fun setFname(fname: String?): PatientHistory? {
+    fun setFname(fname: String?): PatientHistory {
         this.fname = fname
         return this
     }
@@ -276,7 +276,7 @@ class PatientHistory {
     /**
      * @param gender gender or `null` for none
      */
-    fun setGender(gender: String?): PatientHistory? {
+    fun setGender(gender: String?): PatientHistory {
         this.gender = gender
         return this
     }
@@ -291,7 +291,7 @@ class PatientHistory {
     /**
      * @param heartRate heartRate or `null` for none
      */
-    fun setHeartRate(heartRate: Double?): PatientHistory? {
+    fun setHeartRate(heartRate: Double?): PatientHistory {
         this.heartRate = heartRate
         return this
     }
@@ -306,7 +306,7 @@ class PatientHistory {
     /**
      * @param hospital hospital or `null` for none
      */
-    fun setHospital(hospital: String?): PatientHistory? {
+    fun setHospital(hospital: String?): PatientHistory {
         this.hospital = hospital
         return this
     }
@@ -321,7 +321,7 @@ class PatientHistory {
     /**
      * @param hospitalId hospitalId or `null` for none
      */
-    fun setHospitalId(hospitalId: Long?): PatientHistory? {
+    fun setHospitalId(hospitalId: Long?): PatientHistory {
         this.hospitalId = hospitalId
         return this
     }
@@ -351,7 +351,7 @@ class PatientHistory {
     /**
      * @param inviteTime inviteTime or `null` for none
      */
-    fun setInviteTime(inviteTime: Long?): PatientHistory? {
+    fun setInviteTime(inviteTime: Long?): PatientHistory {
         this.inviteTime = inviteTime
         return this
     }
@@ -366,7 +366,7 @@ class PatientHistory {
     /**
      * @param joiningTime joiningTime or `null` for none
      */
-    fun setJoiningTime(joiningTime: Long?): PatientHistory? {
+    fun setJoiningTime(joiningTime: Long?): PatientHistory {
         this.joiningTime = joiningTime
         return this
     }
@@ -381,7 +381,7 @@ class PatientHistory {
     /**
      * @param lastMessageTime lastMessageTime or `null` for none
      */
-    fun setLastMessageTime(lastMessageTime: Long?): PatientHistory? {
+    fun setLastMessageTime(lastMessageTime: Long?): PatientHistory {
         this.lastMessageTime = lastMessageTime
         return this
     }
@@ -396,7 +396,7 @@ class PatientHistory {
     /**
      * @param lname lname or `null` for none
      */
-    fun setLname(lname: String?): PatientHistory? {
+    fun setLname(lname: String?): PatientHistory {
         this.lname = lname
         return this
     }
@@ -411,7 +411,7 @@ class PatientHistory {
     /**
      * @param name name or `null` for none
      */
-    fun setName(name: String?): PatientHistory? {
+    fun setName(name: String?): PatientHistory {
         this.name = name
         return this
     }
@@ -426,7 +426,7 @@ class PatientHistory {
     /**
      * @param note note or `null` for none
      */
-    fun setNote(note: String?): PatientHistory? {
+    fun setNote(note: String?): PatientHistory {
         this.note = note
         return this
     }
@@ -441,7 +441,7 @@ class PatientHistory {
     /**
      * @param oxygenSupplement oxygenSupplement or `null` for none
      */
-    fun setOxygenSupplement(oxygenSupplement: Boolean?): PatientHistory? {
+    fun setOxygenSupplement(oxygenSupplement: Boolean?): PatientHistory {
         this.oxygenSupplement = oxygenSupplement
         return this
     }
@@ -456,7 +456,7 @@ class PatientHistory {
     /**
      * @param patientCondition patientCondition or `null` for none
      */
-    fun setPatientCondition(patientCondition: String?): PatientHistory? {
+    fun setPatientCondition(patientCondition: String?): PatientHistory {
         this.patientCondition = patientCondition
         return this
     }
@@ -471,7 +471,7 @@ class PatientHistory {
     /**
      * @param patientId patientId or `null` for none
      */
-    fun setPatientId(patientId: Long?): PatientHistory? {
+    fun setPatientId(patientId: Long?): PatientHistory {
         this.patientId = patientId
         return this
     }
@@ -486,7 +486,7 @@ class PatientHistory {
     /**
      * @param phone phone or `null` for none
      */
-    fun setPhone(phone: String?): PatientHistory? {
+    fun setPhone(phone: String?): PatientHistory {
         this.phone = phone
         return this
     }
@@ -501,7 +501,7 @@ class PatientHistory {
     /**
      * @param picUrl picUrl or `null` for none
      */
-    fun setPicUrl(picUrl: String?): PatientHistory? {
+    fun setPicUrl(picUrl: String?): PatientHistory {
         this.picUrl = picUrl
         return this
     }
@@ -516,7 +516,7 @@ class PatientHistory {
     /**
      * @param rdProviderId rdProviderId or `null` for none
      */
-    fun setRdProviderId(rdProviderId: Long?): PatientHistory? {
+    fun setRdProviderId(rdProviderId: Long?): PatientHistory {
         this.rdProviderId = rdProviderId
         return this
     }
@@ -531,7 +531,7 @@ class PatientHistory {
     /**
      * @param rdProviderName rdProviderName or `null` for none
      */
-    fun setRdProviderName(rdProviderName: String?): PatientHistory? {
+    fun setRdProviderName(rdProviderName: String?): PatientHistory {
         this.rdProviderName = rdProviderName
         return this
     }
@@ -546,7 +546,7 @@ class PatientHistory {
     /**
      * @param respiratoryRate respiratoryRate or `null` for none
      */
-    fun setRespiratoryRate(respiratoryRate: Double?): PatientHistory? {
+    fun setRespiratoryRate(respiratoryRate: Double?): PatientHistory {
         this.respiratoryRate = respiratoryRate
         return this
     }
@@ -561,7 +561,7 @@ class PatientHistory {
     /**
      * @param score score or `null` for none
      */
-    fun setScore(score: String?): PatientHistory? {
+    fun setScore(score: String?): PatientHistory {
         this.score = score
         return this
     }
@@ -576,7 +576,7 @@ class PatientHistory {
     /**
      * @param spO2 spO2 or `null` for none
      */
-    fun setSpO2(spO2: Double?): PatientHistory? {
+    fun setSpO2(spO2: Double?): PatientHistory {
         this.spO2 = spO2
         return this
     }
@@ -591,7 +591,7 @@ class PatientHistory {
     /**
      * @param status status or `null` for none
      */
-    fun setStatus(status: String?): PatientHistory? {
+    fun setStatus(status: String?): PatientHistory {
         this.status = status
         return this
     }
@@ -606,7 +606,7 @@ class PatientHistory {
     /**
      * @param urgent urgent or `null` for none
      */
-    fun setUrgent(urgent: Boolean?): PatientHistory? {
+    fun setUrgent(urgent: Boolean?): PatientHistory {
         this.urgent = urgent
         return this
     }

@@ -2,10 +2,9 @@ package omnicurekotlin.example.com.userEndpoints.model
 
 class RemoteProviderListResponse {
 
-    var status: Boolean? = null
-
-    var errorId: Int? = null
-    var remoteProviderTypeList: List<RemoteProvider>? = null
+    private var status: Boolean? = null
+    private var errorId: Int? = null
+    private var remoteProviderTypeList: List<RemoteProvider?>? = null
 
     fun getStatus(): Boolean? {
         return status
@@ -23,6 +22,23 @@ class RemoteProviderListResponse {
         this.errorId = errorId
     }
 
+//
+//    public double getErrorId() {
+//        return errorId;
+//    }
+//
+//    public void setErrorId(double errorId) {
+//        this.errorId = errorId;
+//    }
+
+    //
+    //    public double getErrorId() {
+    //        return errorId;
+    //    }
+    //
+    //    public void setErrorId(double errorId) {
+    //        this.errorId = errorId;
+    //    }
     fun getRemoteProviderTypeList(): List<RemoteProvider?>? {
         return remoteProviderTypeList
     }
@@ -31,6 +47,14 @@ class RemoteProviderListResponse {
         this.remoteProviderTypeList = remoteProviderTypeList
     }
 
-
+//    @Override
+//    public RemoteProviderListResponse set(String fieldName, Object value) {
+//        return (RemoteProviderListResponse) super.set(fieldName, value);
+//    }
+//
+//    @Override
+//    public RemoteProviderListResponse clone() {
+//        return (RemoteProviderListResponse) super.clone();
+//    }
 
 }

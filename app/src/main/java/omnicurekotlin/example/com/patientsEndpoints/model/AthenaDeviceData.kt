@@ -33,7 +33,7 @@ class AthenaDeviceData {
     }
 
 
-    fun setBatteryLife(batteryLife: Int?): AthenaDeviceData? {
+    fun setBatteryLife(batteryLife: Int?): AthenaDeviceData {
         this.batteryLife = batteryLife
         return this
     }
@@ -48,7 +48,7 @@ class AthenaDeviceData {
     /**
      * @param deviceID deviceID or `null` for none
      */
-    fun setDeviceID(deviceID: Int?): AthenaDeviceData? {
+    fun setDeviceID(deviceID: Int?): AthenaDeviceData {
         this.deviceID = deviceID
         return this
     }
@@ -63,7 +63,7 @@ class AthenaDeviceData {
     /**
      * @param deviceID1 deviceID1 or `null` for none
      */
-    fun setDeviceID1(deviceID1: Int?): AthenaDeviceData? {
+    fun setDeviceID1(deviceID1: Int?): AthenaDeviceData {
         this.deviceID1 = deviceID1
         return this
     }
@@ -78,7 +78,7 @@ class AthenaDeviceData {
     /**
      * @param deviceTypeValue deviceTypeValue or `null` for none
      */
-    fun setDeviceTypeValue(deviceTypeValue: Int?): AthenaDeviceData? {
+    fun setDeviceTypeValue(deviceTypeValue: Int?): AthenaDeviceData {
         this.deviceTypeValue = deviceTypeValue
         return this
     }
@@ -93,7 +93,7 @@ class AthenaDeviceData {
     /**
      * @param diastolicBP diastolicBP or `null` for none
      */
-    fun setDiastolicBP(diastolicBP: Int?): AthenaDeviceData? {
+    fun setDiastolicBP(diastolicBP: Int?): AthenaDeviceData {
         this.diastolicBP = diastolicBP
         return this
     }
@@ -108,7 +108,7 @@ class AthenaDeviceData {
     /**
      * @param direction direction or `null` for none
      */
-    fun setDirection(direction: Int?): AthenaDeviceData? {
+    fun setDirection(direction: Int?): AthenaDeviceData {
         this.direction = direction
         return this
     }
@@ -123,7 +123,7 @@ class AthenaDeviceData {
     /**
      * @param fname fname or `null` for none
      */
-    fun setFname(fname: String?): AthenaDeviceData? {
+    fun setFname(fname: String?): AthenaDeviceData {
         this.fname = fname
         return this
     }
@@ -138,7 +138,7 @@ class AthenaDeviceData {
     /**
      * @param hRpR hRpR or `null` for none
      */
-    fun setHRpR(hRpR: Int?): AthenaDeviceData? {
+    fun setHRpR(hRpR: Int?): AthenaDeviceData {
         this.hRpR = hRpR
         return this
     }
@@ -153,7 +153,7 @@ class AthenaDeviceData {
     /**
      * @param hardwareId hardwareId or `null` for none
      */
-    fun setHardwareId(hardwareId: String?): AthenaDeviceData? {
+    fun setHardwareId(hardwareId: String?): AthenaDeviceData {
         this.hardwareId = hardwareId
         return this
     }
@@ -168,7 +168,7 @@ class AthenaDeviceData {
     /**
      * @param id id or `null` for none
      */
-    fun setId(id: Long?): AthenaDeviceData? {
+    fun setId(id: Long?): AthenaDeviceData {
         this.id = id
         return this
     }
@@ -183,7 +183,7 @@ class AthenaDeviceData {
     /**
      * @param joiningTime joiningTime or `null` for none
      */
-    fun setJoiningTime(joiningTime: Long?): AthenaDeviceData? {
+    fun setJoiningTime(joiningTime: Long?): AthenaDeviceData {
         this.joiningTime = joiningTime
         return this
     }
@@ -198,7 +198,7 @@ class AthenaDeviceData {
     /**
      * @param lname lname or `null` for none
      */
-    fun setLname(lname: String?): AthenaDeviceData? {
+    fun setLname(lname: String?): AthenaDeviceData {
         this.lname = lname
         return this
     }
@@ -213,7 +213,7 @@ class AthenaDeviceData {
     /**
      * @param medicalID medicalID or `null` for none
      */
-    fun setMedicalID(medicalID: Int?): AthenaDeviceData? {
+    fun setMedicalID(medicalID: Int?): AthenaDeviceData {
         this.medicalID = medicalID
         return this
     }
@@ -228,7 +228,7 @@ class AthenaDeviceData {
     /**
      * @param name name or `null` for none
      */
-    fun setName(name: String?): AthenaDeviceData? {
+    fun setName(name: String?): AthenaDeviceData {
         this.name = name
         return this
     }
@@ -243,7 +243,7 @@ class AthenaDeviceData {
     /**
      * @param packetType packetType or `null` for none
      */
-    fun setPacketType(packetType: Int?): AthenaDeviceData? {
+    fun setPacketType(packetType: Int?): AthenaDeviceData {
         this.packetType = packetType
         return this
     }
@@ -258,7 +258,7 @@ class AthenaDeviceData {
     /**
      * @param patientID patientID or `null` for none
      */
-    fun setPatientID(patientID: Int?): AthenaDeviceData? {
+    fun setPatientID(patientID: Int?): AthenaDeviceData {
         this.patientID = patientID
         return this
     }
@@ -273,7 +273,7 @@ class AthenaDeviceData {
     /**
      * @param respiration respiration or `null` for none
      */
-    fun setRespiration(respiration: Int?): AthenaDeviceData? {
+    fun setRespiration(respiration: Int?): AthenaDeviceData {
         this.respiration = respiration
         return this
     }
@@ -288,7 +288,7 @@ class AthenaDeviceData {
     /**
      * @param sequenceNumber sequenceNumber or `null` for none
      */
-    fun setSequenceNumber(sequenceNumber: Int?): AthenaDeviceData? {
+    fun setSequenceNumber(sequenceNumber: Int?): AthenaDeviceData {
         this.sequenceNumber = sequenceNumber
         return this
     }
@@ -303,7 +303,7 @@ class AthenaDeviceData {
     /**
      * @param spO2 spO2 or `null` for none
      */
-    fun setSpO2(spO2: Int?): AthenaDeviceData? {
+    fun setSpO2(spO2: Int?): AthenaDeviceData {
         this.spO2 = spO2
         return this
     }
@@ -318,7 +318,7 @@ class AthenaDeviceData {
     /**
      * @param status status or `null` for none
      */
-    fun setStatus(status: String?): AthenaDeviceData? {
+    fun setStatus(status: String?): AthenaDeviceData {
         this.status = status
         return this
     }
@@ -333,7 +333,7 @@ class AthenaDeviceData {
     /**
      * @param systolicBP systolicBP or `null` for none
      */
-    fun setSystolicBP(systolicBP: Int?): AthenaDeviceData? {
+    fun setSystolicBP(systolicBP: Int?): AthenaDeviceData {
         this.systolicBP = systolicBP
         return this
     }
@@ -348,7 +348,7 @@ class AthenaDeviceData {
     /**
      * @param takingBp takingBp or `null` for none
      */
-    fun setTakingBp(takingBp: Int?): AthenaDeviceData? {
+    fun setTakingBp(takingBp: Int?): AthenaDeviceData {
         this.takingBp = takingBp
         return this
     }
@@ -363,7 +363,7 @@ class AthenaDeviceData {
     /**
      * @param temperature temperature or `null` for none
      */
-    fun setTemperature(temperature: Int?): AthenaDeviceData? {
+    fun setTemperature(temperature: Int?): AthenaDeviceData {
         this.temperature = temperature
         return this
     }
@@ -378,7 +378,7 @@ class AthenaDeviceData {
     /**
      * @param updateTime updateTime or `null` for none
      */
-    fun setUpdateTime(updateTime: Long?): AthenaDeviceData? {
+    fun setUpdateTime(updateTime: Long?): AthenaDeviceData {
         this.updateTime = updateTime
         return this
     }
@@ -393,7 +393,7 @@ class AthenaDeviceData {
     /**
      * @param wrapperTypeValue wrapperTypeValue or `null` for none
      */
-    fun setWrapperTypeValue(wrapperTypeValue: Int?): AthenaDeviceData? {
+    fun setWrapperTypeValue(wrapperTypeValue: Int?): AthenaDeviceData {
         this.wrapperTypeValue = wrapperTypeValue
         return this
     }

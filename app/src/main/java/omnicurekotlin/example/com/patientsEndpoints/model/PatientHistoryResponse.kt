@@ -64,7 +64,7 @@ class PatientHistoryResponse {
     /**
      * @param id id or `null` for none
      */
-    fun setId(id: Long?): PatientHistoryResponse? {
+    fun setId(id: Long?): PatientHistoryResponse {
         this.id = id
         return this
     }
@@ -79,7 +79,7 @@ class PatientHistoryResponse {
     /**
      * @param patientHistoryList patientHistoryList or `null` for none
      */
-    fun setPatientHistoryList(patientHistoryList: List<PatientHistory?>?): PatientHistoryResponse? {
+    fun setPatientHistoryList(patientHistoryList: List<PatientHistory?>?): PatientHistoryResponse {
         this.patientHistoryList = patientHistoryList
         return this
     }
@@ -94,7 +94,7 @@ class PatientHistoryResponse {
     /**
      * @param status status or `null` for none
      */
-    fun setStatus(status: Boolean?): PatientHistoryResponse? {
+    fun setStatus(status: Boolean?): PatientHistoryResponse {
         this.status = status
         return this
     }

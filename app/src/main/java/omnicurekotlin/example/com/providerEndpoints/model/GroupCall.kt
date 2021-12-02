@@ -10,7 +10,7 @@ class GroupCall {
     private var message: String? = null
 
 
-    fun getReceiverIds(): Array<String?>? {
+    fun getReceiverIds(): Array<String?> {
         return receiverIds
     }
 

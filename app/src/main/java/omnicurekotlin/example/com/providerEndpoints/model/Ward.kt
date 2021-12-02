@@ -85,7 +85,7 @@ class Ward {
     }
 
 
-    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?): Ward? {
+    fun setTotalNumberOfBeds(totalNumberOfBeds: Int?): Ward {
         this.totalNumberOfBeds = totalNumberOfBeds
         return this
     }

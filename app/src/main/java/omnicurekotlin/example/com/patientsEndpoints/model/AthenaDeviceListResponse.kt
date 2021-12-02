@@ -15,7 +15,7 @@ class AthenaDeviceListResponse {
     /**
      * @param athenaDeviceDataList athenaDeviceDataList or `null` for none
      */
-    fun setAthenaDeviceDataList(athenaDeviceDataList: List<AthenaDeviceData?>?): AthenaDeviceListResponse? {
+    fun setAthenaDeviceDataList(athenaDeviceDataList: List<AthenaDeviceData?>?): AthenaDeviceListResponse {
         this.athenaDeviceDataList = athenaDeviceDataList
         return this
     }
@@ -30,7 +30,7 @@ class AthenaDeviceListResponse {
     /**
      * @param errorId errorId or `null` for none
      */
-    fun setErrorId(errorId: Int?): AthenaDeviceListResponse? {
+    fun setErrorId(errorId: Int?): AthenaDeviceListResponse {
         this.errorId = errorId
         return this
     }
@@ -45,7 +45,7 @@ class AthenaDeviceListResponse {
     /**
      * @param errorMessage errorMessage or `null` for none
      */
-    fun setErrorMessage(errorMessage: String?): AthenaDeviceListResponse? {
+    fun setErrorMessage(errorMessage: String?): AthenaDeviceListResponse {
         this.errorMessage = errorMessage
         return this
     }
@@ -60,7 +60,7 @@ class AthenaDeviceListResponse {
     /**
      * @param id id or `null` for none
      */
-    fun setId(id: Long?): AthenaDeviceListResponse? {
+    fun setId(id: Long?): AthenaDeviceListResponse {
         this.id = id
         return this
     }
@@ -75,7 +75,7 @@ class AthenaDeviceListResponse {
     /**
      * @param status status or `null` for none
      */
-    fun setStatus(status: Boolean?): AthenaDeviceListResponse? {
+    fun setStatus(status: Boolean?): AthenaDeviceListResponse {
         this.status = status
         return this
     }

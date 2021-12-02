@@ -27,7 +27,7 @@ class CommonResponse {
     }
 
 
-    fun setActiveList(activeList: List<Patient?>?): CommonResponse? {
+    fun setActiveList(activeList: List<Patient?>?): CommonResponse {
         this.activeList = activeList
         return this
     }
@@ -37,7 +37,7 @@ class CommonResponse {
     }
 
 
-    fun setDischargedCount(dischargedCount: Int?): CommonResponse? {
+    fun setDischargedCount(dischargedCount: Int?): CommonResponse {
         this.dischargedCount = dischargedCount
         return this
     }
@@ -48,7 +48,7 @@ class CommonResponse {
     }
 
 
-    fun setDischargedList(dischargedList: List<Patient?>?):CommonResponse? {
+    fun setDischargedList(dischargedList: List<Patient?>?):CommonResponse {
         this.dischargedList = dischargedList
         return this
     }
@@ -59,7 +59,7 @@ class CommonResponse {
         return errorId
     }
 
-    fun setErrorId(errorId: Int?): CommonResponse? {
+    fun setErrorId(errorId: Int?): CommonResponse {
         this.errorId = errorId
         return this
     }
@@ -69,7 +69,7 @@ class CommonResponse {
         return errorMessage
     }
 
-    fun setErrorMessage(errorMessage: String?): CommonResponse? {
+    fun setErrorMessage(errorMessage: String?): CommonResponse {
         this.errorMessage = errorMessage
         return this
     }
@@ -82,7 +82,7 @@ class CommonResponse {
     /**
      * @param id id or `null` for none
      */
-    fun setId(id: Long?): CommonResponse? {
+    fun setId(id: Long?): CommonResponse {
         this.id = id
         return this
     }
@@ -93,7 +93,7 @@ class CommonResponse {
     }
 
 
-    fun setPendingList(pendingList: List<Patient?>?):CommonResponse? {
+    fun setPendingList(pendingList: List<Patient?>?):CommonResponse {
         this.pendingList = pendingList
         return this
     }
@@ -102,7 +102,7 @@ class CommonResponse {
         return provider
     }
 
-    fun setProvider(provider: Provider?): CommonResponse? {
+    fun setProvider(provider: Provider?): CommonResponse {
         this.provider = provider
         return this
     }
@@ -115,7 +115,7 @@ class CommonResponse {
     /**
      * @param providerList providerList or `null` for none
      */
-    fun setProviderList(providerList: List<Provider>?):CommonResponse? {
+    fun setProviderList(providerList: List<Provider>?):CommonResponse {
         this.providerList = providerList
         return this
     }
@@ -126,7 +126,7 @@ class CommonResponse {
     }
 
 
-    fun setRoom(room: Room?): CommonResponse? {
+    fun setRoom(room: Room?): CommonResponse {
         this.room = room
         return this
     }
@@ -137,7 +137,7 @@ class CommonResponse {
     }
 
 
-    fun setStatus(status: Boolean?): CommonResponse? {
+    fun setStatus(status: Boolean?): CommonResponse {
         this.status = status
         return this
     }
@@ -148,7 +148,7 @@ class CommonResponse {
     }
 
 
-    fun setUnit(unit: Unit): CommonResponse? {
+    fun setUnit(unit: Unit): CommonResponse {
         this.unit = unit
         return this
     }
@@ -158,7 +158,7 @@ class CommonResponse {
     }
 
 
-    fun setWard(ward: Ward?): CommonResponse? {
+    fun setWard(ward: Ward?): CommonResponse {
         this.ward = ward
         return this
     }

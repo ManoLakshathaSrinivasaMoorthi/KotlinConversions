@@ -17,7 +17,7 @@ class PatientListResponse {
     /**
      * @param count count or `null` for none
      */
-    fun setCount(count: Int?): PatientListResponse? {
+    fun setCount(count: Int?): PatientListResponse {
         this.count = count
         return this
     }
@@ -47,7 +47,7 @@ class PatientListResponse {
     /**
      * @param errorMessage errorMessage or `null` for none
      */
-    fun setErrorMessage(errorMessage: String?): PatientListResponse? {
+    fun setErrorMessage(errorMessage: String?): PatientListResponse {
         this.errorMessage = errorMessage
         return this
     }
@@ -62,7 +62,7 @@ class PatientListResponse {
     /**
      * @param id id or `null` for none
      */
-    fun setId(id: Long?): PatientListResponse? {
+    fun setId(id: Long?): PatientListResponse {
         this.id = id
         return this
     }
@@ -77,7 +77,7 @@ class PatientListResponse {
     /**
      * @param patientList patientList or `null` for none
      */
-    fun setPatientList(patientList: List<Patient?>?): PatientListResponse? {
+    fun setPatientList(patientList: List<Patient?>?): PatientListResponse {
         this.patientList = patientList
         return this
     }
@@ -92,7 +92,7 @@ class PatientListResponse {
     /**
      * @param status status or `null` for none
      */
-    fun setStatus(status: Boolean?): PatientListResponse? {
+    fun setStatus(status: Boolean?): PatientListResponse {
         this.status = status
         return this
     }

@@ -17,7 +17,7 @@ import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
 import com.example.kotlinomnicure.utils.UtilityMethods
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.patientsEndpoints.model.PatientDetail
+import omnicurekotlin.example.com.patientsEndpoints.model.PatientDetail
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityPatientDetailBinding
 import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel

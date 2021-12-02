@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName
 class SystemAlerts {
     @Expose
     @SerializedName("systemAlertList")
-    var systemAlertList: List<SystemAlertList?>? = null
+    private var systemAlertList: List<SystemAlertList?>? = null
 
     @Expose
     @SerializedName("status")
-    var status = false
+    private var status = false
 
     @Expose
     @SerializedName("errorId")
@@ -18,7 +18,20 @@ class SystemAlerts {
 
     @Expose
     @SerializedName("errorMessage")
-    var errorMessage: String? = null
+    private var errorMessage: String? = null
+
+    fun isStatus(): Boolean {
+        return status
+    }
+
+    fun getErrorMessage(): String? {
+        return errorMessage
+    }
+
+    fun setErrorMessage(errorMessage: String?) {
+        this.errorMessage = errorMessage
+    }
+
     fun getSystemAlertList(): List<SystemAlertList?>? {
         return systemAlertList
     }
@@ -27,6 +40,13 @@ class SystemAlerts {
         this.systemAlertList = systemAlertList
     }
 
+    fun getStatus(): Boolean {
+        return status
+    }
+
+    fun setStatus(status: Boolean) {
+        this.status = status
+    }
 
     fun getErrorId(): Int {
         return errorId

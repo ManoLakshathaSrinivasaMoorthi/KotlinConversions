@@ -36,7 +36,7 @@ class DocBoxPatient {
     /**
      * @param address address or `null` for none
      */
-    fun setAddress(address: String?): DocBoxPatient? {
+    fun setAddress(address: String?): DocBoxPatient {
         this.address = address
         return this
     }
@@ -51,7 +51,7 @@ class DocBoxPatient {
     /**
      * @param bdProviderId bdProviderId or `null` for none
      */
-    fun setBdProviderId(bdProviderId: Long?): DocBoxPatient? {
+    fun setBdProviderId(bdProviderId: Long?): DocBoxPatient {
         this.bdProviderId = bdProviderId
         return this
     }
@@ -66,7 +66,7 @@ class DocBoxPatient {
     /**
      * @param bdProviderName bdProviderName or `null` for none
      */
-    fun setBdProviderName(bdProviderName: String?): DocBoxPatient? {
+    fun setBdProviderName(bdProviderName: String?): DocBoxPatient {
         this.bdProviderName = bdProviderName
         return this
     }
@@ -81,7 +81,7 @@ class DocBoxPatient {
     /**
      * @param bed bed or `null` for none
      */
-    fun setBed(bed: String?): DocBoxPatient? {
+    fun setBed(bed: String?): DocBoxPatient {
         this.bed = bed
         return this
     }
@@ -96,7 +96,7 @@ class DocBoxPatient {
     /**
      * @param countryCode countryCode or `null` for none
      */
-    fun setCountryCode(countryCode: String?): DocBoxPatient? {
+    fun setCountryCode(countryCode: String?): DocBoxPatient {
         this.countryCode = countryCode
         return this
     }
@@ -111,7 +111,7 @@ class DocBoxPatient {
     /**
      * @param dischargeTime dischargeTime or `null` for none
      */
-    fun setDischargeTime(dischargeTime: Long?): DocBoxPatient? {
+    fun setDischargeTime(dischargeTime: Long?): DocBoxPatient {
         this.dischargeTime = dischargeTime
         return this
     }
@@ -126,7 +126,7 @@ class DocBoxPatient {
     /**
      * @param dob dob or `null` for none
      */
-    fun setDob(dob: Long?): DocBoxPatient? {
+    fun setDob(dob: Long?): DocBoxPatient {
         this.dob = dob
         return this
     }
@@ -141,7 +141,7 @@ class DocBoxPatient {
     /**
      * @param docBoxManagerId docBoxManagerId or `null` for none
      */
-    fun setDocBoxManagerId(docBoxManagerId: String?): DocBoxPatient? {
+    fun setDocBoxManagerId(docBoxManagerId: String?): DocBoxPatient {
         this.docBoxManagerId = docBoxManagerId
         return this
     }
@@ -156,7 +156,7 @@ class DocBoxPatient {
     /**
      * @param docBoxPatientId docBoxPatientId or `null` for none
      */
-    fun setDocBoxPatientId(docBoxPatientId: String?): DocBoxPatient? {
+    fun setDocBoxPatientId(docBoxPatientId: String?): DocBoxPatient {
         this.docBoxPatientId = docBoxPatientId
         return this
     }
@@ -171,7 +171,7 @@ class DocBoxPatient {
     /**
      * @param email email or `null` for none
      */
-    fun setEmail(email: String?): DocBoxPatient? {
+    fun setEmail(email: String?): DocBoxPatient {
         this.email = email
         return this
     }
@@ -186,7 +186,7 @@ class DocBoxPatient {
     /**
      * @param fname fname or `null` for none
      */
-    fun setFname(fname: String?): DocBoxPatient? {
+    fun setFname(fname: String?): DocBoxPatient {
         this.fname = fname
         return this
     }
@@ -201,7 +201,7 @@ class DocBoxPatient {
     /**
      * @param gender gender or `null` for none
      */
-    fun setGender(gender: String?): DocBoxPatient? {
+    fun setGender(gender: String?): DocBoxPatient {
         this.gender = gender
         return this
     }
@@ -216,7 +216,7 @@ class DocBoxPatient {
     /**
      * @param hospital hospital or `null` for none
      */
-    fun setHospital(hospital: String?): DocBoxPatient? {
+    fun setHospital(hospital: String?): DocBoxPatient {
         this.hospital = hospital
         return this
     }
@@ -231,7 +231,7 @@ class DocBoxPatient {
     /**
      * @param hospitalDesciption hospitalDesciption or `null` for none
      */
-    fun setHospitalDesciption(hospitalDesciption: String?): DocBoxPatient? {
+    fun setHospitalDesciption(hospitalDesciption: String?): DocBoxPatient {
         this.hospitalDesciption = hospitalDesciption
         return this
     }
@@ -246,7 +246,7 @@ class DocBoxPatient {
     /**
      * @param hospitalId hospitalId or `null` for none
      */
-    fun setHospitalId(hospitalId: Long?): DocBoxPatient? {
+    fun setHospitalId(hospitalId: Long?): DocBoxPatient {
         this.hospitalId = hospitalId
         return this
     }
@@ -261,7 +261,7 @@ class DocBoxPatient {
     /**
      * @param id id or `null` for none
      */
-    fun setId(id: Long?): DocBoxPatient? {
+    fun setId(id: Long?): DocBoxPatient {
         this.id = id
         return this
     }
@@ -276,7 +276,7 @@ class DocBoxPatient {
     /**
      * @param joiningTime joiningTime or `null` for none
      */
-    fun setJoiningTime(joiningTime: Long?): DocBoxPatient? {
+    fun setJoiningTime(joiningTime: Long?): DocBoxPatient {
         this.joiningTime = joiningTime
         return this
     }
@@ -291,7 +291,7 @@ class DocBoxPatient {
     /**
      * @param lname lname or `null` for none
      */
-    fun setLname(lname: String?): DocBoxPatient? {
+    fun setLname(lname: String?): DocBoxPatient {
         this.lname = lname
         return this
     }
@@ -306,7 +306,7 @@ class DocBoxPatient {
     /**
      * @param name name or `null` for none
      */
-    fun setName(name: String?): DocBoxPatient? {
+    fun setName(name: String?): DocBoxPatient {
         this.name = name
         return this
     }
@@ -321,7 +321,7 @@ class DocBoxPatient {
     /**
      * @param note note or `null` for none
      */
-    fun setNote(note: String?): DocBoxPatient? {
+    fun setNote(note: String?): DocBoxPatient {
         this.note = note
         return this
     }
@@ -336,7 +336,7 @@ class DocBoxPatient {
     /**
      * @param phone phone or `null` for none
      */
-    fun setPhone(phone: String?): DocBoxPatient? {
+    fun setPhone(phone: String?): DocBoxPatient {
         this.phone = phone
         return this
     }
@@ -351,7 +351,7 @@ class DocBoxPatient {
     /**
      * @param picUrl picUrl or `null` for none
      */
-    fun setPicUrl(picUrl: String?): DocBoxPatient? {
+    fun setPicUrl(picUrl: String?): DocBoxPatient {
         this.picUrl = picUrl
         return this
     }
@@ -366,7 +366,7 @@ class DocBoxPatient {
     /**
      * @param rdProviderId rdProviderId or `null` for none
      */
-    fun setRdProviderId(rdProviderId: Long?): DocBoxPatient? {
+    fun setRdProviderId(rdProviderId: Long?): DocBoxPatient {
         this.rdProviderId = rdProviderId
         return this
     }
@@ -381,7 +381,7 @@ class DocBoxPatient {
     /**
      * @param rdProviderName rdProviderName or `null` for none
      */
-    fun setRdProviderName(rdProviderName: String?): DocBoxPatient? {
+    fun setRdProviderName(rdProviderName: String?): DocBoxPatient {
         this.rdProviderName = rdProviderName
         return this
     }
@@ -396,7 +396,7 @@ class DocBoxPatient {
     /**
      * @param status status or `null` for none
      */
-    fun setStatus(status: String?): DocBoxPatient? {
+    fun setStatus(status: String?): DocBoxPatient {
         this.status = status
         return this
     }
@@ -411,7 +411,7 @@ class DocBoxPatient {
     /**
      * @param ward ward or `null` for none
      */
-    fun setWard(ward: String?): DocBoxPatient? {
+    fun setWard(ward: String?): DocBoxPatient {
         this.ward = ward
         return this
     }

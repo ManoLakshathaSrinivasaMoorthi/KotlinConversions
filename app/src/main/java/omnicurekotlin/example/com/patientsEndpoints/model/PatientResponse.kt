@@ -14,7 +14,7 @@ class PatientResponse {
     }
 
 
-    fun setErrorId(errorId: Int?): PatientResponse? {
+    fun setErrorId(errorId: Int?): PatientResponse {
         this.errorId = errorId
         return this
     }
@@ -25,7 +25,7 @@ class PatientResponse {
     }
 
 
-    fun setErrorMessage(errorMessage: String?): PatientResponse? {
+    fun setErrorMessage(errorMessage: String?): PatientResponse {
         this.errorMessage = errorMessage
         return this
     }
@@ -36,7 +36,7 @@ class PatientResponse {
     }
 
 
-    fun setId(id: Long?): PatientResponse? {
+    fun setId(id: Long?): PatientResponse {
         this.id = id
         return this
     }
@@ -47,7 +47,7 @@ class PatientResponse {
     }
 
 
-    fun setPatient(patient: Patient?): PatientResponse? {
+    fun setPatient(patient: Patient?): PatientResponse {
         this.patient = patient
         return this
     }
@@ -57,7 +57,7 @@ class PatientResponse {
         return status
     }
 
-    fun setStatus(status: Boolean?): PatientResponse? {
+    fun setStatus(status: Boolean?): PatientResponse {
         this.status = status
         return this
     }

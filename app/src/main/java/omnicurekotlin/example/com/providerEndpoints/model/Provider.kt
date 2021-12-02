@@ -66,7 +66,7 @@ class Provider {
     }
 
 
-    fun setActiveHour(activeHour: Float?): Provider? {
+    fun setActiveHour(activeHour: Float?): Provider {
         this.activeHour = activeHour
         return this
     }
@@ -107,7 +107,7 @@ class Provider {
         return designation
     }
 
-    fun setDesignation(designation: String?): Provider? {
+    fun setDesignation(designation: String?): Provider {
         this.designation = designation
         return this
     }
@@ -117,7 +117,7 @@ class Provider {
         return dob
     }
 
-    fun setDob(dob: Long?): Provider? {
+    fun setDob(dob: Long?): Provider {
         this.dob = dob
         return this
     }
@@ -128,7 +128,7 @@ class Provider {
     }
 
 
-    fun setEmail(email: String?): Provider? {
+    fun setEmail(email: String?): Provider {
         this.email = email
         return this
     }
@@ -138,7 +138,7 @@ class Provider {
     }
 
 
-    fun setEmailOtp(emailOtp: String?): Provider? {
+    fun setEmailOtp(emailOtp: String?): Provider {
         this.emailOtp = emailOtp
         return this
     }
@@ -149,7 +149,7 @@ class Provider {
     }
 
 
-    fun setEmailOtpVerified(emailOtpVerified: Boolean?): Provider? {
+    fun setEmailOtpVerified(emailOtpVerified: Boolean?): Provider {
         this.emailOtpVerified = emailOtpVerified
         return this
     }
@@ -172,7 +172,7 @@ class Provider {
         return fcmKey
     }
 
-    fun setFcmKey(fcmKey: String?): Provider? {
+    fun setFcmKey(fcmKey: String?): Provider {
         this.fcmKey = fcmKey
         return this
     }
@@ -183,7 +183,7 @@ class Provider {
     }
 
 
-    fun setFirebaseUid(firebaseUid: String?): Provider? {
+    fun setFirebaseUid(firebaseUid: String?): Provider {
         this.firebaseUid = firebaseUid
         return this
     }
@@ -194,7 +194,7 @@ class Provider {
     }
 
 
-    fun setFname(fname: String?): Provider? {
+    fun setFname(fname: String?): Provider {
         this.fname = fname
         return this
     }
@@ -205,7 +205,7 @@ class Provider {
     }
 
 
-    fun setGender(gender: String?): Provider? {
+    fun setGender(gender: String?): Provider {
         this.gender = gender
         return this
     }
@@ -248,7 +248,7 @@ class Provider {
     }
 
 
-    fun setId(id: Long?): Provider? {
+    fun setId(id: Long?): Provider {
         this.id = id
         return this
     }
@@ -269,7 +269,7 @@ class Provider {
     }
 
 
-    fun setJoiningTime(joiningTime: Long?): Provider? {
+    fun setJoiningTime(joiningTime: Long?): Provider {
         this.joiningTime = joiningTime
         return this
     }
@@ -280,7 +280,7 @@ class Provider {
     }
 
 
-    fun setLname(lname: String?): Provider? {
+    fun setLname(lname: String?): Provider {
         this.lname = lname
         return this
     }
@@ -291,7 +291,7 @@ class Provider {
     }
 
 
-    fun setName(name: String?): Provider? {
+    fun setName(name: String?): Provider {
         this.name = name
         return this
     }
@@ -301,7 +301,7 @@ class Provider {
         return npiNumber
     }
 
-    fun setNpiNumber(npiNumber: String?): Provider? {
+    fun setNpiNumber(npiNumber: String?): Provider {
         this.npiNumber = npiNumber
         return this
     }
@@ -311,7 +311,7 @@ class Provider {
     }
 
 
-    fun setNumberOfPatient(numberOfPatient: Int?): Provider? {
+    fun setNumberOfPatient(numberOfPatient: Int?): Provider {
         this.numberOfPatient = numberOfPatient
         return this
     }
@@ -321,7 +321,7 @@ class Provider {
     }
 
 
-    fun setOsType(osType: String?): Provider? {
+    fun setOsType(osType: String?): Provider {
         this.osType = osType
         return this
     }
@@ -332,7 +332,7 @@ class Provider {
     }
 
 
-    fun setOtp(otp: String?): Provider? {
+    fun setOtp(otp: String?): Provider {
         this.otp = otp
         return this
     }
@@ -342,7 +342,7 @@ class Provider {
         return password
     }
 
-    fun setPassword(password: String?): Provider? {
+    fun setPassword(password: String?): Provider {
         this.password = password
         return this
     }
@@ -352,7 +352,7 @@ class Provider {
         return phone
     }
 
-    fun setPhone(phone: String?): Provider? {
+    fun setPhone(phone: String?): Provider {
         this.phone = phone
         return this
     }
@@ -363,7 +363,7 @@ class Provider {
     }
 
 
-    fun setProfilePicUrl(profilePicUrl: String?): Provider? {
+    fun setProfilePicUrl(profilePicUrl: String?): Provider {
         this.profilePicUrl = profilePicUrl
         return this
     }
@@ -374,7 +374,7 @@ class Provider {
     }
 
 
-    fun setQualification(qualification: String?): Provider? {
+    fun setQualification(qualification: String?): Provider {
         this.qualification = qualification
         return this
     }
@@ -385,7 +385,7 @@ class Provider {
     }
 
 
-    fun setRole(role: String?): Provider? {
+    fun setRole(role: String?): Provider {
         this.role = role
         return this
     }
@@ -396,7 +396,7 @@ class Provider {
     }
 
 
-    fun setRoles(roles: List<Role?>?): Provider? {
+    fun setRoles(roles: List<Role?>?): Provider {
         this.roles = roles
         return this
     }
@@ -407,7 +407,7 @@ class Provider {
     }
 
 
-    fun setScreenName(screenName: String?): Provider? {
+    fun setScreenName(screenName: String?): Provider {
         this.screenName = screenName
         return this
     }
@@ -417,7 +417,7 @@ class Provider {
         return smsOtpVerified
     }
 
-    fun setSmsOtpVerified(smsOtpVerified: Boolean?): Provider? {
+    fun setSmsOtpVerified(smsOtpVerified: Boolean?): Provider {
         this.smsOtpVerified = smsOtpVerified
         return this
     }
@@ -428,7 +428,7 @@ class Provider {
     }
 
 
-    fun setSpecialization(specialization: String?): Provider? {
+    fun setSpecialization(specialization: String?): Provider {
         this.specialization = specialization
         return this
     }
@@ -439,7 +439,7 @@ class Provider {
     }
 
 
-    fun setStatus(status: String?): Provider? {
+    fun setStatus(status: String?): Provider {
         this.status = status
         return this
     }
@@ -449,7 +449,7 @@ class Provider {
         return token
     }
 
-    fun setToken(token: String?): Provider? {
+    fun setToken(token: String?): Provider{
         this.token = token
         return this
     }
@@ -460,7 +460,7 @@ class Provider {
     }
 
 
-    fun setVoipToken(voipToken: String?): Provider? {
+    fun setVoipToken(voipToken: String?): Provider {
         this.voipToken = voipToken
         return this
     }

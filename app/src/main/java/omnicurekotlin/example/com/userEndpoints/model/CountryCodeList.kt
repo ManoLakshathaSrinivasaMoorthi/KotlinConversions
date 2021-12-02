@@ -3,17 +3,16 @@ package omnicurekotlin.example.com.userEndpoints.model
 
 class CountryCodeList {
 
-
-    var id: String? = null
+    private var id = 0.0
     private var name: String? = null
-    var code: String? = null
+    private var code: String? = null
 
 
     fun getId(): String? {
-        return id
+        return id.toString()
     }
 
-    fun setId(id: String?) {
+    fun setId(id: Double) {
         this.id = id
     }
 

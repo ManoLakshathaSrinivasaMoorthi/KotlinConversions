@@ -44,7 +44,7 @@ class SendChatMessageInputRequestModel : Serializable {
     //com.google.api.client.util.Key
     var time: Long? = null
 
-    var providerId:String?=null
+    private var providerId:String?=null
 
 
     @JvmName("getTime1")

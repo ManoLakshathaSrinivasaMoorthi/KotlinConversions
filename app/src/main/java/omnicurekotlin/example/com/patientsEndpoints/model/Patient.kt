@@ -99,7 +99,7 @@ class Patient {
     /**
      * @param acceptTime acceptTime or `null` for none
      */
-    fun setAcceptTime(acceptTime: Long?): Patient? {
+    fun setAcceptTime(acceptTime: Long?): Patient {
         this.acceptTime = acceptTime
         return this
     }
@@ -110,7 +110,7 @@ class Patient {
     }
 
 
-    fun setAddress(address: String?): Patient? {
+    fun setAddress(address: String?): Patient {
         this.address = address
         return this
     }
@@ -121,7 +121,7 @@ class Patient {
     }
 
 
-    fun setAppointmentId(appointmentId: Long?): Patient? {
+    fun setAppointmentId(appointmentId: Long?): Patient {
         this.appointmentId = appointmentId
         return this
     }
@@ -132,7 +132,7 @@ class Patient {
     }
 
 
-    fun setArterialBloodPressureSystolic(arterialBloodPressureSystolic: Double?): Patient? {
+    fun setArterialBloodPressureSystolic(arterialBloodPressureSystolic: Double?): Patient {
         this.arterialBloodPressureSystolic = arterialBloodPressureSystolic
         return this
     }
@@ -142,7 +142,7 @@ class Patient {
         return athenaDeviceId
     }
 
-    fun setAthenaDeviceId(athenaDeviceId: String?):Patient? {
+    fun setAthenaDeviceId(athenaDeviceId: String?):Patient {
         this.athenaDeviceId = athenaDeviceId
         return this
     }
@@ -151,7 +151,7 @@ class Patient {
         return bdProviderId
     }
 
-    fun setBdProviderId(bdProviderId: Long?): Patient? {
+    fun setBdProviderId(bdProviderId: Long?): Patient {
         this.bdProviderId = bdProviderId
         return this
     }
@@ -162,7 +162,7 @@ class Patient {
     }
 
 
-    fun setBdProviderName(bdProviderName: String?): Patient? {
+    fun setBdProviderName(bdProviderName: String?): Patient {
         this.bdProviderName = bdProviderName
         return this
     }
@@ -181,7 +181,7 @@ class Patient {
     }
 
 
-    fun setBed(bed: String?): Patient? {
+    fun setBed(bed: String?): Patient {
         this.bed = bed
         return this
     }
@@ -191,7 +191,7 @@ class Patient {
         return countryCode
     }
 
-    fun setCountryCode(countryCode: String?): Patient? {
+    fun setCountryCode(countryCode: String?): Patient {
         this.countryCode = countryCode
         return this
     }
@@ -209,7 +209,7 @@ class Patient {
     }
 
 
-    fun setDischargeMessage(dischargeMessage: String?): Patient? {
+    fun setDischargeMessage(dischargeMessage: String?): Patient {
         this.dischargeMessage = dischargeMessage
         return this
     }
@@ -219,7 +219,7 @@ class Patient {
         return dischargeTime
     }
 
-    fun setDischargeTime(dischargeTime: Long?): Patient? {
+    fun setDischargeTime(dischargeTime: Long?): Patient {
         this.dischargeTime = dischargeTime
         return this
     }
@@ -230,7 +230,7 @@ class Patient {
     }
 
 
-    fun setDob(dob: Long?): Patient? {
+    fun setDob(dob: Long?): Patient {
         this.dob = dob
         return this
     }
@@ -241,7 +241,7 @@ class Patient {
     }
 
 
-    fun setDobDay(dobDay: Int?): Patient? {
+    fun setDobDay(dobDay: Int?): Patient {
         this.dobDay = dobDay
         return this
     }
@@ -252,7 +252,7 @@ class Patient {
     }
 
 
-    fun setDobMonth(dobMonth: String?): Patient? {
+    fun setDobMonth(dobMonth: String?): Patient {
         this.dobMonth = dobMonth
         return this
     }
@@ -264,7 +264,7 @@ class Patient {
     /**
      * @param dobYear dobYear or `null` for none
      */
-    fun setDobYear(dobYear: Int?):Patient? {
+    fun setDobYear(dobYear: Int?):Patient {
         this.dobYear = dobYear
         return this
     }
@@ -279,7 +279,7 @@ class Patient {
     /**
      * @param docBoxManagerId docBoxManagerId or `null` for none
      */
-    fun setDocBoxManagerId(docBoxManagerId: String?): Patient? {
+    fun setDocBoxManagerId(docBoxManagerId: String?): Patient {
         this.docBoxManagerId = docBoxManagerId
         return this
     }
@@ -294,7 +294,7 @@ class Patient {
     /**
      * @param docBoxPatientId docBoxPatientId or `null` for none
      */
-    fun setDocBoxPatientId(docBoxPatientId: String?):Patient? {
+    fun setDocBoxPatientId(docBoxPatientId: String?):Patient {
         this.docBoxPatientId = docBoxPatientId
         return this
     }
@@ -309,7 +309,7 @@ class Patient {
     /**
      * @param email email or `null` for none
      */
-    fun setEmail(email: String?): Patient? {
+    fun setEmail(email: String?): Patient {
         this.email = email
         return this
     }
@@ -324,7 +324,7 @@ class Patient {
     /**
      * @param fname fname or `null` for none
      */
-    fun setFname(fname: String?): Patient? {
+    fun setFname(fname: String?): Patient {
         this.fname = fname
         return this
     }
@@ -335,7 +335,7 @@ class Patient {
     }
 
 
-    fun setGender(gender: String?): Patient? {
+    fun setGender(gender: String?): Patient {
         this.gender = gender
         return this
     }
@@ -344,7 +344,7 @@ class Patient {
         return heartRate
     }
 
-    fun setHeartRate(heartRate: Double?): Patient? {
+    fun setHeartRate(heartRate: Double?): Patient {
         this.heartRate = heartRate
         return this
     }
@@ -359,7 +359,7 @@ class Patient {
     /**
      * @param hospital hospital or `null` for none
      */
-    fun setHospital(hospital: String?): Patient? {
+    fun setHospital(hospital: String?): Patient {
         this.hospital = hospital
         return this
     }
@@ -374,7 +374,7 @@ class Patient {
     /**
      * @param hospitalId hospitalId or `null` for none
      */
-    fun setHospitalId(hospitalId: Long?): Patient? {
+    fun setHospitalId(hospitalId: Long?): Patient {
         this.hospitalId = hospitalId
         return this
     }
@@ -389,7 +389,7 @@ class Patient {
     /**
      * @param id id or `null` for none
      */
-    fun setId(id: Long?): Patient? {
+    fun setId(id: Long?): Patient {
         this.id = id
         return this
     }
@@ -404,7 +404,7 @@ class Patient {
     /**
      * @param inviteTime inviteTime or `null` for none
      */
-    fun setInviteTime(inviteTime: Long?):Patient? {
+    fun setInviteTime(inviteTime: Long?):Patient {
         this.inviteTime = inviteTime
         return this
     }
@@ -419,7 +419,7 @@ class Patient {
     /**
      * @param joiningTime joiningTime or `null` for none
      */
-    fun setJoiningTime(joiningTime: Long?):Patient? {
+    fun setJoiningTime(joiningTime: Long?):Patient {
         this.joiningTime = joiningTime
         return this
     }
@@ -434,7 +434,7 @@ class Patient {
     /**
      * @param lastMessageTime lastMessageTime or `null` for none
      */
-    fun setLastMessageTime(lastMessageTime: Long?): Patient? {
+    fun setLastMessageTime(lastMessageTime: Long?): Patient {
         this.lastMessageTime = lastMessageTime
         return this
     }
@@ -449,7 +449,7 @@ class Patient {
     /**
      * @param lname lname or `null` for none
      */
-    fun setLname(lname: String?): Patient? {
+    fun setLname(lname: String?): Patient {
         this.lname = lname
         return this
     }
@@ -460,7 +460,7 @@ class Patient {
     }
 
 
-    fun setName(name: String?): Patient? {
+    fun setName(name: String?): Patient {
         this.name = name
         return this
     }
@@ -473,7 +473,7 @@ class Patient {
     /**
      * @param note note or `null` for none
      */
-    fun setNote(note: String?): Patient? {
+    fun setNote(note: String?): Patient {
         this.note = note
         return this
     }
@@ -488,7 +488,7 @@ class Patient {
     /**
      * @param oxygenSupplement oxygenSupplement or `null` for none
      */
-    fun setOxygenSupplement(oxygenSupplement: Boolean?): Patient? {
+    fun setOxygenSupplement(oxygenSupplement: Boolean?): Patient {
         this.oxygenSupplement = oxygenSupplement
         return this
     }
@@ -503,7 +503,7 @@ class Patient {
     /**
      * @param patientCondition patientCondition or `null` for none
      */
-    fun setPatientCondition(patientCondition: String?): Patient? {
+    fun setPatientCondition(patientCondition: String?): Patient {
         this.patientCondition = patientCondition
         return this
     }
@@ -518,7 +518,7 @@ class Patient {
     /**
      * @param phone phone or `null` for none
      */
-    fun setPhone(phone: String?):Patient? {
+    fun setPhone(phone: String?):Patient {
         this.phone = phone
         return this
     }
@@ -533,7 +533,7 @@ class Patient {
     /**
      * @param picUrl picUrl or `null` for none
      */
-    fun setPicUrl(picUrl: String?): Patient? {
+    fun setPicUrl(picUrl: String?): Patient {
         this.picUrl = picUrl
         return this
     }
@@ -548,7 +548,7 @@ class Patient {
     /**
      * @param rdProviderId rdProviderId or `null` for none
      */
-    fun setRdProviderId(rdProviderId: Long?): Patient? {
+    fun setRdProviderId(rdProviderId: Long?): Patient {
         this.rdProviderId = rdProviderId
         return this
     }
@@ -563,7 +563,7 @@ class Patient {
     /**
      * @param rdProviderName rdProviderName or `null` for none
      */
-    fun setRdProviderName(rdProviderName: String?):Patient? {
+    fun setRdProviderName(rdProviderName: String?):Patient {
         this.rdProviderName = rdProviderName
         return this
     }
@@ -578,7 +578,7 @@ class Patient {
     /**
      * @param respiratoryRate respiratoryRate or `null` for none
      */
-    fun setRespiratoryRate(respiratoryRate: Double?): Patient? {
+    fun setRespiratoryRate(respiratoryRate: Double?): Patient {
         this.respiratoryRate = respiratoryRate
         return this
     }
@@ -593,7 +593,7 @@ class Patient {
     /**
      * @param score score or `null` for none
      */
-    fun setScore(score: String?): Patient? {
+    fun setScore(score: String?): Patient {
         this.score = score
         return this
     }
@@ -608,7 +608,7 @@ class Patient {
     /**
      * @param spO2 spO2 or `null` for none
      */
-    fun setSpO2(spO2: Double?): Patient? {
+    fun setSpO2(spO2: Double?): Patient {
         this.spO2 = spO2
         return this
     }
@@ -617,7 +617,7 @@ class Patient {
         return arterialBloodPressureDiastolic
     }
 
-    fun setArterialBloodPressureDiastolic(arterialBloodPressureDiastolic: Double?):Patient? {
+    fun setArterialBloodPressureDiastolic(arterialBloodPressureDiastolic: Double?): Patient {
         this.arterialBloodPressureDiastolic = arterialBloodPressureDiastolic
         return this
     }
@@ -640,7 +640,7 @@ class Patient {
     /**
      * @param status status or `null` for none
      */
-    fun setStatus(status: String?): Patient? {
+    fun setStatus(status: String?): Patient {
         this.status = status
         return this
     }
@@ -652,7 +652,7 @@ class Patient {
         return urgent
     }
 
-    fun setUrgent(urgent: Boolean?): Patient? {
+    fun setUrgent(urgent: Boolean?): Patient {
         this.urgent = urgent
         return this
     }
