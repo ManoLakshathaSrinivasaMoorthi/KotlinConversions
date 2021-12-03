@@ -1,7 +1,5 @@
 package omnicurekotlin.example.com.providerEndpoints.model
 
-import com.example.kotlinomnicure.model.ENotesList
-
 class CommonResponse {
 
 

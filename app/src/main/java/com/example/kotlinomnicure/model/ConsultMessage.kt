@@ -1,28 +1,30 @@
 package com.example.kotlinomnicure.model
 
-class ConsultMessage {
+import java.io.Serializable
 
-    var id: String? = null
+class ConsultMessage: Serializable {
+
+    private var id: String? = null
     private var messageId: Long? = null
-    var type //text,image,video,audio,system
+    private var type //text,image,video,audio,system
             : String? = null
     private var text: String? = null
     private var name: String? = null
     private var role: String? = null
     private var urgent = false
-    var senderId: String? = null
+    private var senderId: String? = null
     private var photoUrl: String? = null
     private var imageUrl: String? = null
     private var thumbUrl: String? = null
     private var videoUrl: String? = null
     private var filename: String? = null
-    var time: Long? = null
+    private var time: Long? = null
     private var status //Sent, Delivered, Read
             : String? = null
 
-    fun ConsultMessage() {}
+    constructor() {}
 
-    fun ConsultMessage(
+    constructor(
         text: String?, name: String?, photoUrl: String?,
         imageUrl: String?, type: String?, time: Long,
         senderId: String?, filename: String?, status: String?, role: String?, msgId: Long?
@@ -40,7 +42,7 @@ class ConsultMessage {
         messageId = msgId
     }
 
-    fun ConsultMessage(
+    constructor(
         text: String?, name: String?, photoUrl: String?,
         imageUrl: String?, videoUrl: String?, type: String?, time: Long,
         senderId: String?, filename: String?, status: String?, role: String?, msgId: Long?

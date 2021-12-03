@@ -3,20 +3,24 @@ package com.example.kotlinomnicure.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.kotlinomnicure.utils.Constants
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
 
 class ConsultProvider :Serializable{
-    var patientsId: Long? = null
 
-    var id: Long? = null
-    var patientId: String? = null
-    var text: String? = null
-    var name: String? = null
+
+    private var id: Long? = null
+    private var patientsId: Long? = null
+    private var patientId: Long? = null
+    private var text: String? = null
+    private var name: String? = null
     private var fname: String? = null
     private var lname: String? = null
-    var unread = 0
+    private var unread = 0
     private var time: Long? = null
+    private var inviteTime: Long? = null
     private var msgName: String? = null
     private var wardName: String? = null
     private var recordNumber: String? = null
@@ -26,25 +30,19 @@ class ConsultProvider :Serializable{
     private var bdProviderName: String? = null
     private var rdProviderId: Long? = null
     private var rdProviderName: String? = null
-    var gender: String? = null
+    private var gender: String? = null
     private var email: String? = null
-    private val fiO2: Double? = null
-    private var inviteTime:Long?=null
-
-    var dob: Long? = null
-
+    private var dob: Long? = null
     private var address: String? = null
-
-    var phone: String? = null
-
+    private var phone: String? = null
     private var countryCode: String? = null
-
     private var hospital: String? = null
-
     private var hospitalId: Long? = null
     private var picUrl: String? = null
 
-    var status: Constants.PatientStatus? = null
+    @Expose
+    @SerializedName(value = "status", alternate = ["Status"])
+    private var status: Constants.PatientStatus? = null
 
     private var joiningTime: Long? = null
 
@@ -52,24 +50,24 @@ class ConsultProvider :Serializable{
 
     private var dischargeTime: Long? = null
     private var bed: String? = null
-    var note: String? = null
-    var patientCondition: Constants.PatientCondition? = null
-    var oxygenSupplement: Boolean? = null
-    var urgent: Boolean? = null
+    private var note: String? = null
+    private var patientCondition: Constants.PatientCondition? = null
+    private var oxygenSupplement: Boolean? = null
+    private var urgent: Boolean? = null
     private var resetAcuityFlag: Boolean? = null
 
     //Metrics
-    var docBoxPatientId: String? = null
+    private var docBoxPatientId: String? = null
     private var docBoxManagerId: String? = null
     private var timeHeartRate: Long? = null
     private var timeSpO2: Long? = null
-    var arterialBloodPressureSystolic: Double? = null
-    var heartRate: Double? = null
+    private var arterialBloodPressureSystolic: Double? = null
+    private var heartRate: Double? = null
     private var timeRespiratoryRate: Long? = null
 
     //    private Double sp02;
-    var respiratoryRate: Double? = null
-    var arterialBloodPressureDiastolic: Double? = null
+    private var respiratoryRate: Double? = null
+    private var arterialBloodPressureDiastolic: Double? = null
     private var timeArterialBloodPressureDiastolic: Long? = null
     private var timeArterialBloodPressureSystolic: Long? = null
 
@@ -79,18 +77,25 @@ class ConsultProvider :Serializable{
     private var dobMonth: String? = null
     private var completed_by: String? = null
     private var dobYear: Int? = null
-    var score: Constants.AcuityLevel? = null
-    var fio2: Double? = null
-    var spO2: Double? = null
-    var temperature: Double? = null
+    private var score: Constants.AcuityLevel? = null
+    private var fiO2: Double? = null
+    private var spO2: Double? = null
+    private var temperature: Double? = null
     private var unreadCount = 0
-
 
     fun ConsultProvider() {}
 
-    fun ConsultProvider(id: Long?, patientId: String?, text: String?, name: String?, unread: Int, time: Long?, status: Constants.PatientStatus?) {
+    fun ConsultProvider(
+        id: Long?,
+        patientId: Long?,
+        text: String?,
+        name: String?,
+        unread: Int,
+        time: Long?,
+        status: Constants.PatientStatus?
+    ) {
         this.id = id
-        this.patientId = patientId
+        patientsId = patientId
         this.text = text
         this.name = name
         this.unread = unread
@@ -98,9 +103,16 @@ class ConsultProvider :Serializable{
         this.status = status
     }
 
-    fun ConsultProvider(patientId: String?, text: String?, name: String?, unread: Int, time: Long?, status: Constants.PatientStatus?) {
+    fun ConsultProvider(
+        patientId: Long?,
+        text: String?,
+        name: String?,
+        unread: Int,
+        time: Long?,
+        status: Constants.PatientStatus?
+    ) {
         id = id
-        this.patientId = patientId
+        patientsId = patientId
         this.text = text
         this.name = name
         this.unread = unread
@@ -108,56 +120,12 @@ class ConsultProvider :Serializable{
         this.status = status
     }
 
-
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val consultProvider = o as ConsultProvider
-        return unread == consultProvider.unread &&
-                time == consultProvider.time &&
-                id == consultProvider.id &&
-                text == consultProvider.text &&
-                msgName == consultProvider.msgName &&
-                bdProviderId == consultProvider.bdProviderId &&
-                bdProviderName == consultProvider.bdProviderName &&
-                rdProviderId == consultProvider.rdProviderId &&
-                rdProviderName == consultProvider.rdProviderName &&
-                picUrl == consultProvider.picUrl && status === consultProvider.status &&
-                joiningTime == consultProvider.joiningTime &&
-                dischargeTime == consultProvider.dischargeTime &&
-                note == consultProvider.note && patientCondition === consultProvider.patientCondition &&
-                oxygenSupplement == consultProvider.oxygenSupplement &&
-                resetAcuityFlag == consultProvider.resetAcuityFlag &&
-                urgent == consultProvider.urgent
-    }
-
-    override fun hashCode(): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Objects.hash(id, patientId, text, unread, time, msgName, bdProviderId,
-                bdProviderName, rdProviderId, rdProviderName, picUrl, status, joiningTime,
-                dischargeTime, note, patientCondition, oxygenSupplement, urgent, resetAcuityFlag)
-        } else id!!.toInt()
-    }
-
-    override fun toString(): String {
-        return "ConsultProvider{" +
-                "Id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", time=" + time +
-                ", Status=" + status +
-                ", unread=" + unread +
-                ", score=" + score +
-                '}'
-    }
     fun getInviteTime(): Long? {
-
         return inviteTime
     }
 
-    fun setInviteTime(inviteTime: Long) {
-        inviteTime = inviteTime
+    fun setInviteTime(inviteTime: Long?) {
+        this.inviteTime = inviteTime
     }
 
     fun getWardName(): String? {
@@ -192,22 +160,18 @@ class ConsultProvider :Serializable{
         this.syncTime = syncTime
     }
 
-    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
 
-    @JvmName("setId1")
     fun setId(id: Long?) {
         this.id = id
     }
 
-    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
 
-    @JvmName("setName1")
     fun setName(name: String?) {
         this.name = name
     }
@@ -221,32 +185,26 @@ class ConsultProvider :Serializable{
     }
 
 
-    @JvmName("getText1")
     fun getText(): String? {
         return text
     }
 
-    @JvmName("setText1")
     fun setText(text: String?) {
         this.text = text
     }
 
-    @JvmName("getUnread1")
     fun getUnread(): Int {
         return unread
     }
 
-    @JvmName("setUnread1")
     fun setUnread(unread: Int) {
         this.unread = unread
     }
 
-    @JvmName("getPatientsId1")
     fun getPatientsId(): Long? {
         return patientsId
     }
 
-    @JvmName("setPatientsId1")
     fun setPatientsId(patientsId: Long?) {
         this.patientsId = patientsId
     }
@@ -291,12 +249,10 @@ class ConsultProvider :Serializable{
         this.rdProviderName = rdProviderName
     }
 
-    @JvmName("getGender1")
     fun getGender(): String? {
         return gender
     }
 
-    @JvmName("setGender1")
     fun setGender(gender: String?) {
         this.gender = gender
     }
@@ -309,12 +265,10 @@ class ConsultProvider :Serializable{
         this.email = email
     }
 
-    @JvmName("getDob1")
     fun getDob(): Long? {
         return dob
     }
 
-    @JvmName("setDob1")
     fun setDob(dob: Long?) {
         this.dob = dob
     }
@@ -327,12 +281,10 @@ class ConsultProvider :Serializable{
         this.address = address
     }
 
-    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }
 
-    @JvmName("setPhone1")
     fun setPhone(phone: String?) {
         this.phone = phone
     }
@@ -369,12 +321,10 @@ class ConsultProvider :Serializable{
         this.picUrl = picUrl
     }
 
-    @JvmName("getStatus1")
     fun getStatus(): Constants.PatientStatus? {
         return status
     }
 
-    @JvmName("setStatus1")
     fun setStatus(status: Constants.PatientStatus?) {
         this.status = status
     }
@@ -411,22 +361,18 @@ class ConsultProvider :Serializable{
         this.memberCount = memberCount
     }
 
-    @JvmName("getNote1")
     fun getNote(): String? {
         return note
     }
 
-    @JvmName("setNote1")
     fun setNote(note: String?) {
         this.note = note
     }
 
-    @JvmName("getDocBoxPatientId1")
     fun getDocBoxPatientId(): String? {
         return docBoxPatientId
     }
 
-    @JvmName("setDocBoxPatientId1")
     fun setDocBoxPatientId(docBoxPatientId: String?) {
         this.docBoxPatientId = docBoxPatientId
     }
@@ -463,43 +409,49 @@ class ConsultProvider :Serializable{
         this.timeRespiratoryRate = timeRespiratoryRate
     }
 
-    @JvmName("getArterialBloodPressureSystolic1")
     fun getArterialBloodPressureSystolic(): Double? {
         return arterialBloodPressureSystolic
     }
 
+    /* public Double getSp02() {
+        return sp02;
+    }
 
-    @JvmName("setArterialBloodPressureSystolic1")
+    public void setSp02(Double spO2) {
+        this.sp02 = spO2;
+    }*/
+
+    /* public Double getSp02() {
+        return sp02;
+    }
+
+    public void setSp02(Double spO2) {
+        this.sp02 = spO2;
+    }*/
     fun setArterialBloodPressureSystolic(arterialBloodPressureSystolic: Double?) {
         this.arterialBloodPressureSystolic = arterialBloodPressureSystolic
     }
 
-    @JvmName("getHeartRate1")
     fun getHeartRate(): Double? {
         return heartRate
     }
 
-    @JvmName("setHeartRate1")
     fun setHeartRate(heartRate: Double?) {
         this.heartRate = heartRate
     }
 
-    @JvmName("getRespiratoryRate1")
     fun getRespiratoryRate(): Double? {
         return respiratoryRate
     }
 
-    @JvmName("setRespiratoryRate1")
     fun setRespiratoryRate(respiratoryRate: Double?) {
         this.respiratoryRate = respiratoryRate
     }
 
-    @JvmName("getArterialBloodPressureDiastolic1")
     fun getArterialBloodPressureDiastolic(): Double? {
         return arterialBloodPressureDiastolic
     }
 
-    @JvmName("setArterialBloodPressureDiastolic1")
     fun setArterialBloodPressureDiastolic(arterialBloodPressureDiastolic: Double?) {
         this.arterialBloodPressureDiastolic = arterialBloodPressureDiastolic
     }
@@ -508,16 +460,14 @@ class ConsultProvider :Serializable{
         return fiO2
     }
 
-    fun setFiO2(fiO2: Double) {
-        fiO2 = fiO2
+    fun setFiO2(fiO2: Double?) {
+        this.fiO2 = fiO2
     }
 
-    @JvmName("getSpO21")
     fun getSpO2(): Double? {
         return spO2
     }
 
-    @JvmName("setSpO21")
     fun setSpO2(spO2: Double?) {
         this.spO2 = spO2
     }
@@ -562,12 +512,10 @@ class ConsultProvider :Serializable{
         this.lname = lname
     }
 
-    @JvmName("getTemperature1")
     fun getTemperature(): Double? {
         return temperature
     }
 
-    @JvmName("setTemperature1")
     fun setTemperature(temperature: Double?) {
         this.temperature = temperature
     }
@@ -581,7 +529,6 @@ class ConsultProvider :Serializable{
         this.timeFiO2 = timeFiO2
     }
 
-    @JvmName("getPatientCondition1")
     fun getPatientCondition(): Constants.PatientCondition? {
         return patientCondition
     }
@@ -594,27 +541,22 @@ class ConsultProvider :Serializable{
         this.teamName = teamName
     }
 
-    @JvmName("setPatientCondition1")
     fun setPatientCondition(patientCondition: Constants.PatientCondition?) {
         this.patientCondition = patientCondition
     }
 
-    @JvmName("getOxygenSupplement1")
     fun getOxygenSupplement(): Boolean? {
         return oxygenSupplement
     }
 
-    @JvmName("setOxygenSupplement1")
     fun setOxygenSupplement(oxygenSupplement: Boolean?) {
         this.oxygenSupplement = oxygenSupplement
     }
 
-    @JvmName("getUrgent1")
     fun getUrgent(): Boolean? {
         return urgent
     }
 
-    @JvmName("setUrgent1")
     fun setUrgent(urgent: Boolean?) {
         this.urgent = urgent
     }
@@ -652,23 +594,79 @@ class ConsultProvider :Serializable{
     }
 
 
-    @JvmName("getScore1")
     fun getScore(): Constants.AcuityLevel? {
         return score
     }
 
-    @JvmName("setScore1")
     fun setScore(score: Constants.AcuityLevel?) {
         this.score = score
     }
 
-    @JvmName("getPatientId1")
-    fun getPatientId(): String? {
+    fun getPatientId(): Long? {
         return patientId
     }
 
     fun setPatientId(patientId: Long?) {
-        this.patientId = patientId.toString()
+        this.patientId = patientId
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    override fun equals(o: Any?): Boolean {
+        if (this === o) return true
+        if (o == null || javaClass != o.javaClass) return false
+        val consultProvider = o as ConsultProvider
+        return unread == consultProvider.unread &&
+                time == consultProvider.time &&
+                id == consultProvider.id &&
+                text == consultProvider.text &&
+                msgName == consultProvider.msgName &&
+                bdProviderId == consultProvider.bdProviderId &&
+                bdProviderName == consultProvider.bdProviderName &&
+                rdProviderId == consultProvider.rdProviderId &&
+                rdProviderName == consultProvider.rdProviderName &&
+                picUrl == consultProvider.picUrl && status === consultProvider.status &&
+                joiningTime == consultProvider.joiningTime &&
+                dischargeTime == consultProvider.dischargeTime &&
+                note == consultProvider.note && patientCondition === consultProvider.patientCondition &&
+                oxygenSupplement == consultProvider.oxygenSupplement &&
+                resetAcuityFlag == consultProvider.resetAcuityFlag &&
+                urgent == consultProvider.urgent
+    }
+
+    override fun hashCode(): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Objects.hash(
+                id,
+                patientsId,
+                text,
+                unread,
+                time,
+                msgName,
+                bdProviderId,
+                bdProviderName,
+                rdProviderId,
+                rdProviderName,
+                picUrl,
+                status,
+                joiningTime,
+                dischargeTime,
+                note,
+                patientCondition,
+                oxygenSupplement,
+                urgent,
+                resetAcuityFlag
+            )
+        } else id!!.toInt()
+    }
+
+    override fun toString(): String {
+        return "ConsultProvider{" +
+                "Id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", time=" + time +
+                ", Status=" + status +
+                ", unread=" + unread +
+                ", score=" + score +
+                '}'
+    }
 }
