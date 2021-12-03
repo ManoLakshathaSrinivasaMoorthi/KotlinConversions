@@ -12,7 +12,7 @@ class CommonResponse {
 
     private var errorId: Int? = null
 
-    private var errorMessage: String? = null
+    var errorMessage: String? = null
 
     private val eNotesActivity: List<ENotesList>? = null
 

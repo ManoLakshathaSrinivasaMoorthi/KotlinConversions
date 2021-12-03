@@ -32,6 +32,9 @@
         android:theme="@style/Theme.KotlinOmniCure"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.NotificationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.RingingActivity"
             android:exported="false" />
         <activity

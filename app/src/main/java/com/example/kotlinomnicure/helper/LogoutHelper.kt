@@ -7,6 +7,7 @@ import android.view.View
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.BaseActivity
 import com.example.kotlinomnicure.activity.LoginActivity
+import com.example.kotlinomnicure.activity.MyProfileActivity
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
@@ -20,7 +21,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LogoutHelper{
+class LogoutHelper(myProfileActivity: MyProfileActivity, root: View?) {
 
     //Variables
     private val TAG = LogoutHelper::class.java.simpleName

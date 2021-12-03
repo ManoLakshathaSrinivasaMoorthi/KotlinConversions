@@ -176,7 +176,7 @@ class NotificationActivity : BaseActivity(){
             PrefUtility().saveBooleanInPref(this,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false)
-          PrefUtility().saveStringInPref(this,
+            PrefUtility().saveStringInPref(this,
                 Constants.SharedPrefConstants.PASSWORD,
                 "")
             showPasswordPopup()
@@ -326,7 +326,7 @@ class NotificationActivity : BaseActivity(){
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     false)
                 clearPrefs()
-                
+
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -355,7 +355,7 @@ class NotificationActivity : BaseActivity(){
                     alertDialog!!.show()
                 }
             } catch (e: BadTokenException) {
-=
+                =
             }
         }
 
@@ -377,7 +377,7 @@ class NotificationActivity : BaseActivity(){
         val viewGroup: ViewGroup = findViewById(android.R.id.content)
         dialogView = LayoutInflater.from(applicationContext)
             .inflate(R.layout.fingerprint_dialog, viewGroup, false)
-    
+
         val btnContinue = dialogView!!.findViewById<Button>(R.id.buttonContinue)
         val btnSignOut = dialogView!!.findViewById<Button>(R.id.buttonSignOut)
         val fpLayout = dialogView!!.findViewById<LinearLayout>(R.id.fingerprintLayout)
@@ -548,7 +548,7 @@ class NotificationActivity : BaseActivity(){
                         stopAuth()
                         //  handledisable();
 
-                      
+
                     } else if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
                         // user clicked negative button
 
@@ -613,7 +613,7 @@ class NotificationActivity : BaseActivity(){
 
                     }
                     super.onAuthenticationFailed()
-                    
+
                 }
             })
         val promptInfo = PromptInfo.Builder()
@@ -671,7 +671,7 @@ class NotificationActivity : BaseActivity(){
             if (ValidationUtil().checkEdittext(editTextPassword) == true) {
                 checkPasswordApi(editTextPassword!!.getText().toString())
             }
-           
+
         }
 
         // Sign out button click listener
@@ -907,7 +907,7 @@ class NotificationActivity : BaseActivity(){
 
     var progressDialog: CustomProgressDialog? = null
 
-   fun showProgressBar(string: String) {
+    fun showProgressBar(string: String) {
         dismissProgressBar()
         try {
             progressDialog = CustomProgressDialog(this)

@@ -7,21 +7,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.AddNotificationDataRequest
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.CommonResponseProviderNotification
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.ProviderNotificationResponse
-import com.example.kotlinomnicure.requestbodys.CommonIdRequestBody
+
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.GetProviderByIdRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.GetProviderListRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.ProviderNotificationDetailsRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.SendMessageRequestBody
-import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
+
 import omnicurekotlin.example.com.hospitalEndpoints.model.HospitalListResponse
-import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
-import omnicurekotlin.example.com.providerEndpoints.model.HandOffAcceptRequest
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
-import omnicurekotlin.example.com.providerEndpoints.model.ProviderListResponse
+
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.CommonIdRequestBody
+import omnicurekotlin.example.com.healthcareEndPoints.model.AddNotificationDataRequest
+import omnicurekotlin.example.com.healthcareEndPoints.model.CommonResponseProviderNotification
+import omnicurekotlin.example.com.healthcareEndPoints.model.ProviderNotificationResponse
+import omnicurekotlin.example.com.providerEndpoints.HandOffAcceptRequest
+import omnicurekotlin.example.com.providerEndpoints.model.*
 import omnicurekotlin.example.com.userEndpoints.model.VersionInfoResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +42,7 @@ class HomeViewModel : ViewModel() {
     private var handOffAcceptObservable: MutableLiveData<CommonResponse>? = null
     private var addOrUpdateObservable: MutableLiveData<CommonResponseProviderNotification>? = null
 
-    private var passwordObservable: MutableLiveData<CommonResponse>? =
+    private var passwordObservable: MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse>? =
         null
     private var acceptInviteObservable: MutableLiveData<CommonResponse>? =
         null
@@ -62,6 +63,87 @@ class HomeViewModel : ViewModel() {
         return versionInfoObservable
     }
 
+    fun checkPassword(
+        email: String?,
+        password: String?,
+        token: String?,
+    ): MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse>? {
+        passwordObservable = MutableLiveData()
+        if (email != null) {
+            password?.let {
+                if (token != null) {
+                    checkPass(email, it, token)
+                }
+            }
+        }
+        return passwordObservable
+    }
+
+    private fun checkPass(email: String, password: String, token: String) {
+        val errMsg = ""
+        val bodyValues = HashMap<String, String>()
+        bodyValues["email"] = email
+        bodyValues["password"] = password
+        bodyValues["token"] = token
+        ApiClient().getApi(true, true)?.loginWithPassword(bodyValues)?.
+        enqueue(object : Callback<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?> {
+                override fun onResponse(
+                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                    response: Response<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>, ) {
+                    if (response.isSuccessful()) {
+                        Log.d("discharge", "onResponse: $response")
+                        val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse? =
+                            response.body()
+                        if (passwordObservable == null) {
+                            passwordObservable = MutableLiveData()
+                        }
+                        passwordObservable!!.setValue(commonResponse)
+                    } else {
+                        Log.d("discharge", "onResponse: $response")
+                        Handler(Looper.getMainLooper()).post {
+                            val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
+                                omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
+                            commonResponse.setErrorMessage(Constants.API_ERROR)
+                            if (passwordObservable == null) {
+                                passwordObservable =
+                                    MutableLiveData()
+                            }
+                            passwordObservable!!.setValue(commonResponse)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                    t: Throwable,
+                ) {
+                    Log.d("discharge", "onFailure: $t")
+                    Handler(Looper.getMainLooper()).post {
+                        val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
+                            omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
+                        commonResponse.setErrorMessage(Constants.API_ERROR)
+                        if (passwordObservable == null) {
+                            passwordObservable =
+                                MutableLiveData()
+                        }
+                        passwordObservable!!.setValue(commonResponse)
+                    }
+                }
+            })
+        if (!TextUtils.isEmpty(errMsg)) {
+            Handler(Looper.getMainLooper()).post {
+                val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
+                    omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
+                commonResponse.setErrorMessage(errMsg)
+                if (passwordObservable == null) {
+                    passwordObservable =
+                        MutableLiveData()
+                }
+                passwordObservable!!.setValue(commonResponse)
+            }
+        }
+    }
+
     // Convert to retofit
     private fun getVersionInfoRetro(osType: String) {
         // Parsing the params as body
@@ -73,7 +155,7 @@ class HomeViewModel : ViewModel() {
             ?.enqueue(object : Callback<VersionInfoResponse?> {
                 override fun onResponse(
                     call: Call<VersionInfoResponse?>,
-                    response: Response<VersionInfoResponse?>
+                    response: Response<VersionInfoResponse?>,
                 ) {
                     if (response.isSuccessful()) {
                         Log.d("loginTags", "onResponse: " + response.code())
@@ -99,7 +181,7 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<VersionInfoResponse?>,
-                    t: Throwable
+                    t: Throwable,
                 ) {
 //                Log.e("loginTags", "onFailure: "+t.toString());
                     errMsg[0] = Constants.API_ERROR
@@ -119,7 +201,7 @@ class HomeViewModel : ViewModel() {
     fun getProviderList(
         providerId: Long,
         token: String,
-        role: String
+        role: String,
     ): LiveData<ProviderListResponse?>? {
         providerListObservable = MutableLiveData()
         getProviders(providerId, token, role)
@@ -182,7 +264,8 @@ class HomeViewModel : ViewModel() {
     fun acceptInvite(
         providerId: Long,
         token: String,
-        patientId: Long): LiveData<CommonResponse?>? {
+        patientId: Long,
+    ): LiveData<CommonResponse?>? {
         acceptInviteObservable = MutableLiveData()
        // acceptInviteCall(providerId, token, patientId)
         return acceptInviteObservable
@@ -199,7 +282,7 @@ class HomeViewModel : ViewModel() {
         token: String,
         receiverId: Long,
         patientId: Long,
-        callType: String
+        callType: String,
     ): LiveData<CommonResponse?>? {
         startCallObservable = MutableLiveData()
         startCallAPI(callerId, token, receiverId, patientId, callType)
@@ -209,7 +292,8 @@ class HomeViewModel : ViewModel() {
     fun resetAcuityScore(
         providerId: Long,
         token: String,
-        patientId: Long): LiveData<CommonResponse?>? {
+        patientId: Long,
+    ): LiveData<CommonResponse?>? {
         resetAcuityObservable = MutableLiveData()
        // resetAcuity(providerId, token, patientId)
         return resetAcuityObservable
@@ -224,7 +308,7 @@ class HomeViewModel : ViewModel() {
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
+                    response: Response<CommonResponse?>,
                 ) {
                     if (response.isSuccessful) {
 
@@ -241,7 +325,7 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<CommonResponse?>,
-                    t: Throwable
+                    t: Throwable,
                 ) {
 
                 }
@@ -270,7 +354,7 @@ class HomeViewModel : ViewModel() {
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
+                    response: Response<CommonResponse?>,
                 ) {
                     if (response.isSuccessful()) {
 
@@ -287,7 +371,7 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<CommonResponse?>,
-                    t: Throwable
+                    t: Throwable,
                 ) {
 
                 }
@@ -320,7 +404,7 @@ class HomeViewModel : ViewModel() {
             ?.enqueue(object : Callback<HospitalListResponse?> {
                 override fun onResponse(
                     call: Call<HospitalListResponse?>,
-                    response: Response<HospitalListResponse?>
+                    response: Response<HospitalListResponse?>,
                 ) {
 
                     if (response.isSuccessful) {
@@ -365,7 +449,7 @@ class HomeViewModel : ViewModel() {
             ?.enqueue(object : Callback<ProviderListResponse?> {
                 override fun onResponse(
                     call: Call<ProviderListResponse?>,
-                    response: Response<ProviderListResponse?>
+                    response: Response<ProviderListResponse?>,
                 ) {
                     if (response.isSuccessful) {
 
@@ -390,7 +474,8 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<ProviderListResponse?>,
-                    t: Throwable) {
+                    t: Throwable,
+                ) {
 
                     Handler(Looper.getMainLooper()).post {
                         val commonResponse: ProviderListResponse =
@@ -429,7 +514,7 @@ class HomeViewModel : ViewModel() {
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
+                    response: Response<CommonResponse?>,
                 ) {
                     if (response.isSuccessful()) {
 
@@ -455,7 +540,8 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<CommonResponse?>,
-                    t: Throwable) {
+                    t: Throwable,
+                ) {
 
                     Handler(Looper.getMainLooper()).post {
                         val commonResponse: CommonResponse =
@@ -493,7 +579,7 @@ class HomeViewModel : ViewModel() {
            ?.enqueue(object : Callback<CommonResponseProviderNotification?> {
                 override fun onResponse(
                     call: Call<CommonResponseProviderNotification?>,
-                    response: Response<CommonResponseProviderNotification?>
+                    response: Response<CommonResponseProviderNotification?>,
                 ) {
                     if (response.isSuccessful) {
 
@@ -517,7 +603,7 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<CommonResponseProviderNotification?>,
-                    t: Throwable
+                    t: Throwable,
                 ) {
 
                     Handler(Looper.getMainLooper()).post {
@@ -563,7 +649,7 @@ class HomeViewModel : ViewModel() {
         call?.enqueue(object : Callback<ProviderNotificationResponse?> {
             override fun onResponse(
                 call: Call<ProviderNotificationResponse?>,
-                response: Response<ProviderNotificationResponse?>
+                response: Response<ProviderNotificationResponse?>,
             ) {
 
                 if (response.isSuccessful) {
@@ -669,7 +755,7 @@ class HomeViewModel : ViewModel() {
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
+                    response: Response<CommonResponse?>,
                 ) {
                     if (response.isSuccessful) {
 
@@ -693,7 +779,8 @@ class HomeViewModel : ViewModel() {
                 }
 
                 override fun onFailure(
-                    call: Call<CommonResponse?>, t: Throwable) {
+                    call: Call<CommonResponse?>, t: Throwable,
+                ) {
 
                     Handler(Looper.getMainLooper()).post {
                         val commonResponse: CommonResponse =
@@ -734,7 +821,7 @@ class HomeViewModel : ViewModel() {
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
+                    response: Response<CommonResponse?>,
                 ) {
                     if (response.isSuccessful) {
 
@@ -761,7 +848,7 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<CommonResponse?>,
-                    t: Throwable
+                    t: Throwable,
                 ) {
 
                     Handler(Looper.getMainLooper()).post {
@@ -789,82 +876,6 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
-
-
-
-  /*  private fun resetAcuity(id: Long, token: String, patientId: Long) {
-        val errMsg = ""
-        val bodyValues = HashMap<String, String>()
-        bodyValues["id"] = id.toString()
-        bodyValues["token"] = token
-        bodyValues["patientId"] = patientId.toString()
-        ApiClient().getApiPatientEndpoints(true, true)?.resetAcuityApi(bodyValues)
-            ?.enqueue(object : Callback<CommonResponse?> {
-                override fun onResponse(
-                    call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
-                ) {
-                    if (response.isSuccessful()) {
-                        Log.d("reset Acuity", "onResponse: $response")
-                        val commonResponse: CommonResponse? =
-                            response.body()
-                        if (resetAcuityObservable == null) {
-                            resetAcuityObservable = MutableLiveData()
-                        }
-                        resetAcuityObservable!!.setValue(commonResponse)
-                    } else {
-                        Log.d("reset Acuity", "onResponse: $response")
-                        Handler(Looper.getMainLooper()).post {
-                            val commonResponse:CommonResponse =
-                                CommonResponse()
-                            commonResponse.errorMessage
-                            if (resetAcuityObservable == null) {
-                                resetAcuityObservable =
-                                    MutableLiveData()
-                            }
-                            resetAcuityObservable!!.setValue(commonResponse)
-                        }
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<CommonResponse?>,
-                    t: Throwable
-                ) {
-                    Log.d("reset Acuity", "onFailure: $t")
-                    Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
-                            CommonResponse()
-                        commonResponse.errorMessage
-                        if (resetAcuityObservable == null) {
-                            resetAcuityObservable =
-                                MutableLiveData()
-                        }
-                        resetAcuityObservable!!.setValue(commonResponse)
-                    }
-                }
-            })
-        if (!TextUtils.isEmpty(errMsg)) {
-            Handler(Looper.getMainLooper()).post {
-                val commonResponse:CommonResponse =
-                    CommonResponse()
-                commonResponse.errorMessage
-                if (resetAcuityObservable == null) {
-                    resetAcuityObservable =
-                        MutableLiveData()
-                }
-                resetAcuityObservable!!.setValue(commonResponse)
-            }
-        }
-    }*/
-
-
-
-
-
-
-
-
 
     override fun onCleared() {
         super.onCleared()

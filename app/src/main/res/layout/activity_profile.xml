@@ -71,7 +71,7 @@
                     android:layout_height="@dimen/drawer_image_size"
                     android:layout_gravity="center">
 
-                    <com.mvp.omnicure.customview.CircularImageView
+                    <com.example.kotlinomnicure.customview.CircularImageView
                         android:id="@+id/id_profile_img"
                         android:layout_width="@dimen/drawer_image_size"
                         android:layout_height="@dimen/drawer_image_size"

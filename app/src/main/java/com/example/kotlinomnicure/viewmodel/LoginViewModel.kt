@@ -16,8 +16,6 @@ import com.mvp.omnicure.kotlinactivity.requestbodys.PhoneNumberBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
-import java.net.SocketTimeoutException
 import java.util.HashMap
 
 class LoginViewModel: ViewModel() {

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Build
@@ -251,7 +253,29 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
     }
 
 
-
+    open fun getVersion(): String? {
+        val v: String
+        v = try {
+            val packageInfo = packageManager.getPackageInfo(packageName, 0)
+            if (UtilityMethods().isTestServer()) {
+                "v " + packageInfo.versionName + " - DEV"
+            } else if (UtilityMethods().isDemoTestServer()) {
+                "v " + packageInfo.versionName + " - Demo"
+            } else if (UtilityMethods().isQaTestServer()) {
+                "v " + packageInfo.versionName + " - INT"
+            } else if (UtilityMethods().isPilotServer()) {
+                "v " + packageInfo.versionName + " - Pilot"
+            } else if (UtilityMethods().isStagingServer()) {
+                "v " + packageInfo.versionName + " - Stage"
+            } else {
+                "v " + packageInfo.versionName
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            //            Log.e(TAG, "Exception:", e.getCause());
+            "v "
+        }
+        return v
+    }
 
     fun showProgressBar() {
         dismissProgressBar()
