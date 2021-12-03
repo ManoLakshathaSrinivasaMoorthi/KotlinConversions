@@ -288,7 +288,7 @@ class CustomSnackBar {
          */
         fun make(
             view: View?,
-            activity: FragmentActivity?.() -> Unit,
+            activity: Activity?,
             snackBarType: Int,
             message: String?,
             position: Int,

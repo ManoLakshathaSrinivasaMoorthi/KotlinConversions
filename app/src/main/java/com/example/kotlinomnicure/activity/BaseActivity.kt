@@ -35,7 +35,7 @@ import java.io.IOException
 
 open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
     private val TAG = BaseActivity::class.java.simpleName
-    protected var mHandler: Handler? = null
+    protected open var mHandler: Handler? = null
     var toast: Toast? = null
     private var progressDialog: CustomProgressDialog? = null
     private var activity: Activity? = null

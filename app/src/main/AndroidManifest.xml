@@ -32,6 +32,15 @@
         android:theme="@style/Theme.KotlinOmniCure"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.RingingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TeamGroupChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ImageCaptureActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ViewUrgentMessagesActivity"
             android:exported="false" />
         <activity
