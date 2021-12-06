@@ -5,22 +5,57 @@ import com.google.gson.annotations.SerializedName
 import omnicurekotlin.example.com.providerEndpoints.model.SystemAlerts
 
 class AlertsResponse {
+
     @Expose
     @SerializedName("systemAlertList")
-    var systemAlertList: List<SystemAlerts>? = null
+    private var systemAlertList: List<SystemAlerts?>? = null
 
     @Expose
     @SerializedName("errorId")
-    var errorId = 0
+    private var errorId = 0
 
     @Expose
     @SerializedName("errorMessage")
-    var errorMessage: String? = null
+    private var errorMessage: String? = null
 
     @Expose
     @SerializedName("status")
-    var isStatus = false
-    fun getStatus(): Boolean {
-        return isStatus
+    private var status = false
+
+    fun getErrorMessage(): String? {
+        return errorMessage
     }
+
+    fun setErrorMessage(errorMessage: String?) {
+        this.errorMessage = errorMessage
+    }
+
+    fun isStatus(): Boolean {
+        return status
+    }
+
+    fun getSystemAlertList(): List<SystemAlerts?>? {
+        return systemAlertList
+    }
+
+    fun setSystemAlertList(systemAlertList: List<SystemAlerts?>?) {
+        this.systemAlertList = systemAlertList
+    }
+
+    fun getErrorId(): Int {
+        return errorId
+    }
+
+    fun setErrorId(errorId: Int) {
+        this.errorId = errorId
+    }
+
+    fun getStatus(): Boolean {
+        return status
+    }
+
+    fun setStatus(status: Boolean) {
+        this.status = status
+    }
+
 }

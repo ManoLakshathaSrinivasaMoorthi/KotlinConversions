@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.kotlinomnicure.activity.EncUtil
 import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.model.ENotesMessageList
 import com.example.kotlinomnicure.utils.AESUtils
 
 import com.example.kotlinomnicure.utils.PrefUtility

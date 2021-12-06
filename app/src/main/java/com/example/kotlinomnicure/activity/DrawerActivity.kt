@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityDrawerBinding
 import com.example.kotlinomnicure.utils.Constants

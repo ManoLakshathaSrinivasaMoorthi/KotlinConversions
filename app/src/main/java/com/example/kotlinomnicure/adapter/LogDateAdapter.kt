@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.model.ENotesList
 
 
 class LogDateAdapter(applicationContext: Context, eNotesList: MutableList<ENotesList?>) : RecyclerView.Adapter<LogDateAdapter.ViewHolder>() {
