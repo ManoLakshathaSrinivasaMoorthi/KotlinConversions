@@ -107,7 +107,7 @@ class NotificationHelper: ContextWrapper {
         getManager()!!.notify(id, notification.build())
     }
 
-    fun clearNotification(notify_id: Int) {
+    fun clearNotification(notify_id: Long?) {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(notify_id)
     }

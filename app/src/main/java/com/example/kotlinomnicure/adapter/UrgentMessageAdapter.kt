@@ -18,7 +18,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ChatActivityViewModel
+import com.example.kotlinomnicure.viewmodel.ChatActivityViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.PDFViewerActivity
 import com.example.kotlinomnicure.activity.VideoPlayerActivity

@@ -11,10 +11,10 @@ import com.example.kotlinomnicure.databinding.ActivityTrainingMaterialBinding
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 
-class TrainingMaterialsActivity : BaseActivity(){
+class TrainingMaterialActivity : BaseActivity(){
 
     //Declare the variables
-    private val TAG: String = TrainingMaterialsActivity::class.java.getSimpleName()
+    private val TAG: String = TrainingMaterialActivity::class.java.getSimpleName()
     private var binding: ActivityTrainingMaterialBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

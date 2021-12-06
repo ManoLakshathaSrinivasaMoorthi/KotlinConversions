@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -21,10 +20,12 @@ import com.example.kotlinomnicure.media.Utils
 import com.example.kotlinomnicure.model.ConsultProvider
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
-import kotlinx.coroutines.NonCancellable.isCompleted
 import java.util.*
 
-class PatientListAdapter: RecyclerView.Adapter<PatientListAdapter.ConsultListViewHolder>() {
+class PatientListAdapter(
+    homeActivity: HomeActivity,
+    providerFilteredList: MutableList<ConsultProvider?>?
+) : RecyclerView.Adapter<PatientListAdapter.ConsultListViewHolder>() {
 
     private val TAG = ConsultListViewHolder::class.java.simpleName
     private var itemClickListener: OnListItemClickListener? = null
@@ -113,7 +114,7 @@ class PatientListAdapter: RecyclerView.Adapter<PatientListAdapter.ConsultListVie
      * Provider list update
      * @param providerLists
      */
-    fun updateList(providerLists: List<ConsultProvider>?) {
+    infix fun updateList(providerLists: MutableList<ConsultProvider?>) {
         if (providerLists != null) {
             providerList = providerLists
             originalProviderList = providerLists
@@ -248,9 +249,9 @@ class PatientListAdapter: RecyclerView.Adapter<PatientListAdapter.ConsultListVie
             }
             // Container view click listener
             itemBinding.containerView.setOnClickListener { view ->
-                if (!PatientListAdapter().isCompleted(consultProvider)) {
+                if (!PatientListAdapter(this, providerFilteredList).isCompleted(consultProvider)) {
                     handleMultipleClick(itemBinding.containerView)
-                    PatientListAdapter().itemClickListener?.onClickChatView(adapterPosition,
+                    PatientListAdapter(this, providerFilteredList).itemClickListener?.onClickChatView(adapterPosition,
                         consultProvider)
                 }
             }
@@ -258,14 +259,14 @@ class PatientListAdapter: RecyclerView.Adapter<PatientListAdapter.ConsultListVie
             itemBinding.dropdownArrow.setOnClickListener { view ->
 //            itemBinding.detailsBtn.setEnabled(false);
                 handleMultipleClick(itemBinding.dropdownArrow)
-                PatientListAdapter().itemClickListener?.onArrowDropDownClick(adapterPosition)
+                PatientListAdapter(this, providerFilteredList).itemClickListener?.onArrowDropDownClick(adapterPosition)
             }
 
             // Name text click listener
             itemBinding.nameTextView.setOnClickListener { view ->
 //            itemBinding.detailsBtn.setEnabled(false);
                 handleMultipleClick(itemBinding.nameTextView)
-                PatientListAdapter().itemClickListener?.onArrowDropDownClick(adapterPosition)
+                PatientListAdapter(this, providerFilteredList).itemClickListener?.onArrowDropDownClick(adapterPosition)
             }
             var time = 0L
             if (consultProvider.getInviteTime() != null && consultProvider.getInviteTime()!! > 0) {
@@ -274,7 +275,7 @@ class PatientListAdapter: RecyclerView.Adapter<PatientListAdapter.ConsultListVie
                 time = consultProvider.getTime()!!
             }
             // If completed
-            if (PatientListAdapter().isCompleted(consultProvider)) {
+            if (PatientListAdapter(this, providerFilteredList).isCompleted(consultProvider)) {
                 if (consultProvider.getTime() != null && consultProvider.getTime()!! > 0) {
                     time = consultProvider.getTime()!!
                 }

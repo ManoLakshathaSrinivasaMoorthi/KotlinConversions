@@ -77,7 +77,7 @@ interface PatientEndpoints {
 
 
     @POST("patientEndpoints/v1/inviteProviderBroadCast")
-    fun inviteBroadCast(@Body bodyValues: HashMap<String?, String?>?): Call<CommonResponse?>?
+    fun inviteBroadCast(@Body bodyValues: HashMap<String, String>): Call<CommonResponse?>?
 
 
 

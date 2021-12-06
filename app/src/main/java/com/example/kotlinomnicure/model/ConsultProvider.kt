@@ -12,8 +12,8 @@ class ConsultProvider :Serializable{
 
 
     private var id: Long? = null
-    private var patientsId: Long? = null
-    private var patientId: Long? = null
+    var patientsId: Long? = null
+    var patientId: Long? = null
     private var text: String? = null
     private var name: String? = null
     private var fname: String? = null
@@ -42,7 +42,7 @@ class ConsultProvider :Serializable{
 
     @Expose
     @SerializedName(value = "status", alternate = ["Status"])
-    private var status: Constants.PatientStatus? = null
+    var status: Constants.PatientStatus? = null
 
     private var joiningTime: Long? = null
 
@@ -61,13 +61,13 @@ class ConsultProvider :Serializable{
     private var docBoxManagerId: String? = null
     private var timeHeartRate: Long? = null
     private var timeSpO2: Long? = null
-    private var arterialBloodPressureSystolic: Double? = null
-    private var heartRate: Double? = null
+    var arterialBloodPressureSystolic: Double? = null
+    var heartRate: Double? = null
     private var timeRespiratoryRate: Long? = null
 
     //    private Double sp02;
     private var respiratoryRate: Double? = null
-    private var arterialBloodPressureDiastolic: Double? = null
+    var arterialBloodPressureDiastolic: Double? = null
     private var timeArterialBloodPressureDiastolic: Long? = null
     private var timeArterialBloodPressureSystolic: Long? = null
 

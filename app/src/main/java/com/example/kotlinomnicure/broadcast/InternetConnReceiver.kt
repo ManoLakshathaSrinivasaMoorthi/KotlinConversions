@@ -4,10 +4,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.example.kotlinomnicure.activity.BaseActivity
 import com.example.kotlinomnicure.interfaces.OnInternetConnChangeListener
+import com.example.kotlinomnicure.activity.BaseActivity
 
-class InternetConnReceiver: BroadcastReceiver() {
+class InternetConnReceiver(baseActivity: BaseActivity) : BroadcastReceiver() {
 
     private val TAG = InternetConnReceiver::class.java.simpleName
     private var listener: OnInternetConnChangeListener? = null

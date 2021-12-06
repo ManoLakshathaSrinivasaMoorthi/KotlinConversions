@@ -6,7 +6,7 @@ class PatientDetail {
 
     private var status = false
     private var errorId = 0
-    private var errorMsg: String? =null
+    var errorMsg: String? =null
 
 
     fun getStatus(): Boolean {

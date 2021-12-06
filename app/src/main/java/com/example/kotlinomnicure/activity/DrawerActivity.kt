@@ -24,7 +24,7 @@ open class DrawerActivity : AppCompatActivity() {
     private val TAG = DrawerActivity::class.java.simpleName
     protected var binding: ActivityDrawerBinding? = null
     protected var drawerLayout: DrawerLayout? = null
-    protected var navHeaderView: View? = null
+    var navHeaderView: View? = null
     protected var viewModel: HomeViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

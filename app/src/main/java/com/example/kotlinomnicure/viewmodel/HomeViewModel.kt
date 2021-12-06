@@ -48,7 +48,7 @@ class HomeViewModel : ViewModel() {
         null
     private var startCallObservable: MutableLiveData<CommonResponse>? =
         null
-    private var resetAcuityObservable: MutableLiveData<CommonResponse>? =
+    private var resetAcuityObservable: MutableLiveData<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse >? =
         null
     private var providerObservable: MutableLiveData<CommonResponse>? =
         null
@@ -89,7 +89,8 @@ class HomeViewModel : ViewModel() {
         enqueue(object : Callback<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?> {
                 override fun onResponse(
                     call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
-                    response: Response<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>, ) {
+                    response: Response<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                ) {
                     if (response.isSuccessful()) {
                         Log.d("discharge", "onResponse: $response")
                         val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse? =
@@ -289,14 +290,77 @@ class HomeViewModel : ViewModel() {
         return startCallObservable
     }
 
-    fun resetAcuityScore(
-        providerId: Long,
-        token: String,
-        patientId: Long,
-    ): LiveData<CommonResponse?>? {
+    fun resetAcuityScore(providerId: Long, token: String, patientId: Long): LiveData<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse ?>? {
         resetAcuityObservable = MutableLiveData()
-       // resetAcuity(providerId, token, patientId)
+        resetAcuity(providerId, token, patientId)
         return resetAcuityObservable
+    }
+
+    private fun resetAcuity(providerId: Long, token: String, patientId: Long) {
+        val errMsg = ""
+        val bodyValues = HashMap<String, String>()
+        bodyValues["id"] = providerId.toString()
+        bodyValues["token"] = token
+        bodyValues["patientId"] = patientId.toString()
+        ApiClient().getApiPatientEndpoints(true, true)?.resetAcuityApi(bodyValues)
+           ?.enqueue(object : Callback<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse ?> {
+                override fun onResponse(
+                    call: Call<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse ?>,
+                    response: Response<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse ?>,
+                ) {
+                    if (response.isSuccessful()) {
+                        Log.d("reset Acuity", "onResponse: $response")
+                        val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse? =
+                            response.body()
+                        if (resetAcuityObservable == null) {
+                            resetAcuityObservable = MutableLiveData()
+                        }
+                        resetAcuityObservable!!.setValue(commonResponse)
+                    } else {
+                        Log.d("reset Acuity", "onResponse: $response")
+                        Handler(Looper.getMainLooper()).post {
+                            val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse =
+                                omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse()
+                            commonResponse.setErrorMessage(Constants.API_ERROR)
+                            if (resetAcuityObservable == null) {
+                                resetAcuityObservable =
+                                    MutableLiveData()
+                            }
+                            resetAcuityObservable!!.setValue(commonResponse)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse ?>,
+                    t: Throwable,
+                ) {
+                    Log.d("reset Acuity", "onFailure: $t")
+                    Handler(Looper.getMainLooper()).post {
+                        val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse =
+                            omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse()
+                        commonResponse.setErrorMessage(Constants.API_ERROR)
+                        if (resetAcuityObservable == null) {
+                            resetAcuityObservable =
+                                MutableLiveData()
+                        }
+                        resetAcuityObservable!!.setValue(commonResponse)
+                    }
+                }
+            })
+
+        if (!TextUtils.isEmpty(errMsg)) {
+            Handler(Looper.getMainLooper()).post {
+                val commonResponse:omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse  =
+                    omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse()
+                commonResponse.setErrorMessage(errMsg)
+                if (resetAcuityObservable == null) {
+                    resetAcuityObservable =
+                        MutableLiveData()
+                }
+                resetAcuityObservable!!.setValue(commonResponse)
+            }
+        }
     }
 
     private fun getProvider(id: Long, token: String, providerId: Long) {

@@ -12,7 +12,11 @@ import com.example.kotlinomnicure.model.ConsultProvider
 import java.util.ArrayList
 import java.util.HashMap
 
-class LocationListAdapter:
+class LocationListAdapter(
+    param: HospitalRecyclerListener,
+    hospitalList: HashMap<Long, ConsultProvider?>,
+    selectedHospitalId: Long
+) :
     RecyclerView.Adapter<LocationListAdapter.ViewHolder>() {
     private var hospitalRecyclerListener: HospitalRecyclerListener? = null
     private var hospitalList: MutableList<ConsultProvider>? = null
@@ -25,7 +29,7 @@ class LocationListAdapter:
     ) {
         this.hospitalRecyclerListener = hospitalRecyclerListener
         this.hospitalList = ArrayList<ConsultProvider>(hospitalList.values)
-        selectedHospitalId = selectedHospId
+        this@LocationListAdapter.selectedHospitalId = selectedHospId
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -74,7 +78,23 @@ class LocationListAdapter:
         fun setHospitalList(hospital: ConsultProvider) {
             this.hospital = hospital
             itemBinding.hospitalName.setText(hospital.getHospital())
-            if (LocationListAdapter().selectedHospitalId == hospital.getHospitalId()) {
+            if (LocationListAdapter(object : HospitalRecyclerListener() {
+                    fun onItemSelected(hospital: ConsultProvider) {
+                        selectedHospitalId = hospital.getHospitalId()!!
+                        //Filter active screen by score
+                        if (hospital.getName() == null) {
+                            if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA) {
+                                filterdeselectactive()
+                            } else {
+                            }
+                        } else {
+                            filterselectactive()
+                        }
+                        filterByAcuityActive(acuityLevel)
+                        dialog.dismiss()
+                        filterByDialog!!.dismiss()
+                    }
+                }, hospitalList, selectedHospitalId).selectedHospitalId == hospital.getHospitalId()) {
                 itemBinding.icSelected.setChecked(true)
             } else {
                 itemBinding.icSelected.setChecked(false)
@@ -85,18 +105,114 @@ class LocationListAdapter:
             this.itemBinding = itemBinding
             //  itemBinding.icSelected.setEnabled(false);
             itemView.setOnClickListener {
-                LocationListAdapter().selectedHospitalId = hospital?.getHospitalId()!!
-                LocationListAdapter().notifyDataSetChanged()
-                LocationListAdapter().getHospitalRecyclerListener()?.onItemSelected(hospital)
+                LocationListAdapter(object : HospitalRecyclerListener() {
+                    fun onItemSelected(hospital: ConsultProvider) {
+                        selectedHospitalId = hospital.getHospitalId()!!
+                        //Filter active screen by score
+                        if (hospital.getName() == null) {
+                            if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA) {
+                                filterdeselectactive()
+                            } else {
+                            }
+                        } else {
+                            filterselectactive()
+                        }
+                        filterByAcuityActive(acuityLevel)
+                        dialog.dismiss()
+                        filterByDialog!!.dismiss()
+                    }
+                }, hospitalList, selectedHospitalId).selectedHospitalId = hospital?.getHospitalId()!!
+                LocationListAdapter(object : HospitalRecyclerListener() {
+                    fun onItemSelected(hospital: ConsultProvider) {
+                        selectedHospitalId = hospital.getHospitalId()!!
+                        //Filter active screen by score
+                        if (hospital.getName() == null) {
+                            if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA) {
+                                filterdeselectactive()
+                            } else {
+                            }
+                        } else {
+                            filterselectactive()
+                        }
+                        filterByAcuityActive(acuityLevel)
+                        dialog.dismiss()
+                        filterByDialog!!.dismiss()
+                    }
+                }, hospitalList, selectedHospitalId).notifyDataSetChanged()
+                LocationListAdapter(object : HospitalRecyclerListener() {
+                    fun onItemSelected(hospital: ConsultProvider) {
+                        selectedHospitalId = hospital.getHospitalId()!!
+                        //Filter active screen by score
+                        if (hospital.getName() == null) {
+                            if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA) {
+                                filterdeselectactive()
+                            } else {
+                            }
+                        } else {
+                            filterselectactive()
+                        }
+                        filterByAcuityActive(acuityLevel)
+                        dialog.dismiss()
+                        filterByDialog!!.dismiss()
+                    }
+                }, hospitalList, selectedHospitalId).getHospitalRecyclerListener()?.onItemSelected(hospital)
             }
             itemBinding.icSelected.setOnClickListener(View.OnClickListener { v ->
                 val checkBox = v as CheckBox
                 if (!checkBox.isChecked) {
                     checkBox.isChecked = true
                 }
-                LocationListAdapter().selectedHospitalId = hospital?.getHospitalId()!!
-                LocationListAdapter().notifyDataSetChanged()
-                LocationListAdapter().getHospitalRecyclerListener()?.onItemSelected(hospital)
+                LocationListAdapter(object : HospitalRecyclerListener() {
+                    fun onItemSelected(hospital: ConsultProvider) {
+                        selectedHospitalId = hospital.getHospitalId()!!
+                        //Filter active screen by score
+                        if (hospital.getName() == null) {
+                            if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA) {
+                                filterdeselectactive()
+                            } else {
+                            }
+                        } else {
+                            filterselectactive()
+                        }
+                        filterByAcuityActive(acuityLevel)
+                        dialog.dismiss()
+                        filterByDialog!!.dismiss()
+                    }
+                }, hospitalList, selectedHospitalId).selectedHospitalId = hospital?.getHospitalId()!!
+                LocationListAdapter(object : HospitalRecyclerListener() {
+                    fun onItemSelected(hospital: ConsultProvider) {
+                        selectedHospitalId = hospital.getHospitalId()!!
+                        //Filter active screen by score
+                        if (hospital.getName() == null) {
+                            if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA) {
+                                filterdeselectactive()
+                            } else {
+                            }
+                        } else {
+                            filterselectactive()
+                        }
+                        filterByAcuityActive(acuityLevel)
+                        dialog.dismiss()
+                        filterByDialog!!.dismiss()
+                    }
+                }, hospitalList, selectedHospitalId).notifyDataSetChanged()
+                LocationListAdapter(object : HospitalRecyclerListener() {
+                    fun onItemSelected(hospital: ConsultProvider) {
+                        selectedHospitalId = hospital.getHospitalId()!!
+                        //Filter active screen by score
+                        if (hospital.getName() == null) {
+                            if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA) {
+                                filterdeselectactive()
+                            } else {
+                            }
+                        } else {
+                            filterselectactive()
+                        }
+                        filterByAcuityActive(acuityLevel)
+                        dialog.dismiss()
+                        filterByDialog!!.dismiss()
+                    }
+                }, hospitalList, selectedHospitalId).getHospitalRecyclerListener()?.onItemSelected(hospital)
             })
         }
     }

@@ -20,21 +20,25 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.customview.CustomDialog
 import com.example.kotlinomnicure.databinding.ActivityEconsultChartBinding
 import com.example.kotlinomnicure.helper.NotificationHelper
 import com.example.kotlinomnicure.helper.PBMessageHelper
+import com.example.kotlinomnicure.media.Utils
 import com.example.kotlinomnicure.model.ConsultProvider
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
+import com.google.firebase.database.*
 
 
 import com.google.gson.Gson
-import com.mvp.omnicure.activity.ChatActivity
-import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
-import omnicurekotlin.example.com.providerEndpoints.model.HandOffAcceptRequest
+import omnicurekotlin.example.com.patientsEndpoints.model.PatientDetail
+import omnicurekotlin.example.com.providerEndpoints.HandOffAcceptRequest
+
 import omnicurekotlin.example.com.providerEndpoints.model.Members
 
 import org.json.JSONException
@@ -69,43 +73,42 @@ class ActivityConsultChart : BaseActivity() {
     private var mFirebaseDatabaseReference: DatabaseReference? = null
     private var strAcuityScore: String? = null
     private var strScreenCensus = ""
+    private var context:Context=ActivityConsultChart()
 
     // Unread message listener from firebase - Add Consult provider data from the snapshot
-    var mUnreadMessageListener: ValueEventListener = object : ValueEventListener {
+    private var mUnreadMessageListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-//            Log.d(TAG, "ConsultProviderChart" + dataSnapshot);
+
             val consultProviderA: ConsultProvider? =
                 dataSnapshot.getValue(ConsultProvider::class.java)
-            //            Log.d(TAG, "ConsultProviderChart" + new Gson().toJson(consultProviderA));
+
             // If the provider data is null - show error dialog
             if (consultProviderA == null) {
                 showErrorDialog()
                 return
             }
             // If the data has status value, details are updated
-            if (consultProviderA.getStatus() != null && consultProviderA.getStatus()
+            if (consultProviderA.getStatus() != null && consultProviderA.getStatus()!!
                     .equals(Constants.PatientStatus.Active)
-                && !mConsultProvider.getStatus().equals(Constants.PatientStatus.Active)
-            ) {
-//                System.out.println("providerapiflag " + providerApiFlag);
+                && !mConsultProvider?.getStatus()?.equals(Constants.PatientStatus.Active)!!) {
+
                 if (providerApiFlag) {
                     return
                 }
-                mConsultProvider.setStatus(Constants.PatientStatus.Active)
+                mConsultProvider?.setStatus(Constants.PatientStatus.Active)
                 //Getting patient details via "getPatienDetails" API call based on the UID
                 getPatientDetails(uid)
                 binding?.txtAccept?.setVisibility(View.GONE)
                 binding?.txtContactTeam?.setVisibility(View.VISIBLE)
-                val role: String? = PrefUtility().getRole(this)
-                val strRpUserType: String? = PrefUtility().getStringInPref(this,
-                    Constants.SharedPrefConstants.R_PROVIDER_TYPE,
-                    "")
+                val role: String? = PrefUtility().getRole(context)
+                val strRpUserType: String? = PrefUtility().getStringInPref(context,
+                    Constants.SharedPrefConstants.R_PROVIDER_TYPE, "")
 
             }
             if (consultProviderA.getStatus() != null
-                && !mConsultProvider?.getStatus()?.equals(Constants.PatientStatus.Pending)
+                && !mConsultProvider?.getStatus()?.equals(Constants.PatientStatus.Pending)!!
             ) {
-                mConsultProvider.setStatus(consultProviderA.getStatus())
+                mConsultProvider?.setStatus(consultProviderA.getStatus())
             }
             if (consultProviderA.getUnread() > 0) {
 
@@ -114,14 +117,16 @@ class ActivityConsultChart : BaseActivity() {
                 binding?.imgMessageAlert?.setVisibility(View.GONE)
             }
             // Removing the stubs
-            if (mConsultProvider.getScore() != null && mConsultProvider.getScore() !== consultProviderA.getScore()) {
+            if (mConsultProvider?.getScore() != null && mConsultProvider?.getScore() !== consultProviderA.getScore()) {
                 statusStub!!.removeAllViews()
                 //                statusStub
-                UtilityMethods().displayPatientStatusComponent(this,
-                    statusStub,
-                    mConsultProvider.getUrgent(),
-                    consultProviderA.getStatus() === Constants.PatientStatus.Pending,
-                    consultProviderA.getScore())
+                statusStub?.let {
+                    UtilityMethods().displayPatientStatusComponent(context,
+                        it,
+                        mConsultProvider?.getUrgent(),
+                        consultProviderA.getStatus() === Constants.PatientStatus.Pending,
+                        consultProviderA.getScore())
+                }
             }
         }
 
@@ -142,12 +147,12 @@ class ActivityConsultChart : BaseActivity() {
         val alertMsg = dialogView.findViewById<TextView>(R.id.alertMessage)
         alertTitle.visibility = View.GONE
         var message: String? = getString(R.string.consultation_request_already_accepted_msg)
-        val strRole: String =
+        val strRole: String? =
             PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.ROLE, "")
-        val strDesignation: String =
+        val strDesignation: String? =
             PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.R_PROVIDER_TYPE, "")
-        if (mConsultProvider.getStatus().equals(Constants.PatientStatus.Handoff)
-            || mConsultProvider.getStatus().equals(Constants.PatientStatus.HandoffPending)
+        if (mConsultProvider?.getStatus()?.equals(Constants.PatientStatus.Handoff) == true
+            || mConsultProvider?.getStatus()?.equals(Constants.PatientStatus.HandoffPending) == true
         ) {
             if (strRole == "RD" && !strDesignation.equals("MD/DO", ignoreCase = true)) {
                 message = getString(R.string.patient_handed_off_to_other_grp)
@@ -199,8 +204,8 @@ class ActivityConsultChart : BaseActivity() {
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
-        stub = findViewById(R.id.layout_stub_view) as ViewStub?
-        statusStub = findViewById(R.id.status_stub) as RelativeLayout?
+        stub = findViewById<ViewStub>(R.id.layout_stub_view)
+        statusStub = findViewById<RelativeLayout>(R.id.status_stub)
 
         // Getting the values from the intent
         uid = getIntent().getLongExtra("uid", 0)
@@ -221,7 +226,7 @@ class ActivityConsultChart : BaseActivity() {
             Constants.SharedPrefConstants.R_PROVIDER_TYPE,
             "")
 
-        val providerID: Long = PrefUtility().getProviderId(this)
+        val providerID: Long? = PrefUtility().getProviderId(this)
 
         // Getting the patient details via API call using UID as inout
         getPatientDetails(uid)
@@ -279,35 +284,35 @@ class ActivityConsultChart : BaseActivity() {
 
             // Directing the user to chat activity with needed data
             val intentConsultChart = Intent(this, ChatActivity::class.java)
-            intentConsultChart.putExtra("uid", mConsultProvider.getId())
+            intentConsultChart.putExtra("uid", mConsultProvider?.getId())
             //                Log.d(TAG, "strUid : " + mConsultProvider.getId());
-            intentConsultChart.putExtra("path", "consults/" + mConsultProvider.getId())
+            intentConsultChart.putExtra("path", "consults/" + mConsultProvider?.getId())
             intentConsultChart.putExtra("consultProviderId", "" + mConsultProviderKey)
             intentConsultChart.putExtra(getString(R.string.consultProviderPatientId),
-                "" + mConsultProvider.getId())
-            intentConsultChart.putExtra("consultProviderText", mConsultProvider.getText())
-            intentConsultChart.putExtra("consultProviderName", mConsultProvider.getName())
-            intentConsultChart.putExtra("dob", mConsultProvider.getDob())
-            intentConsultChart.putExtra("gender", mConsultProvider.getGender())
-            intentConsultChart.putExtra("note", mConsultProvider.getNote())
-            intentConsultChart.putExtra("phone", mConsultProvider.getPhone())
-            intentConsultChart.putExtra("patientId", mConsultProvider.getPatientsId())
-            intentConsultChart.putExtra("status", mConsultProvider.getStatus())
+                "" + mConsultProvider?.getId())
+            intentConsultChart.putExtra("consultProviderText", mConsultProvider?.getText())
+            intentConsultChart.putExtra("consultProviderName", mConsultProvider?.getName())
+            intentConsultChart.putExtra("dob", mConsultProvider?.getDob())
+            intentConsultChart.putExtra("gender", mConsultProvider?.getGender())
+            intentConsultChart.putExtra("note", mConsultProvider?.getNote())
+            intentConsultChart.putExtra("phone", mConsultProvider?.getPhone())
+            intentConsultChart.putExtra("patientId", mConsultProvider?.getPatientsId())
+            intentConsultChart.putExtra("status", mConsultProvider?.getStatus())
             if (!TextUtils.isEmpty(strConsultTeamName)) {
                 intentConsultChart.putExtra("teamNameConsult", strConsultTeamName)
             }
             intentConsultChart.putExtra(Constants.IntentKeyConstants.IS_PATIENT_URGENT,
-                mConsultProvider.getUrgent())
+                mConsultProvider?.getUrgent())
             //Setting the consult provider status if not null
-            if (mConsultProvider.getStatus() != null) {
-                intentConsultChart.putExtra("status", mConsultProvider.getStatus().toString())
-                if (mConsultProvider.getStatus() === Constants.PatientStatus.Invited ||
-                    mConsultProvider.getStatus() === Constants.PatientStatus.Handoff
+            if (mConsultProvider?.getStatus() != null) {
+                intentConsultChart.putExtra("status", mConsultProvider!!.getStatus().toString())
+                if (mConsultProvider?.getStatus() === Constants.PatientStatus.Invited ||
+                    mConsultProvider?.getStatus() === Constants.PatientStatus.Handoff
                 ) {
                     intentConsultChart.putExtra(Constants.IntentKeyConstants.INVITATION, true)
-                    clearNotifications(mConsultProvider.getId().intValue())
-                } else if (mConsultProvider.getStatus() === Constants.PatientStatus.Completed ||
-                    mConsultProvider.getStatus() === Constants.PatientStatus.Discharged
+                    clearNotifications(mConsultProvider?.getId())
+                } else if (mConsultProvider?.getStatus() === Constants.PatientStatus.Completed ||
+                    mConsultProvider?.getStatus() === Constants.PatientStatus.Discharged
                 ) {
                     intentConsultChart.putExtra(Constants.IntentKeyConstants.COMPLETED, true)
                     clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID)
@@ -317,11 +322,11 @@ class ActivityConsultChart : BaseActivity() {
         })
 
         // Handling contact team click
-        binding.txtContactTeam.setOnClickListener(View.OnClickListener { v ->
+        binding?.txtContactTeam?.setOnClickListener(View.OnClickListener { v ->
             // Handling the multi click
             handleMultipleClick(v)
             if (membersList!!.size > 0 && membersList != null) {
-                showTeamMembersDialog(this, membersList, mConsultProvider)
+                mConsultProvider?.let { showTeamMembersDialog(this, membersList, it) }
             } else {
 
                 CustomSnackBar.make(binding?.containerLayout,
@@ -330,12 +335,12 @@ class ActivityConsultChart : BaseActivity() {
                     errorTeams,
                     CustomSnackBar.TOP,
                     3000,
-                    0).show()
+                    0)?.show()
             }
         })
         // Handling accept team click
         binding?.txtAccept?.setOnClickListener(View.OnClickListener { // Handling the multi click
-            handleMultipleClick(binding?.txtAccept)
+            handleMultipleClick(binding?.txtAccept!!)
             // On accept click listener with consult provider data
             acceptClick(mConsultProvider)
         })
@@ -370,12 +375,12 @@ class ActivityConsultChart : BaseActivity() {
      * Adding the un read message listener
      */
     override fun onStart() {
-//        System.out.println("consult chart onstart");
+
         super.onStart()
         try {
             unReadMessageListener()
         } catch (e: Exception) {
-//            Log.i(TAG, "onStartAct: EXCEPTION " + e.getMessage());
+
         }
     }
 
@@ -383,12 +388,13 @@ class ActivityConsultChart : BaseActivity() {
      * Method to add un read message listener
      */
     private fun unReadMessageListener() {
-//        Log.d(TAG, "unReadMessageListener: ");
-        val mProviderUid: String = PrefUtility().getFireBaseUid(this) //mFirebaseUser.getUid();
+
+        val mProviderUid: String? = PrefUtility().getFireBaseUid(this) //mFirebaseUser.getUid();
         mUnreadMessageDB =
-            mFirebaseDatabaseReference!!.child("providers").child(mProviderUid).child("active")
-                .child(
-                    mConsultProviderKey!!)
+            mProviderUid?.let {
+                mFirebaseDatabaseReference!!.child("providers").child(it).child("active")
+                    .child(mConsultProviderKey!!)
+            }
         mUnreadMessageDB!!.addValueEventListener(mUnreadMessageListener)
     }
 
@@ -426,9 +432,9 @@ class ActivityConsultChart : BaseActivity() {
      * Connecting to SoS call via startSOS API call and directing to call activity
      */
     private fun connectSOSCall() {
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods().isInternetConnected(this)!!) {
 
-            CustomSnackBar.make(binding.getRoot(),
+            CustomSnackBar.make(binding?.getRoot(),
                 this,
                 CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity),
@@ -438,65 +444,71 @@ class ActivityConsultChart : BaseActivity() {
             return
         }
         val title: String =
-            getString(R.string.sos_alert_confirmation_msg).toString() + " " + mConsultProvider.getName()
+            getString(R.string.sos_alert_confirmation_msg).toString() + " " + mConsultProvider?.getName()
         val message: String = getString(R.string.alert_msg)
         customDialog = UtilityMethods().showDialog(this,
             title,
             message,
             false,
             R.string.send,
-            View.OnClickListener {
+            {
                 showProgressBar()
                 val providerID: Long?= PrefUtility().getProviderId(this)
                 val token: String? = PrefUtility().getStringInPref(this,
                     Constants.SharedPrefConstants.TOKEN,
                     "")
 
-                viewModel.startSOS(providerID, token, mConsultProvider?.patientId)
-                    .observe(this) { commonResponse ->
-                        dismissProgressBar()
-                        if (commonResponse != null && commonResponse.getStatus()) {
-                            // Directing to call activity
-                            val callScreen =
-                                Intent(this, CallActivity::class.java)
-                            callScreen.putExtra("providerName",
-                                mConsultProvider.getBdProviderName())
-                            callScreen.putExtra("providerHospitalName",
-                                mConsultProvider.getHospital())
-                            callScreen.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME,
-                                java.lang.String.valueOf(mConsultProvider?.patientsId))
-                            callScreen.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_KEY, "")
-                            callScreen.putExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE,
-                                getResources().getStringArray(R.array.encryption_mode_values)
-                                    .get(0))
-                            callScreen.putExtra(Constants.IntentKeyConstants.AUDIT_ID,
-                                commonResponse.getAuditId())
-                            callScreen.putExtra("patientId", mConsultProvider?.patientsId)
-                            callScreen.putExtra("sos", true)
-                            callScreen.putExtra("callType", "outgoing")
-                            val gson = Gson()
-                            callScreen.putExtra("providerList",
-                                gson.toJson(commonResponse.getProviderList()))
-                            startActivity(callScreen)
-                        } else {
-                            val errMsg: String =
-                                ErrorMessages()?.getErrorMessage(this,
-                                    commonResponse.getErrorMessage(),
-                                    Constants.API.startCall)
+                if (providerID != null) {
+                    if (token != null) {
+                        mConsultProvider?.patientId?.let { it1 ->
+                            viewModel?.startSOS(providerID, token, it1)
+                                ?.observe(this) { commonResponse ->
+                                    dismissProgressBar()
+                                    if (commonResponse != null && commonResponse.getStatus()) {
+                                        // Directing to call activity
+                                        val callScreen =
+                                            Intent(this, CallActivity::class.java)
+                                        callScreen.putExtra("providerName",
+                                            mConsultProvider!!.getBdProviderName())
+                                        callScreen.putExtra("providerHospitalName",
+                                            mConsultProvider!!.getHospital())
+                                        callScreen.putExtra(ConstantApp().ACTION_KEY_CHANNEL_NAME,
+                                            java.lang.String.valueOf(mConsultProvider?.patientsId))
+                                        callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_KEY, "")
+                                        callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_MODE,
+                                            getResources().getStringArray(R.array.encryption_mode_values)
+                                                .get(0))
+                                        callScreen.putExtra(Constants.IntentKeyConstants.AUDIT_ID,
+                                            commonResponse.getAuditId())
+                                        callScreen.putExtra("patientId", mConsultProvider?.patientsId)
+                                        callScreen.putExtra("sos", true)
+                                        callScreen.putExtra("callType", "outgoing")
+                                        val gson = Gson()
+                                        callScreen.putExtra("providerList",
+                                            gson.toJson(commonResponse.getProviderList()))
+                                        startActivity(callScreen)
+                                    } else {
+                                        val errMsg: String? =
+                                            ErrorMessages()?.getErrorMessage(this,
+                                                commonResponse?.getErrorMessage(),
+                                                Constants.API.startCall)
 
-                            CustomSnackBar.make(binding?.getRoot(),
-                                this,
-                                CustomSnackBar.WARNING,
-                                errMsg,
-                                CustomSnackBar.TOP,
-                                3000,
-                                0)?.show()
+                                        CustomSnackBar.make(binding?.getRoot(),
+                                            this,
+                                            CustomSnackBar.WARNING,
+                                            errMsg,
+                                            CustomSnackBar.TOP,
+                                            3000,
+                                            0)?.show()
+                                    }
+                                }
                         }
                     }
+                }
                 customDialog?.dismiss()
             },
             R.string.cancel,
-            View.OnClickListener { customDialog?.cancel() },
+            { customDialog?.cancel() },
             Color.RED,
             true)
     }
@@ -520,17 +532,17 @@ class ActivityConsultChart : BaseActivity() {
     private fun getTeamMemberDetails(patientId: Long, teamName: String) {
         membersList!!.clear()
 
-        viewModel.getMemberList(patientId, teamName).observe(this) { teamsDetailListResponse ->
+        viewModel?.getMemberList(patientId, teamName)?.observe(this) { teamsDetailListResponse ->
             dismissProgressBar()
-            if (teamsDetailListResponse != null && teamsDetailListResponse.getStatus() != null && teamsDetailListResponse.getStatus()) {
+            if (teamsDetailListResponse != null && teamsDetailListResponse.getStatus() != null && teamsDetailListResponse.getStatus()!!) {
 
-                if (teamsDetailListResponse.getTeamDetails().getMembers() != null) {
+                if (teamsDetailListResponse.getTeamDetails()?.getMembers() != null) {
                     membersList.clear()
-                    membersList.addAll(teamsDetailListResponse.getTeamDetails().getMembers())
-                    strConsultTeamName = teamsDetailListResponse.getTeamDetails().getName()
+                    teamsDetailListResponse.teamDetails?.let { membersList.addAll(it.getMembers()) }
+                    strConsultTeamName = teamsDetailListResponse.getTeamDetails()!!.getName()
                 }
-            } else if (!TextUtils.isEmpty(teamsDetailListResponse.getErrorMessage()) && teamsDetailListResponse.getErrorMessage() != null) {
-                errorTeams = teamsDetailListResponse.getErrorMessage()
+            } else if (!TextUtils.isEmpty(teamsDetailListResponse?.getErrorMessage()) && teamsDetailListResponse?.getErrorMessage() != null) {
+                errorTeams = teamsDetailListResponse?.getErrorMessage()
 
             } else {
                 errorTeams = getString(R.string.api_error)
@@ -543,7 +555,7 @@ class ActivityConsultChart : BaseActivity() {
      *
      * @param notificationId
      */
-    private fun clearNotifications(notificationId: Int) {
+    private fun clearNotifications(notificationId: Long?) {
         NotificationHelper(this).clearNotification(notificationId)
     }
 
@@ -554,33 +566,33 @@ class ActivityConsultChart : BaseActivity() {
         mConsultProvider = ConsultProvider()
         mConsultProviderKey = getIntent().getStringExtra("consultProviderId")
 
-        mConsultProvider.setId(getIntent().getStringExtra(getString(R.string.consultProviderPatientId))
+        mConsultProvider?.setId(getIntent().getStringExtra(getString(R.string.consultProviderPatientId))
             ?.toLong())
-        mConsultProvider.setPatientsId(getIntent().getStringExtra(getString(R.string.consultProviderPatientId))
+        mConsultProvider?.setPatientsId(getIntent().getStringExtra(getString(R.string.consultProviderPatientId))
             ?.toLong())
-        mConsultProvider.setText(getIntent().getStringExtra("consultProviderText"))
-        mConsultProvider.setName(getIntent().getStringExtra("consultProviderName"))
-        mConsultProvider.setUnread(getIntent().getIntExtra("unreadMessageCount", 0))
+        mConsultProvider?.setText(getIntent().getStringExtra("consultProviderText"))
+        mConsultProvider?.setName(getIntent().getStringExtra("consultProviderName"))
+        mConsultProvider?.setUnread(getIntent().getIntExtra("unreadMessageCount", 0))
         val dob: Long = getIntent().getLongExtra("dob", -1)
-        mConsultProvider.setDob(dob)
+        mConsultProvider?.setDob(dob)
         val gender: String = getIntent().getStringExtra("gender").toString()
-        mConsultProvider.setGender(gender)
+        mConsultProvider?.setGender(gender)
         val note: String? = getIntent().getStringExtra("note")
-        mConsultProvider.setNote(note)
+        mConsultProvider?.setNote(note)
         val status: String? = getIntent().getStringExtra("status")
         //        Log.e(TAG, "setProviderObject:status-> " + status);
         if (!TextUtils.isEmpty(status)) {
-            mConsultProvider.setStatus(Constants.PatientStatus.valueOf(status))
+            mConsultProvider?.setStatus(status?.let { Constants.PatientStatus.valueOf(it) })
         }
-        mConsultProvider.setUrgent(getIntent().getBooleanExtra(Constants.IntentKeyConstants.IS_PATIENT_URGENT,
+        mConsultProvider?.setUrgent(getIntent().getBooleanExtra(Constants.IntentKeyConstants.IS_PATIENT_URGENT,
             false))
         if (getIntent().hasExtra("phone")) {
-            mConsultProvider.setPhone(getIntent().getStringExtra("phone"))
+            mConsultProvider?.setPhone(getIntent().getStringExtra("phone"))
         }
-        if (mConsultProvider.getUnread() > 0) {
-            binding.imgMessageAlert.setVisibility(View.VISIBLE)
+        if (mConsultProvider?.getUnread()!! > 0) {
+            binding?.imgMessageAlert?.setVisibility(View.VISIBLE)
         } else {
-            binding.imgMessageAlert.setVisibility(View.GONE)
+            binding?.imgMessageAlert?.setVisibility(View.GONE)
         }
         strScreenCensus = getIntent().getStringExtra(Constants.IntentKeyConstants.SCREEN_TYPE).toString()
     }
@@ -596,7 +608,7 @@ class ActivityConsultChart : BaseActivity() {
             Constants.API.getPatientDetails.toString()))
         viewModel?.getPatienDetails(uid)?.observe(this) { response ->
 
-            val patID: Long = mConsultProvider.getPatientsId()
+            val patID: Long? = mConsultProvider?.getPatientsId()
 
             if (response != null && response.getStatus()) {
                 val gson = Gson()
@@ -606,15 +618,17 @@ class ActivityConsultChart : BaseActivity() {
 
                     patientDetails = response
                     populateConsultDetails()
-                    getTeamMemberDetails(patID, "Team " + patientDetails.patient.getTeamName())
+                    if (patID != null) {
+                        getTeamMemberDetails(patID, "Team " + patientDetails!!.patient?.getTeamName())
+                    }
                     //                    }
                 } catch (e: JSONException) {
 
                 }
-            } else if (!TextUtils.isEmpty(response.errorMsg) && response.errorMsg!= null) {
+            } else if (!TextUtils.isEmpty(response?.errorMsg) && response?.errorMsg!= null) {
                 dismissProgressBar()
-                val errMsg: String = ErrorMessages().getErrorMessage(this,
-                    java.lang.String.valueOf(response.errorMsg),
+                val errMsg: String? = ErrorMessages().getErrorMessage(this,
+                    java.lang.String.valueOf(response?.errorMsg),
                     Constants.API.getPatientDetails)
                 CustomSnackBar.make(binding?.containerLayout,
                     this,
@@ -628,7 +642,7 @@ class ActivityConsultChart : BaseActivity() {
                 dismissProgressBar()
                 val strErrMsg: String = getString(R.string.api_error)
                 CustomSnackBar.make(binding?.containerLayout,
-                    this@ActivityConsultChart,
+                    this,
                     CustomSnackBar.WARNING,
                     strErrMsg,
                     CustomSnackBar.TOP,
@@ -653,14 +667,14 @@ class ActivityConsultChart : BaseActivity() {
 
 
         var oxySupp = false
-        if (patientDetails.patient != null) {
+        if (patientDetails?.patient != null) {
 
             oxySupp = patientDetails?.patient!!.isOxygenSupplement()
             heartRateValue = patientDetails?.patient!!.getHeartRate()
             highBPValue = patientDetails?.patient!!.getArterialBloodPressureSystolic()
             lowBPValue = patientDetails?.patient!!.getArterialBloodPressureDiastolic()
             spo2Value = patientDetails?.patient!!.getRespiratoryRate()
-            fiO2Value = patientDetails?.patient!!.getFiO2()
+            fiO2Value = patientDetails?.patient!!.getFio2()
             tempValue = patientDetails?.patient!!.getTemperature()
         }
         val provider = ConsultProvider()
@@ -694,28 +708,28 @@ class ActivityConsultChart : BaseActivity() {
         }
         // O2 supplement
         provider.setOxygenSupplement(oxySupp)
-        if (!TextUtils.isEmpty(patientDetails.patient.getPatientCondition())) {
-            if (patientDetails.patient.getPatientCondition()
-                    .equalsIgnoreCase(java.lang.String.valueOf(Constants.PatientCondition.Alert))
+        if (!TextUtils.isEmpty(patientDetails?.patient?.getPatientCondition())) {
+            if (patientDetails?.patient?.getPatientCondition()
+                    .equals(java.lang.String.valueOf(Constants.PatientCondition.Alert),ignoreCase = true)
             ) {
                 provider.setPatientCondition(Constants.PatientCondition.Alert)
-            } else if (patientDetails.patient.getPatientCondition()
-                    .equalsIgnoreCase(java.lang.String.valueOf(Constants.PatientCondition.Voice))
+            } else if (patientDetails?.patient?.getPatientCondition()
+                    .equals(java.lang.String.valueOf(Constants.PatientCondition.Voice),ignoreCase = true)
             ) {
                 provider.setPatientCondition(Constants.PatientCondition.Voice)
-            } else if (patientDetails.patient.getPatientCondition()
-                    .equalsIgnoreCase(java.lang.String.valueOf(Constants.PatientCondition.Pain))
+            } else if (patientDetails?.patient?.getPatientCondition()
+                    .equals(java.lang.String.valueOf(Constants.PatientCondition.Pain),ignoreCase = true)
             ) {
                 provider.setPatientCondition(Constants.PatientCondition.Pain)
-            } else if (patientDetails.patient.getPatientCondition()
-                    .equalsIgnoreCase(java.lang.String.valueOf(Constants.PatientCondition.Unresponsive))
+            } else if (patientDetails?.patient?.getPatientCondition()
+                    .equals(java.lang.String.valueOf(Constants.PatientCondition.Unresponsive),ignoreCase = true)
             ) {
                 provider.setPatientCondition(Constants.PatientCondition.Unresponsive)
             }
         }
 
         // Accept textview is changed based on thr consult provider status
-        val status: Constants.PatientStatus? = mConsultProvider.getStatus()
+        val status: Constants.PatientStatus? = mConsultProvider?.getStatus()
 
         binding?.txtAccept?.setText(getString(R.string.accept))
 
@@ -726,9 +740,9 @@ class ActivityConsultChart : BaseActivity() {
 
 
         // Score
-        if (patientDetails.patient.getScore() != null) {
-            mConsultProvider?.setScore(Constants.AcuityLevel.valueOf(patientDetails.patient
-                .getScore()!!))
+        if (patientDetails?.patient?.getScore() != null) {
+            mConsultProvider?.setScore(Constants.AcuityLevel.valueOf(patientDetails!!.patient
+                ?.getScore()!!))
         }
         stub?.let { UtilityMethods().displayVitals(this, it, provider) }
         statusStub?.let {
@@ -736,7 +750,7 @@ class ActivityConsultChart : BaseActivity() {
                 it,
                 mConsultProvider?.getUrgent(),
                 status === Constants.PatientStatus.Pending,
-                patientDetails.patient.getScore()?.let { it1 -> Constants.AcuityLevel.valueOf(it1) })
+                patientDetails?.patient?.getScore()?.let { it1 -> Constants.AcuityLevel.valueOf(it1) })
         }
 
         // Contact team text is changed based on the role
@@ -744,33 +758,33 @@ class ActivityConsultChart : BaseActivity() {
             PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.R_PROVIDER_TYPE, "")
         strAcuityScore = patientDetails?.patient?.getScore()
         if (status === Constants.PatientStatus.Pending || status === Constants.PatientStatus.Invited || status === Constants.PatientStatus.Handoff) {
-            binding?.txtContactTeam?.setVisibility(View.GONE)
+            binding?.txtContactTeam?.visibility = View.GONE
             if (strRpUserType.equals("MD/DO", ignoreCase = true)) {
                 binding?.txtAccept?.setVisibility(View.VISIBLE)
             }
         } else {
-            binding.txtContactTeam.setVisibility(View.VISIBLE)
-            binding.txtAccept.setVisibility(View.GONE)
+            binding?.txtContactTeam?.setVisibility(View.VISIBLE)
+            binding?.txtAccept?.setVisibility(View.GONE)
         }
         // Record number
-        if (!TextUtils.isEmpty(patientDetails.patient.getRecordNumber())) {
-            binding.txtMRNNumber.setText(Html.fromHtml("MRN&nbsp;" + patientDetails.patient
-                .getRecordNumber()))
+        if (!TextUtils.isEmpty(patientDetails?.patient?.getRecordNumber())) {
+            binding?.txtMRNNumber?.setText(Html.fromHtml("MRN&nbsp;" + patientDetails?.patient
+                ?.getRecordNumber()))
         } else {
-            binding.txtMRNNumber.setText("MRN ")
+            binding?.txtMRNNumber?.setText("MRN ")
         }
         // Patient name
-        binding.txtPatientName.setText(patientDetails.patient.getFname()
-            .toString() + " " + patientDetails.patient.getLname())
+        binding?.txtPatientName?.setText(patientDetails?.patient?.getFname()
+            .toString() + " " + patientDetails?.patient?.getLname())
 
         // DOB
         val dot = " <b>\u00b7</b> "
-        if (!TextUtils.isEmpty(patientDetails.patient.getDob())) {
+        if (!TextUtils.isEmpty(patientDetails?.patient?.getDob())) {
             strDob = dot + dob
         }
         // Gender
-        if (!TextUtils.isEmpty(patientDetails.patient.getGender())) {
-            strGender = patientDetails.patient.getGender()
+        if (!TextUtils.isEmpty(patientDetails?.patient?.getGender())) {
+            strGender = patientDetails?.patient?.getGender()
             if (strGender.equals("Male", ignoreCase = true)) {
                 strGender = dot + "M"
             } else if (strGender.equals("Female", ignoreCase = true)) {
@@ -782,13 +796,13 @@ class ActivityConsultChart : BaseActivity() {
                 patientDetails?.patient?.getPhone()) &&
             !patientDetails?.patient?.getPhone().equals("null",ignoreCase = true)
         ) {
-            dot + patientDetails!!.patient.getPhone()
+            dot + patientDetails!!.patient?.getPhone()
         } else {
             ""
         }
 
         //Age
-        binding.txtAge.setText(Html.fromHtml(age + strGender + strDob + strPhone))
+        binding?.txtAge?.setText(Html.fromHtml(age + strGender + strDob + strPhone))
         strWard = if (!TextUtils.isEmpty(patientDetails?.patient?.getWardName()?.trim()) &&
             !patientDetails?.patient?.getWardName().equals("null",ignoreCase = true)
         ) {
@@ -798,8 +812,8 @@ class ActivityConsultChart : BaseActivity() {
         }
         // Hospital
         if (!TextUtils.isEmpty(patientDetails?.patient?.getHospital())) {
-            binding?.txtLocation?.setText(Html.fromHtml(patientDetails?.patient?.getHospital()
-                .toString() + strWard))
+            binding?.txtLocation?.text = Html.fromHtml(patientDetails?.patient?.getHospital()
+                .toString() + strWard)
         }
 
         // Getting the note for complain details
@@ -845,10 +859,10 @@ class ActivityConsultChart : BaseActivity() {
                 consultProvider.getPatientsId()?.let {
                     if (token != null) {
                         HomeViewModel().acceptInvite(providerId, token, it)
-                            .observe(this) { listResponse ->
+                            ?.observe(this) { listResponse ->
 
                                 providerApiFlag = false
-                                if (listResponse != null && listResponse.status != null && listResponse.status) {
+                                if (listResponse?.status != null && listResponse.status!!) {
                                     mConsultProvider?.setStatus(Constants.PatientStatus.Active)
 
                                     getPatientDetails(uid)
@@ -863,7 +877,7 @@ class ActivityConsultChart : BaseActivity() {
                                 } else {
                                     // Dissmis progress bar
                                     dismissProgressBar()
-                                    //                    Log.d(TAG, "acceptClick Error : " + new Gson().toJson(listResponse));
+
                                     var errMsg = ""
                                     if (listResponse != null && !TextUtils.isEmpty(listResponse.errorMessage)) {
                                         errMsg = listResponse.errorMessage.toString()
@@ -903,8 +917,7 @@ class ActivityConsultChart : BaseActivity() {
                             binding?.txtContactTeam?.setVisibility(View.VISIBLE)
                             val role: String? = PrefUtility().getRole(this)
                             val strRpUserType: String? =
-                                PrefUtility().getStringInPref(this,
-                                    Constants.SharedPrefConstants.R_PROVIDER_TYPE,
+                                PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.R_PROVIDER_TYPE,"")
 
                         }
                         else {
@@ -960,7 +973,7 @@ class ActivityConsultChart : BaseActivity() {
         @SuppressLint("SimpleDateFormat")
         get() {
             val timeInMillis: Long =
-                java.lang.Long.valueOf(patientDetails.patient.getDob())
+                java.lang.Long.valueOf(patientDetails?.patient?.getDob())
             return SimpleDateFormat("MM-dd-yyyy").format(Date(timeInMillis))
         }
 
@@ -970,22 +983,22 @@ class ActivityConsultChart : BaseActivity() {
      * @return
      */
     private val age: String
-        private get() {
+         get() {
             val calendar = Calendar.getInstance()
             val year = calendar[Calendar.YEAR]
-            calendar.timeInMillis = patientDetails.patient.getDob().toLong()
+            calendar.timeInMillis = patientDetails?.patient?.getDob()?.toLong()!!
             val agee = year - calendar[Calendar.YEAR]
             return agee.toString()
         }
 
-  */
+
     /**
      * Direct to Remote Hand off activity
      */
     private fun doRemoteSideHandOff() {
         val intent = Intent(this, RemoteHandOffActivity::class.java)
         intent.putExtra("patient_id", mConsultProvider?.getPatientsId())
-        intent.putExtra("patient_name", patientDetails.patient.getName())
+        intent.putExtra("patient_name", patientDetails?.patient?.name)
         intent.putExtra(Constants.IntentKeyConstants.SCREEN_TYPE, strScreenCensus)
         startActivityForResult(intent, 505)
     }
@@ -995,7 +1008,6 @@ class ActivityConsultChart : BaseActivity() {
      */
     private fun doCompleteConsultation() {
 
-//        Dialog dialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         val dialog = Dialog(this, R.style.AppTheme_NoActionBarDark)
         dialog.setContentView(R.layout.mark_complete_dialog)
         dialog.show()
@@ -1043,7 +1055,7 @@ class ActivityConsultChart : BaseActivity() {
                     ignoreCase = true)
             ) {
                 if (TextUtils.isEmpty(plan) || plan.equals("Plan:", ignoreCase = true)) {
-                    //                        UtilityMethods.showErrorSnackBar(v, getString(R.string.summary_note_is_mandatory), Snackbar.LENGTH_LONG);
+
                     CustomSnackBar.make(v, this, CustomSnackBar.WARNING,
                         getString(R.string.summary_note_is_mandatory),
                         CustomSnackBar.TOP, 3000, 0)?.show()
@@ -1073,63 +1085,67 @@ class ActivityConsultChart : BaseActivity() {
             }
             dialog.dismiss()
             showProgressBar()
-            //                String notes = assessment + "\n \n" + plan;
+
             val notes = "Assessment: $assessment\n  \nPlan: $plan"
             val providerID: Long?= PrefUtility().getProviderId(this)
-            val token: String? = PrefUtility().getStringInPref(this,
-                Constants.SharedPrefConstants.TOKEN,
-                "")
+            val token: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.TOKEN, "")
             // DischargePatient API call
-            viewModel.dischargePatient(providerID, token, mConsultProvider.getId(), notes)
-                .observe(this) { commonResponse ->
-                    dismissProgressBar()
-                    if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                        if (mConsultProvider != null) {
-                            val providerName: String? =
-                                PrefUtility().getStringInPref(this,
-                                    Constants.SharedPrefConstants.NAME, "")
-                            val role: String? =
-                                PrefUtility().getStringInPref(this,
-                                    Constants.SharedPrefConstants.R_PROVIDER_TYPE,
-                                    "")
-                            mFirebaseDatabaseReference!!.child("providers")
-                                .child(providerID.toString()).child("active")
-                                .child(java.lang.String.valueOf(mConsultProvider!!.getId()))
-                                .child("completed_by").setValue("$providerName, $role")
-                            mConsultProvider!!.setStatus(Constants.PatientStatus.Completed)
-                            if (!TextUtils.isEmpty(strScreenCensus) && strScreenCensus.equals(
-                                    Constants.IntentKeyConstants.SCREEN_CENSUS,
-                                    ignoreCase = true)
-                            ) {
-                                setResult(Activity.RESULT_OK)
-                                finish()
-                            } else {
-                                startActivity(Intent(this,
-                                    HomeActivity::class.java)
-                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                    .putExtra(Constants.IntentKeyConstants.TARGET_PAGE,
-                                        "completed"))
-                                finish()
+            if (providerID != null) {
+                if (token != null) {
+                    mConsultProvider?.getId()?.let {
+                        viewModel?.dischargePatient(providerID, token, it, notes)
+                            ?.observe(this) { commonResponse ->
+                                dismissProgressBar()
+                                if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
+                                    if (mConsultProvider != null) {
+                                        val providerName: String? =
+                                            PrefUtility().getStringInPref(this,
+                                                Constants.SharedPrefConstants.NAME, "")
+                                        val role: String? =
+                                            PrefUtility().getStringInPref(this,
+                                                Constants.SharedPrefConstants.R_PROVIDER_TYPE,
+                                                "")
+                                        mFirebaseDatabaseReference!!.child("providers")
+                                            .child(providerID.toString()).child("active")
+                                            .child(java.lang.String.valueOf(mConsultProvider!!.getId()))
+                                            .child("completed_by").setValue("$providerName, $role")
+                                        mConsultProvider!!.setStatus(Constants.PatientStatus.Completed)
+                                        if (!TextUtils.isEmpty(strScreenCensus) && strScreenCensus.equals(
+                                                Constants.IntentKeyConstants.SCREEN_CENSUS,
+                                                ignoreCase = true)
+                                        ) {
+                                            setResult(Activity.RESULT_OK)
+                                            finish()
+                                        } else {
+                                            startActivity(Intent(this,
+                                                HomeActivity::class.java)
+                                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                                .putExtra(Constants.IntentKeyConstants.TARGET_PAGE,
+                                                    "completed"))
+                                            finish()
+                                        }
+
+
+                                    }
+                                } else {
+                                    btnComplete.isEnabled = true
+                                    val errMsg: String? =
+                                        ErrorMessages().getErrorMessage(this,
+                                            commonResponse?.getErrorMessage(),
+                                            Constants.API.register)
+
+                                    CustomSnackBar.make(idContainerLayout, this,
+                                        CustomSnackBar.WARNING, errMsg, CustomSnackBar.TOP, 3000, 0)?.show()
+                                }
                             }
-
-
-                        }
-                    } else {
-                        btnComplete.isEnabled = true
-                        val errMsg: String? =
-                            ErrorMessages().getErrorMessage(this,
-                                commonResponse.getErrorMessage(),
-                                Constants.API.register)
-
-                        CustomSnackBar.make(idContainerLayout, this,
-                            CustomSnackBar.WARNING, errMsg, CustomSnackBar.TOP, 3000, 0)?.show()
                     }
                 }
+            }
         })
         dialog.show()
     }
 
-*/
+
     /**
      * BP more option click listener popup
      *
@@ -1173,7 +1189,7 @@ class ActivityConsultChart : BaseActivity() {
         }
         rleNotes.setOnClickListener { v ->
             handleMultipleClick(v)
-            val intent = Intent(this, ActivityENotes::class.java)
+            val intent = Intent(this, ActivityEnotes::class.java)
             intent.putExtra("patient_id", mConsultProvider?.getPatientsId())
             intent.putExtra("patient_name", patientDetails?.patient?.name)
             intent.putExtra("patient_status", mConsultProvider?.status.toString())
@@ -1185,7 +1201,7 @@ class ActivityConsultChart : BaseActivity() {
             handleMultipleClick(v)
             val intent = Intent(this, ActivityLog::class.java)
             intent.putExtra("patient_id", mConsultProvider?.getPatientsId())
-            intent.putExtra("patient_name", patientDetails?.patient.name)
+            intent.putExtra("patient_name", patientDetails?.patient?.name)
             startActivity(intent)
             dialog.dismiss()
         }
@@ -1214,8 +1230,8 @@ class ActivityConsultChart : BaseActivity() {
         val rlActivityLogs = dialog.findViewById<View>(R.id.rlActivityLogs) as RelativeLayout
         val imgCancel = dialog.findViewById<View>(R.id.imgCancel) as ImageView
         imgCancel.setOnClickListener { dialog.dismiss() }
-        if (mConsultProvider.getStatus().equals(Constants.PatientStatus.HandoffPending)) {
-//        if (mConsultProvider.getStatus().equals(Constants.PatientStatus.HandoffPending) || mConsultProvider.getStatus().equals(Constants.PatientStatus.Handoff) ) {
+        if (mConsultProvider?.getStatus()?.equals(Constants.PatientStatus.HandoffPending) == true) {
+
             rlHandOffPatient.visibility = View.GONE
         } else {
             rlHandOffPatient.visibility = View.VISIBLE
@@ -1251,9 +1267,9 @@ class ActivityConsultChart : BaseActivity() {
         }
         rleNotes.setOnClickListener { v ->
             handleMultipleClick(v)
-            val intent = Intent(this, ActivityENotes::class.java)
+            val intent = Intent(this, ActivityEnotes::class.java)
             intent.putExtra("patient_id", mConsultProvider?.getPatientsId())
-            intent.putExtra("patient_name", patientDetails?.patient.name)
+            intent.putExtra("patient_name", patientDetails?.patient?.name)
             intent.putExtra("patient_status", mConsultProvider?.getStatus().toString())
             intent.putExtra(Constants.IntentKeyConstants.SCREEN_TYPE, strScreenCensus)
             startActivity(intent)
@@ -1263,13 +1279,13 @@ class ActivityConsultChart : BaseActivity() {
             handleMultipleClick(v)
             val intent = Intent(this, ActivityLog::class.java)
             intent.putExtra("patient_id", mConsultProvider?.getPatientsId())
-            intent.putExtra("patient_name", patientDetails?.patient.name)
+            intent.putExtra("patient_name", patientDetails?.patient?.name)
             startActivity(intent)
             dialog.dismiss()
         }
         rlCreateProgress.setOnClickListener { v ->
             handleMultipleClick(v)
-            val intent = Intent(this, AddProgressENoteActivity::class.java)
+            val intent = Intent(this, AddProgressEnoteActivity::class.java)
             intent.putExtra("patient_id", mConsultProvider?.getPatientsId())
             intent.putExtra("patient_name", patientDetails?.patient?.name)
             intent.putExtra("patient_status", mConsultProvider?.getStatus().toString())
@@ -1393,7 +1409,7 @@ class ActivityConsultChart : BaseActivity() {
         // Reset button acuity click
         btnResetAcuity.setOnClickListener {
             val providerId: Long? = PrefUtility().getProviderId(this)
-            val token: String?= PrefUtility().getToken(this)
+            val token: String? = PrefUtility().getToken(this)
             val patientId: Long =
                 if (mConsultProvider?.getId() != null) mConsultProvider!!.getId()!! else 0
 
@@ -1417,138 +1433,129 @@ class ActivityConsultChart : BaseActivity() {
                 handleMultipleClick(v)
                 showProgressBar(getString(R.string.acuity_score_reset_pb_mgs))
                 // ResetAcuityValue API call is triggered
-                viewModel.resetAcuityValue(providerId, token, patientId, acuityLevel).observe(this,
+                if (providerId != null) {
+                    if (token != null) {
+                        // ResetAcuityValue API call is triggered
+                        viewModel!!.resetAcuityValue(providerId,
+                            token,
+                            patientId,
+                            java.lang.String.valueOf(acuityLevel))!!
+                            .observe(this, { commonResponse ->
+                                dismissProgressBar()
+                                if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
 
-                        dismissProgressBar()
-                        if (commonResponse != null && commonResponse.!= null && commonResponse.getStatus()) {
-                            //                                    Log.d(TAG, "showAcuityReset Response : " + commonResponse);
-                            mConsultProvider.setResetAcuityFlag(true)
-                            if (!TextUtils.isEmpty(strScreenCensus) && strScreenCensus.equals(
-                                    Constants.IntentKeyConstants.SCREEN_CENSUS,
-                                    ignoreCase = true)
-                            ) {
-                                setResult(Activity.RESULT_OK)
-                                finish()
-                            } else {
-                                // Directing to home activity based on SCREEN_CENSUS
-                                val intent = Intent(this@ActivityConsultChart,
-                                    HomeActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                startActivity(intent)
-                                finish()
-                                alertDialog.dismiss()
-                                dialog.dismiss()
+                                    mConsultProvider!!.setResetAcuityFlag(true)
+                                    if (!TextUtils.isEmpty(strScreenCensus) && strScreenCensus.equals(
+                                            Constants.IntentKeyConstants.SCREEN_CENSUS,
+                                            ignoreCase = true)
+                                    ) {
+                                        setResult(RESULT_OK)
+                                        finish()
+                                    } else {
+                                        // Directing to home activity based on SCREEN_CENSUS
+                                        val intent = Intent(this,
+                                            HomeActivity::class.java)
+                                        intent.flags =
+                                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                        startActivity(intent)
+                                        finish()
+                                        alertDialog.dismiss()
+                                        dialog.dismiss()
 
 
-                                //In-App alert for acuity change
-                                // Getting value from shared preference for Acuity alert
-                                //                                        boolean acuity;
-                                //                                        if(PrefUtility.getStringInPref(ActivityConsultChart.this, Constants.SharedPrefConstants.ALERT_ACUITY, "") != null || !PrefUtility.getStringInPref(ActivityConsultChart.this, Constants.SharedPrefConstants.ALERT_ACUITY, "").isEmpty()){
-                                //
-                                //                                            acuity = Boolean.parseBoolean(PrefUtility.getStringInPref(ActivityConsultChart.this, Constants.SharedPrefConstants.ALERT_ACUITY, ""));
-                                //                                            // If the acuity is true, In-App alert can be triggered
-                                //                                            if(acuity){
-                                //                                                Log.e(TAG, "onChanged: fname"+patientDetails.getPatient().getFname() );
-                                //                                                Log.e(TAG, "onChanged: lname"+patientDetails.getPatient().getLname());
-                                //                                                Log.e(TAG, "onChanged: acuityscore"+mConsultProvider.getScore() );
-                                //                                                Log.e(TAG, "onChanged: Acuity message-->"+"Acuity for "+patientDetails.getPatient().getFname().concat(" ").concat(patientDetails.getPatient().getLname()).concat(" has been changed from ").concat(String.valueOf(mConsultProvider.getScore())).concat(" to ").concat(String.valueOf(acuityLevel)) );
-                                //
-                                //                                                triggerInAppAlertForAcuityChange("Acuity level for "+patientDetails.getPatient().getFname().concat(" ").concat(patientDetails.getPatient().getFname()).concat(" has been changed from ").concat(String.valueOf(mConsultProvider.getScore())).concat(" to ").concat(String.valueOf(acuityLevel)));
-                                //                                            }
-                                //                                        }
-                            }
-                        } else if (commonResponse != null && !TextUtils.isEmpty(commonResponse.getErrorMessage()) && commonResponse.getErrorMessage() != null) {
-                            val errMsg: String = commonResponse.getErrorMessage()
-                            CustomSnackBar.make(binding.getRoot(),
-                                this@ActivityConsultChart,
-                                CustomSnackBar.WARNING,
-                                errMsg,
-                                CustomSnackBar.TOP,
-                                3000,
-                                0).show()
-                        } else {
-                            CustomSnackBar.make(binding.getRoot(),
-                                this@ActivityConsultChart,
-                                CustomSnackBar.WARNING,
-                                getString(R.string.api_error),
-                                CustomSnackBar.TOP,
-                                3000,
-                                0).show()
-                        }
-                    })
+                                    }
+                                } else if (commonResponse != null && !TextUtils.isEmpty(
+                                        commonResponse.getErrorMessage()) && commonResponse.getErrorMessage() != null
+                                ) {
+                                    val errMsg: String = commonResponse.getErrorMessage()!!
+                                    CustomSnackBar.make(binding!!.root,
+                                        this,
+                                        CustomSnackBar.WARNING,
+                                        errMsg,
+                                        CustomSnackBar.TOP,
+                                        3000,
+                                        0)!!
+                                        .show()
+                                } else {
+                                    CustomSnackBar.make(binding!!.root,
+                                        this,
+                                        CustomSnackBar.WARNING,
+                                        getString(R.string.api_error),
+                                        CustomSnackBar.TOP,
+                                        3000,
+                                        0)!!
+                                        .show()
+                                }
+                            })
+
+                    }
+
+                    // No click listener
+                    buttonNo.setOnClickListener {
+                        alertDialog.dismiss()
+                        dialog.dismiss()
+                    }
+                    alertDialog.show()
+                }
+                dialog.show()
             }
-            // No click listener
-            buttonNo.setOnClickListener {
-                alertDialog.dismiss()
-                dialog.dismiss()
+
+            /**
+             * In-App alert for acuity change only if,
+             * The user enabled the acuity alerts in alert/notification settings
+             * Else the user wont get notified even if the acuity level is modified
+             *
+             * @param message
+             */
+            fun triggerInAppAlertForAcuityChange(message: String) {
+
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                val pendingIntent = PendingIntent.getActivity(this, 1,
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                val notificationHelper = NotificationHelper(getApplicationContext())
+                notificationHelper.sendNotification(pendingIntent,
+                    "Acuity modified",
+                    message,
+                    Constants.NotificationIds.NOTIFICATION_ID)
             }
-            alertDialog.show()
+
+            fun checkSelfPermissionsMediaCheck(): Boolean {
+                return checkSelfPermissionGrantedCheck(Manifest.permission.RECORD_AUDIO,
+                    ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO) &&
+                        checkSelfPermissionGrantedCheck(Manifest.permission.CAMERA,
+                            ConstantApp().PERMISSION_REQ_ID_CAMERA)
+            }
+
+            fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
+
+                if (ContextCompat.checkSelfPermission(this,
+                        permission)
+                    != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(this, arrayOf(permission),
+                        requestCode)
+                    return false
+                }
+                return true
+            }
+
+            fun onRequestPermissionsResult(
+                requestCode: Int, permissions: Array<String?>, grantResults: IntArray,
+            ) {
+
+                when (requestCode) {
+                    ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
+                        checkSelfPermissionGrantedCheck(Manifest.permission.CAMERA,
+                            ConstantApp().PERMISSION_REQ_ID_CAMERA)
+                    }
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
+                    }
+                    else -> {
+                        Toast.makeText(this, "Please give permission", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
         }
-        dialog.show()
-    }
 
-    /**
-     * In-App alert for acuity change only if,
-     * The user enabled the acuity alerts in alert/notification settings
-     * Else the user wont get notified even if the acuity level is modified
-     *
-     * @param message
-     */
-    private fun triggerInAppAlertForAcuityChange(message: String) {
-//        Log.e(TAG, "triggerInAppAlertForAcuityChange:Message " + message);
-        val intent = Intent(this@ActivityConsultChart, HomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        val pendingIntent = PendingIntent.getActivity(this, 1,
-            intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val notificationHelper = NotificationHelper(getApplicationContext())
-        notificationHelper.sendNotification(pendingIntent,
-            "Acuity modified",
-            message,
-            Constants.NotificationIds.NOTIFICATION_ID)
-    }
-
-    fun checkSelfPermissionsMediaCheck(): Boolean {
-        return checkSelfPermissionGrantedCheck(Manifest.permission.RECORD_AUDIO,
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO) &&
-                checkSelfPermissionGrantedCheck(Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA)
-    }
-
-    fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
-//        Log.i("checkSelfPermission ", permission + " " + requestCode);
-        if (ContextCompat.checkSelfPermission(this,
-                permission)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(this, arrayOf(permission),
-                requestCode)
-            return false
-        }
-        return true
-    }
-
-    fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String?>, grantResults: IntArray,
-    ) {
-//        Log.i("onRequestPermissions", requestCode + " " + Arrays.toString(permissions)
-//                + " " + Arrays.toString(grantResults));
-        when (requestCode) {
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO -> {
-                checkSelfPermissionGrantedCheck(Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA)
-            }
-            ConstantApp.PERMISSION_REQ_ID_CAMERA -> {
-            }
-            else -> {
-                Toast.makeText(this, "Please give permission", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    companion object {
-        // Variables
-        private val TAG = ActivityConsultChart::class.java.simpleName
-    }
-}

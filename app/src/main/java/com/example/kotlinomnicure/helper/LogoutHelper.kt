@@ -1,13 +1,14 @@
 package com.example.kotlinomnicure.helper
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
 import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.activity.BaseActivity
+
 import com.example.kotlinomnicure.activity.LoginActivity
-import com.example.kotlinomnicure.activity.MyProfileActivity
+
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
@@ -15,13 +16,13 @@ import com.example.kotlinomnicure.utils.UtilityMethods
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
+import com.example.kotlinomnicure.activity.BaseActivity
 import com.mvp.omnicure.kotlinactivity.requestbodys.LogoutRequestBody
-import omnicurekotlin.example.com.loginEndpoints.model.CommonResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LogoutHelper(myProfileActivity: MyProfileActivity, root: View?) {
+class LogoutHelper(activity: Activity, root: View?) {
 
     //Variables
     private val TAG = LogoutHelper::class.java.simpleName
@@ -54,7 +55,7 @@ class LogoutHelper(myProfileActivity: MyProfileActivity, root: View?) {
                 return
             }
             activity?.showProgressBar(activity?.getString(R.string.logout_pb_msg))
-            //            String token = PrefUtility.getStringInPref(context, Constants.SharedPrefConstants.TOKEN, "");\
+
             val userId: Long? = PrefUtility().getProviderId(context!!)
             val token: String? = PrefUtility().getToken(context!!)
 
@@ -63,14 +64,17 @@ class LogoutHelper(myProfileActivity: MyProfileActivity, root: View?) {
             //sending body through data class
             val requestBody = LogoutRequestBody(token, userId)
 
-//            Call<CommonResponse> call = ApiClient.getApi(false, false).doLogout(userId, token);
-            val call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>? = ApiClient().getApi(true, true).doLogout(requestBody)
-            call?.enqueue(object : Callback<CommonResponse?> {
-                override fun onResponse(
-                    call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
-                ) {
 
+            val call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>? =
+                ApiClient().getApi(true, true)?.doLogout(requestBody)
+            call?.enqueue(object : Callback<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?> {
+
+
+
+                override fun onResponse(
+                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                    response: Response<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                ) {
                     if (response.isSuccessful) {
                         activity!!.dismissProgressBar()
                         onSuccessLogout()
@@ -79,7 +83,12 @@ class LogoutHelper(myProfileActivity: MyProfileActivity, root: View?) {
                     }
                 }
 
-                override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {}
+                override fun onFailure(
+                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                    t: Throwable,
+                ) {
+
+                }
             })
 
             /* new Thread(new Runnable() {

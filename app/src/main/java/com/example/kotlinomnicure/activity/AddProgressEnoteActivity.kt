@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageInputRequestModel
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.ChatActivityViewModel
+import com.example.kotlinomnicure.viewmodel.ChatActivityViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
 
 

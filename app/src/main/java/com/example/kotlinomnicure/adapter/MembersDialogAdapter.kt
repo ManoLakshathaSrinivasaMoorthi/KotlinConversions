@@ -21,15 +21,22 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.kotlinomnicure.R
-import com.example.kotlinomnicure.activity.BaseActivity
+
 import com.example.kotlinomnicure.activity.ChatActivity
 import com.example.kotlinomnicure.databinding.MembersDialogItemBinding
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
+import com.example.kotlinomnicure.activity.BaseActivity
+import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import omnicurekotlin.example.com.providerEndpoints.model.Members
 
-class MembersDialogAdapter: RecyclerView.Adapter<MembersDialogAdapter.ViewHolder>() {
+class MembersDialogAdapter(
+    baseActivity: BaseActivity,
+    context: Context,
+    members: List<Members?>?,
+    param: CallbackDirectory
+) : RecyclerView.Adapter<MembersDialogAdapter.ViewHolder>() {
     var memberList: List<Members>? = null
     var context: Context? = null
     var activity: Activity? = null
@@ -135,11 +142,11 @@ class MembersDialogAdapter: RecyclerView.Adapter<MembersDialogAdapter.ViewHolder
 
     fun checkSelfPermissions() {
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO,
-                ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO) &&
-            checkSelfPermission(Manifest.permission.CAMERA, ConstantApp.PERMISSION_REQ_ID_CAMERA)
+                ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO) &&
+            checkSelfPermission(Manifest.permission.CAMERA, ConstantApp().PERMISSION_REQ_ID_CAMERA)
         ) {
             checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE)
+                ConstantApp().PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE)
         }
     }
 
@@ -161,11 +168,11 @@ class MembersDialogAdapter: RecyclerView.Adapter<MembersDialogAdapter.ViewHolder
         permissions: Array<String?>, grantResults: IntArray, ) {
 
         when (requestCode) {
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO -> {
+            ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
                 checkSelfPermission(Manifest.permission.CAMERA,
                     ConstantApp.PERMISSION_REQ_ID_CAMERA)
             }
-            ConstantApp.PERMISSION_REQ_ID_CAMERA -> {
+            ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
             }
             else -> {
                 Toast.makeText(context, "Please give permission", Toast.LENGTH_SHORT).show()
@@ -184,15 +191,71 @@ class MembersDialogAdapter: RecyclerView.Adapter<MembersDialogAdapter.ViewHolder
         init {
             this.itemBinding = itemBinding
             itemBinding.audioIcon.setOnClickListener { view ->
-                MembersDialogAdapter().handleMultipleClick(itemBinding.audioIcon)
-                MembersDialogAdapter().checkSelfPermissions()
-                MembersDialogAdapter().callbackDirectory?.onClickCallItem(MembersDialogAdapter().memberList?.get(adapterPosition),
+                MembersDialogAdapter(this, context, members, object : CallbackDirectory() {
+                    override fun onClickCallItem(provider: Members?, callType: String?) {
+                        startCall(context, provider, callType, mDialogView, consultProvider.getId())
+                    }
+                }).handleMultipleClick(itemBinding.audioIcon)
+                MembersDialogAdapter(this, context, members, object : CallbackDirectory() {
+                    override fun onClickCallItem(provider: Members?, callType: String?) {
+                        startCall(context, provider, callType, mDialogView, consultProvider.getId())
+                    }
+                }).checkSelfPermissions()
+                MembersDialogAdapter(this, context, members, object : CallbackDirectory() {
+                    override fun onClickCallItem(provider: Members?, callType: String?) {
+                        Constants.API.startCall(context,
+                            provider,
+                            callType,
+                            mDialogView,
+                            consultProvider.getId())
+                    }
+                }).callbackDirectory?.onClickCallItem(MembersDialogAdapter(this, context, members, object : CallbackDirectory() {
+                    override fun onClickCallItem(provider: Members?, callType: String?) {
+                        Constants.API.startCall(context,
+                            provider,
+                            callType,
+                            mDialogView,
+                            consultProvider.getId())
+                    }
+                }).memberList?.get(adapterPosition),
                     Constants.FCMMessageType.AUDIO_CALL)
             }
             itemBinding.videoIcon.setOnClickListener { view ->
-                MembersDialogAdapter().handleMultipleClick(itemBinding.videoIcon)
-                MembersDialogAdapter().checkSelfPermissions()
-                MembersDialogAdapter().callbackDirectory?.onClickCallItem(MembersDialogAdapter().memberList?.get(adapterPosition),
+                MembersDialogAdapter(this, context, members, object : CallbackDirectory() {
+                    override fun onClickCallItem(provider: Members?, callType: String?) {
+                        Constants.API.startCall(context,
+                            provider,
+                            callType,
+                            mDialogView,
+                            consultProvider.getId())
+                    }
+                }).handleMultipleClick(itemBinding.videoIcon)
+                MembersDialogAdapter(this, context, members, object : CallbackDirectory() {
+                    override fun onClickCallItem(provider: Members?, callType: String?) {
+                        Constants.API.startCall(context,
+                            provider,
+                            callType,
+                            mDialogView,
+                            consultProvider.getId())
+                    }
+                }).checkSelfPermissions()
+                MembersDialogAdapter(this, context, members, object : CallbackDirectory() {
+                    override fun onClickCallItem(provider: Members?, callType: String?) {
+                        Constants.API.startCall(context,
+                            provider,
+                            callType,
+                            mDialogView,
+                            consultProvider.getId())
+                    }
+                }).callbackDirectory?.onClickCallItem(MembersDialogAdapter(this, context, members, object : CallbackDirectory() {
+                    override fun onClickCallItem(provider: Members?, callType: String?) {
+                        Constants.API.startCall(context,
+                            provider,
+                            callType,
+                            mDialogView,
+                            consultProvider.getId())
+                    }
+                }).memberList?.get(adapterPosition),
                     Constants.FCMMessageType.VIDEO_CALL)
             }
         }

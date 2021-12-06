@@ -15,7 +15,6 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +33,6 @@ import com.example.kotlinomnicure.viewmodel.MyVirtualTeamsViewModel
 import com.google.gson.Gson
 import omnicurekotlin.example.com.hospitalEndpoints.model.Patient
 import omnicurekotlin.example.com.hospitalEndpoints.model.WardPatientList
-import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.providerEndpoints.model.OtherRebroadcastRequest
 import java.text.SimpleDateFormat
 import java.util.*

@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
 import com.example.kotlinomnicure.databinding.ActivityEconsultChartRemoteBinding
-import com.example.kotlinomnicure.helper.NotificationHelper
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.media.Utils
 import com.example.kotlinomnicure.model.ConsultProvider

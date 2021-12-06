@@ -15,6 +15,7 @@ import com.example.kotlinomnicure.activity.MyDashboardActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
 import com.example.kotlinomnicure.databinding.ActivitySplashBinding
+import com.example.kotlinomnicure.interfaces.OnNetConnectedListener
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.viewmodel.SplashViewModel
 
@@ -30,7 +31,7 @@ import omnicurekotlin.example.com.userEndpoints.model.VersionInfoResponse
 
 import java.lang.Exception
 
-class SplashActivity : BaseActivity(){
+class SplashActivity : BaseActivity(), OnNetConnectedListener {
     private val TAG = SplashActivity::class.java.simpleName
     protected var binding: ActivitySplashBinding? = null
     private var mFirebaseAuth: FirebaseAuth? = null

@@ -4472,7 +4472,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
         }
     }
 
-    private fun clearNotifications(notificationId: Int) {
+    fun clearNotifications(notificationId: Int) {
         when (notificationId) {
             Constants.NotificationIds.NOTIFICATION_ID -> {
                 NotificationHelper(this).clearNotification(Constants.NotificationIds.NOTIFICATION_ID)
@@ -4536,7 +4536,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
         }
     }
 
-    private fun handleMultipleClick(view: View) {
+    fun handleMultipleClick(view: View) {
         view.isEnabled = false
         view.isClickable = false
         mHandler.postDelayed({
