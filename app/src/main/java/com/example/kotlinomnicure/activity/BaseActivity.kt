@@ -954,14 +954,14 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
         return context
     }
 
-    fun checkSelfPermissionsMediaCheck(): Boolean {
+    open fun checkSelfPermissionsMediaCheck(): Boolean {
         return checkSelfPermissionGrantedCheck(Manifest.permission.RECORD_AUDIO,
             ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO) &&
                 checkSelfPermissionGrantedCheck(Manifest.permission.CAMERA,
                     ConstantApp().PERMISSION_REQ_ID_CAMERA)
     }
 
-    fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
+    open fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
 //        Log.i("checkSelfPermission ", permission + " " + requestCode);
         if (ContextCompat.checkSelfPermission(this,
                 permission)

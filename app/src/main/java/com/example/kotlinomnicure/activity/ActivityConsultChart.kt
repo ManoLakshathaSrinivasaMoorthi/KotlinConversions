@@ -530,7 +530,7 @@ class ActivityConsultChart : BaseActivity() {
      * @param teamName
      */
     private fun getTeamMemberDetails(patientId: Long, teamName: String) {
-        membersList!!.clear()
+     /*   membersList!!.clear()
 
         viewModel?.getMemberList(patientId, teamName)?.observe(this) { teamsDetailListResponse ->
             dismissProgressBar()
@@ -547,7 +547,7 @@ class ActivityConsultChart : BaseActivity() {
             } else {
                 errorTeams = getString(R.string.api_error)
             }
-        }
+        }*/
     }
 
     /**
@@ -1499,6 +1499,8 @@ class ActivityConsultChart : BaseActivity() {
                 }
                 dialog.show()
             }
+        }
+    }
 
             /**
              * In-App alert for acuity change only if,
@@ -1520,14 +1522,14 @@ class ActivityConsultChart : BaseActivity() {
                     Constants.NotificationIds.NOTIFICATION_ID)
             }
 
-            fun checkSelfPermissionsMediaCheck(): Boolean {
+            override fun checkSelfPermissionsMediaCheck(): Boolean {
                 return checkSelfPermissionGrantedCheck(Manifest.permission.RECORD_AUDIO,
                     ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO) &&
                         checkSelfPermissionGrantedCheck(Manifest.permission.CAMERA,
                             ConstantApp().PERMISSION_REQ_ID_CAMERA)
             }
 
-            fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
+            override fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
 
                 if (ContextCompat.checkSelfPermission(this,
                         permission)
@@ -1540,22 +1542,22 @@ class ActivityConsultChart : BaseActivity() {
                 return true
             }
 
-            fun onRequestPermissionsResult(
-                requestCode: Int, permissions: Array<String?>, grantResults: IntArray,
-            ) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray, ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-                when (requestCode) {
-                    ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
-                        checkSelfPermissionGrantedCheck(Manifest.permission.CAMERA,
-                            ConstantApp().PERMISSION_REQ_ID_CAMERA)
-                    }
-                    ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
-                    }
-                    else -> {
-                        Toast.makeText(this, "Please give permission", Toast.LENGTH_SHORT).show()
-                    }
-                }
+        when (requestCode) {
+            ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
+                checkSelfPermissionGrantedCheck(Manifest.permission.CAMERA,
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA)
             }
+            ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
+            }
+            else -> {
+                Toast.makeText(this, "Please give permission", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
         }
 
