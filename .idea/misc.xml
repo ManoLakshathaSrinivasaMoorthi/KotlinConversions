@@ -3,7 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/drawable-v24/gradient.xml" value="0.20512820512820512" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/drawable-v24/ic_close_white_24.xml" value="0.20277777777777778" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/drawable-v24/ic_tick_mark_blue.xml" value="0.20277777777777778" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/drawable-v24/ic_warning.xml" value="0.20277777777777778" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/drawable-v24/ic_warning_close.xml" value="0.20277777777777778" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_call_options.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_hospital_list.xml" value="0.15833333333333333" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_second.xml" value="0.15648148148148147" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_ringing.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_splash.xml" value="0.16018518518518518" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/chat_bottom_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/custom_snackbar_error_layout.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/custom_snackbar_layout.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_dashboard_rp_others.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/right_drawer_container_layout.xml" value="0.1" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/black_border_drawable_bg.xml" value="0.20512820512820512" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/error_edittext_bg.xml" value="0.20833333333333334" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/ic_back_arrow.xml" value="0.20833333333333334" />
@@ -51,7 +65,6 @@
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_remote_hand_off.xml" value="0.22552083333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_remote_provider_directory.xml" value="0.2265625" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/complete_patient.xml" value="0.2265625" />
-        <entry key="..\:/KotlinConversions/app/src/main/res/layout/members_dialog_item.xml" value="0.22552083333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/remote_directory_child.xml" value="0.22552083333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/remote_provider_sign_up_second.xml" value="0.2265625" />
         <entry key="..\:/KotlinConversions/app/src/main/res/menu/consult_chart_menu.xml" value="0.2421875" />

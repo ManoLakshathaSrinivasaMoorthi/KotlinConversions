@@ -1,10 +1,8 @@
 package com.example.kotlinomnicure.utils
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
@@ -688,7 +686,7 @@ class PrefUtility {
         return getStringInPref(context, Constants.SharedPrefConstants.TOKEN, "")
     }
 
-    fun savePatientAcuityResetCounter(context: Context?, map: HashMap<Long?, Long?>?) {
+    fun savePatientAcuityResetCounter(context: Context?, map: HashMap<Long, Long>?) {
         val str = Gson().toJson(map)
         context?.let {
             PrefUtility().saveStringInPref(it,

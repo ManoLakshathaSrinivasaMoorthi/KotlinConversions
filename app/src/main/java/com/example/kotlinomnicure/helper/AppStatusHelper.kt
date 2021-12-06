@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.app.Application.ActivityLifecycleCallbacks
 import android.app.KeyguardManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -18,7 +17,6 @@ import com.example.kotlinomnicure.OmnicureApp
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
-import com.example.kotlinomnicure.model.HealthMonitoring
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods

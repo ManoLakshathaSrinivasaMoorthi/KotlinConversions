@@ -1,6 +1,5 @@
 package com.example.kotlinomnicure.apiRetrofit
 
-import com.example.kotlinomnicure.model.HealthMonitoring
 import com.google.gson.JsonObject
 import omnicurekotlin.example.com.providerEndpoints.model.*
 import retrofit2.Call
