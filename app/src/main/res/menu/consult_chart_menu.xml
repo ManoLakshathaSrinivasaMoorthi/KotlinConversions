@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_reset_acuity"
+        android:icon="@drawable/ic_exit"
+        android:title="@string/reset_acuity_chart"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/item_transfer_patient"
+        android:icon="@drawable/ic_patient_icon"
+        android:title="@string/transfer_patient"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/item_handoff_patient"
+        android:icon="@drawable/ic_handoff_patients"
+        android:title="@string/hand_off_patients"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/item_complete_consultation"
+        android:icon="@drawable/ic_exit"
+        android:title="@string/complete_consultation"
+        app:showAsAction="never" />
+</menu>

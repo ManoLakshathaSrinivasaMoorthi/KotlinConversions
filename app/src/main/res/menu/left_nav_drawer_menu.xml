@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/id_my_consults"
+            android:actionLayout="@layout/action_layout_menu_my_consults"
+            android:icon="@drawable/ic_my_consults"
+            android:title="@string/my_consults_in_caps"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/id_hand_off_patient"
+            android:actionLayout="@layout/action_layout_menu_my_consults"
+            android:icon="@drawable/ic_handoff_patients"
+            android:title="@string/hand_off_patients"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/group3">
+        <item
+            android:id="@+id/id_contact_admin"
+            android:icon="@drawable/ic_contact_admin"
+            android:title="@string/contact_admin"
+            android:visible="true"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/group4">
+        <item
+            android:id="@+id/id_training_materials"
+            android:icon="@drawable/ic_training_materials"
+            android:title="@string/training_material"
+            android:visible="true"
+            app:showAsAction="never" />
+    </group>
+    <group android:id="@+id/group5">
+        <item
+            android:id="@+id/id_system_alert"
+            android:icon="@drawable/ic_system_alerts"
+            android:title="@string/system_alert"
+            android:visible="true"
+            app:showAsAction="never" />
+    </group>
+    <group android:id="@+id/group6">
+        <item
+            android:id="@+id/id_feedback"
+            android:icon="@drawable/ic_feedback"
+            android:title="@string/feedback"
+            android:visible="true"
+            app:showAsAction="never" />
+    </group>
+    <group android:id="@+id/group7">
+        <item
+            android:id="@+id/id_change_password"
+            android:icon="@drawable/ic_handoff_patients"
+            android:title="@string/change_password"
+            android:visible="true"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/group8">
+        <item
+            android:id="@+id/id_logout"
+            android:icon="@drawable/ic_signout"
+            android:title="@string/signout"
+            app:showAsAction="never" />
+    </group>
+</menu>

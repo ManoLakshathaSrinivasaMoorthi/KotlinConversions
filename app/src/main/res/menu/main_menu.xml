@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--    <item-->
+    <!--        android:id="@+id/sign_out_menu"-->
+    <!--        android:title="Signout"-->
+    <!--        app:showAsAction="never"/>-->
+    <item
+        android:id="@+id/action_call"
+        android:icon="@drawable/ic_video_call"
+        android:title="@string/video_call"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/audio_call"
+        android:icon="@drawable/ic_audio_call_black"
+        android:title="@string/audio_call"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/invite_menu"
+        android:icon="@drawable/ic_add_provider"
+        android:title="@string/add_provider"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_patient_detail"
+        android:icon="@drawable/ic_patient_icon"
+        android:title="@string/patient_details"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_transfer_patient"
+        android:icon="@drawable/ic_patient_icon"
+        android:title="@string/transfer_patient"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_complete"
+        android:icon="@drawable/ic_exit"
+        android:title="@string/discharge_patient"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_handoff"
+        android:icon="@drawable/ic_handoff_patients"
+        android:title="@string/hand_off_patients"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/complete_consultation"
+        android:icon="@drawable/ic_exit"
+        android:title="@string/complete_consultation"
+        app:showAsAction="never" />
+</menu>

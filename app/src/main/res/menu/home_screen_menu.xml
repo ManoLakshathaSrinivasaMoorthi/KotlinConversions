@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_patient_menu"
+        android:icon="@drawable/add_patient_icon_selector"
+        android:title="@string/add_new_patient"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/directory"
+        android:icon="@drawable/directory_selector_bg"
+        android:title="@string/directory"
+        app:showAsAction="always" />
+</menu>
