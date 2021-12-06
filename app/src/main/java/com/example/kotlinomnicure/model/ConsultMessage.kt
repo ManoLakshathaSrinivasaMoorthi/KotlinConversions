@@ -4,7 +4,7 @@ import java.io.Serializable
 
 class ConsultMessage: Serializable {
 
-    private var id: String? = null
+    var id: String? = null
     private var messageId: Long? = null
     private var type //text,image,video,audio,system
             : String? = null
@@ -78,10 +78,12 @@ class ConsultMessage: Serializable {
         this.urgent = urgent
     }
 
+    @JvmName("getId1")
     fun getId(): String? {
         return id
     }
 
+    @JvmName("setId1")
     fun setId(id: String?) {
         this.id = id
     }

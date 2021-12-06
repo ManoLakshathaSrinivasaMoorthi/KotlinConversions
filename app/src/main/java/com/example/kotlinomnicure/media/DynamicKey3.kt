@@ -11,7 +11,7 @@ class DynamicKey3 {
         randomInt: Int,
         uid: Long,
         expiredTs: Int
-    ): String? {
+    ): String {
         var uid = uid
         val version = "003"
         val unixTsStr =

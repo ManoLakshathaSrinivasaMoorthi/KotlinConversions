@@ -7,10 +7,14 @@ import android.view.SurfaceView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlinomnicure.videocall.propeller.UserStatusData
+import com.example.kotlinomnicure.videocall.propeller.VideoInfoData
+import com.example.kotlinomnicure.videocall.propeller.ui.RecyclerItemClickListener
 import omnicurekotlin.example.com.providerEndpoints.model.Provider
 import org.slf4j.LoggerFactory
 import java.util.ArrayList
 import java.util.HashMap
+import kotlin.math.sqrt
 
 class GridVideoViewContainer: RecyclerView {
     private val log = LoggerFactory.getLogger(GridVideoViewContainer::class.java)
@@ -25,7 +29,7 @@ class GridVideoViewContainer: RecyclerView {
 
 
     fun setItemEventHandler(listener: RecyclerItemClickListener.OnItemClickListener?) {
-        this.addOnItemTouchListener(RecyclerItemClickListener(getContext(), listener))
+        this.addOnItemTouchListener(RecyclerItemClickListener(context, listener))
     }
 
     private fun initAdapter(activity: Activity, localUid: Int, localStatus: Int, localAudioStatus: Int,
@@ -33,7 +37,7 @@ class GridVideoViewContainer: RecyclerView {
         providerList: ArrayList<Provider>): Boolean {
         if (mGridVideoViewContainerAdapter == null) {
             mGridVideoViewContainerAdapter = GridVideoViewContainerAdapter(activity, localUid, localStatus, localAudioStatus, uids, providerList)
-            mGridVideoViewContainerAdapter.setHasStableIds(true)
+            mGridVideoViewContainerAdapter?.setHasStableIds(true)
             return true
         }
         return false
@@ -51,47 +55,45 @@ class GridVideoViewContainer: RecyclerView {
         val newCreated =
             initAdapter(activity, localUid, localStatus, localAudioStatus, uids, providerList)
         if (!newCreated) {
-            mGridVideoViewContainerAdapter.setLocalUid(localUid)
-            mGridVideoViewContainerAdapter.customizedInit(uids, true)
+            mGridVideoViewContainerAdapter?.setLocalUid(localUid)
+            mGridVideoViewContainerAdapter?.customizedInit(uids, true)
         }
-        this.setAdapter(mGridVideoViewContainerAdapter)
-        val orientation = if (isLandscape) RecyclerView.HORIZONTAL else RecyclerView.VERTICAL
+        this.adapter = mGridVideoViewContainerAdapter
+        val orientation = if (isLandscape) HORIZONTAL else VERTICAL
         val count = uids.size
-        if (count <= 2) { // only local full view or or with one peer
-            this.setLayoutManager(
-                LinearLayoutManager(
+        when {
+            count <= 2 -> { // only local full view or or with one peer
+                this.layoutManager = LinearLayoutManager(
                     activity.applicationContext,
                     orientation,
                     false
                 )
-            )
-        } else if (count == 3) {
-            val itemSpanCount = 2 // FIX for 3 users = 1 + 2 peer
-            this.setLayoutManager(
-                GridLayoutManager(
-                    activity.applicationContext,
-                    itemSpanCount,
-                    orientation,
-                    false
-                )
-            )
-        } else if (count > 3) {
-            val itemSpanCount = getNearestSqrt(count)
-            //Log.d("VIDEO","itemSpanCount="+ itemSpanCount + "; count=" + count);
-            this.setLayoutManager(
-                GridLayoutManager(
+            }
+            count == 3 -> {
+                val itemSpanCount = 2 // FIX for 3 users = 1 + 2 peer
+                this.layoutManager = GridLayoutManager(
                     activity.applicationContext,
                     itemSpanCount,
                     orientation,
                     false
                 )
-            )
+            }
+            count > 3 -> {
+                val itemSpanCount = getNearestSqrt(count)
+                //Log.d("VIDEO","itemSpanCount="+ itemSpanCount + "; count=" + count);
+                this.layoutManager = GridLayoutManager(
+                    activity.applicationContext,
+                    itemSpanCount,
+                    orientation,
+                    false
+                )
+            }
         }
-        mGridVideoViewContainerAdapter.notifyDataSetChanged()
+        mGridVideoViewContainerAdapter?.notifyDataSetChanged()
     }
 
     private fun getNearestSqrt(n: Int): Int {
-        return Math.sqrt(n.toDouble()).toInt()
+        return sqrt(n.toDouble()).toInt()
     }
 
     fun notifyUiChanged(
@@ -104,25 +106,25 @@ class GridVideoViewContainer: RecyclerView {
         if (mGridVideoViewContainerAdapter == null) {
             return
         }
-        mGridVideoViewContainerAdapter.notifyUiChanged(uids, localUid, status, audioStatus, volume)
+        mGridVideoViewContainerAdapter!!.notifyUiChanged(uids, localUid, status, audioStatus, volume)
     }
 
     fun addVideoInfo(uid: Int, video: VideoInfoData?) {
         if (mGridVideoViewContainerAdapter == null) {
             return
         }
-        mGridVideoViewContainerAdapter.addVideoInfo(uid, video)
+        video?.let { mGridVideoViewContainerAdapter!!.addVideoInfo(uid, it) }
     }
 
     fun cleanVideoInfo() {
         if (mGridVideoViewContainerAdapter == null) {
             return
         }
-        mGridVideoViewContainerAdapter.cleanVideoInfo()
+        mGridVideoViewContainerAdapter?.cleanVideoInfo()
     }
 
     fun getItem(position: Int): UserStatusData? {
-        return mGridVideoViewContainerAdapter.getItem(position)
+        return mGridVideoViewContainerAdapter?.getItem(position)
     }
 
 }

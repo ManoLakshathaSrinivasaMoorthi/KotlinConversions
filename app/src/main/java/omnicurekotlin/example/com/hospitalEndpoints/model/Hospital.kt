@@ -15,7 +15,7 @@ class Hospital {
     private var doctorCount: Long? = null
     private var email: String? = null
     private var experience: String? = null
-    private var id: Long? = null
+    var id: Long? = null
     private var joiningTime: Long? = null
     private var lat: Double? = null
     private var lng: Double? = null
@@ -146,6 +146,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }

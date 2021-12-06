@@ -11,7 +11,7 @@ class DynamicKey {
         channelName: String,
         unixTs: Int,
         randomInt: Int
-    ): String? {
+    ): String {
         val unixTsStr =
             ("0000000000" + Integer.toString(unixTs)).substring(Integer.toString(unixTs).length)
         val randomIntStr =

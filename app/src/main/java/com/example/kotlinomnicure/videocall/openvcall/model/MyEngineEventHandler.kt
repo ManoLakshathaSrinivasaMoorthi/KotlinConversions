@@ -2,7 +2,6 @@ package com.example.kotlinomnicure.videocall.openvcall.model
 
 import android.content.Context
 import io.agora.rtc.IRtcEngineEventHandler
-import io.agora.rtc.IRtcEngineEventHandler.*
 import io.agora.rtc.RtcEngine
 import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
@@ -114,7 +113,7 @@ class MyEngineEventHandler : IRtcEngineEventHandler() {
         while (it.hasNext()) {
             val handler = it.next()
             if (handler is DuringCallEventHandler) {
-                handler.onExtraCallback(AGEventHandler().EVENT_TYPE_ON_USER_VIDEO_STATS, stats)
+                handler.onExtraCallback(AGEventHandler.EVENT_TYPE_ON_USER_VIDEO_STATS, stats)
             }
         }
     }
@@ -201,7 +200,7 @@ class MyEngineEventHandler : IRtcEngineEventHandler() {
         missed: Int,
         cached: Int
     ) {
-        log.warn("onStreamMessageError " + (uid and 0xFFFFFFFFL) + " " + streamId + " " + error + " " + missed + " " + cached)
+        log.warn("onStreamMessageError " + (uid and 0xFFFFFFFFL.toInt()) + " " + streamId + " " + error + " " + missed + " " + cached)
         val it: Iterator<AGEventHandler> = mEventHandlerList.keys.iterator()
         while (it.hasNext()) {
             val handler = it.next()
@@ -209,7 +208,7 @@ class MyEngineEventHandler : IRtcEngineEventHandler() {
                 handler.onExtraCallback(
                     AGEventHandler.EVENT_TYPE_ON_AGORA_MEDIA_ERROR,
                     error,
-                    "on stream msg error " + (uid and 0xFFFFFFFFL) + " " + missed + " " + cached
+                    "on stream msg error " + (uid and 0xFFFFFFFFL.toInt()) + " " + missed + " " + cached
                 )
             }
         }
@@ -229,8 +228,8 @@ class MyEngineEventHandler : IRtcEngineEventHandler() {
         }
     }
 
-    var mRtcEngine: RtcEngine? = null
-    var _context: Context? = null
+    private var mRtcEngine: RtcEngine? = null
+    private var _context: Context? = null
     fun setEngine(ctx: Context?, engine: RtcEngine?) {
         mRtcEngine = engine
         _context = ctx

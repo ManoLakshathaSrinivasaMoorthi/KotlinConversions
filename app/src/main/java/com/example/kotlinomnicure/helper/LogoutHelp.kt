@@ -111,7 +111,7 @@ class LogoutHelp {
 
     private fun launchLoginActivity() {
         val mobile: String? = activity?.let { PrefUtility().getStringInPref(it, Constants.SharedPrefConstants.USER_MOBILE_NO, "") }
-        NotificationHelper(context as Activity?).clearAllNotification()
+     //   context as Activity?. let { NotificationHelper(it).clearAllNotification() }
         PrefUtility().clearAllData(context as Activity)
         val intent = Intent(context, LoginActivity::class.java)
         //        intent.putExtra(Constants.IntentKeyConstants.MOBILE_NO,mobile);

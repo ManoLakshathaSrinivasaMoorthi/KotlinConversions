@@ -16,6 +16,7 @@ import com.example.kotlinomnicure.adapter.HospitalListAdapter
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityHospitalListBinding
 import com.example.kotlinomnicure.utils.*
+import com.example.kotlinomnicure.viewmodel.HospitalListViewModel
 import com.google.gson.Gson
 
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital

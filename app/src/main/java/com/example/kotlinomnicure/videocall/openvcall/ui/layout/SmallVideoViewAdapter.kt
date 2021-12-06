@@ -34,26 +34,7 @@ abstract class SmallVideoViewAdapter: VideoViewAdapter {
 //        log.debug("SmallVideoViewAdapter " + (mLocalUid & 0xFFFFFFFFL) + " " + (mExceptedUid & 0xFFFFFFFFL));
    }
 
-    fun customizedInit(uids: HashMap<Int?, SurfaceView?>?, force: Boolean) {
-        val status = HashMap<Int, Int>()
-        status[mLocalUid] = mLocalStatus
-        val audioStatus = HashMap<Int, Int>()
-        audioStatus[mLocalUid] = mLocalAudioStatus
-        mUsers?.let {
-            VideoViewAdapterUtil().composeDataItem(it, uids, mLocalUid, status, audioStatus, null,
-                mVideoInfo, mExceptedUid)
-        }
-        setProfileInUsers()
-        if (force || mItemWidth === 0 || mItemHeight === 0) {
-            val windowManager = mContext?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            val outMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(outMetrics)
-            mItemWidth = outMetrics.widthPixels / 4
-            mItemHeight = mItemWidth //outMetrics.heightPixels / 4;
-        }
-    }
-
-   override fun notifyUiChanged(
+    override fun notifyUiChanged(
        uids: HashMap<Int?, SurfaceView?>?,
        uidExcepted: Int,
        status: HashMap<Int?, Int?>?,
@@ -130,6 +111,33 @@ abstract class SmallVideoViewAdapter: VideoViewAdapter {
           VideoViewAdapterUtil().renderExtraData(mContext,
               it, myHolder, mExceptedUid, false)
       }
+    }
+
+    companion object {
+        private fun customizedInit(
+            smallVideoViewAdapter: SmallVideoViewAdapter,
+            uids: HashMap<Int?, SurfaceView?>?, force: Boolean) {
+            val status = HashMap<Int, Int>()
+            status[smallVideoViewAdapter.mLocalUid] = smallVideoViewAdapter.mLocalStatus
+            val audioStatus = HashMap<Int, Int>()
+            audioStatus[smallVideoViewAdapter.mLocalUid] = smallVideoViewAdapter.mLocalAudioStatus
+            smallVideoViewAdapter.mUsers?.let {
+                VideoViewAdapterUtil().composeDataItem(it, uids,
+                    smallVideoViewAdapter.mLocalUid, status, audioStatus, null,
+                    smallVideoViewAdapter.mVideoInfo,
+                    smallVideoViewAdapter.mExceptedUid
+                )
+            }
+            smallVideoViewAdapter.setProfileInUsers()
+            if (force || smallVideoViewAdapter.mItemWidth === 0 || smallVideoViewAdapter.mItemHeight === 0) {
+                val windowManager = smallVideoViewAdapter.mContext?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val outMetrics = DisplayMetrics()
+                windowManager.defaultDisplay.getMetrics(outMetrics)
+                smallVideoViewAdapter.mItemWidth = outMetrics.widthPixels / 4
+                smallVideoViewAdapter.mItemHeight =
+                    smallVideoViewAdapter.mItemWidth //outMetrics.heightPixels / 4;
+            }
+        }
     }
 
 }

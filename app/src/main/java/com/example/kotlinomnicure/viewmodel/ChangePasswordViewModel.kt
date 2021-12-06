@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.CommonResponse
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
+import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.userEndpoints.model.ResetPasswordRequest
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,9 +26,9 @@ class ChangePasswordViewModel:ViewModel() {
 
     private fun doChangePassword(resetPasswordRequest: ResetPasswordRequest) {
         val errMsg = arrayOf("")
-        val call: Call<CommonResponse> =
+        val call: Call<CommonResponse?>? =
             ApiClient().getApiUserEndpoints(true, true).changePassword(resetPasswordRequest)
-        call.enqueue(object : Callback<CommonResponse?> {
+        call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
                 response: Response<CommonResponse?>,

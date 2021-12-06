@@ -2,16 +2,19 @@ package com.example.kotlinomnicure.videocall.openvcall.ui.layout
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.view.SurfaceView
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
+import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.utils.UtilityMethods
+import com.example.kotlinomnicure.videocall.propeller.Constant
 import com.example.kotlinomnicure.videocall.propeller.UserStatusData
 import com.example.kotlinomnicure.videocall.propeller.VideoInfoData
+import com.example.kotlinomnicure.videocall.propeller.ui.ViewUtil
+import okhttp3.internal.and
 import org.slf4j.LoggerFactory
 import java.util.ArrayList
 import java.util.HashMap
@@ -24,18 +27,18 @@ class VideoViewAdapterUtil {
 
     fun composeDataItem1(
         users: ArrayList<UserStatusData>,
-        uids: HashMap<Int, SurfaceView?>,
+        uids: HashMap<Int, SurfaceView>?,
         localUid: Int,
         localStatus: Int,
         localAudioStatus: Int
     ) {
 //        Log.d("TAG", "composeDataItem1: "+localUid+" status: "+localStatus);
-        for (entry in uids.entries) {
+        for (entry in uids?.entries!!) {
             if (DEBUG) {
 //                log.debug("composeDataItem1 " + (entry.getKey() & 0xFFFFFFFFL) + " " + (localUid & 0xFFFFFFFFL) + " " + users.size() + " " + entry.getValue());
             }
             val surfaceV = entry.value
-            surfaceV!!.setZOrderOnTop(false)
+            surfaceV.setZOrderOnTop(false)
             surfaceV.setZOrderMediaOverlay(false)
             //            searchUidsAndAppend(users, entry, localUid, localStatus,localAudioStatus, UserStatusData.DEFAULT_VOLUME, null);
             searchUidsAndAppend(
@@ -44,18 +47,14 @@ class VideoViewAdapterUtil {
                 localUid,
                 localStatus,
                 localAudioStatus,
-                UserStatusData.getDefaultVolume(),
+                UserStatusData().getDefaultVolume(),
                 null
             )
         }
         removeNotExisted(users, uids, localUid)
     }
 
-    private fun removeNotExisted(
-        users: ArrayList<UserStatusData>,
-        uids: HashMap<Int, SurfaceView?>,
-        localUid: Int
-    ) {
+    private fun removeNotExisted(users: ArrayList<UserStatusData>, uids: HashMap<Int, SurfaceView>?, localUid: Int){
         if (DEBUG) {
             log.debug("removeNotExisted all " + uids + " " + users.size)
         }
@@ -65,17 +64,18 @@ class VideoViewAdapterUtil {
             if (DEBUG) {
                 log.debug("removeNotExisted $user $localUid")
             }
-            if (uids[user.getmUid()] == null && user.getmUid() !== localUid) {
+            if (uids?.get(user.getmUid()) == null && user.getmUid() !== localUid) {
                 it.remove()
             }
         }
     }
 
+
     private fun searchUidsAndAppend(
-        users: ArrayList<UserStatusData>, entry: Map.Entry<Int, SurfaceView?>,
+        users: ArrayList<UserStatusData>, entry: MutableMap.MutableEntry<Int, SurfaceView>?,
         localUid: Int, status: Int?, audioStatus: Int?, volume: Int, i: VideoInfoData?
     ) {
-        if (entry.key == 0 || entry.key == localUid) {
+        if (entry?.key == 0 || entry?.key == localUid) {
             var found = false
             for (user in users) {
                 if (user.getmUid() === entry.key && user.getmUid() === 0 || user.getmUid() === localUid) { // first time
@@ -97,12 +97,12 @@ class VideoViewAdapterUtil {
             }
             if (!found) {
 //                Log.d("TAG", "searchUidsAndAppend: "+localUid+" status: "+status);
-                users.add(0, UserStatusData(localUid, entry.value, status, audioStatus, volume, i))
+                users.add(0, UserStatusData(localUid, entry?.value, status, audioStatus, volume, i))
             }
         } else {
             var found = false
             for (user in users) {
-                if (user.getmUid() === entry.key) {
+                if (user.getmUid() === entry?.key) {
                     if (status != null) {
                         user.setmStatus(status)
                     }
@@ -116,18 +116,22 @@ class VideoViewAdapterUtil {
                 }
             }
             if (!found) {
-                users.add(UserStatusData(entry.key, entry.value, status, audioStatus, volume, i))
+                entry?.key?.let { UserStatusData(it, entry.value, status, audioStatus, volume, i) }?.let {
+                    users.add(
+                        it
+                    )
+                }
             }
         }
     }
 
     fun composeDataItem(
-        users: ArrayList<UserStatusData>, uids: HashMap<Int, SurfaceView?>,
+        users: ArrayList<UserStatusData>, uids: HashMap<Int?, SurfaceView?>,
         localUid: Int,
         status: HashMap<Int?, Int?>?,
         audioStatus: HashMap<Int?, Int?>?,
         volume: HashMap<Int?, Int?>?,
-        video: HashMap<Int?, VideoInfoData?>?
+        video: HashMap<Int, VideoInfoData>?
     ) {
         composeDataItem(users, uids, localUid, status, audioStatus, volume, video, 0)
 //        Log.d("TAG", "composeDataItem: "+localUid+" status: "+status.get(localUid));
@@ -142,7 +146,7 @@ class VideoViewAdapterUtil {
         video: HashMap<Int, VideoInfoData>?, uidExcepted: Int
     ) {
 //        Log.d("TAG", "composeDataItem: "+localUid+" status: "+status.get(localUid)+ " uidExcepted: "+uidExcepted+" audiostatus: "+audioStatusMap.get(localUid));
-        for (entry in uids.entries) {
+        for (entry in uids?.entries!!) {
             val uid = entry.key
 
 //            if (uid == uidExcepted && uidExcepted != 0) {
@@ -160,7 +164,7 @@ class VideoViewAdapterUtil {
             if (audioStatusMap != null) {
                 audioStatus = audioStatusMap[uid]
                 if (audioStatus == null) { // check again
-                    audioStatus = UserStatusData.DEFAULT_STATUS
+                    audioStatus = UserStatusData().DEFAULT_STATUS
                 }
             }
             var v: Int? = null
@@ -172,7 +176,7 @@ class VideoViewAdapterUtil {
             }
             if (v == null) {
 //                v = UserStatusData.DEFAULT_VOLUME;
-                v = UserStatusData.getDefaultVolume()
+                v = UserStatusData().getDefaultVolume()
             }
             var i: VideoInfoData?
             if (video != null) {
@@ -184,7 +188,9 @@ class VideoViewAdapterUtil {
                 i = null
             }
             if (DEBUG) {
-                log.debug("composeDataItem " + users + " " + entry + " " + (localUid and 0XFFFFFFFFL) + " " + s + " " + v + " " + i + " " + local + " " + (uid and 0XFFFFFFFFL) + " " + (uidExcepted and 0XFFFFFFFFL))
+                log.debug("composeDataItem " + users + " " + entry + " " + (localUid and 0XFFFFFFFFL.toInt()) + " " + s + " " + v + " " + i + " " + local + " " + (uid?.and(
+                    0XFFFFFFFFL
+                )) + " " + (uidExcepted and 0XFFFFFFFFL.toInt()))
             }
             searchUidsAndAppend(users, entry, localUid, s, audioStatus, v, i)
         }
@@ -216,7 +222,7 @@ class VideoViewAdapterUtil {
         }
         //        Log.d("TAG", "renderExtraData name" + user.mName + " status" + user.getmStatus() );
         if (user.getmStatus() != null) {
-            if (user.getmStatus() and UserStatusData.VIDEO_MUTED !== 0) {
+            if (user.getmStatus()!! and UserStatusData().VIDEO_MUTED !== 0) {
 
 //                if(!TextUtils.isEmpty(user.mProfilePic)) {
                 if (!TextUtils.isEmpty(user.getmProfilePic())) {
@@ -226,19 +232,23 @@ class VideoViewAdapterUtil {
                         myHolder.mCircularAvtar!!.visibility = View.VISIBLE
                         //                        Glide.with(context).load(user.mProfilePic).into(myHolder.mCircularAvtar);
                         Glide.with(context!!).load(user.getmProfilePic())
-                            .into<Target<Drawable>>(myHolder.mCircularAvtar)
+                            .into(myHolder.mCircularAvtar!!)
                     } else {
                         myHolder.mAvatar!!.visibility = View.VISIBLE
                         myHolder.mCircularAvtar!!.visibility = View.GONE
                         //                        Glide.with(context).load(user.mProfilePic).into(myHolder.mAvatar);
                         Glide.with(context!!).load(user.getmProfilePic())
-                            .into<Target<Drawable>>(myHolder.mAvatar)
+                            .into(myHolder.mAvatar!!)
                     }
                 } else {
                     myHolder.mAvtarImageText!!.visibility = View.VISIBLE
                     myHolder.mAvatar!!.visibility = View.GONE
                     myHolder.mCircularAvtar!!.visibility = View.GONE
-                    myHolder.mAvtarImageText.setText(UtilityMethods.getNameText(user.getmName()))
+                    myHolder.mAvtarImageText?.text = user.getmName()?.let {
+                        UtilityMethods().getNameText(
+                            it
+                        )
+                    }
                     if (fromBigGrid) {
                         myHolder.mAvtarImageText!!.setBackgroundResource(R.drawable.text_image_drawable_white)
                     } else {
@@ -257,7 +267,7 @@ class VideoViewAdapterUtil {
                 myHolder.mAvtarImageText!!.visibility = View.GONE
                 myHolder.mMaskView!!.setBackgroundColor(Color.TRANSPARENT)
             }
-            myHolder.mAvtarName!!.text = getTrimmedText(user.getmName(), 12)
+            myHolder.mAvtarName!!.text = user.getmName()?.let { getTrimmedText(it, 12) }
             if (user.getmAudioStatus() != null && user.getmAudioStatus() !== 0) {
 //                Log.i("TAG","audiosStatus: "+user.getmAudioStatus()+" :::::::UserStatusData.AUDIO_MUTED: "+UserStatusData.AUDIO_MUTED);
                 myHolder.mIndicator!!.setImageResource(R.drawable.icon_muted)
@@ -300,9 +310,10 @@ class VideoViewAdapterUtil {
 //        } else {
 //            myHolder.mIndicator.setVisibility(View.INVISIBLE);
 //        }
-        if (Constant.SHOW_VIDEO_INFO && user.getVideoInfoData() != null) {
-            val videoInfo: VideoInfoData = user.getVideoInfoData()
-            myHolder.mMetaData.setText(ViewUtil.composeVideoInfoString(context, videoInfo))
+        if (Constant().SHOW_VIDEO_INFO && user.getVideoInfoData() != null) {
+            val videoInfo: VideoInfoData = user.getVideoInfoData()!!
+            myHolder.mMetaData?.text =
+                context?.let { ViewUtil().composeVideoInfoString(it, videoInfo) }
             //            if(videoInfo.mWidth==0 && videoInfo.mHeight==0) {
 //                Log.d("Volume", "Video Muted by " + "uid=" + user.getmUid());
 //                myHolder.mAvatar.setVisibility(View.VISIBLE);
@@ -318,7 +329,7 @@ class VideoViewAdapterUtil {
         }
     }
 
-    fun getTrimmedText(str: String, length: Int): String? {
+    fun getTrimmedText(str: String, length: Int): String {
         if (TextUtils.isEmpty(str)) {
             return ""
         }

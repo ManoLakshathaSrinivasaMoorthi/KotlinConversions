@@ -45,6 +45,8 @@ class UserStatusData {
         i: VideoInfoData?
     ):super()
 
+    constructor()
+
 
     fun UserStatusData(
         uid: Int,

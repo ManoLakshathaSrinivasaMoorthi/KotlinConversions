@@ -37,9 +37,9 @@ class AppointmentInfoViewModel: ViewModel() {
     fun signUpPatient(
         providerId: Long,
         token: String,
-        patient: Appointment): LiveData<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>? {
+        patient: Appointment): LiveData<CommonResponse?>? {
         patientObservable =
-            MutableLiveData<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>()
+            MutableLiveData<CommonResponse?>()
 
         patientSignUpRetro(providerId, token, patient)
         return patientObservable
@@ -49,18 +49,18 @@ class AppointmentInfoViewModel: ViewModel() {
         val errMsg = arrayOfNulls<String>(1)
 
         ApiClient().getApiPatientEndpoints(true, true)?.registerPatient(patient)
-            ?.enqueue(object : Callback<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?> {
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
-                    call: Call<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>,
-                    response: Response<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>
+                    call: Call<CommonResponse?>,
+                    response: Response<CommonResponse?>
                 ) {
                     Log.d(TAG, "onResponse: registerPatient " + response.code())
                     if (response.isSuccessful()) {
-                        val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse? =
+                        val commonResponse: CommonResponse? =
                             response.body()
                         if (patientObservable == null) {
                             patientObservable =
-                                MutableLiveData<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>()
+                                MutableLiveData<CommonResponse?>()
                         }
                         patientObservable!!.setValue(commonResponse)
                     } else {
@@ -72,11 +72,11 @@ class AppointmentInfoViewModel: ViewModel() {
                             errMsg[0] = Constants.API_ERROR
                         }
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse()
+                            val commonResponse: CommonResponse()
                             commonResponse.setErrorMessage(errMsg[0])
                             if (patientObservable == null) {
                                 patientObservable =
-                                    MutableLiveData<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>()
+                                    MutableLiveData<CommonResponse?>()
                             }
                             patientObservable!!.setValue(commonResponse)
                         }
@@ -84,29 +84,29 @@ class AppointmentInfoViewModel: ViewModel() {
                 }
 
                 override fun onFailure(
-                    call: Call<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>,
+                    call: Call<CommonResponse?>,
                     t: Throwable
                 ) {
                     Log.e(TAG, "onFailure: registerPatient$t")
 
                     errMsg[0] = Constants.API_ERROR
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse()
+                        val commonResponse: CommonResponse()
                         commonResponse.setErrorMessage(errMsg[0])
                         if (patientObservable == null) {
                             patientObservable =
-                                MutableLiveData<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>()
+                                MutableLiveData<CommonResponse?>()
                         }
                         patientObservable!!.setValue(commonResponse)
                     }
                 }
             })
         if (!TextUtils.isEmpty(errMsg[0])) {
-            val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
+            val commonResponse: CommonResponse
             commonResponse.setErrorMessage(errMsg[0])
             if (patientObservable == null) {
                 patientObservable =
-                    MutableLiveData<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse?>()
+                    MutableLiveData<CommonResponse?>()
             }
             patientObservable!!.setValue(commonResponse)
         }

@@ -1,4 +1,3 @@
 package com.example.kotlinomnicure.helper
 
-class DirectoryListHelperOld {
-}
+class DirectoryListHelperOld

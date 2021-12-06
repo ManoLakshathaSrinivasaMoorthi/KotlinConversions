@@ -3,7 +3,6 @@ package com.example.kotlinomnicure.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
@@ -15,7 +14,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.telephony.TelephonyManager.CellInfoCallback.ERROR_TIMEOUT
 import android.text.*
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,7 +24,6 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.webkit.WebViewClient.ERROR_TIMEOUT
 import android.widget.*
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AlertDialog
@@ -56,7 +53,6 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.activity.SignupActivity
 import okhttp3.OkHttpClient
 import java.security.KeyStore
 import java.util.*

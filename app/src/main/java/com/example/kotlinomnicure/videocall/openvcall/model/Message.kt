@@ -1,6 +1,6 @@
 package com.example.kotlinomnicure.videocall.openvcall.model
 
-class Message {
+class Message(sender: User?, content: String?) {
     private var mSender: User? = null
 
     private var mContent: String? = null
@@ -12,8 +12,6 @@ class Message {
         mSender = sender
         mContent = content
     }
-
-    constructor(sender: User?, content: String?):super()
 
     fun getSender(): User? {
         return mSender

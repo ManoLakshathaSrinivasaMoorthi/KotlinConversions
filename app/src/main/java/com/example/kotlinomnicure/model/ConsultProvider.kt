@@ -52,12 +52,12 @@ class ConsultProvider :Serializable{
     private var bed: String? = null
     private var note: String? = null
     private var patientCondition: Constants.PatientCondition? = null
-    private var oxygenSupplement: Boolean? = null
+    var oxygenSupplement: Boolean? = null
     private var urgent: Boolean? = null
     private var resetAcuityFlag: Boolean? = null
 
     //Metrics
-    private var docBoxPatientId: String? = null
+    val docBoxPatientId: String? = null
     private var docBoxManagerId: String? = null
     private var timeHeartRate: Long? = null
     private var timeSpO2: Long? = null
@@ -201,10 +201,12 @@ class ConsultProvider :Serializable{
         this.unread = unread
     }
 
+    @JvmName("getPatientsId1")
     fun getPatientsId(): Long? {
         return patientsId
     }
 
+    @JvmName("setPatientsId1")
     fun setPatientsId(patientsId: Long?) {
         this.patientsId = patientsId
     }
@@ -321,10 +323,12 @@ class ConsultProvider :Serializable{
         this.picUrl = picUrl
     }
 
+    @JvmName("getStatus1")
     fun getStatus(): Constants.PatientStatus? {
         return status
     }
 
+    @JvmName("setStatus1")
     fun setStatus(status: Constants.PatientStatus?) {
         this.status = status
     }

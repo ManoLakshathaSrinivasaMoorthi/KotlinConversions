@@ -62,13 +62,13 @@ class ActivityCensusConsultChart : AppCompatActivity() {
     private var strPatientRespiratoryRate: Double? = null
     private var strPatientTemperature: Double? = null
     private var strPatientBdProviderId: String? = null
-    private  var strPatientRdProviderId:kotlin.String? = null
+    private  var strPatientRdProviderId: String? = null
     private var stub: ViewStub? = null
     private var patient: Patient? = null
     private val membersList: List<Members> = ArrayList()
     private var strProviderNameType: String? = null
-     private  var strTime:kotlin.String? = null
-    private  var strStatus:kotlin.String? = null
+     private  var strTime: String? = null
+    private  var strStatus: String? = null
 
 
    //On create
@@ -97,12 +97,11 @@ class ActivityCensusConsultChart : AppCompatActivity() {
         if (strProviderNameType != null && !TextUtils.isEmpty(strProviderNameType)) {
 
             val vals = strProviderNameType!!.split(",").toTypedArray()
-            var providerName = ""
             if (vals.size > 1 && vals[0].length > 12) {
                 vals[0] = vals[0].substring(0, 12) + ".."
             }
-            providerName = TextUtils.join(",", vals)
-            providerName = providerName.substring(0, 1).toUpperCase() + providerName.substring(1)
+            var providerName: String = TextUtils.join(",", vals)
+            providerName = providerName.substring(0, 1).uppercase(Locale.getDefault()) + providerName.substring(1)
             binding!!.txtProviderName.text = providerName
         }
         if (strTime != "null") {
@@ -224,7 +223,7 @@ class ActivityCensusConsultChart : AppCompatActivity() {
 
         var strAge = ""
         var strGender = ""
-        var strDob = ""
+        var strDob: String
         var strPhone = ""
         var strWard = ""
         var strWards = ""

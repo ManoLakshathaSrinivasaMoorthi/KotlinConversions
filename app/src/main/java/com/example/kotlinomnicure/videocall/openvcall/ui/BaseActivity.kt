@@ -61,10 +61,10 @@ abstract class BaseActivity: BaseActivity() {
 
     protected open fun permissionGranted() {}
 
-    protected override fun onPostCreate(savedInstanceState: Bundle?) {
+    override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         Handler().postDelayed(Runnable {
-            if (isFinishing()) {
+            if (isFinishing) {
                 return@Runnable
             }
             val checkPermissionResult = checkSelfPermissions()
@@ -89,7 +89,7 @@ abstract class BaseActivity: BaseActivity() {
                 )
     }
 
-    protected override fun onDestroy() {
+    override fun onDestroy() {
         deInitUIandEvent()
         super.onDestroy()
     }
@@ -100,7 +100,7 @@ abstract class BaseActivity: BaseActivity() {
         v.clearFocus()
     }
 
-    open fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
+    override fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
 //        log.debug("checkSelfPermission " + permission + " " + requestCode);
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -121,7 +121,7 @@ abstract class BaseActivity: BaseActivity() {
     }
 
     protected open fun application(): OmnicureApp {
-        return getApplication() as OmnicureApp
+        return application as OmnicureApp
     }
 
     protected open fun rtcEngine(): RtcEngine? {
@@ -145,13 +145,13 @@ abstract class BaseActivity: BaseActivity() {
     }
 
     fun showLongToast(msg: String?) {
-        this.runOnUiThread(Runnable {
+        this.runOnUiThread {
             Toast.makeText(
-                getApplicationContext(),
+                applicationContext,
                 msg,
                 Toast.LENGTH_LONG
             ).show()
-        })
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -162,7 +162,7 @@ abstract class BaseActivity: BaseActivity() {
 //        log.debug("onRequestPermissionsResult " + requestCode + " " + Arrays.toString(permissions) + " " + Arrays.toString(grantResults));
         when (requestCode) {
             ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
-                if (grantResults.size > 0
+                if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     checkSelfPermissionGrantedCheck(
@@ -174,7 +174,7 @@ abstract class BaseActivity: BaseActivity() {
                 }
             }
             ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
-                if (grantResults.size > 0
+                if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     checkSelfPermissionGrantedCheck(
@@ -187,7 +187,7 @@ abstract class BaseActivity: BaseActivity() {
                 }
             }
             ConstantApp().PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE -> {
-                if (grantResults.size > 0
+                if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                 } else {
@@ -198,14 +198,14 @@ abstract class BaseActivity: BaseActivity() {
     }
 
     protected open fun virtualKeyHeight(): Int {
-        val hasPermanentMenuKey = ViewConfiguration.get(getApplication()).hasPermanentMenuKey()
+        val hasPermanentMenuKey = ViewConfiguration.get(application).hasPermanentMenuKey()
         if (hasPermanentMenuKey) {
             return 0
         }
 
         // Also can use getResources().getIdentifier("navigation_bar_height", "dimen", "android");
         val metrics = DisplayMetrics()
-        val display: Display = getWindowManager().getDefaultDisplay()
+        val display: Display = windowManager.defaultDisplay
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             display.getRealMetrics(metrics)
         } else {
@@ -237,9 +237,9 @@ abstract class BaseActivity: BaseActivity() {
     protected fun getStatusBarHeight(): Int {
         // status bar height
         var statusBarHeight = 0
-        val resourceId: Int = getResources().getIdentifier("status_bar_height", "dimen", "android")
+        val resourceId: Int = resources.getIdentifier("status_bar_height", "dimen", "android")
         if (resourceId > 0) {
-            statusBarHeight = getResources().getDimensionPixelSize(resourceId)
+            statusBarHeight = resources.getDimensionPixelSize(resourceId)
         }
         if (statusBarHeight == 0) {
 //            log.error("Can not get height of status bar");
@@ -249,9 +249,9 @@ abstract class BaseActivity: BaseActivity() {
 
     protected fun getActionBarHeight(): Int {
         // action bar height
-        var actionBarHeight = 0
+        val actionBarHeight: Int
         val styledAttributes: TypedArray =
-            this.getTheme().obtainStyledAttributes(intArrayOf(R.attr.actionBarSize))
+            this.theme.obtainStyledAttributes(intArrayOf(R.attr.actionBarSize))
         actionBarHeight = styledAttributes.getDimension(0, 0f).toInt()
         styledAttributes.recycle()
         if (actionBarHeight == 0) {
@@ -307,8 +307,8 @@ abstract class BaseActivity: BaseActivity() {
 //            System.out.println("onTokenPrivilegeWillExpire_join "+config().getmChannel()+" "+config().getmUid()+" "+token);
             val newToken = RtcTokenBuilder()
             val timestamp = (System.currentTimeMillis() / 1000 + 120).toInt()
-            val appId: String? = PrefUtility().getAgoraAppId(getApplicationContext())
-            val certId: String? = PrefUtility().getAgoraCertificateId(getApplicationContext())
+            val appId: String? = PrefUtility().getAgoraAppId(applicationContext)
+            val certId: String? = PrefUtility().getAgoraCertificateId(applicationContext)
 
 //            System.out.println("appid_agora "+appId);
             val accessToken: String? = newToken.buildTokenWithUid(

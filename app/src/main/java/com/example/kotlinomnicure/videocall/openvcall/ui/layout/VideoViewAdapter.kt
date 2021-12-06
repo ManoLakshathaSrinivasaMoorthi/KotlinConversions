@@ -23,7 +23,7 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     val DEBUG = false
 
-    protected var mInflater: LayoutInflater? = null
+    private var mInflater: LayoutInflater? = null
     protected var mContext: Context? = null
 
     protected var mUsers: ArrayList<UserStatusData>? = null
@@ -65,7 +65,7 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         customizedInit(uids, true)
     }
 
-    protected abstract fun customizedInit(uids: HashMap<Int, SurfaceView>?, force: Boolean)
+    abstract fun customizedInit(uids: HashMap<Int, SurfaceView>?, force: Boolean)
 
     abstract fun notifyUiChanged(
         uids: HashMap<Int?, SurfaceView?>?,
@@ -145,7 +145,7 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         return user.getmUid()
     }
 
-    fun getItem(position: Int): UserStatusData? {
+    open fun getItem(position: Int): UserStatusData? {
         return mUsers!![position]
     }
 
@@ -166,7 +166,7 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     private fun getProviderFromList(uid: Int): Provider? {
         for (provider in mProviderList!!) {
-            if (provider.getId().equals(Any?) === uid) {
+            if (provider?.getId()?.equals(Any?) === uid) run run {
                 return provider
             }
         }

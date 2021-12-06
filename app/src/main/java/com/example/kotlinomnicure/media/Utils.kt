@@ -1,5 +1,6 @@
 package com.example.kotlinomnicure.media
 
+
 import android.text.format.DateFormat
 import org.ocpsoft.prettytime.PrettyTime
 import java.security.InvalidKeyException
@@ -8,8 +9,6 @@ import java.security.SecureRandom
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-
-
 import java.util.concurrent.TimeUnit
 import java.util.zip.CRC32
 import javax.crypto.Mac
@@ -29,20 +28,20 @@ class Utils {
         return mac.doFinal(msg)
     }
 
-    fun pack(packableEx: PackableEx): ByteArray? {
-        val buffer = ByteBuf(rawContent)
+    fun pack(packableEx: PackableEx): ByteArray {
+        val buffer = ByteBuf()
         packableEx.marshal(buffer)
         return buffer.asBytes()
     }
 
     fun unpack(data: ByteArray?, packableEx: PackableEx) {
-        val buffer = data?.let { ByteBuf(it) }
+        val buffer = ByteBuf(data!!)
         packableEx.unmarshal(buffer)
     }
 
     fun getTimeAgo1(time: Long): String? {
         return try {
-            val strDate: String? = Utils().timestampToDate(time)
+            val strDate: String = Utils().timestampToDate(time)
             val dateFormat = SimpleDateFormat("MM-dd-yy hh:mma")
             val objDate = dateFormat.parse(strDate)
             val p = PrettyTime()
@@ -78,12 +77,16 @@ class Utils {
             } else if (hour < 24) {
                 convTime = hour.toString() + " hour" + (if (hour > 1) "s " else " ") + suffix
             } else if (day >= 7) {
-                convTime = if (day > 360) {
-                    (day / 365).toString() + " year" + (if (day / 360 > 1) "s " else " ") + suffix
-                } else if (day > 30) {
-                    (day / 30).toString() + " month" + (if (day / 30 > 1) "s " else " ") + suffix
-                } else {
-                    (day / 7).toString() + " week" + (if (day / 7 > 1) "s " else " ") + suffix
+                convTime = when {
+                    day > 360 -> {
+                        (day / 365).toString() + " year" + (if (day / 360 > 1) "s " else " ") + suffix
+                    }
+                    day > 30 -> {
+                        (day / 30).toString() + " month" + (if (day / 30 > 1) "s " else " ") + suffix
+                    }
+                    else -> {
+                        (day / 7).toString() + " week" + (if (day / 7 > 1) "s " else " ") + suffix
+                    }
                 }
             } else if (day < 7) {
                 convTime = day.toString() + " day" + (if (day > 1) "s " else " ") + suffix
@@ -95,7 +98,7 @@ class Utils {
         return convTime
     }
 
-    fun timestampToDate(timeStamp: Long): String? {
+    fun timestampToDate(timeStamp: Long): String {
         val cal = Calendar.getInstance(Locale.ENGLISH)
         cal.timeInMillis = timeStamp
         var date = DateFormat.format("MM-dd-yy hh:mma", cal).toString()
@@ -103,7 +106,7 @@ class Utils {
         return date
     }
 
-    fun timestampToDateYYYY(timeStamp: Long): String? {
+    fun timestampToDateYYYY(timeStamp: Long): String {
         val cal = Calendar.getInstance(Locale.ENGLISH)
         cal.timeInMillis = timeStamp
         var date = DateFormat.format("MM-dd-yyyy hh:mma", cal).toString()
@@ -111,13 +114,13 @@ class Utils {
         return date
     }
 
-    fun base64Encode(data: ByteArray?): String? {
-        val encodedBytes: ByteArray = Base64().encodeBase64(data)
+    fun base64Encode(data: ByteArray?): String {
+        val encodedBytes: ByteArray = Base64.encodeBase
         return String(encodedBytes)
     }
 
     fun base64Decode(data: String): ByteArray? {
-        return Base64().decodeBase64(data.toByteArray())
+        return Base64.decodeBase64(data.toByteArray())
     }
 
     fun crc32(data: String): Int {
@@ -142,13 +145,7 @@ class Utils {
 
     fun isUUID(uuid: String): Boolean {
         return if (uuid.length != 32) {
-            val b = false
-            b
+            false
         } else uuid.matches("\\p{XDigit}+")
-
-    }
-
-    private fun String.matches(regex: String): Boolean {
-
     }
 }

@@ -23,7 +23,7 @@ class CustomDialog(context: Context?) : Dialog(context!!) {
     private var positiveListener: View.OnClickListener? = null
     private var negativeTextId = -1
     private var negetiveListener: View.OnClickListener? = null
-    private var positiveButtonColor = -1
+    var positiveButtonColor = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

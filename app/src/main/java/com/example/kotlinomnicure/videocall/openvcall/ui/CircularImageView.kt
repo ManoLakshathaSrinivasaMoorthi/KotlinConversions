@@ -3,14 +3,10 @@ package com.example.kotlinomnicure.videocall.openvcall.ui
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.widget.ImageView
 
-class CircularImageView: androidx.appcompat.widget.AppCompatImageView {
-
-    constructor(context: Context?, attributeSet: AttributeSet?) :
-        super(context!!, attributeSet)
+class CircularImageView(context: Context?, attributeSet: AttributeSet?) :
+    androidx.appcompat.widget.AppCompatImageView(context!!, attributeSet) {
 
     override fun onDraw(canvas: Canvas) {
         val drawable = drawable ?: return
@@ -25,10 +21,8 @@ class CircularImageView: androidx.appcompat.widget.AppCompatImageView {
         canvas.drawBitmap(roundBitmap, 0f, 0f, null)
     }
 
-    fun getRoundedCroppedBitmap(bitmap: Bitmap, radius: Int, width: Int, height: Int): Bitmap {
-        val finalBitmap: Bitmap
-        finalBitmap =
-            if (bitmap.width != width || bitmap.height != height) Bitmap.createScaledBitmap(
+    private fun getRoundedCroppedBitmap(bitmap: Bitmap, radius: Int, width: Int, height: Int): Bitmap {
+        val finalBitmap: Bitmap = if (bitmap.width != width || bitmap.height != height) Bitmap.createScaledBitmap(
                 bitmap, width, height,
                 false
             ) else bitmap

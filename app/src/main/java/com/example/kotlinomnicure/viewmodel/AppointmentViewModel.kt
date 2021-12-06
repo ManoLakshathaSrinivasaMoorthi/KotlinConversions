@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
 import omnicurekotlin.example.com.appointmentEndpoints.model.Appointment

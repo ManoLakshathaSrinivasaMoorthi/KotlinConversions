@@ -5,16 +5,13 @@ class CurrentUserSettings {
 
     private var mEncryptionKey: String? = null
 
-    var mChannelName: String? = null
+    private var mChannelName: String? = null
 
     fun getmEncryptionModeIndex(): Int {
         return mEncryptionModeIndex
     }
 
    constructor()
-   {
-
-   }
     constructor(mEncryptionModeIndex: Int) {
         this.mEncryptionModeIndex = mEncryptionModeIndex
     }

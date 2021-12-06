@@ -29,6 +29,7 @@ import java.lang.IllegalStateException
 import java.net.InetAddress
 import java.net.UnknownHostException
 import java.util.concurrent.*
+import kotlin.math.roundToInt
 
 class UtilityMethods {
     private val TAG = UtilityMethods::class.java.simpleName
@@ -265,7 +266,7 @@ class UtilityMethods {
 
     fun pxToDp(context: Context, px: Int): Int {
         val displayMetrics = context.resources.displayMetrics
-        return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
+        return (px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
 
     fun setNameEditTextFilter(text: EditText) {
@@ -328,7 +329,7 @@ class UtilityMethods {
         } else {
             dialog.setTitle("")
         }
-        dialog.setShowTitle(showTitle)
+        dialog().setShowTitle(showTitle)
         if (positiveButtonColor != -1) {
             dialog.positiveButtonColor = positiveButtonColor
         }
@@ -684,58 +685,57 @@ class UtilityMethods {
     }
 
     fun isTestServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("dev-omnicure", ignoreCase = true)
     }
 
     fun isProductionServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("omnicure", ignoreCase = true)
     }
 
     fun isExternalTestServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("omnicure-ext-test", ignoreCase = true)
     }
 
     fun isDemoTestServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("omnicure-demo", ignoreCase = true)
     }
 
     fun isQaTestServer(): Boolean {
-        return if (BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("qa-omnicure", ignoreCase = true)
-        ) true else false
     }
 
     fun isPilotServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("omnicurepilot", ignoreCase = true)
     }
 
     fun isNetccnAutoTestServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("netccnautotest", ignoreCase = true)
     }
 
     fun isStagingServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("omnicure-staging", ignoreCase = true)
     }
 
     fun isNetccnDevServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("netccndev", ignoreCase = true)
     }
 
     fun isOmnicureTestServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("omnicure_test", ignoreCase = true)
     }
 
     fun isNetccnSecTestServer(): Boolean {
-        return BuildConfigConstants.getBackendAppName()
+        return BuildConfigConstants().getBackendAppName()
                 .equals("netccnsectest", ignoreCase = true)
     }
 

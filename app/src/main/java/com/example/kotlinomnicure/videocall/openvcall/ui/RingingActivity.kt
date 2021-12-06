@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.content.IntentFilter
 import android.content.res.AssetFileDescriptor
-import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -28,6 +28,7 @@ import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import com.example.kotlinomnicure.videocall.openvcall.model.CurrentUserSettings
+import com.example.kotlinomnicure.viewmodel.CallActivityViewModel
 import com.google.gson.Gson
 import com.mvp.omnicure.kotlinactivity.requestbodys.SendMsgNotifyRequestBody
 import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
@@ -39,7 +40,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import java.lang.Exception
 import java.net.SocketTimeoutException
 import java.util.*
 
@@ -48,10 +48,10 @@ class RingingActivity:BaseActivity() {
     private val TAG = "RingingAct"
     private var screenOn = false
     var player: MediaPlayer? = null
-    var mHandlerRinging: Handler? = null
-    var mRunnable: Runnable? = null
-    var mBroadcastReceiver: BroadcastReceiver? = null
-    var mReceiver: ScreenReceiver? = null
+    private var mHandlerRinging: Handler? = null
+    private var mRunnable: Runnable? = null
+    private var mBroadcastReceiver: BroadcastReceiver? = null
+    private var mReceiver: ScreenReceiver? = null
     var mProviderList: ArrayList<Provider> = ArrayList<Provider>()
     private var mAcceptClickTime = System.currentTimeMillis()
     var auditId: String? = null
@@ -75,7 +75,7 @@ class RingingActivity:BaseActivity() {
         //appname
         val header = findViewById(R.id.header) as TextView
         header.text = java.lang.String.format(getString(R.string.omnicure_now), Buildconfic.value())
-        val patientInfoLayout = findViewById(R.id.patient_info_layout) as LinearLayout
+        val patientInfoLayout = findViewById<LinearLayout>(R.id.patient_info_layout)
         if (intent.hasExtra("sos")) {
             sosImageView.visibility = View.VISIBLE
             patientInfoLayout.setBackgroundResource(R.color.sos_red)
@@ -85,7 +85,7 @@ class RingingActivity:BaseActivity() {
             patientInfoLayout.setBackgroundResource(R.drawable.blue_gradient)
             patient_title.setText(R.string.patient_information)
         }
-        val imageButton = findViewById(R.id.ringing_call_icon) as ImageButton
+        val imageButton = findViewById<ImageButton>(R.id.ringing_call_icon)
         if (intent.hasExtra("call") && intent.getStringExtra("call")
                 .equals(Constants.FCMMessageType.AUDIO_CALL)
         ) {
@@ -94,10 +94,10 @@ class RingingActivity:BaseActivity() {
             imageButton.setImageResource(R.drawable.video_icon)
         }
         val caller_image_view: CircularImageView =
-            findViewById(R.id.caller_image_view) as CircularImageView
+            findViewById(R.id.caller_image_view)
         caller_image_view.setVisibility(View.GONE)
-        val caller_image_text = findViewById(R.id.caller_image_text) as TextView
-        val caller_name = findViewById(R.id.caller_name) as TextView
+        val caller_image_text = findViewById<TextView>(R.id.caller_image_text)
+        val caller_name = findViewById<TextView>(R.id.caller_name)
         val providerName = intent.getStringExtra("providerName")
         val providerType = intent.getStringExtra("providerType")
         var callType = "Incoming call"
@@ -121,22 +121,22 @@ class RingingActivity:BaseActivity() {
             pt = ", $providerType"
         }
         val callerTitle =
-            """${if (intent.hasExtra("sos")) "SOS " + callType.toLowerCase() + " " else callType} from 
+            """${if (intent.hasExtra("sos")) "SOS " + callType.lowercase(Locale.getDefault()) + " " else callType} from 
 $providerName$pt"""
 
 //        caller_name.setText(getIntent().getStringExtra("providerName"));
         caller_name.text = callerTitle
         caller_image_text.visibility = View.VISIBLE
-        caller_image_text.setText(intent.getStringExtra("providerName")?.let {
+        caller_image_text.text = intent.getStringExtra("providerName")?.let {
             UtilityMethods().getNameText(
                 it
             )
-        })
-        val caller_hospital = findViewById(R.id.caller_hospital) as TextView
+        }
+        val caller_hospital = findViewById<TextView>(R.id.caller_hospital)
         caller_hospital.text = intent.getStringExtra("hospitalName")
         caller_hospital.visibility = View.GONE
-        val patient = findViewById(R.id.id_patient_name) as TextView
-        val patient_layout = findViewById(R.id.patient_layout) as LinearLayout
+        val patient = findViewById<TextView>(R.id.id_patient_name)
+        val patient_layout = findViewById<LinearLayout>(R.id.patient_layout)
         if (intent.hasExtra("patientAge")) {
             patient_layout.visibility = View.VISIBLE
             val calendar = Calendar.getInstance()
@@ -173,7 +173,7 @@ $providerName$pt"""
         }
         if (intent.hasExtra("profilePicUrl") && !TextUtils.isEmpty(intent.getStringExtra("profilePicUrl"))) {
             val imageUrl = intent.getStringExtra("profilePicUrl")
-            caller_image_view.setVisibility(View.VISIBLE)
+            caller_image_view.visibility = View.VISIBLE
             caller_image_text.visibility = View.GONE
             if (!TextUtils.isEmpty(imageUrl)) {
                 Glide.with(this)
@@ -305,8 +305,7 @@ $providerName$pt"""
                                         }
                                     }
                                 }
-                                val connection_message =
-                                    findViewById(R.id.connection_message) as TextView
+                                val connection_message = findViewById<TextView>(R.id.connection_message)
                                 Handler().postDelayed({ finish() }, 2000)
                             }
                         }
@@ -415,16 +414,18 @@ $providerName$pt"""
 //        System.out.println("coming hereee");
         val providerID: String =
             java.lang.String.valueOf(PrefUtility().getProviderId(this@RingingActivity))
-        CallActivityViewModel().sendAuditId(auditId, flag, providerID, type)
-            .observe(this@RingingActivity) { commonResponse ->
-//            System.out.println("callauditResponseRinging "+auditId+" "+commonResponse);
-                dismissProgressBar()
-                if (commonResponse != null && commonResponse.getStatus()) {
-                    //Do nothing
-                } else {
-//                log.info("sos dismiss message: " + commonResponse.getErrorMessage());
+        auditId?.let {
+            CallActivityViewModel().sendAuditId(it, flag, providerID, type)
+                ?.observe(this@RingingActivity) { commonResponse ->
+    //            System.out.println("callauditResponseRinging "+auditId+" "+commonResponse);
+                    dismissProgressBar()
+                    if (commonResponse != null && commonResponse.getStatus()) {
+                        //Do nothing
+                    } else {
+    //                log.info("sos dismiss message: " + commonResponse.getErrorMessage());
+                    }
                 }
-            }
+        }
     }
 
     override fun onStart() {
@@ -485,7 +486,7 @@ $providerName$pt"""
         if (intent.hasExtra("patientId")) {
             requestBody.setPatientId(intent.getLongExtra("patientId", 0L))
         }
-        ApiClient().getApiProviderEndpoints(true, true)?.sendMessageNotification(requestBody)
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)?.sendMessageNotification(requestBody)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
@@ -538,7 +539,7 @@ $providerName$pt"""
 //    AssetFileDescriptor afd = getAssets().openFd("ringtone.mp3");
 
     //    AssetFileDescriptor afd = getAssets().openFd("ringtone.mp3");
-    fun forwardToRoom() {
+    private fun forwardToRoom() {
         /*CurrentUserSettings.mChannelName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME);//"omnicuretest";
 
         CurrentUserSettings.mEncryptionKey = "";*/
@@ -641,10 +642,10 @@ $providerName$pt"""
                     player.stop()
                 }
             } else if (intent.action.equals("sos-dismiss", ignoreCase = true)) {
-                val channel = intent.getStringExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME)
-                if (getIntent().hasExtra("sos") && channel.equals(
+                val channel = intent.getStringExtra(ConstantApp().ACTION_KEY_CHANNEL_NAME)
+                if (getIntent()?.hasExtra("sos") == true && channel.equals(
                         getIntent().getStringExtra(
-                            ConstantApp.ACTION_KEY_CHANNEL_NAME
+                            ConstantApp().ACTION_KEY_CHANNEL_NAME
                         ), ignoreCase = true
                     )
                 ) {

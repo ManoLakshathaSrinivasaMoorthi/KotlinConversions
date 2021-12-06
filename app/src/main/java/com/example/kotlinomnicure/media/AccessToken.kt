@@ -59,11 +59,11 @@ class AccessToken(appId: String?, appCertificate: String?, channelName: String?,
     }
 
     @Throws(Exception::class)
-    fun build(): String? {
-        if (!appId?.let { Utils().isUUID(it) }) {
+    fun build(): String {
+        if (!appId?.let { Utils().isUUID(it) }!!) {
             return ""
         }
-        if (!appCertificate?.let { Utils().isUUID(it) }) {
+        if (!appCertificate?.let { Utils().isUUID(it) }!!) {
             return ""
         }
         messageRawContent = message?.let { Utils().pack(it) }!!
@@ -90,7 +90,7 @@ class AccessToken(appId: String?, appCertificate: String?, channelName: String?,
     fun generateSignature(
         appCertificate: String?,
         appID: String?, channelName: String?, uid: String?, message: ByteArray?
-    ): ByteArray? {
+    ): ByteArray {
         val baos = ByteArrayOutputStream()
         try {
             baos.write(appID!!.toByteArray())
@@ -178,6 +178,7 @@ class AccessToken(appId: String?, appCertificate: String?, channelName: String?,
             crcUid = `in`.readInt()
             rawMessage = `in`.readBytes()
         }
+
 
         @JvmName("marshal1")
         override fun marshal(out: ByteBuf?): ByteBuf? {

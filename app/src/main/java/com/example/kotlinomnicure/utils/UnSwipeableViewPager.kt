@@ -6,10 +6,9 @@ import androidx.viewpager.widget.ViewPager
 import android.view.MotionEvent
 
 class UnSwipeableViewPager : ViewPager {
-    constructor(context: Context?) : super(context!!) {}
+    constructor(context: Context?) : super(context!!)
     constructor(context: Context?, attrs: AttributeSet?) : super(
-        context!!, attrs) {
-    }
+        context!!, attrs)
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         // Never allow swiping to switch between pages
