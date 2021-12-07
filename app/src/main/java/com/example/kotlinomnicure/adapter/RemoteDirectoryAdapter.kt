@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.adapter
+package com.example.kotlinomnicure.adapter
 
 import android.Manifest
 import android.app.Activity
@@ -27,6 +27,8 @@ import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.RemoteDirectoryChildBinding
 import com.example.kotlinomnicure.activity.ChatActivity
+import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 
 class RemoteDirectoryAdapter(
     requireActivity: FragmentActivity,
@@ -186,12 +188,10 @@ class RemoteDirectoryAdapter(
     fun checkSelfPermissions(): Boolean {
         return checkSelfPermission(
             Manifest.permission.RECORD_AUDIO,
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO
-        ) &&
+            ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO) &&
                 checkSelfPermission(
                     Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA
-                )
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA)
     }
 
     fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
@@ -218,13 +218,12 @@ class RemoteDirectoryAdapter(
 //        Log.i("onRequestPermissions", requestCode + " " + Arrays.toString(permissions)
 //                + " " + Arrays.toString(grantResults));
         when (requestCode) {
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO -> {
+            ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
                 checkSelfPermission(
                     Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA
-                )
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA)
             }
-            ConstantApp.PERMISSION_REQ_ID_CAMERA -> {
+            ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
             }
             else -> {
                 Toast.makeText(context, "Please give permission", Toast.LENGTH_SHORT).show()

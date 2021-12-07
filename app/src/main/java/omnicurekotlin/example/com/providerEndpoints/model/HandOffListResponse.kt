@@ -9,7 +9,7 @@ class HandOffListResponse {
 
     @Expose
     @SerializedName("otherBspList")
-    private var otherBspList: ArrayList<OtherBspList?>? = null
+    var otherBspList: ArrayList<OtherBspList?>? = null
 
     @Expose
     @SerializedName("errorId")

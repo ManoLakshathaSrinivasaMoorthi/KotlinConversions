@@ -28,6 +28,7 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.RemoteDirectoryChildBinding
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import com.example.kotlinomnicure.activity.ChatActivity
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 
 class BedsideDirectoryAdapter(
     requireActivity: FragmentActivity,

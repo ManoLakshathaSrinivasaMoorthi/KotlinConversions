@@ -114,7 +114,7 @@ class PatientListAdapter(
      * Provider list update
      * @param providerLists
      */
-    infix fun updateList(providerLists: MutableList<ConsultProvider?>) {
+    infix fun updateList(providerLists: List<ConsultProvider>) {
         if (providerLists != null) {
             providerList = providerLists
             originalProviderList = providerLists

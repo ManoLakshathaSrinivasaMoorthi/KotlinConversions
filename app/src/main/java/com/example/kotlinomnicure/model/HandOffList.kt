@@ -26,13 +26,13 @@ class HandOffList  {
 
     private var id: String? = null
     var messageId: String? = null
-    private var message: String? = null
+    var message: String? = null
     private var type //text,image,video,audio,system
             : String? = null
     var subType //completion, summary
             : String? = null
     private var text: String? = null
-    private var title: String? = null
+    var title: String? = null
     private var name: String? = null
     private var role: String? = null
     private var urgent = false
@@ -42,12 +42,12 @@ class HandOffList  {
     private var thumbUrl: String? = null
     private var videoUrl: String? = null
     private var filename: String? = null
-    private var senderName: String? = null
-    private var receiverList: List<ChatMessageStatusModel?>? = null
-    private var time: Long? = null
+    var senderName: String? = null
+    var receiverList: List<ChatMessageStatusModel?>? = null
+    var time: Long? = null
     private var patientId: Long? = null
     private var consultId: Long? = null
-    private var accepterName: String? = null
+    var accepterName: String? = null
     private var status //Sent, Delivered, Read
             : String? = null
 

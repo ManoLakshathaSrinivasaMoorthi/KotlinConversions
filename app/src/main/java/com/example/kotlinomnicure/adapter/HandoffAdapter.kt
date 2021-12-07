@@ -31,10 +31,9 @@ class HandoffAdapter : RecyclerView.Adapter<HandoffAdapter.ViewHolder>() {
             readStatusArr.add(position, true)
             if (consultMessage.receiverList != null) {
                 for (i in 0 until consultMessage.receiverList!!.size) {
-                    val rec: ChatMessageStatusModel = consultMessage.receiverList!!.get(i)
-                    if (rec.receiverId.equals(uid,ignoreCase = true) && rec.status
-                            .equals("Received")
-                    ) {
+                    val rec: ChatMessageStatusModel? = consultMessage.receiverList!!.get(i)
+                    if (rec?.receiverId.equals(uid,ignoreCase = true) && rec?.status
+                            .equals("Received")) {
                         readStatusArr[position] = false
                         break
                     }
@@ -57,10 +56,9 @@ class HandoffAdapter : RecyclerView.Adapter<HandoffAdapter.ViewHolder>() {
         holder.time.setText(consultMessage.time?.let { Utils().timestampToDate(it) })
         if (consultMessage.receiverList != null) {
             for (i in 0 until consultMessage.receiverList!!.size) {
-                val rec: ChatMessageStatusModel = consultMessage.receiverList!!.get(i)
-                if (rec.receiverId.equals(uid,ignoreCase = true) && rec.status
-                        .equals("Received")
-                ) {
+                val rec: ChatMessageStatusModel? = consultMessage.receiverList!!.get(i)
+                if (rec?.receiverId.equals(uid,ignoreCase = true) && rec?.status
+                        .equals("Received")) {
                     holder.unreadIcon.visibility = View.VISIBLE
                     break
                 } else {

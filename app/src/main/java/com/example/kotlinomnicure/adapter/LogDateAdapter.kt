@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.model.ENotesList
+import com.example.kotlinomnicure.model.ENotesMessageList
 
 
-class LogDateAdapter(applicationContext: Context, eNotesList: MutableList<ENotesList?>) : RecyclerView.Adapter<LogDateAdapter.ViewHolder>() {
+class LogDateAdapter() : RecyclerView.Adapter<LogDateAdapter.ViewHolder> {
     private var eNoteslist: List<ENotesList>? = null
     private var context: Context? = null
     val recycledViewPool = RecycledViewPool()
@@ -38,7 +40,7 @@ class LogDateAdapter(applicationContext: Context, eNotesList: MutableList<ENotes
         logsRecycler!!.setRecycledViewPool(recycledViewPool)
         holder.date.setText(eNoteslist!![position].getDate())
         if (iterator!!.hasNext()) {
-            val date: String = eNoteslist!!.iterator().next().getDate()
+            val date: String? = eNoteslist!!.iterator().next().getDate()
             logsRecycler!!.adapter =
                 InnerLogsAdapter(eNoteslist!![position].getMessages(), context, this)
 
@@ -55,9 +57,13 @@ class LogDateAdapter(applicationContext: Context, eNotesList: MutableList<ENotes
 
         init {
             date = itemView.findViewById(R.id.datesTxt)
-           LogDateAdapter(applicationContext, eNotesList).logsRecycler = itemView.findViewById(R.id.logsRecycler)
+           LogDateAdapter(LogDateAdapter().context!!, LogDateAdapter().eNoteslist).logsRecycler = itemView.findViewById(R.id.logsRecycler)
         }
     }
+
+    constructor(context: Context, eNoteslist: List<ENotesList>?) : super()
+
+    constructor(context: Context, eNoteslist: List<ENotesMessageList>?) : super()
 
     fun getLogsRecycler(): RecyclerView? {
         return logsRecycler

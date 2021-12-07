@@ -15,8 +15,7 @@ import java.lang.Exception
 
 class HandOffPatientAdapter(
     handOffPatientsActivity: HandOffPatientsActivity,
-    handOffListResponse: HandOffListResponse?
-) : RecyclerView.Adapter<HandOffPatientAdapter.ViewHolder>() {
+    handOffListResponse: HandOffListResponse?) : RecyclerView.Adapter<HandOffPatientAdapter.ViewHolder>() {
 
     private var handOffPatientsActivity: HandOffPatientsActivity? = null
     private var handOffListResponse: HandOffListResponse? = null

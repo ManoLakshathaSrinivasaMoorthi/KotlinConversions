@@ -40,8 +40,12 @@ class SystemAlertAdapter(systemAlertActivity: SystemAlertActivity, systemAlerts:
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val systemAlert = systemAlerts!!.systemAlertList?.get(position)
-        holder.itemBinding.systemAlertTitle.setText(systemAlert.title)
-        holder.itemBinding.systemAlertCreatedTime.setText(ChatUtils().getTimeAgo(systemAlert.createdTime.toLong()))
+        holder.itemBinding.systemAlertTitle.setText(systemAlert?.title)
+        holder.itemBinding.systemAlertCreatedTime.setText(systemAlert?.createdTime?.toLong()?.let {
+            ChatUtils().getTimeAgo(
+                it
+            )
+        })
         holder.itemBinding.systemAlertDisplayMessage.setText(
             Html.fromHtml(
                 systemAlerts!!.systemAlertList?.get(position)?.alertMsg,
@@ -53,7 +57,7 @@ class SystemAlertAdapter(systemAlertActivity: SystemAlertActivity, systemAlerts:
     override fun getItemCount(): Int {
         val count: Int
         count = try {
-            systemAlerts!!.systemAlertList.size
+            systemAlerts!!.systemAlertList!!.size
         } catch (e: Exception) {
             return 0
         }

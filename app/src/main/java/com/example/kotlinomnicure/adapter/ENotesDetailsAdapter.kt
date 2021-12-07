@@ -29,8 +29,7 @@ class ENotesDetailsAdapter(
     applicationContext: Context,
     messagesList: List<HandOffList?>?,
     patientDetails: Patient?,
-    fragName: String?
-) : RecyclerView.Adapter<ENotesDetailsAdapter.ViewHolder>() {
+    fragName: String?) : RecyclerView.Adapter<ENotesDetailsAdapter.ViewHolder>() {
     var context: Context? = null
     var messagesList: List<HandOffList>? = null
     var type: String? = null
@@ -41,8 +40,7 @@ class ENotesDetailsAdapter(
         context: Context?,
         list: List<HandOffList>?,
         pat: Patient?,
-        t: String?,
-    ) {
+        t: String? ) {
         this.context = context
         this.messagesList = list
         this.patientDetails = pat

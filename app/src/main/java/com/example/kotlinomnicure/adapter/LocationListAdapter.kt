@@ -12,12 +12,7 @@ import com.example.kotlinomnicure.model.ConsultProvider
 import java.util.ArrayList
 import java.util.HashMap
 
-class LocationListAdapter(
-    param: HospitalRecyclerListener,
-    hospitalList: HashMap<Long, ConsultProvider?>,
-    selectedHospitalId: Long
-) :
-    RecyclerView.Adapter<LocationListAdapter.ViewHolder>() {
+class LocationListAdapter(param: HospitalRecyclerListener, hospitalList: HashMap<Long, ConsultProvider?>, selectedHospitalId: Long) : RecyclerView.Adapter<LocationListAdapter.ViewHolder>() {
     private var hospitalRecyclerListener: HospitalRecyclerListener? = null
     private var hospitalList: MutableList<ConsultProvider>? = null
     private var selectedHospitalId: Long = -1
@@ -25,11 +20,10 @@ class LocationListAdapter(
     fun LocationListAdapter(
         hospitalRecyclerListener: HospitalRecyclerListener?,
         hospitalList: HashMap<Long?, ConsultProvider?>,
-        selectedHospId: Long,
-    ) {
+        selectedHospId: Long, ) {
         this.hospitalRecyclerListener = hospitalRecyclerListener
         this.hospitalList = ArrayList<ConsultProvider>(hospitalList.values)
-        this@LocationListAdapter.selectedHospitalId = selectedHospId
+        this.selectedHospitalId = selectedHospId
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -73,13 +67,13 @@ class LocationListAdapter(
 
     class ViewHolder(itemBinding: LocationListChildBinding) :
         RecyclerView.ViewHolder(itemBinding.getRoot()) {
-        private val itemBinding: LocationListChildBinding
+        private val itemBinding: LocationListChildBinding = itemBinding
         var hospital: ConsultProvider? = null
         fun setHospitalList(hospital: ConsultProvider) {
             this.hospital = hospital
             itemBinding.hospitalName.setText(hospital.getHospital())
-            if (LocationListAdapter(object : HospitalRecyclerListener() {
-                    fun onItemSelected(hospital: ConsultProvider) {
+            if (LocationListAdapter(object : HospitalRecyclerListener {
+                    override fun onItemSelected(hospital: ConsultProvider) {
                         selectedHospitalId = hospital.getHospitalId()!!
                         //Filter active screen by score
                         if (hospital.getName() == null) {
@@ -102,11 +96,10 @@ class LocationListAdapter(
         }
 
         init {
-            this.itemBinding = itemBinding
             //  itemBinding.icSelected.setEnabled(false);
             itemView.setOnClickListener {
                 LocationListAdapter(object : HospitalRecyclerListener() {
-                    fun onItemSelected(hospital: ConsultProvider) {
+                    override fun onItemSelected(hospital: ConsultProvider) {
                         selectedHospitalId = hospital.getHospitalId()!!
                         //Filter active screen by score
                         if (hospital.getName() == null) {
