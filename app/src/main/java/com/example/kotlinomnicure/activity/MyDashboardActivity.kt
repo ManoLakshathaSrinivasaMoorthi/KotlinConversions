@@ -319,13 +319,10 @@ class MyDashboardActivity : BaseActivity() {
     }
     override fun onResume() {
         super.onResume()
-        val strRole: String? =
-            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.ROLE, "")
-        val strDesignation: String? =
-            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.R_PROVIDER_TYPE, "")
-        imageURL =
-            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.PROFILE_IMG_URL, "")
-        0
+        val strRole: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.ROLE, "")
+        val strDesignation: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.R_PROVIDER_TYPE, "")
+        imageURL = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.PROFILE_IMG_URL, "")
+
         if (!TextUtils.isEmpty(imageURL)) {
             binding!!.profilePic.setVisibility(View.VISIBLE)
             binding!!.defaultImageView.setVisibility(View.GONE)
@@ -365,8 +362,7 @@ class MyDashboardActivity : BaseActivity() {
         }
 
         // To get the AES key anytime by calling the version Info API
-        val aesKey: String? =
-            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.AES_API_KEY, "")
+        val aesKey: String? = PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.AES_API_KEY, "")
 
         if (aesKey == null || TextUtils.isEmpty(aesKey)) {
             getAppConfig()
@@ -563,10 +559,8 @@ class MyDashboardActivity : BaseActivity() {
         childEventListener = object : ChildEventListener {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             override fun onChildAdded(dataSnapshot: DataSnapshot, previous: String?) {
-                /*dataSnapshot object is annotated as NonNull so no need for this condition
-                if (dataSnapshot == null) {
-                    return;
-                }*/
+
+                }
                 //Log.d(TAG, "ChildEvent - onChildAdded: " + dataSnapshot.getValue(ConsultProvider.class) + " : prev " + previous);
                 val key = dataSnapshot.key
                 //            Log.d("DATASNAPSHOT" , new Gson().toJson(dataSnapshot));
@@ -588,9 +582,7 @@ class MyDashboardActivity : BaseActivity() {
                             consultstaus(providerHashMap.values)
                         }
 
-//                        if(pendingstatus==true){
-//                            consultstauspending(providerHashMap.values());
-//                        }
+
                     }
                 }
             }
@@ -600,13 +592,9 @@ class MyDashboardActivity : BaseActivity() {
                 val key = dataSnapshot.key
                 //                Log.i(TAG, "patient changed " + dataSnapshot);
                 if (dataSnapshot.value != null && !dataSnapshot.value.toString()
-                        .equals("", ignoreCase = true)
-                ) {
-//                if (!dataSnapshot.getValue().toString().equalsIgnoreCase("")) {
+                        .equals("", ignoreCase = true)) {
                     val consultProvider = dataSnapshot.getValue(ConsultProvider::class.java)
                     providerHashMap[key] = consultProvider
-                    //                    Log.e(TAG, "onChildAdded: itemCount->" + itemCount);
-//                    Log.e(TAG, "onChildAdded: providerHashMap->" + providerHashMap.size());
                     if (itemCount <= providerHashMap.size) {
                         itemCount = providerHashMap.size.toLong()
                         if (Staus) {
@@ -614,9 +602,7 @@ class MyDashboardActivity : BaseActivity() {
                         } else {
                             consultstaus(providerHashMap.values)
                         }
-                        //                        if(pendingstatus==true){
-//                            consultstauspending(providerHashMap.values());
-//                        }
+
                     }
                 }
             }
@@ -642,7 +628,7 @@ class MyDashboardActivity : BaseActivity() {
 //                Log.d(TAG, "ChildEvent - onCancelled: " + databaseError);
             }
         }
-        uid = PrefUtility.getFireBaseUid(this)
+        uid = PrefUtility().getFireBaseUid(this)
         mProviderUid = uid.toString() //mFirebaseUser.getUid();
         mPath = "providers/$mProviderUid/active"
         messagesRef = mFirebaseDatabaseReference!!.child(mPath!!)
@@ -809,7 +795,7 @@ class MyDashboardActivity : BaseActivity() {
                 }
                 var condition = false
 
-                condition = consultProvider.getStatus() === Constants.PatientStatus.Active
+                condition = consultProvider.getStatus() == Constants.PatientStatus.Active
 
 
 

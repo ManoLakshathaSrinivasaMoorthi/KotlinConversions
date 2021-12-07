@@ -3,7 +3,6 @@ package com.example.kotlinomnicure.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
@@ -22,7 +21,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.CommonResponse
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityChangePasswordBinding

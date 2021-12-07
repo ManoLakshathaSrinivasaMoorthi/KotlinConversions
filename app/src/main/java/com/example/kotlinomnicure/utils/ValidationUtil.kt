@@ -231,7 +231,7 @@ class ValidationUtil {
 
 
     fun checkPassword(
-        str: String, binding: ActivityChangePasswordBinding?,
+        str: String, binding: ActivityLocalCareProviderSignUpFirstBinding,
         strFirstName: String, strLastName: String, strEmail: String,
     ): String? {
         var str = str

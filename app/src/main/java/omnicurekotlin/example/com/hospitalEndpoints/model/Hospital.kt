@@ -19,7 +19,7 @@ class Hospital {
     private var joiningTime: Long? = null
     private var lat: Double? = null
     private var lng: Double? = null
-    private var name: String? = null
+    var name: String? = null
     private var occupiedBeds: Int? = null
     private var phone: String? = null
     private var picUrl: String? = null

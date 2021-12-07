@@ -38,8 +38,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-
-
 class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
     private val TAG = ActivityPatientCensusPatient::class.java.simpleName
     protected var binding: ActivityPatientCensusPatientBinding? = null
@@ -826,7 +824,7 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
     }
 
     private fun clearNotifications(notificationId: Int) {
-        NotificationHelper(this, null).clearNotification(notificationId)
+        NotificationHelper(this, null).clearNotification(notificationId.toLong())
     }
 
     override fun onViewClick(position: Int) {
@@ -1072,19 +1070,10 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
             val response=it.body()
             dismissProgressBar()
             Log.d(TAG, "Teams Details Response : " + Gson().toJson(response))
-            if (response != null && response.getStatus() != null && response.getStatus()!!) {
+            if (response?.status != null && response.status!!) {
               //  val obj = JSONObject(response)
                 teamNameArrayList = ArrayList()
-//              //  val teamDetailsList: JSONArray = obj.optJSONArray("teamDetailsList")
-//                if (teamDetailsList != null) {
-//                    for (i in 0 until teamDetailsList.length()) {
-//                        val jsonObject = teamDetailsList.optJSONObject(i)
-//                        if (jsonObject != null) {
-//                            val teamName = jsonObject.optString("name")
-//                            (teamNameArrayList as ArrayList<String>).add(teamName)
-//                        }
-//                    }
-//                }
+
                 patientCensusListAdapter?.setTeamNameArrayList(teamNameArrayList)
                 Log.d(TAG,
                     "teamNameArrayList : " + (teamNameArrayList as ArrayList<String>).size
@@ -1136,7 +1125,7 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
     }
 
     fun DoStartConsultationSameProvider(context: Context?, patient: Patient) {
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods().isInternetConnected(this)!!) {
             CustomSnackBar.make(
                 binding?.content, this,
                 CustomSnackBar.WARNING, getString(R.string.no_internet_connectivity),
@@ -1160,14 +1149,14 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
             token?.let { it1 ->
                 patient.getId()?.let { it2 ->
                     chatViewModel.inviteProviderBroadCast(it, it1, it2)?.observe(this,  {
-                                val commonResponse=it.body()
+
                                 dismissProgressBar()
-                                Log.d(TAG, "DoStartConsultationSameProvider response : " + Gson().toJson(commonResponse))
-                                if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
+                                Log.d(TAG, "DoStartConsultationSameProvider response : " + Gson().toJson(it))
+                                if (it != null &&it.getStatus() != null && it.getStatus()!!) {
                                     getCensusPatientList()
                                 } else {
-                                    val errMsg: String? = ErrorMessages().getErrorMessage(this, commonResponse?.getErrorMessage(), Constants.API.invite)
-                                    //Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show()
+                                    val errMsg: String? = ErrorMessages().getErrorMessage(this, it?.getErrorMessage(), Constants.API.invite)
+
                                 }
                             })
                 }
@@ -1177,7 +1166,7 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
 
     private fun DoStartConsultationOtherProvider(context: Context, patient: Patient) {
         val providerId: Long? = PrefUtility().getProviderId(this)
-        if (!UtilityMethods().isInternetConnected(this)) {
+        if (!UtilityMethods().isInternetConnected(this)!!) {
             CustomSnackBar.make(
                 binding?.content, this, CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity), CustomSnackBar.TOP, 3000, 0
@@ -1199,7 +1188,7 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
                 TAG, "DoStartConsultationOtherProvider response : " + Gson().toJson(commonResponse)
             )
             dismissProgressBar()
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
+            if (commonResponse != null && commonResponse.status!= null && commonResponse.status!!) {
                 getCensusPatientList()
             } else {
                 val errMsg: String? = ErrorMessages().getErrorMessage(
@@ -1215,7 +1204,7 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
 
 
         override fun compare(patient1: Patient?, patient2: Patient?): Int {
-            return if (patient1 == null || patient1.getTime() == null || patient2 == null || patient2.getTime() == null
+            return if (patient1?.getTime() == null || patient2 == null || patient2.getTime() == null
             ) {
                 Int.MIN_VALUE
             } else patient2.getTime()!!.compareTo(patient1.getTime()!!)

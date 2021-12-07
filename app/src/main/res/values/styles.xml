@@ -235,7 +235,10 @@
         <item name="android:shadowDy">2</item>
         <item name="android:shadowColor">@color/transparent_75_white</item>
     </style>
-
+    <style name="SlideUpDialogforconsultDetails">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_bottom</item>
+    </style>
     <style name="Theme_Dialog" parent="Base.Theme.AppCompat.Dialog">
         <item name="android:windowMinWidthMajor">100%</item>
         <item name="android:windowMinWidthMinor">100%</item>

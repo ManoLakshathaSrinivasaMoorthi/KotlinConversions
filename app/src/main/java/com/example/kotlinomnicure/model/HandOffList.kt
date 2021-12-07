@@ -25,18 +25,18 @@ class HandOffList  {
 
 
     private var id: String? = null
-    private var messageId: String? = null
+    var messageId: String? = null
     private var message: String? = null
     private var type //text,image,video,audio,system
             : String? = null
-    private var subType //completion, summary
+    var subType //completion, summary
             : String? = null
     private var text: String? = null
     private var title: String? = null
     private var name: String? = null
     private var role: String? = null
     private var urgent = false
-    private var senderId: String? = null
+    var senderId: String? = null
     private var photoUrl: String? = null
     private var imageUrl: String? = null
     private var thumbUrl: String? = null

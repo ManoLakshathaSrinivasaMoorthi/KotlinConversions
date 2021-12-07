@@ -11,8 +11,9 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
 
-import com.example.kotlinomnicure.viewmodel.HomeViewModel
+
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityDrawerBinding
 import com.example.kotlinomnicure.utils.Constants
@@ -21,11 +22,11 @@ import com.example.kotlinomnicure.utils.UtilityMethods
 
 
 open class DrawerActivity : AppCompatActivity() {
-    private val TAG = DrawerActivity::class.java.simpleName
-    protected var binding: ActivityDrawerBinding? = null
+    val TAG = DrawerActivity::class.java.simpleName
+    var binding: ActivityDrawerBinding? = null
     protected var drawerLayout: DrawerLayout? = null
     var navHeaderView: View? = null
-    protected var viewModel: HomeViewModel? = null
+    var viewModel: HomeViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

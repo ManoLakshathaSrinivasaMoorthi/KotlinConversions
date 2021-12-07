@@ -11,7 +11,7 @@ import java.util.*
 class ConsultProvider :Serializable{
 
 
-    private var id: Long? = null
+    var id: Long? = null
     var patientsId: Long? = null
     var patientId: Long? = null
     private var text: String? = null

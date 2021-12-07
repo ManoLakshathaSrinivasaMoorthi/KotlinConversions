@@ -832,7 +832,7 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
      * Clearing the prefenrence values
      */
     fun clearPrefs() {
-        activity?.let { NotificationHelper(it).clearAllNotification() }
+        activity?.let { NotificationHelper(it, null).clearAllNotification() }
         activity?.let { PrefUtility().clearAllData(it) }
         activity?.let { PrefUtility().clearRedirectValidation(it) }
     }

@@ -11,6 +11,7 @@ import com.example.kotlinomnicure.adapter.LogDateAdapter
 
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityLogBinding
+import com.example.kotlinomnicure.model.ENotesList
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.UtilityMethods
 

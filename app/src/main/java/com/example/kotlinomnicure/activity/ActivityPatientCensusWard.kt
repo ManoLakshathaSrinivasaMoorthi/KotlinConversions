@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 
+
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -326,7 +327,7 @@ class ActivityPatientCensusWard : BaseActivity() {
                     Log.d(TAG, "getCensusWardList response : " + Gson().toJson(response))
                     censusWardListAdapter = CensusWardListAdapter(object : CensusWardListAdapter.HospitalRecyclerListener {
                         override fun onItemSelected(ward: WardPatientList?) {
-                            var intent = Intent(this, ActivityPatientCensusPatient::class.java)
+                            val intent = Intent(this@ActivityPatientCensusWard, ActivityPatientCensusPatient::class.java)
                             intent.putExtra("hospitalName", strDashboardHospitalName)
                             intent.putExtra("hospitalAddress", strDashboardHospitalAddress)
                             intent.putExtra("wardName", ward?.getWardName())

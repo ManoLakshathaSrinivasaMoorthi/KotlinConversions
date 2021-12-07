@@ -16,7 +16,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.SendChatMessageInputRequestModel
+
 import com.example.kotlinomnicure.viewmodel.ChatActivityViewModel
 import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
 
@@ -27,6 +27,7 @@ import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
 import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
+import omnicurekotlin.example.com.providerEndpoints.model.SendChatMessageInputRequestModel
 import java.lang.Exception
 import java.util.*
 

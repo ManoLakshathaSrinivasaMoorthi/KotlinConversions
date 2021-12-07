@@ -177,7 +177,7 @@ class LogoutHelper(activity: Activity, root: View?) {
      */
     private fun launchLoginActivity() {
         val mobile: String? = activity?.let { PrefUtility().getStringInPref(it, Constants.SharedPrefConstants.USER_MOBILE_NO, "") }
-        NotificationHelper(context!!).clearAllNotification()
+        NotificationHelper(context!!, null).clearAllNotification()
         val email: String? = PrefUtility().getStringInPref(context!!, Constants.SharedPrefConstants.EMAIL, "")
         val password: String? = PrefUtility().getStringInPref(context!!, Constants.SharedPrefConstants.PASSWORD, "")
         PrefUtility().clearAllData(context!!)

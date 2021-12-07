@@ -482,7 +482,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
                 sendBroadcast(intent)
                 //check notification for android 10
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    val notificationHelper = NotificationHelper(applicationContext)
+                    val notificationHelper = NotificationHelper(applicationContext, null)
                     if (providerId != null) {
                         notificationHelper.clearNotification(providerId.toInt())
                     }
@@ -788,7 +788,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
                     this, REQUEST_CODE,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT
                 )
-                val notificationHelper = NotificationHelper(applicationContext)
+                val notificationHelper = NotificationHelper(applicationContext, null)
                 notificationHelper.sendNotification(
                     pendingIntent,
                     title,
@@ -1445,7 +1445,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
                 this, REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT
             )
-            val notificationHelper = NotificationHelper(applicationContext)
+            val notificationHelper = NotificationHelper(applicationContext, null)
             notificationHelper.sendNotification(pendingIntent, title, message, patientId)
         } catch (e: Exception) {
 //            Log.e(TAG, "Exception:", e.getCause());
@@ -1464,7 +1464,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
             if (patientObj != null) {
                 patientId = patientObj["id"].asInt
             }
-            val notificationHelper = NotificationHelper(applicationContext)
+            val notificationHelper = NotificationHelper(applicationContext, null)
             notificationHelper.clearNotification(patientId)
         } catch (e: Exception) {
 //            Log.e(TAG, "Exception:", e.getCause());
@@ -1491,7 +1491,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
                 this, REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT
             )
-            val notificationHelper = NotificationHelper(applicationContext)
+            val notificationHelper = NotificationHelper(applicationContext, null)
             notificationHelper.sendNotification(
                 pendingIntent,
                 title,
@@ -1521,7 +1521,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
                 this, REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT
             )
-            val notificationHelper = NotificationHelper(applicationContext)
+            val notificationHelper = NotificationHelper(applicationContext, null)
             notificationHelper.sendNotification(
                 pendingIntent,
                 title,
@@ -1551,7 +1551,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
                 this, REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT
             )
-            val notificationHelper = NotificationHelper(applicationContext)
+            val notificationHelper = NotificationHelper(applicationContext, null)
             notificationHelper.sendNotification(
                 pendingIntent,
                 title,
@@ -1580,7 +1580,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
                 this, REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT
             )
-            val notificationHelper = NotificationHelper(applicationContext)
+            val notificationHelper = NotificationHelper(applicationContext, null)
             notificationHelper.sendNotification(
                 pendingIntent,
                 title,
@@ -1606,7 +1606,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
             val intent = Intent(this, SystemAlertActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             val pendingIntent = PendingIntent.getActivity(this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            val notificationHelper = NotificationHelper(applicationContext)
+            val notificationHelper = NotificationHelper(applicationContext, null)
             notificationHelper.sendNotification(pendingIntent, title, message, Constants.NotificationIds.MSG_NOTIFICATION_ID)
         } catch (e: Exception) {
 //            Log.e(TAG, "Exception:", e.getCause());
@@ -1628,7 +1628,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
             putIntentExtra(intent, remoteMessage)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             val pendingIntent = PendingIntent.getActivity(this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            val notificationHelper = NotificationHelper(applicationContext)
+            val notificationHelper = NotificationHelper(applicationContext, null)
             notificationHelper.sendNotification(pendingIntent, title, message, Constants.NotificationIds.MSG_NOTIFICATION_ID)
             //            Log.d(TAG, "Patient Assigned Title" + title);
         } catch (e: Exception) {

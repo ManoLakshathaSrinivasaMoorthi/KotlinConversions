@@ -3,6 +3,7 @@ package com.example.kotlinomnicure.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -27,6 +28,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -37,7 +39,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 
-import coil.ImageLoader
+
 import com.example.kotlinomnicure.viewmodel.ChatActivityViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
@@ -47,6 +49,8 @@ import com.example.kotlinomnicure.adapter.PatientListAdapter
 import com.example.kotlinomnicure.customview.CircularImageView
 import com.example.kotlinomnicure.customview.CustomDialog
 import com.example.kotlinomnicure.databinding.ActivityHomeBinding
+import com.example.kotlinomnicure.databinding.ItemConsultListBinding
+import com.example.kotlinomnicure.helper.DirectoryListHelperOld
 import com.example.kotlinomnicure.helper.LogoutHelper
 import com.example.kotlinomnicure.helper.NotificationHelper
 import com.example.kotlinomnicure.helper.PBMessageHelper
@@ -65,7 +69,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
-import com.mvp.omnicure.activity.ActivityConsultChartRemote
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.providerEndpoints.HandOffAcceptRequest
 import omnicurekotlin.example.com.providerEndpoints.model.Provider
@@ -81,9 +84,9 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.collections.ArrayList
 
-class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedListener,
+class HomeActivity : DrawerActivity(),BaseActivity(),NavigationView.OnNavigationItemSelectedListener,
     OnListItemClickListener {
     var expandedPosition = -1
     private var containerParent: FrameLayout? = null
@@ -109,7 +112,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
     private var mPath: String? = null
     private var messagesRef: DatabaseReference? = null
     private var query: Query? = null
-    private var homeBinding: ActivityHomeBinding? = null
+    var homeBinding: ActivityHomeBinding? = null
     private var searchQueryStr: String? = null
     private var filterPatientStatus: Constants.PatientStatus? = null
     private var acuityLevel: Constants.AcuityLevel = Constants.AcuityLevel.NA
@@ -119,12 +122,13 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
     private var eConsultTime: Constants.ConsultTime = Constants.ConsultTime.NA
     private var urgencyLevelType: Constants.UrgencyLevel = Constants.UrgencyLevel.NA
 
-    //private Constants.UrgencyLevel urgencyLevelTypePending = Constants.UrgencyLevel.NA;
     private var role: String? = null
     private val customDialog: CustomDialog? = null
     private val parser: SnapshotParser<ConsultProvider>? = null
     private var itemCount: Long = -1
     private var strFeedbackForm = ""
+    var context:Context?=HomeActivity(0)
+    var activity:Activity=null
 
     /**
      * Getting the current user
@@ -142,8 +146,8 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
     private var locationListAdapter: LocationListAdapter? = null
     private val ALL_HOSPITAL_ID = UUID.randomUUID().hashCode().toLong()
     private var selectedHospitalId = ALL_HOSPITAL_ID
-    private var selectedTab =TAB.Active
-    private var mAdapter: PatientListAdapter? = null
+     var selectedTab =TAB.Active
+    var mAdapter: PatientListAdapter? = null
     private var uid: String? = null
     var intentCensus: String? = ""
 
@@ -152,6 +156,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         override fun onDataChange(dataSnapshot: DataSnapshot) {
 
 
+            val key = dataSnapshot.key
             if (dataSnapshot.value != null && !dataSnapshot.value.toString()
                     .equals("", ignoreCase = true)) {
                 val consultProvider: ConsultProvider? =
@@ -191,89 +196,133 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         }
     }
 
-    // Child event listener for new data added/changed/removed status
-    var childEventListener: ChildEventListener? = object : ChildEventListener {
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        override fun onChildAdded(dataSnapshot: DataSnapshot, previous: String?) {
-
-            val key = dataSnapshot.key
-
-            if (dataSnapshot.value != null && !dataSnapshot.value.toString()
-                    .equals("", ignoreCase = true)
-            ) {
-
-                val consultProvider: ConsultProvider? =
-                    dataSnapshot.getValue(ConsultProvider::class.java)
-                providerHashMap[key] = consultProvider
-
-                if (itemCount <= providerHashMap.size) {
-                    itemCount = providerHashMap.size.toLong()
-                    filterList(providerHashMap.values)
-                    mAdapter?.notifyDataSetChanged()
+    private fun filterList(providers: MutableCollection<ConsultProvider?>) {
+        if (providers == null || providers.isEmpty()) {
+            providerFilteredList!!.clear()
+            //Handling the visibilty of the tab - Active, Pending, Complete
+            //Means there is no selected filter applied so resetted to default all section
+            handleListVisibility(false)
+            homeBinding!!.badgeCount.visibility = View.GONE
+            return
+        }
+        providerFilteredList!!.clear()
+        var badgeCount = 0
+        for (consultProvider in providers) {
+            if (consultProvider == null) {
+                continue
+            }
+            if (consultProvider.getPatientId() == null || TextUtils.isEmpty(consultProvider.getName())) {
+                continue
+            }
+            if (consultProvider.getUnread() > 0 && consultProvider.getStatus() != null && consultProvider.getStatus() !== Constants.PatientStatus.Pending && consultProvider.getStatus() !== Constants.PatientStatus.Invited && consultProvider.getStatus() !== Constants.PatientStatus.Completed && consultProvider.getStatus() !== Constants.PatientStatus.Discharged) {
+                badgeCount++
+            }
+            if (selectedTab.equals(TAB.Active)) {
+                var condition = false
+                if (strDesignation.equals("md/do", ignoreCase = true)) {
+                    condition =
+                        consultProvider.getStatus() === Constants.PatientStatus.Invited || consultProvider.getStatus() === Constants.PatientStatus.Handoff
+                }
+                if (consultProvider.getStatus() === Constants.PatientStatus.Completed || consultProvider.getStatus() === Constants.PatientStatus.Discharged || condition) {
+                    continue
+                }
+                if (filterPatientStatus != null && consultProvider.getStatus() !== filterPatientStatus) {
+                    if (filterPatientStatus!!.equals(Constants.PatientStatus.Active)
+                        && (consultProvider.getStatus()!!.equals(Constants.PatientStatus.Active)
+                                || consultProvider.getStatus()!!
+                            .equals(Constants.PatientStatus.Patient)
+                                || consultProvider.getStatus()!!
+                            .equals(Constants.PatientStatus.HandoffPending) //                            || consultProvider.getStatus().equals(Constants.PatientStatus.Handoff)
+                                )
+                    ) {
+                    } else {
+                        continue
+                    }
+                }
+            } else if (selectedTab == TAB.Patients) {
+                if (consultProvider.getStatus() === Constants.PatientStatus.Active || consultProvider.getStatus() === Constants.PatientStatus.Pending || consultProvider.getStatus() === Constants.PatientStatus.Invited || consultProvider.getStatus() === Constants.PatientStatus.Handoff || consultProvider.getStatus() === Constants.PatientStatus.HomeCare || consultProvider.getStatus() === Constants.PatientStatus.HandoffPending || consultProvider.getStatus() === Constants.PatientStatus.Patient) {
+                    continue
+                }
+            } else if (selectedTab == TAB.Pending) {
+                if (consultProvider.getStatus() === Constants.PatientStatus.Pending || consultProvider.getStatus() === Constants.PatientStatus.Invited || consultProvider.getStatus() === Constants.PatientStatus.Handoff) {
+                } else {
+                    continue
                 }
             }
-
-
-
-            // Filtering based on the acuity
-            if (selectedTab == TAB.Active) {
-                //Filter active screen by score
-                filterByAcuityActive(acuityLevel)
-            } else if (selectedTab ==TAB.Pending) {
-                //Filtering by pending acuity
-                getnewpendingchange()
-                filterByAcuityPending(acuityLevelPending)
-            } else if (selectedTab == TAB.Patients) {
-                // Filtering by status type
-                filterByStatusType(patientStatusType)
+            if (searchQueryStr != null) {
+                var firstName = consultProvider.getFname()
+                val lastName = consultProvider.getLname()
+                if (!TextUtils.isEmpty(consultProvider.getName())) {
+                    firstName = consultProvider.getName()
+                }
+                var isFound = false
+                if (firstName != null && firstName.trim { it <= ' ' }.toLowerCase()
+                        .contains(searchQueryStr!!.toLowerCase())
+                    || lastName != null && lastName.trim { it <= ' ' }.toLowerCase()
+                        .contains(searchQueryStr!!.toLowerCase())
+                ) {
+                    isFound = true
+                }
+                if (!isFound) {
+                    continue
+                }
             }
+            providerFilteredList.add(consultProvider)
+        }
+        if (providerFilteredList.isEmpty()) {
+            //Handling the visibilty of the tab - Active, Pending, Complete
+            //Means there is no selected filter applied so resetted to default all section
+            handleListVisibility(false)
+            homeBinding!!.badgeCount.visibility = View.GONE
+            return
+        }
+        //Handling the visibilty of the tab - Active, Pending, Complete
+        //Means there is no selected filter applied so resetted to default all section
+        //Handling the visibilty of the tab - Active, Pending, Complete
+        //Means there is no selected filter applied so resetted to default all section
+        handleListVisibility(true)
+        //Sorting the provider list by time
+        //Sorting the provider list by time
+        Collections.sort(providerFilteredList, PatientSortByTime())
+
+        // To refresh patient list adapter
+
+        // To refresh patient list adapter
+        if (mAdapter != null) {
+            mAdapter!!.updateList(providerFilteredList!!)
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
-            filterItem(dataSnapshot)
+        // Badge count visibiltiy
 
-            //Filtering based on the acuity
-            if (selectedTab == TAB.Active) {
-                //Filter active screen by score
-                filterByAcuityActive(acuityLevel)
-            } else if (selectedTab == TAB.Pending) {
-                // Filter pending screen by score
-                filterByAcuityPending(acuityLevelPending)
-            } else if (selectedTab == TAB.Patients) {
-                // Filtering by status type
-                filterByStatusType(patientStatusType)
+        // Badge count visibiltiy
+        if (badgeCount > 0) {
+            homeBinding!!.badgeCount.visibility = View.VISIBLE
+            val badgeCountStr = badgeCount.toString()
+            if (badgeCountStr.length == 1) {
+                homeBinding!!.badgeCount.setTextSize(12)
+            } else if (badgeCountStr.length > 1) {
+                homeBinding!!.badgeCount.setTextSize(10)
+            } else if (badgeCountStr.length > 2) {
+                homeBinding!!.badgeCount.setTextSize(7)
             }
-
-
-        }
-
-        @SuppressLint("NotifyDataSetChanged")
-        override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-
-            providerHashMap.remove(dataSnapshot.key)
-            filterList(providerHashMap.values)
-            if (selectedTab == TAB.Active) {
-                //Filter active screen by score
-                filterByAcuityActive(acuityLevel)
-            } else if (selectedTab == TAB.Pending) {
-                //Filtering by pending acuity
-                filterByAcuityPending(acuityLevelPending)
-            } else if (selectedTab == TAB.Patients) {
-                // Filtering by status type
-                filterByStatusType(patientStatusType)
-            }
-            mAdapter?.notifyDataSetChanged()
-        }
-
-        override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
-//            Log.d(TAG, "ChildEvent - onChildMoved: " + dataSnapshot);
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-//            Log.d(TAG, "ChildEvent - onCancelled: " + databaseError);
+            homeBinding!!.badgeCount.text = badgeCountStr
+        } else {
+            homeBinding!!.badgeCount.visibility = View.GONE
         }
     }
+
+    class PatientSortByTime : Comparator<ConsultProvider?> {
+        override fun compare(consultProvider1: ConsultProvider?, consultProvider2: ConsultProvider?): Int {
+            return if (consultProvider2 == null || consultProvider1 == null || consultProvider2.getTime() == null || consultProvider1.getTime() == null) {
+                Int.MIN_VALUE
+            } else consultProvider2.getTime()!!.compareTo(consultProvider1.getTime()!!)
+        }
+
+    }
+
+
+
+
 
     fun getnewpendingchange() {
         // new pending activity status change
@@ -282,7 +331,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         val mPathnewpendng = "providers/$mProviderUid1/newPendingRequest"
         mFirebaseDatabaseReference!!.child("providers").child(mProviderUid1)
             .child("newPendingRequest").setValue(false)
-        //end
+
     }
 
     /**
@@ -334,7 +383,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                     homeBinding?.idBtnComplete?.setBackground(getResources().getDrawable(R.drawable.transparent_bg))
                     homeBinding?.idBtnPending?.setTextColor(getResources().getColor(R.color.white))
                     homeBinding?.idBtnPending?.setBackground(getResources().getDrawable(R.drawable.transparent_bg))
-                    //                    homeBinding.idBtnActive.setTypeface(Typeface.DEFAULT_BOLD);
+                   
                     if (role != null && role.equals(Constants.ProviderRole.BD.toString(), ignoreCase = true)) {
                         homeBinding?.fab?.setVisibility(View.VISIBLE)
                     } else {
@@ -368,7 +417,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                     })
                     homeBinding?.txtClearpending?.setOnClickListener(View.OnClickListener { v ->
                         handleMultipleClick(v)
-                        // isActivePatient = false;
+
                         filterByAcuityPending(Constants.AcuityLevel.NA)
                         eConsultTime = Constants.ConsultTime.NA
                         //Filtering by pending acuity
@@ -446,6 +495,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      * @param context
      * @param provider
      */
+    @SuppressLint("SimpleDateFormat", "ClickableViewAccessibility")
     fun consultDetailsDialog(context: Context?, provider: ConsultProvider) {
 
 
@@ -479,10 +529,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         val unreadMessageListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-//                Log.d(TAG, "onMessageReceived : " + snapshot);
-                /*if (snapshot == null) {
-                    return;
-                }*/
+
                 val consultProvider: ConsultProvider? =
                     snapshot.getValue(ConsultProvider::class.java)
                 if (consultProvider != null) {
@@ -496,9 +543,9 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
 
             override fun onCancelled(error: DatabaseError) {}
         }
-        //        unreadMessage.addValueEventListener(unreadMessageListener);
+
         mFirebaseDatabaseReference!!.addValueEventListener(unreadMessageListener)
-        dialog.setOnDismissListener { //                unreadMessage.removeEventListener(unreadMessageListener);
+        dialog.setOnDismissListener {
             mFirebaseDatabaseReference!!.removeEventListener(unreadMessageListener)
         }
         val stub = dialog.findViewById<View>(R.id.layout_stub_view) as ViewStub
@@ -533,7 +580,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                     provider.getStatus() === Constants.PatientStatus.Discharged
                 ) {
                     intentConsultChart.putExtra(Constants.IntentKeyConstants.COMPLETED, true)
-                    clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID)
+                    clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID.toLong())
                 }
             }
             startActivity(intentConsultChart)
@@ -576,8 +623,8 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         val strComplaint: String? = provider.getNote()
         var stringComplaint = strComplaint
-        if (strComplaint.contains(":")) {
-            stringComplaint = strComplaint?.substring(strComplaint?.indexOf(":") + 1)
+        if (strComplaint?.contains(":") == true) {
+            stringComplaint = strComplaint.substring(strComplaint.indexOf(":") + 1)
         }
         txtPatientName.setText(provider.getName())
         txtComplaint.movementMethod = ScrollingMovementMethod()
@@ -613,6 +660,51 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         dialog.show()
     }
 
+    private fun startChat(consultProvider: ConsultProvider) {
+        if (consultProvider == null || consultProvider.getPatientId() == null) {
+
+            CustomSnackBar.make(homeBinding!!.root,
+                this,
+                CustomSnackBar.WARNING,
+                "Patient does not exist",
+                CustomSnackBar.TOP,
+                3000,
+                0)!!
+                .show()
+            return
+        }
+
+
+        val intent = Intent(baseContext, ChatActivity::class.java)
+        intent.putExtra("uid", consultProvider.getPatientId())
+        intent.putExtra("path", "consults/" + consultProvider.getPatientId())
+        intent.putExtra("consultProviderId", "" + consultProvider.getId())
+        intent.putExtra("consultProviderPatientId", "" + consultProvider.getPatientId())
+        intent.putExtra("consultProviderText", consultProvider.getText())
+        intent.putExtra("consultProviderName", consultProvider.getName())
+        intent.putExtra("dob", consultProvider.getDob())
+        intent.putExtra("gender", consultProvider.getGender())
+        intent.putExtra("note", consultProvider.getNote())
+        intent.putExtra("phone", consultProvider.getPhone())
+        intent.putExtra("patientId", consultProvider.getPatientsId())
+        intent.putExtra("teamNameConsult", "Team " + consultProvider.getTeamName())
+//        Log.d(TAG, "strConsultTeamName : " + "Team " + consultProvider.getTeamName());
+
+        //        Log.d(TAG, "strConsultTeamName : " + "Team " + consultProvider.getTeamName());
+        intent.putExtra(Constants.IntentKeyConstants.IS_PATIENT_URGENT, consultProvider.getUrgent())
+        if (consultProvider.getStatus() != null) {
+            intent.putExtra("status", consultProvider.getStatus().toString())
+            if (consultProvider.getStatus() === Constants.PatientStatus.Invited || consultProvider.getStatus() === Constants.PatientStatus.Handoff) {
+                intent.putExtra(Constants.IntentKeyConstants.INVITATION, true)
+                clearNotifications(consultProvider.getPatientId().intValue())
+            } else if (consultProvider.getStatus() === Constants.PatientStatus.Completed || consultProvider.getStatus() === Constants.PatientStatus.Discharged) {
+                intent.putExtra(Constants.IntentKeyConstants.COMPLETED, true)
+                clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID)
+            }
+        }
+        startActivity(intent)
+    }
+
     /**
      * Filter active screen by score
      */
@@ -637,7 +729,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                     }
                 }
             }
-            val eConsultStatusList: List<ConsultProvider> = ArrayList<>(lowScoreData)
+            val eConsultStatusList: List<ConsultProvider> = java.util.ArrayList<ConsultProvider>(lowScoreData)
             lowScoreData.clear()
             // filter for eConsult Status
             for (i in eConsultStatusList.indices) {
@@ -654,7 +746,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             }
 
             //Filter for location
-            val acuityUrgencyFilteredList: List<ConsultProvider> = ArrayList<>(lowScoreData)
+            val acuityUrgencyFilteredList: List<ConsultProvider> = java.util.ArrayList<ConsultProvider>(lowScoreData)
             if (selectedHospitalId > 0) {
                 if (ALL_HOSPITAL_ID == selectedHospitalId) {
                     // skip filter hospital to add all hospital
@@ -711,7 +803,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                 }
             }
         }
-        val eConsultStatusList: List<ConsultProvider> = ArrayList<>(lowScoreData)
+        val eConsultStatusList: List<ConsultProvider> = ArrayList<>
         lowScoreData.clear()
         //Filter for eConsult Status
         for (i in eConsultStatusList.indices) {
@@ -724,10 +816,11 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                 Constants.PatientStatus.Pending -> if (consultProvider.getStatus() === Constants.PatientStatus.Pending) {
                     lowScoreData.add(consultProvider)
                 }
+
             }
         }
         //Filter for Location
-        val acuityUrgencyFilteredList: List<ConsultProvider> = ArrayList<>(lowScoreData)
+        val acuityUrgencyFilteredList: List<ConsultProvider> = ArrayList<>
         if (selectedHospitalId > 0) {
             if (ALL_HOSPITAL_ID == selectedHospitalId) {
                 // skip filter hospital to add all hospital
@@ -769,7 +862,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
     private fun performSearch(lowScoreData: MutableList<ConsultProvider?>): MutableList<ConsultProvider?> {
         val searchQuery: String = homeBinding?.searchEdittext?.text.toString()
         if (!TextUtils.isEmpty(searchQuery)) {
-            val tempOfFilterList: List<ConsultProvider> = ArrayList<>(lowScoreData)
+            val tempOfFilterList: List<ConsultProvider> =ArrayList<ConsultProvider>()
             lowScoreData.clear()
             for (provider in tempOfFilterList) {
                 var firstName: String? = provider.getFname()
@@ -794,25 +887,29 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      *
      * @param level
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun filterByAcuityPending(level: Constants.AcuityLevel) {
         if (providerFilteredList == null) {
             return
         }
         if (level === Constants.AcuityLevel.NA) {
             // This is for ALL acuity option filter
+
+
+            // This is for ALL acuity option filter
             if (mAdapter != null) {
-                val tempList: Any? = ArrayList<>(providerFilteredList)
-                val consultProviders: MutableList<ConsultProvider?> = filterByTime(tempList)
-                val searchResult: List<ConsultProvider?> = performSearch(consultProviders)
+                val tempList: List<ConsultProvider?> = java.util.ArrayList<ConsultProvider?>(providerFilteredList)
+                val consultProviders = filterByTime(tempList)
+                val searchResult: List<ConsultProvider?> = performSearch(consultProviders as MutableList<ConsultProvider?>)
                 acuityLevelPending = level
                 mAdapter!!.updateList(searchResult as MutableList<ConsultProvider?>)
                 mAdapter!!.notifyDataSetChanged()
-                if (mAdapter?.getItemCount() ) {
+                if (mAdapter!!.itemCount <= 0) {
                     showEmptyMessageForPendingTab()
-                    homeBinding?.noPatientLayout?.setVisibility(View.VISIBLE)
+                    homeBinding!!.noPatientLayout.visibility = View.VISIBLE
                 } else {
-                    homeBinding?.messageRecyclerView?.setVisibility(View.VISIBLE)
-                    homeBinding?.noPatientLayout?.setVisibility(View.GONE)
+                    homeBinding!!.messageRecyclerView.visibility = View.VISIBLE
+                    homeBinding!!.noPatientLayout.visibility = View.GONE
                 }
             }
             homeBinding?.filterText?.setText("All")
@@ -826,13 +923,13 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                 lowScoreData.add(consultProvider)
             }
         }
-        val consultProviders: MutableList<ConsultProvider?> = filterByTime(lowScoreData)
-        val searchResult: List<ConsultProvider?> = performSearch(consultProviders)
+        val consultProviders: List<ConsultProvider?> = filterByTime(lowScoreData)
+        val searchResult: List<ConsultProvider?> = performSearch(consultProviders  as MutableList<ConsultProvider?>)
         acuityLevelPending = level
         if (mAdapter != null) {
             mAdapter!!.updateList(searchResult as MutableList<ConsultProvider?>)
             mAdapter!!.notifyDataSetChanged()
-            if (mAdapter?.getItemCount() <= 0) {
+            if (mAdapter?.getItemCount()!! <= 0) {
                 showEmptyMessageForPendingTab()
                 homeBinding?.noPatientLayout?.setVisibility(View.VISIBLE)
             } else {
@@ -849,19 +946,19 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      * @param providerList
      * @return
      */
-    private fun filterByTime(providerList: MutableList<ConsultProvider?>): MutableList<ConsultProvider?> {
+    fun filterByTime(providerList: MutableList<ConsultProvider>): MutableList<ConsultProvider> {
         if (eConsultTime === Constants.ConsultTime.NA) {
             // If it's all the we don't need to change the list
             return providerList
         } else {
-            val timeList: List<ConsultProvider> = ArrayList<>(providerList)
+            val timeList: List<ConsultProvider?> = java.util.ArrayList<ConsultProvider?>(providerList)
             providerList.clear()
             val currentTime = Calendar.getInstance()
             //Filter for time
             for (i in timeList.indices) {
-                val consultProvider: ConsultProvider = timeList[i]
+                val consultProvider = timeList[i]
                 var time = 0L
-                if (consultProvider.getTime() != null && consultProvider.getTime()!! > 0) {
+                if (consultProvider!!.getTime() != null && consultProvider.getTime()!! > 0) {
                     time = consultProvider.getTime()!!
                 } else if (consultProvider.getJoiningTime() != null && consultProvider.getJoiningTime()!! > 0) {
                     time = consultProvider.getJoiningTime()!!
@@ -877,7 +974,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                             providerList.add(consultProvider)
                         }
                     }
-                    Constants.ConsultTime.Thirty-> {
+                    Constants.ConsultTime.Thirty -> {
                         val diffInMin = TimeUnit.MILLISECONDS.toMinutes(duration)
                         //                        Log.d(TAG, "diffInMin : " + diffInMin);
                         if (diffInMin <= 30) {
@@ -891,7 +988,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                             providerList.add(consultProvider)
                         }
                     }
-                    Constants.ConsultTime.OverThirtyMin -> {
+                    Constants.ConsultTime.OverOneHour -> {
                         val diffInHours = TimeUnit.MILLISECONDS.toHours(duration)
                         //                        Log.d(TAG, "diffInHrs : " + diffInHours);
                         if (diffInHours > 1) {
@@ -967,8 +1064,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
     private fun showEmptyMessageForActiveTab() {
         if (isCurrentUserIsBedSideUser) {
             if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA && eConsultStatus === Constants.PatientStatus.NA && TextUtils.isEmpty(
-                    homeBinding?.searchEdittext?.getText().toString())
-            ) {
+                    homeBinding?.searchEdittext?.getText().toString())) {
 
                 // This means there is no selected filter applied so resetted to default all section
                 handleListVisibility(false)
@@ -996,7 +1092,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      */
     private fun showEmptyMessageForPendingTab() {
         if (acuityLevelPending === Constants.AcuityLevel.NA && eConsultTime === Constants.ConsultTime.NA && TextUtils.isEmpty(
-                homeBinding?.searchEdittext.getText().toString())) {
+                homeBinding?.searchEdittext?.getText().toString())) {
 
             //Handling the visibilty of the tab - Active, Pending, Complete
             //Means there is no selected filter applied so resetted to default all section
@@ -1011,8 +1107,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      */
     private fun showEmptyMessageForCompleteTab() {
         if (patientStatusType === Constants.PatientStatus.NA
-            && TextUtils.isEmpty(homeBinding?.searchEdittext.getText().toString())
-        ) {
+            && TextUtils.isEmpty(homeBinding?.searchEdittext?.getText().toString())) {
 
             //Handling the visibilty of the tab - Active, Pending, Complete
             //Means there is no selected filter applied so resetted to default all section
@@ -1023,19 +1118,19 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
     }
 
     private fun showFilterErrorMessage() {
-        homeBinding.noPatientTitle.setVisibility(View.VISIBLE)
-        homeBinding.noPatientText.setText(getResources().getString(R.string.no_results_for_filter))
+        homeBinding?.noPatientTitle?.setVisibility(View.VISIBLE)
+        homeBinding?.noPatientText?.setText(getResources()?.getString(R.string.no_results_for_filter))
     }
 
     private val isCurrentUserIsBedSideUser: Boolean
-        private get() {
+      get() {
             val role: String? = PrefUtility().getRole(this)
             return if (!TextUtils.isEmpty(role)) {
                 role.equals(Constants.ProviderRole.BD.toString(), ignoreCase = true)
             } else false
         }
     private val isCurrentUserIsRemoteSideUser: Boolean
-        private get() {
+        get() {
             val role: String? = PrefUtility().getRole(this)
             return if (!TextUtils.isEmpty(role)) {
                 role.equals(Constants.ProviderRole.RD.toString(), ignoreCase = true)
@@ -1219,7 +1314,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             acuityLevelPending = Constants.AcuityLevel.NA
             //Filtering by pending acuity - NA
             filterByAcuityPending(Constants.AcuityLevel.NA)
-            homeBinding.filterText.setText("All")
+            homeBinding?.filterText?.setText("All")
             dialog.dismiss()
             if (eConsultTime === Constants.ConsultTime.NA) {
                 filterdeselectpending()
@@ -1519,7 +1614,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                 override fun onItemSelected(hospital: ConsultProvider?) {
                     selectedHospitalId = hospital?.getHospitalId()!!
                     //Filter active screen by score
-                    if (hospital?.getName() == null) {
+                    if (hospital.getName() == null) {
                         if (acuityLevel === Constants.AcuityLevel.NA && urgencyLevelType === Constants.UrgencyLevel.NA) {
                             filterdeselectactive()
                         } else {
@@ -1697,7 +1792,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         rlAll.setOnClickListener { // Filtering by status type - NA
             // filterByStatusType(Constants.PatientStatus.NA);
             patientStatusType = Constants.PatientStatus.NA
-            homeBinding?.filterText.setText("All")
+            homeBinding?.filterText?.setText("All")
             dialog.dismiss()
             filterdeselectcomplet()
         }
@@ -1705,7 +1800,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
     }
 
     protected override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super<DrawerActivity>.onCreate(savedInstanceState)
         role = PrefUtility().getRole(this)
         containerParent = findViewById(R.id.container)
         homeBinding = DataBindingUtil.inflate(getLayoutInflater(),
@@ -1726,10 +1821,51 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
 
     }
 
+    private fun clearAllNotifications() {
+        NotificationHelper(this, null).clearAllNotification()
+    }
+
     protected override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
+        super<DrawerActivity>.onNewIntent(intent)
         //Handling the notification click based on the intent
         handleNotification(intent)
+    }
+
+    private fun handleNotification(intent: Intent) {
+        val userId: Long = PrefUtility.getProviderId(this)
+        // To login activity if user is null / -1
+        // To login activity if user is null / -1
+        if (userId == null || userId == -1L) {
+            intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        } // If the intent has "forward" - redirect to chat activity
+        else if (intent.hasExtra("forward")
+            && intent.getStringExtra("forward")
+                .equals(ChatActivity::class.java.simpleName, ignoreCase = true)
+        ) {
+            val chatActIntent = Intent(this, ChatActivity::class.java)
+            chatActIntent.putExtras(intent.extras!!)
+            startActivity(chatActIntent)
+        }
+        // Getting the bundle data
+        // Getting the bundle data
+        val extras = intent.extras
+        if (extras != null) {
+            val select = extras.getString(Constants.IntentKeyConstants.TARGET_PAGE, "")
+            if (select == "pending") {
+                getnewpendingchange()
+                if (homeBinding!!.pendingBtnLayout.visibility === View.VISIBLE) {
+                    homeBinding!!.pendingBtnLayout.performClick()
+                }
+            } else if (select == "completed") {
+                homeBinding!!.completedBtnLayout.performClick()
+            } else if (select == "active") {
+                homeBinding!!.activeBtnLayout.performClick()
+            }
+        }
+
     }
 
     /**
@@ -1814,7 +1950,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             }
             mAdapter!!.notifyDataSetChanged()
             if (mAdapter!!.getItemCount() <= 0) {
-                if (selectedTab == HomeActivity().TAB.Active) {
+                if (selectedTab == TAB.Active) {
                     showEmptyMessageForActiveTab()
                 } else if (selectedTab == TAB.Pending) {
                     showEmptyMessageForPendingTab()
@@ -1921,6 +2057,12 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         setSearchTextWatcher()
     }
 
+    private fun handleTabButtons() {
+        homeBinding!!.activeBtnLayout.setOnClickListener(tabChangeListener)
+        homeBinding!!.completedBtnLayout.setOnClickListener(tabChangeListener)
+        homeBinding!!.pendingBtnLayout.setOnClickListener(tabChangeListener)
+    }
+
     /**
      * Query listener
      */
@@ -1966,6 +2108,42 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
 
     }
 
+    /**
+     * Getting provider details by ID
+     *
+     * @param uid
+     */
+    private fun getProviderDetailsById(it: Long) {
+        val id: Long? = PrefUtility().getProviderId(this)
+        val token: String? = PrefUtility().getToken(this)
+        viewModel!!.getProviderById(id, token, uid).observe(this, { commonResponse ->
+//            Log.d(TAG, "getProviderDetails: " + new Gson().toJson(commonResponse));
+            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus() && commonResponse.getProvider() != null) {
+                val provider = commonResponse.getProvider()
+
+//                PrefUtility.saveUserData(this, provider);
+                PrefUtility().saveStringInPref(this,
+                    Constants.SharedPrefConstants.HOSPITAL_NAME,
+                    provider!!.getHospital())
+                val hospitalTxt: TextView = navHeaderView!!.findViewById(R.id.id_hospital_name)
+                hospitalTxt.text = provider!!.getHospital()
+            } else {
+                val errMsg: String? = ErrorMessages().getErrorMessage(this,
+                    commonResponse!!.getErrorMessage(),
+                    Constants.API.getProviderById)
+                //                UtilityMethods.showErrorSnackBar(binding.container, errMsg, Snackbar.LENGTH_LONG);
+                CustomSnackBar.make(binding!!.container,
+                    this,
+                    CustomSnackBar.WARNING,
+                    errMsg,
+                    CustomSnackBar.TOP,
+                    3000,
+                    0)!!
+                    .show()
+            }
+        })
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         getMenuInflater().inflate(R.menu.home_screen_menu, menu)
         val addPatientMenu = menu.findItem(R.id.add_patient_menu)
@@ -1990,7 +2168,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                 }
             }
         }
-        return super.onPrepareOptionsMenu(menu)
+        return super<DrawerActivity>.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -2003,7 +2181,12 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                 onClickDirectory()
             }
         }
-        return super.onOptionsItemSelected(item)
+        return super<DrawerActivity>.onOptionsItemSelected(item)
+    }
+
+    private fun onClickAddPatient() {
+        val intent = Intent(this, AddPatientActivity::class.java)
+        startActivityForResult(intent, Constants.ActivityRequestCodes.ADD_PATIENT_REQ_CODE)
     }
 
     @SuppressLint("SetTextI18n")
@@ -2074,20 +2257,20 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             emailTxt?.visibility = View.GONE
         }
         imgLayout?.setOnClickListener { view: View? ->
-            selectImage() }
+            HomeActivity(0).selectImage() }
 
 
-        menuMyConsultsView.setOnClickListener { view: View? ->
+        menuMyConsultsView?.setOnClickListener { view: View? ->
 //            Log.i(TAG, "On click myconsults: ");
             drawerLayout?.closeDrawers()
         }
-        menuChangePassword.setOnClickListener { view: View? ->
+        menuChangePassword?.setOnClickListener { view: View? ->
 //            Log.i(TAG, "On click change password : ");
             drawerLayout?.closeDrawers()
             val intent = Intent(this, ResetPasswordActivity::class.java)
             startActivity(intent)
         }
-        menuHandOffPatients.setOnClickListener { view: View? ->
+        menuHandOffPatients?.setOnClickListener { view: View? ->
 //            Log.i(TAG, "On click handoff patients : ");
             drawerLayout?.closeDrawers()
             val intent = Intent(this, HandOffPatientsActivity::class.java)
@@ -2121,24 +2304,91 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             val intent = Intent(this, MyVirtualTeamsActivity::class.java)
             startActivity(intent)
         }
-        menuContactAdmin.setOnClickListener { view: View? ->
+        menuContactAdmin?.setOnClickListener { view: View? ->
 
             drawerLayout?.closeDrawers()
             val intent = Intent(this, ContactAdminActivity::class.java)
             startActivity(intent)
         }
-        menuFeedbackView.setOnClickListener { view: View? ->
+        menuFeedbackView?.setOnClickListener { view: View? ->
             drawerLayout?.closeDrawers()
 
             val uri = Uri.parse(strFeedbackForm)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
-        menuSignoutView.setOnClickListener { view: View ->
+        menuSignoutView?.setOnClickListener { view: View ->
 
             drawerLayout?.closeDrawers()
             handleMultipleClick(view)
             onClickLogout()
+        }
+    }
+
+    class ImageLoader: AsyncTask<java.lang.Void, java.lang.Void, Bitmap>() {
+        var activityReference: WeakReference<HomeActivity>? = null
+        var imageURL: String? = null
+        var imageProgressBar: ProgressBar? = null
+        var imageView: ImageView? = null
+        var cameraIcon:android.widget.ImageView? = null
+        var defaultImgView: TextView? = null
+
+        fun ImageLoader(activity: HomeActivity, imageURL: String?) {
+            activityReference = WeakReference(activity)
+            this.imageURL = imageURL
+            imageView = activityReference!!.get()!!.navHeaderView!!.findViewById(R.id.id_profile_img)
+            cameraIcon = activityReference!!.get()!!.navHeaderView!!.findViewById(R.id.cameraIcon)
+            imageProgressBar = activityReference!!.get()!!.navHeaderView!!.findViewById(R.id.id_profile_image_pb)
+            defaultImgView = activityReference!!.get()!!.navHeaderView!!.findViewById(R.id.default_image_view)
+        }
+
+        protected override fun onPreExecute() {
+            super.onPreExecute()
+            imageProgressBar!!.visibility = View.VISIBLE
+            imageView!!.visibility = View.GONE
+            defaultImgView!!.visibility = View.VISIBLE
+            cameraIcon?.setVisibility(View.VISIBLE)
+            val name: String? = PrefUtility().getStringInPref(activityReference!!.get(),
+                Constants.SharedPrefConstants.NAME, "")
+            defaultImgView!!.setText(UtilityMethods().getNameText(name))
+        }
+
+        protected override fun doInBackground(vararg params: Void?): Bitmap? {
+            var bitmap: Bitmap?
+            try {
+                val connection = URL(imageURL).openConnection()
+                connection.connectTimeout = 10000
+                bitmap = BitmapFactory.decodeStream(connection.getInputStream())
+            } catch (e: Exception) {
+                bitmap = null
+
+            }
+            return bitmap
+        }
+
+        protected override fun onPostExecute(bitmap: Bitmap?) {
+            super.onPostExecute(bitmap)
+            val homeActivity = activityReference!!.get()
+            if (homeActivity != null) {
+                imageProgressBar!!.visibility = View.GONE
+                if (bitmap != null) {
+                    imageView!!.visibility = View.VISIBLE
+                    defaultImgView!!.visibility = View.GONE
+                    cameraIcon?.setVisibility(View.GONE)
+                    imageView!!.setImageBitmap(bitmap)
+                } else {
+                    imageView!!.visibility = View.GONE
+                    defaultImgView!!.visibility = View.VISIBLE
+                    cameraIcon?.setVisibility(View.VISIBLE)
+                    val name: String? = PrefUtility().getStringInPref(homeActivity,
+                        Constants.SharedPrefConstants.NAME, "")
+                    defaultImgView.setText(UtilityMethods.getNameText(name))
+                }
+            }
+        }
+
+        protected override fun onCancelled() {
+            super.onCancelled()
         }
     }
 
@@ -2158,7 +2408,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             return
         }
         mProviderUid = uid //mFirebaseUser.getUid();
-        val mLinearLayoutManager = LinearLayoutManager(this
+        val mLinearLayoutManager = LinearLayoutManager(this)
         homeBinding?.messageRecyclerView?.setLayoutManager(mLinearLayoutManager)
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
         mPath = "providers/$mProviderUid/active"
@@ -2207,9 +2457,9 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
 
             CustomSnackBar.make(binding?.container,
                 this,
-                CustomSnackBar().WARNING,
+                CustomSnackBar.WARNING,
                 getString(R.string.no_internet_connectivity),
-                CustomSnackBar().TOP,
+                CustomSnackBar.TOP,
                 3000,
                 0)?.show()
             return
@@ -2218,9 +2468,9 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         val provider = Provider()
         provider.setStatus(status)
         provider.setId(providerId)
-        showProgressBar(PBMessageHelper.getMessage(this, Constants.API.updateProvider.toString()))
+        showProgressBar(PBMessageHelper().getMessage(this, Constants.API.updateProvider.toString()))
         viewModel?.updateProviderStatus(provider)?.observe(this) { commonResponse ->
-//            Log.i(TAG, "onClickStatusButton: ");
+
             dismissProgressBar()
             if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
                 val currentStatus: String? = commonResponse.getProvider()?.getStatus()
@@ -2241,22 +2491,38 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                     commonResponse?.getErrorMessage(),
                     Constants.API.updateProvider)
 
-                CustomSnackBar.make(binding.drawerLayout,
+                CustomSnackBar.make(binding?.drawerLayout,
                     this,
                     CustomSnackBar.WARNING,
                     errMsg,
                     CustomSnackBar.TOP,
                     3000,
-                    0).show()
+                    0)?.show()
             }
+        }
+    }
+
+    private fun updateProviderStatus() {
+
+        val dotImg: ImageView = navHeaderView!!.findViewById(R.id.id_dot)
+        val status: String? =
+            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.PROVIDER_STATUS, "")
+        if (TextUtils.isEmpty(status) || status.equals(Constants.ProviderStatus.OffLine.toString(),
+                ignoreCase = true)) {
+            dotImg.setImageResource(R.drawable.ic_grey_circle)
+            homeBinding!!.idDot.setImageResource(R.drawable.ic_grey_circle)
+        } else {
+            //statusBtn.setText(R.string.go_offline);
+            dotImg.setImageResource(R.drawable.ic_green_circle)
+            homeBinding!!.idDot.setImageResource(R.drawable.ic_green_circle)
         }
     }
 
     // Migrated to MyProfileActivity
     private fun updateProfileImage(provider: Provider, bitmap: Bitmap?) {
-        val progressBar: ProgressBar = navHeaderView.findViewById(R.id.id_profile_image_pb)
-        if (!UtilityMethods().isInternetConnected(this)) {
-//            UtilityMethods.showInternetError(binding.container, Snackbar.LENGTH_LONG);
+        val progressBar: ProgressBar? = navHeaderView?.findViewById(R.id.id_profile_image_pb)
+        if (!UtilityMethods().isInternetConnected(this)!!) {
+
             CustomSnackBar.make(binding?.container,
                 this,
                 CustomSnackBar.WARNING,
@@ -2264,10 +2530,10 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                 CustomSnackBar.TOP,
                 3000,
                 0)?.show()
-            progressBar.visibility = View.GONE
+            progressBar?.visibility = View.GONE
             return
         }
-        viewModel.updateProviderStatus(provider).observe(this) { commonResponse ->
+        viewModel?.updateProviderStatus(provider)?.observe(this) { commonResponse ->
 //            Log.i(TAG, "onClickStatusButton: ");
             progressBar.visibility = View.GONE
             if (commonResponse != null && commonResponse.status!= null && commonResponse.status!!) {
@@ -2310,7 +2576,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             if (providerFilteredList!!.size <= 0) {
                 filterList(providerFilteredList)
             }
-            //                System.out.println("items list adapter " + providerFilteredList);
+
         }, 1000)
         mAdapter = PatientListAdapter(this, providerFilteredList)
 
@@ -2333,20 +2599,20 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                         handleListVisibility(false)
                     }
                 } else {
-                    homeBinding.noPatientLayout.setVisibility(View.GONE)
-                    homeBinding.filterLayout.setVisibility(View.VISIBLE)
-                    homeBinding.messageRecyclerView.setVisibility(View.VISIBLE)
-                    homeBinding.noPatientTitle.setVisibility(View.GONE)
+                    homeBinding?.noPatientLayout?.setVisibility(View.GONE)
+                    homeBinding?.filterLayout?.setVisibility(View.VISIBLE)
+                    homeBinding?.messageRecyclerView?.setVisibility(View.VISIBLE)
+                    homeBinding?.noPatientTitle?.setVisibility(View.GONE)
                 }
             }
         })
-        homeBinding.messageRecyclerView.setAdapter(mAdapter)
+        homeBinding?.messageRecyclerView?.setAdapter(mAdapter)
         if (true) {
             return
         }
-        val options: FirebaseRecyclerOptions<ConsultProvider> =
+        val options: FirebaseRecyclerOptions<ConsultProvider?> =
             FirebaseRecyclerOptions.Builder<ConsultProvider>()
-                .setQuery(query, ConsultProvider::class.java)
+                .setQuery(query!!, ConsultProvider::class.java)
                 .build()
 
         // Setting up the view
@@ -2356,90 +2622,68 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                     viewGroup: ViewGroup,
                     position: Int,
                 ): ConsultListViewHolder {
-//                Log.d(TAG, "onCreateViewHolder: ");
+
                     val inflater = LayoutInflater.from(viewGroup.context)
                     val itemBinding: ItemConsultListBinding = DataBindingUtil.inflate(inflater,
                         R.layout.item_consult_list,
                         viewGroup,
                         false)
-                    /*if(options != null && options.getSnapshots() != null){
-                    providerList.clear();
-                    providerList.addAll(options.getSnapshots());
-                }*/
+
                     val viewHolder = ConsultListViewHolder(itemBinding)
                     viewHolder.setOnClickListeners()
                     return viewHolder
                 }
 
-                protected override fun onBindViewHolder(
+                protected fun onBindViewHolder(
                     viewHolder: ConsultListViewHolder,
                     position: Int,
-                    consultProvider: ConsultProvider?,
+                    consultProvider: ConsultProvider?
                 ) {
-//                Log.d(TAG, "onBindViewHolder: ");
-                    viewHolder.bind(consultProvider,
+
+                    viewHolder.binder(consultProvider,
                         selectedTab,
                         filterPatientStatus,
                         searchQueryStr,
                         expandedPosition)
-                    setMessageCount(consultProvider)
+                    setMessageCount(consultProvider!!)
                 }
+
             }
+                // Firebase recyclerview adapter observer handling
+                mFirebaseAdapter.registerAdapterDataObserver(
+                object : AdapterDataObserver() {
+                    override fun onItemRangeInserted(positionStart: Int, totalItemCount: Int) {
+                        super.onItemRangeInserted(positionStart, totalItemCount)
 
-        // Firebase recyclerview adapter observer handling
-        mFirebaseAdapter.registerAdapterDataObserver(object : AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, totalItemCount: Int) {
-                super.onItemRangeInserted(positionStart, totalItemCount)
-                //                Log.d(TAG, "onItemRangeInserted: " + positionStart + ", " + totalItemCount);
-
-                /*if(isPatientAdded && mFirebaseAdapter.getItemCount() > itemCount){
-                    isPatientAdded = false;
-                    homeBinding.messageRecyclerView.scrollToPosition(mFirebaseAdapter.getItemCount());
-                }
-                itemCount = mFirebaseAdapter.getItemCount();*/
-                // If the recycler view is initially being loaded or the
-                // user is at the bottom of the list, scroll to the bottom
-                // of the list to show the newly added message.
-                /*if (lastVisiblePosition == -1 ||
-                        (positionStart >= (friendlyMessageCount - 1) &&
-                                lastVisiblePosition == (positionStart - 1))) {
-                    homeBinding.messageRecyclerView.scrollToPosition(positionStart);
-                }*/
-                //when patient got added, scroll to added patient position
-                /*if(positionStart == (itemCount-1)) {
-                    if (listViewPos == -1) {
-                        listViewPos = positionStart;
                     }
-                    homeBinding.messageRecyclerView.scrollToPosition(listViewPos);
-                }*/
-            }
-        })
-        homeBinding.messageRecyclerView.setAdapter(mFirebaseAdapter)
-    }
+                })
 
+                homeBinding.messageRecyclerView.setAdapter(mFirebaseAdapter)
+
+            }
     /**
      * Filtering the provider data item based on datasnopshot and updating the adapter
      *
      * @param dataSnapshot
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private fun filterItem(dataSnapshot: DataSnapshot) {
+    fun filterItem(dataSnapshot: DataSnapshot) {
         val key = dataSnapshot.key
         val consultProvider: ConsultProvider? = providerHashMap[key]
         if (consultProvider != null) {
             providerHashMap[key] = dataSnapshot.getValue(ConsultProvider::class.java)
             if (consultProvider === dataSnapshot.getValue(ConsultProvider::class.java)) {
-                val id: Long = mAdapter.getExpandedPatientId()
-                if (consultProvider.getPatientId() != null && id != null && consultProvider.getPatientId()
+                val id: Long? = mAdapter!!.getExpandedPatientId()
+                if (consultProvider.getPatientId() != null && id != null && consultProvider.getPatientId()!!
                         .equals(id)
                 ) {
                     filterList(providerHashMap.values)
-                    val index: Int = mAdapter.getItemIndex(id)
-                    mAdapter.notifyItemChanged(index)
+                    val index: Int = mAdapter!!.getItemIndex(id)
+                    mAdapter!!.notifyItemChanged(index)
                 }
             } else {
                 filterList(providerHashMap.values)
-                mAdapter.notifyDataSetChanged()
+                mAdapter!!.notifyDataSetChanged()
             }
         }
     }
@@ -2449,32 +2693,35 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      *
      * @param uid
      */
-    private fun getProviderDetailsById(uid: Long) {
-        val id: Long = PrefUtility.getProviderId(this@HomeActivity)
-        val token: String = PrefUtility.getToken(this@HomeActivity)
-        viewModel.getProviderById(id, token, uid).observe(this@HomeActivity) { commonResponse ->
-//            Log.d(TAG, "getProviderDetails: " + new Gson().toJson(commonResponse));
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus() && commonResponse.getProvider() != null) {
-                val provider: Provider = commonResponse.getProvider()
+    fun getProviderDetailsById(uid: Long) {
+        val id: Long? = PrefUtility().getProviderId(this)
+        val token: String? = PrefUtility().getToken(this)
+        if (id != null) {
+            if (token != null) {
+                viewModel?.getProviderById(id, token, uid)?.observe(this) { commonResponse ->
 
-//                PrefUtility.saveUserData(this, provider);
-                PrefUtility.saveStringInPref(this@HomeActivity,
-                    Constants.SharedPrefConstants.HOSPITAL_NAME,
-                    provider.getHospital())
-                val hospitalTxt: TextView = navHeaderView.findViewById(R.id.id_hospital_name)
-                hospitalTxt.setText(provider.getHospital())
-            } else {
-                val errMsg: String = ErrorMessages.getErrorMessage(this@HomeActivity,
-                    commonResponse.getErrorMessage(),
-                    Constants.API.getProviderById)
-                //                UtilityMethods.showErrorSnackBar(binding.container, errMsg, Snackbar.LENGTH_LONG);
-                CustomSnackBar.make(binding.container,
-                    this,
-                    CustomSnackBar.WARNING,
-                    errMsg,
-                    CustomSnackBar.TOP,
-                    3000,
-                    0).show()
+                    if (commonResponse != null && commonResponse.status != null && commonResponse.status && commonResponse.getProvider() != null) {
+                        val provider: Provider = commonResponse.getProvider()!!
+
+                        PrefUtility().saveStringInPref(this,
+                            Constants.SharedPrefConstants.HOSPITAL_NAME,
+                            provider.getHospital())
+                        val hospitalTxt: TextView = navHeaderView.findViewById(R.id.id_hospital_name)
+                        hospitalTxt.setText(provider.getHospital())
+                    } else {
+                        val errMsg: String = ErrorMessages.getErrorMessage(this,
+                            commonResponse?.getErrorMessage(),
+                            Constants.API.getProviderById)
+
+                        CustomSnackBar.make(binding?.container,
+                            this,
+                            CustomSnackBar.WARNING,
+                            errMsg,
+                            CustomSnackBar.TOP,
+                            3000,
+                            0)?.show()
+                    }
+                }
             }
         }
     }
@@ -2484,13 +2731,13 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      *
      * @param providers
      */
-    private fun filterList(providers: Collection<ConsultProvider?>?) {
+    fun filterList(providers: Collection<ConsultProvider?>?) {
         if (providers == null || providers.isEmpty()) {
             providerFilteredList!!.clear()
             //Handling the visibilty of the tab - Active, Pending, Complete
             //Means there is no selected filter applied so resetted to default all section
-            handleListVisibility(false)
-            homeBinding.badgeCount.setVisibility(View.GONE)
+           HomeActivity(0).handleListVisibility(false)
+            homeBinding?.badgeCount?.setVisibility(View.GONE)
             return
         }
         providerFilteredList!!.clear()
@@ -2505,7 +2752,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             if (consultProvider.getUnread() > 0 && consultProvider.getStatus() != null && consultProvider.getStatus() !== Constants.PatientStatus.Pending && consultProvider.getStatus() !== Constants.PatientStatus.Invited && consultProvider.getStatus() !== Constants.PatientStatus.Completed && consultProvider.getStatus() !== Constants.PatientStatus.Discharged) {
                 badgeCount++
             }
-            if (selectedTab == TAB.Active.ordinal) {
+            if (selectedTab == TAB.Active) {
                 var condition = false
                 if (strDesignation.equals("md/do", ignoreCase = true)) {
                     condition =
@@ -2515,33 +2762,33 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                     continue
                 }
                 if (filterPatientStatus != null && consultProvider.getStatus() !== filterPatientStatus) {
-                    if (filterPatientStatus.equals(Constants.PatientStatus.Active)
+                    if (filterPatientStatus!!.equals(Constants.PatientStatus.Active)
                         && (consultProvider.getStatus().equals(Constants.PatientStatus.Active)
                                 || consultProvider.getStatus()
-                            .equals(Constants.PatientStatus.Patient)
+                            ?.equals(Constants.PatientStatus.Patient) == true
                                 || consultProvider.getStatus()
-                            .equals(Constants.PatientStatus.HandoffPending) //                            || consultProvider.getStatus().equals(Constants.PatientStatus.Handoff)
+                            ?.equals(Constants.PatientStatus.HandoffPending) == true //                            || consultProvider.getStatus().equals(Constants.PatientStatus.Handoff)
                                 )
                     ) {
                     } else {
                         continue
                     }
                 }
-            } else if (selectedTab == TAB.Patients.ordinal) {
+            } else if (selectedTab == TAB.Patients) {
                 if (consultProvider.getStatus() === Constants.PatientStatus.Active || consultProvider.getStatus() === Constants.PatientStatus.Pending || consultProvider.getStatus() === Constants.PatientStatus.Invited || consultProvider.getStatus() === Constants.PatientStatus.Handoff || consultProvider.getStatus() === Constants.PatientStatus.HomeCare || consultProvider.getStatus() === Constants.PatientStatus.HandoffPending || consultProvider.getStatus() === Constants.PatientStatus.Patient) {
                     continue
                 }
-            } else if (selectedTab == TAB.Pending.ordinal) {
+            } else if (selectedTab == TAB.Pending) {
                 if (consultProvider.getStatus() === Constants.PatientStatus.Pending || consultProvider.getStatus() === Constants.PatientStatus.Invited || consultProvider.getStatus() === Constants.PatientStatus.Handoff) {
                 } else {
                     continue
                 }
             }
             if (searchQueryStr != null) {
-                var firstName: String = consultProvider.getFname()
-                val lastName: String = consultProvider.getLname()
+                var firstName: String = consultProvider.getFname().toString()
+                val lastName: String? = consultProvider.getLname()
                 if (!TextUtils.isEmpty(consultProvider.getName())) {
-                    firstName = consultProvider.getName()
+                    firstName = consultProvider.getName().toString()
                 }
                 var isFound = false
                 if (firstName != null && firstName.trim { it <= ' ' }.toLowerCase().contains(
@@ -2561,7 +2808,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             //Handling the visibilty of the tab - Active, Pending, Complete
             //Means there is no selected filter applied so resetted to default all section
             handleListVisibility(false)
-            homeBinding.badgeCount.setVisibility(View.GONE)
+            homeBinding?.badgeCount?.setVisibility(View.GONE)
             return
         }
         //Handling the visibilty of the tab - Active, Pending, Complete
@@ -2572,7 +2819,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
 
         // To refresh patient list adapter
         if (mAdapter != null) {
-            mAdapter.updateList(providerFilteredList)
+            mAdapter!!.updateList(providerFilteredList)
         }
 
         // Badge count visibiltiy
@@ -2598,30 +2845,27 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      *
      * @param isVisible
      */
-    private fun handleListVisibility(isVisible: Boolean) {
-        var page = TAB.values()[selectedTab].toString()
-        if (selectedTab == TAB.Active.ordinal) {
+    fun handleListVisibility(isVisible: Boolean) {
+        var page = TAB.values().get(selectedTab).toString()
+        if (selectedTab == TAB.Active) {
             page = "Active"
-        } else if (selectedTab == TAB.Pending.ordinal) {
+        } else if (selectedTab == TAB.Pending) {
             page = "Pending"
-        } else if (selectedTab == TAB.Patients.ordinal) {
+        } else if (selectedTab == TAB.Patients) {
             page = "Complete"
         }
         homeBinding?.noPatientText?.setText(getString(R.string.no_patient_found_new, page))
         if (isVisible) {
             homeBinding?.messageRecyclerView?.setVisibility(View.VISIBLE)
             homeBinding?.filterLayout?.setVisibility(View.VISIBLE)
-            homeBinding?.noPatientLayout?.setVisibility(View.GONE)
-            //            homeBinding.searchView.setVisibility(View.VISIBLE);
-//            homeBinding.lineView.setVisibility(View.VISIBLE);
+
         } else {
             homeBinding?.messageRecyclerView?.setVisibility(View.GONE)
-            homeBinding?.noPatientLayou?.setVisibility(View.VISIBLE)
+            homeBinding?.noPatientLayout?.setVisibility(View.VISIBLE)
             homeBinding?.noPatientTitle?.setVisibility(View.GONE)
             homeBinding?.filterLayout?.setVisibility(View.GONE)
             if (TextUtils.isEmpty(searchQueryStr) && filterPatientStatus == null) {
-//                homeBinding.searchView.setVisibility(View.GONE);
-//                homeBinding.lineView.setVisibility(View.INVISIBLE);
+
             }
         }
     }
@@ -2629,13 +2873,13 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
     /**
      * Add patient click listener - Triggering to add patient activity
      */
-    private fun onClickAddPatient() {
+    fun onClickAddPatient() {
         val intent = Intent(this, AddPatientActivity::class.java)
         startActivityForResult(intent, Constants.ActivityRequestCodes.ADD_PATIENT_REQ_CODE)
     }
 
-    private fun onClickDirectory() {
-//        drawerLayout.openDrawer(GravityCompat.END);
+    fun onClickDirectory() {
+
     }
 
     /**
@@ -2656,7 +2900,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             return
         }
 
-}
+
         val intent = Intent(getBaseContext(), ChatActivity::class.java)
         intent.putExtra("uid", consultProvider.getPatientId())
         intent.putExtra("path", "consults/" + consultProvider.getPatientId())
@@ -2679,87 +2923,148 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                 clearNotifications(consultProvider.getPatientId())
             } else if (consultProvider.getStatus() === Constants.PatientStatus.Completed || consultProvider.getStatus() === Constants.PatientStatus.Discharged) {
                 intent.putExtra(Constants.IntentKeyConstants.COMPLETED, true)
-                clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID)
+                clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID.toLong())
             }
         }
         startActivity(intent)
 
     }
 
-    /**
+    fun openChartPage(provider: ConsultProvider) {
+        var strCompletedByName: String? = ""
+        if (provider.getCompleted_by() != null && !TextUtils.isEmpty(provider.getCompleted_by())) {
+            strCompletedByName = provider.getCompleted_by()
+        }
+        val intentConsultChart: Intent
+        intentConsultChart = if (provider.getStatus() === Constants.PatientStatus.Completed ||
+            provider.getStatus() === Constants.PatientStatus.Discharged
+        ) {
+            Intent(this, ActivityConsultChartRemote::class.java)
+        } else {
+            Intent(this, ActivityConsultChart::class.java)
+        }
+        intentConsultChart.putExtra("uid", provider.getPatientId())
+        intentConsultChart.putExtra("providerNameType", strCompletedByName)
+        intentConsultChart.putExtra("completedTime", java.lang.String.valueOf(provider.getTime()))
+        intentConsultChart.putExtra("status", provider.getStatus())
+        intentConsultChart.putExtra("path", "consults/" + provider.getPatientId())
+        intentConsultChart.putExtra("consultProviderId", "" + provider.getId())
+        intentConsultChart.putExtra("consultProviderPatientId", "" + provider.getPatientId())
+        intentConsultChart.putExtra("consultProviderText", provider.getText())
+        intentConsultChart.putExtra("consultProviderName", provider.getName())
+        intentConsultChart.putExtra("unreadMessageCount", provider.getUnread())
+        intentConsultChart.putExtra("dob", provider.getDob())
+        intentConsultChart.putExtra("gender", provider.getGender())
+        intentConsultChart.putExtra("note", provider.getNote())
+        intentConsultChart.putExtra("phone", provider.getPhone())
+        intentConsultChart.putExtra("patientId", provider.getPatientsId())
+
+        intentConsultChart.putExtra(Constants.IntentKeyConstants.IS_PATIENT_URGENT,
+            provider.getUrgent())
+        if (provider.getStatus() != null) {
+            intentConsultChart.putExtra("status", provider.getStatus().toString())
+            if (provider.getStatus() === Constants.PatientStatus.Invited ||
+                provider.getStatus() === Constants.PatientStatus.Handoff
+            ) {
+                intentConsultChart.putExtra(Constants.IntentKeyConstants.INVITATION, true)
+                clearNotifications(provider.patientId)
+            } else if (provider.getStatus() === Constants.PatientStatus.Completed ||
+                provider.getStatus() === Constants.PatientStatus.Discharged
+            ) {
+                intentConsultChart.putExtra(Constants.IntentKeyConstants.COMPLETED, true)
+                clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID.)
+            }
+        }
+        startActivity(intentConsultChart)
+
+    }
+}
+
+    private fun setMessageCount(model: ConsultProvider) {
+
+    }
+
+    enum class TAB {
+   Active,Pending,Complete,Patients
+}
+
+/**
      * Accept click listener - Triggering the "acceptInvite" API call
      *
      * @param viewHolder
      * @param consultProvider
      */
-    fun acceptClick(
-        viewHolder: PatientListAdapter.ConsultListViewHolder,
-        consultProvider: ConsultProvider,
-    ) {
-        showProgressBar()
+    fun acceptClick(viewHolder: PatientListAdapter.ConsultListViewHolder, consultProvider: ConsultProvider, ) {
+        BaseActivity().showProgressBar()
         if (consultProvider.getStatus() === Constants.PatientStatus.Invited) {
-//            Log.d(TAG, "onDataChange: accepted");
-            val providerId: Long = PrefUtility().getProviderId(this)
-            val token: String = PrefUtility().getStringInPref(this,
-                Constants.SharedPrefConstants.TOKEN,
-                "")
-            viewModel?.acceptInvite(providerId, token, consultProvider.getPatientId())
-                ?.observe(this) { listResponse ->
-//
-                    dismissProgressBar()
-                    if (listResponse != null && listResponse.status != null && listResponse.status) {
-//                    mHandler.postDelayed(() -> scrollListToTop(), 500);\
-                        consultProvider.setStatus(Constants.PatientStatus.Active)
-                        //Opening the chart page based on the status of the provider
-                        openChartPage(consultProvider)
-                    } else {
-                        dismissProgressBar()
-                        viewHolder.itemBinding.inviteBtn.setEnabled(true)
-                        val errMsg: String? = ErrorMessages().getErrorMessage(this,
-                            listResponse?.getErrorMessage(),
-                            Constants.API.acceptInvite)
 
-                        CustomSnackBar.make(homeBinding?.idRootLayout,
-                            this,
-                            CustomSnackBar.WARNING,
-                            errMsg,
-                            CustomSnackBar.TOP,
-                            3000,
-                            0?.show()
+            val providerId: Long? = HomeActivity().context?.let { PrefUtility().getProviderId(it) }
+            val token: String?= HomeActivity().context?.let { PrefUtility().getStringInPref(it, Constants.SharedPrefConstants.TOKEN, "") }
+            if (providerId != null) {
+                if (token != null) {
+                    consultProvider.getPatientId()?.let {
+                        HomeActivity().viewModel?.acceptInvite(providerId, token, it)
+                            ?.observe(this,{
+
+                                //
+                                BaseActivity().dismissProgressBar()
+                                if (it?.status != null && it.status!!) {
+
+                                    consultProvider.setStatus(Constants.PatientStatus.Active)
+                                    //Opening the chart page based on the status of the provider
+                                    HomeActivity().openChartPage(consultProvider)
+                                } else {
+                                    BaseActivity().dismissProgressBar()
+                                    viewHolder.itemBinding.inviteBtn.setEnabled(true)
+                                    val errMsg: String? = ErrorMessages().getErrorMessage(this,
+                                       it?.getErrorMessage(),
+                                        Constants.API.acceptInvite)
+
+                                    CustomSnackBar.make(HomeActivity().homeBinding?.idRootLayout,
+                                        HomeActivity().activity,
+                                        CustomSnackBar.WARNING,
+                                        errMsg,
+                                        CustomSnackBar.TOP,
+                                        3000,
+                                        0)?.show()
+                                }
+                            })
                     }
                 }
+            }
         } else {
-            val uid: Long =
-                PrefUtility().getLongInPref(this, Constants.SharedPrefConstants.USER_ID, 0)
+            val uid: Long? =
+                HomeActivity().context?.let { PrefUtility().getLongInPref(it, Constants.SharedPrefConstants.USER_ID, 0) }
             val handOffAcceptRequest = HandOffAcceptRequest()
             handOffAcceptRequest.setPatientId(consultProvider.getPatientId())
             handOffAcceptRequest.setProviderId(uid)
 
-            viewModel?.acceptRemoteHandoff(handOffAcceptRequest)
-                ?.observe(this) { listResponse ->
-//                Log.d(TAG, "handoff accept response " + listResponse);
-                    dismissProgressBar()
-                    if (listResponse?.status != null && listResponse.status!!) {
+            HomeActivity().viewModel?.acceptRemoteHandoff(handOffAcceptRequest)
+                ?.observe(this,{
+
+
+                    BaseActivity().dismissProgressBar()
+                    if (it?.status != null && it.status!!) {
 
                         consultProvider.setStatus(Constants.PatientStatus.Active)
                         //Opening the chart page based on the status of the provider
-                        openChartPage(consultProvider)
+                        HomeActivity().openChartPage(consultProvider)
                     } else {
-                        dismissProgressBar()
+                        BaseActivity().dismissProgressBar()
                         viewHolder.itemBinding.inviteBtn.setEnabled(true)
                         val errMsg: String? = ErrorMessages().getErrorMessage(this,
-                            listResponse?.getErrorMessage(),
+                            it?.getErrorMessage(),
                             Constants.API.acceptInvite)
 
-                        CustomSnackBar.make(homeBinding?.idRootLayout,
-                            this,
+                        CustomSnackBar.make(HomeActivity().homeBinding?.idRootLayout,
+                           HomeActivity().activity,
                             CustomSnackBar.WARNING,
                             errMsg,
                             CustomSnackBar.TOP,
                             3000,
                             0)?.show()
                     }
-                }
+                })
         }
     }
 
@@ -2769,92 +3074,39 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      * @param viewHolder
      * @param consultProvider
      */
-    fun reconsultClick(
-        viewHolder: PatientListAdapter.ConsultListViewHolder?,
-        consultProvider: ConsultProvider, ) {
-        showProgressBar("Inviting provider please wait.")
-        val providerId: Long?= PrefUtility().getProviderId(this)
+    fun reconsultClick(viewHolder: PatientListAdapter.ConsultListViewHolder?, consultProvider: ConsultProvider, ) {
+        BaseActivity().showProgressBar("Inviting provider please wait.")
+        val providerId: Long?= HomeActivity().context?.let { PrefUtility().getProviderId(it) }
         val token: String? =
-            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.TOKEN, "")
+            HomeActivity().context?.let { PrefUtility().getStringInPref(it, Constants.SharedPrefConstants.TOKEN, "") }
         val chatViewModel: ChatActivityViewModel = ViewModelProvider(this).get(
             ChatActivityViewModel::class.java)
         chatViewModel.inviteProviderBroadCast(providerId, token, consultProvider.getPatientId())
-            .observe(this, object : Observer<CommonResponse?> {
+            ?.observe(this, object : Observer<CommonResponse?> {
                 override fun onChanged(commonResponse: CommonResponse?) {
-                    dismissProgressBar()
+                    BaseActivity().dismissProgressBar()
 
-                    if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
-                        Log.d(TAG, "Response Broadcast ")
+                    if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
+                        Log.d(HomeActivity().TAG, "Response Broadcast ")
                     } else {
 
                         val errMsg: String? = ErrorMessages().getErrorMessage(this,
-                            if (commonResponse != null) commonResponse.getErrorMessage() else null,
+                            commonResponse?.getErrorMessage(),
                             Constants.API.invite)
-                        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show()
+
+                        Toast.makeText(HomeActivity().context, errMsg, Toast.LENGTH_SHORT).show()
                     }
 
                 }
             })
     }
 
-    /**
-     * On Back pressed handling
-     */
-    override fun onBackPressed() {
-        if (drawerLayout?.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout?.closeDrawer(GravityCompat.START)
-        } else if (drawerLayout?.isDrawerOpen(GravityCompat.END)) {
-            drawerLayout?.closeDrawer(GravityCompat.END)
-        } else if (intentCensus != null && intentCensus == Constants.IntentKeyConstants.SCREEN_CENSUS_START_CONSULT) {
-            startActivity(Intent(this, MyDashboardActivity::class.java))
-            finish()
-        } else {
-            finish()
-        }
-    }
 
-    override fun onStart() {
-        super.onStart()
-    }
 
-    protected override fun onStop() {
-        super.onStop()
-    }
 
-    /**
-     * onPause life cycle handling
-     */
-    override fun onPause() {
-        super.onPause()
-        listViewPos =
-            (homeBinding.messageRecyclerView.getLayoutManager() as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-        listViewPos = listViewPos + 1
-        //mFirebaseAdapter.stopListening();
-    }
-
-    fun onResume() {
-        super.onResume()
-    }
-
-    /**
-     * onDestroy life cycle handling
-     */
-    override fun onDestroy() {
-        super<DrawerActivity>.onDestroy()
-        try {
-
-        } catch (e: Exception) {
-//            Log.e(TAG, "Exception:", e.getCause());
-        }
-        // Remove child event listener
-        if (childEventListener != null) {
-            messagesRef!!.removeEventListener(childEventListener!!)
-        }
-
-    }
 
     // Migrated to MyProfileActivity
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    override fun onNavigationItemSelected(item: View): Boolean {
         val id = item.itemId
         drawerLayout?.closeDrawers()
         when (id) {
@@ -2863,13 +3115,13 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
             R.id.id_hand_off_patient -> {
 
 //                Log.i(TAG, "On click Handoff Patient: ");
-                val intent = Intent(this, HandOffPatientsActivity::class.java)
+                val intent = Intent(HomeActivity(), HandOffPatientsActivity::class.java)
                 startActivity(intent)
             }
             R.id.id_contact_admin -> {
 
 //                Log.i(TAG, "On click Contact admin: ");
-                val intent = Intent(this, ContactAdminActivity::class.java)
+                val intent = Intent(HomeActivity(), ContactAdminActivity::class.java)
                 startActivity(intent)
             }
             R.id.id_training_materials -> {
@@ -2910,17 +3162,17 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
         }
         return false
     }
-
+}
     /**
      * Logout click handling
      */
     private fun onClickLogout() {
 
-        LogoutHelper(this, binding?.getRoot()).doLogout()
+        LogoutHelper(HomeActivity().activity, HomeActivity().binding?.getRoot()).doLogout()
     }
 
     protected override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        super<DrawerActivity>.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 Constants.ActivityRequestCodes.ADD_PATIENT_REQ_CODE -> {
@@ -2946,7 +3198,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                         } else if ("Pending".equals(status, ignoreCase = true)) {
                             filterPatientStatus = Constants.PatientStatus.Pending
                             if (PrefUtility().getRole(this)
-                                    .equalsIgnoreCase(Constants.ProviderRole.RD.toString())
+                                    .equals(Constants.ProviderRole.RD.toString(),ignoreCase = true)
                             ) {
                                 filterPatientStatus = Constants.PatientStatus.Invited
                             }
@@ -2977,7 +3229,7 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                             uri =
                                 data.extras!!.getParcelable(Constants.ImageCaptureConstants.SCANNED_RESULT)
                             var imageBitmap = getBitmapFromUri(uri)
-                            imageBitmap = getResizedBitmap(imageBitmap, Constants.IMAGE_MAX_SIZE)
+                            imageBitmap = imageBitmap?.let { getResizedBitmap(it, Constants.IMAGE_MAX_SIZE) }
                             imageBitmap = getRotatedBitmap(uri!!.path, imageBitmap)
                             //Making square image
                             val dimension = Math.min(imageBitmap!!.width, imageBitmap.height)
@@ -2993,19 +3245,28 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
                     try {
                         val uri = data?.data
                         var imageBitmap = getBitmapFromUri(uri)
-                        imageBitmap = getResizedBitmap(imageBitmap, Constants.IMAGE_MAX_SIZE)
+                        imageBitmap = imageBitmap?.let { getResizedBitmap(it, Constants.IMAGE_MAX_SIZE) }
                         //imageBitmap = getRotatedBitmap(uri.getPath(),imageBitmap);
                         //Making square image
                         val dimension = Math.min(imageBitmap!!.width, imageBitmap.height)
                         imageBitmap =
                             ThumbnailUtils.extractThumbnail(imageBitmap, dimension, dimension)
-                        storeImgInFirebase(imageBitmap)
+                        HomeActivity().storeImgInFirebase(imageBitmap)
                     } catch (e: Exception) {
 //                        Log.e(TAG, "Exception:", e.getCause());
                     }
                 }
             }
         }
+    }
+
+    private fun scrollListToTop() {
+
+      
+        if (homeBinding!!.messageRecyclerView != null && mAdapter!!.itemCount >= 0) {
+            homeBinding!!.messageRecyclerView.scrollToPosition(0)
+        }
+        mAdapter!!.notifyDataSetChanged()
     }
 
     /**
@@ -3015,691 +3276,525 @@ class HomeActivity : DrawerActivity(), NavigationView.OnNavigationItemSelectedLi
      * loaded ,and fetch directory in background and refresh the directory
      */
     private fun fetchDirectory() {
-        DirectoryListHelperOld(binding, viewModel, object : MembersDialogAdapter.CallbackDirectory() {
-            fun onClickProvierItem(provider: Provider) {
-                showProgressBar()
+        DirectoryListHelperOld(binding, viewModel,
+            param = object : MembersDialogAdapter.CallbackDirectory() {
+                fun onClickProvierItem(var provider: ConsultProvider) {
+                    showProgressBar()
 
-                val providerID: Long? = PrefUtility().getProviderId(this)
-                val token: String?= PrefUtility().getStringInPref(this,
-                    Constants.SharedPrefConstants.TOKEN,
-                    "")
-                provider.getId()?.let {
-                    if (providerID != null) {
-                        viewModel?.startCall(providerID,
-                            token,
-                            it,
-                            0L,
-                            Constants.FCMMessageType.VIDEO_CALL)
-                            ?.observe(this{
-                                dismissProgressBar()
-                                if (commonResponse != null && commonResponse.status != null && commonResponse.st) {
+                    val providerID: Long? = context?.let { PrefUtility().getProviderId(it) }
+                    val token: String? = context?.let {
+                        PrefUtility().getStringInPref(it,
+                            Constants.SharedPrefConstants.TOKEN, "")
+                    }
+                    provider.getId()?.let {
+                        if (providerID != null) {
+                            if (token != null) {
+                                HomeActivity(0).viewModel?.startCall(providerID,
+                                    token,
+                                    it,
+                                    0L,
+                                    Constants.FCMMessageType.VIDEO_CALL)
+                                    ?.observe(this{
+                                        dismissProgressBar()
+                                        if (commonResponse != null && commonResponse.status != null && commonResponse.st) {
 
-                                    val callScreen = Intent(this, CallActivity::class.java)
-                                    callScreen.putExtra("providerName", provider.getName())
-                                    callScreen.putExtra("providerId", provider.getId())
-                                    callScreen.putExtra("providerHospitalName", provider.getHospital())
-                                    callScreen.putExtra("profilePicUrl", provider.getProfilePicUrl())
-                                    callScreen.putExtra(ConstantApp().ACTION_KEY_CHANNEL_NAME,
-                                        providerID.toString() + "-" + provider.getId())
-                                    callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_KEY, "")
-                                    callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_MODE,
-                                        getResources().getStringArray(R.array.encryption_mode_values)
-                                            .get(0))
-                                    callScreen.putExtra("callType", "outgoing")
-                                    val gson = Gson()
-                                    val providerList: MutableList<Provider> =
-                                        ArrayList<Provider>()
-                                    providerList.add(provider)
-                                    val selfProvider = Provider()
-                                    selfProvider.setId(providerID)
-                                    selfProvider.setName(PrefUtility().getStringInPref(this,
-                                        Constants.SharedPrefConstants.NAME,
-                                        ""))
-                                    selfProvider.setProfilePicUrl(PrefUtility().getStringInPref(this,
-                                        Constants.SharedPrefConstants.PROFILE_IMG_URL,
-                                        ""))
-                                    selfProvider.setHospital(PrefUtility().getStringInPref(ctx,
-                                        Constants.SharedPrefConstants.HOSPITAL_NAME,
-                                        ""))
-                                    selfProvider.setRole(PrefUtility().getStringInPref(ctx,
-                                        Constants.SharedPrefConstants.ROLE,
-                                        ""))
-                                    providerList.add(selfProvider)
-                                    callScreen.putExtra("providerList", gson.toJson(providerList))
-                                    startActivity(callScreen)
-                                } else {
-                                    val errMsg: String? = ErrorMessages().getErrorMessage(this,
-                                        commonResponse?.getErrorMessage(),
-                                        Constants.API.startCall)
+                                            val callScreen = Intent(this, CallActivity::class.java)
+                                            callScreen.putExtra("providerName", provider.getName())
+                                            callScreen.putExtra("providerId", provider.getId())
+                                            callScreen.putExtra("providerHospitalName",
+                                                provider.getHospital())
+                                            callScreen.putExtra("profilePicUrl",
+                                                provider.getProfilePicUrl())
+                                            callScreen.putExtra(ConstantApp().ACTION_KEY_CHANNEL_NAME,
+                                                providerID.toString() + "-" + provider.getId())
+                                            callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_KEY,
+                                                "")
+                                            callScreen.putExtra(ConstantApp().ACTION_KEY_ENCRYPTION_MODE,
+                                                getResources().getStringArray(R.array.encryption_mode_values)
+                                                    .get(0))
+                                            callScreen.putExtra("callType", "outgoing")
+                                            val gson = Gson()
+                                            val providerList: MutableList<Provider> =
+                                                ArrayList<Provider>()
+                                            providerList.add(provider)
+                                            val selfProvider = Provider()
+                                            selfProvider.setId(providerID)
+                                            selfProvider.setName(PrefUtility().getStringInPref(this,
+                                                Constants.SharedPrefConstants.NAME,
+                                                ""))
+                                            selfProvider.setProfilePicUrl(PrefUtility().getStringInPref(
+                                                this,
+                                                Constants.SharedPrefConstants.PROFILE_IMG_URL,
+                                                ""))
+                                            selfProvider.setHospital(PrefUtility().getStringInPref(
+                                                ctx,
+                                                Constants.SharedPrefConstants.HOSPITAL_NAME,
+                                                ""))
+                                            selfProvider.setRole(PrefUtility().getStringInPref(ctx,
+                                                Constants.SharedPrefConstants.ROLE,
+                                                ""))
+                                            providerList.add(selfProvider)
+                                            callScreen.putExtra("providerList",
+                                                gson.toJson(providerList))
+                                            startActivity(callScreen)
+                                        } else {
+                                            val errMsg: String? =
+                                                ErrorMessages().getErrorMessage(this,
+                                                    commonResponse?.getErrorMessage(),
+                                                    Constants.API.startCall)
 
-                                    CustomSnackBar.make(containerParent,
-                                        this@,
-                                        CustomSnackBar.WARNING,
-                                        errMsg,
-                                        CustomSnackBar.TOP,
-                                        3000,
-                                        0).show()
+                                            CustomSnackBar.make(containerParent,
+                                                this,
+                                                CustomSnackBar.WARNING,
+                                                errMsg,
+                                                CustomSnackBar.TOP,
+                                                3000,
+                                                0).show()
+                                        }
+                                    })
+                            }
+                        }
+
+
+                    }
+
+                    /**
+                     * Updating the provider status
+                     */
+                    /**
+                     * Updating the provider status
+                     */
+                    fun updateProviderStatus() {
+
+                        val dotImg: ImageView? = navHeaderView?.findViewById(R.id.id_dot)
+                        val status: String? =
+                            PrefUtility().getStringInPref(context,
+                                Constants.SharedPrefConstants.PROVIDER_STATUS,
+                                "")
+                        if (TextUtils.isEmpty(status) || status.equals(Constants.ProviderStatus.OffLine.toString(),
+                                ignoreCase = true)
+                        ) {
+
+                            dotImg?.setImageResource(R.drawable.ic_grey_circle)
+                            homeBinding?.idDot?.setImageResource(R.drawable.ic_grey_circle)
+                        } else {
+
+                            dotImg?.setImageResource(R.drawable.ic_green_circle)
+                            homeBinding?.idDot?.setImageResource(R.drawable.ic_green_circle)
+                        }
+                    }
+
+                    // Migrated to MyProfileActivity
+                    fun selectImage() {
+                        val items =
+                            arrayOf<CharSequence>(getString(R.string.take_photo),
+                                getString(R.string.select_image))
+                        val builder = AlertDialog.Builder(context)
+                        builder.setTitle(R.string.add_edit_image)
+                        builder.setItems(items) { dialog: DialogInterface?, item: Int ->
+                            val intent = Intent(this,
+                                ImageCaptureActivity::class.java)
+                            if (items[item] == getString(R.string.take_photo)) {
+
+                                val cameraPermission =
+                                    ActivityCompat.checkSelfPermission(context,
+                                        Manifest.permission.CAMERA)
+                                val storagePermission = ActivityCompat.checkSelfPermission(context,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                if (cameraPermission == PackageManager.PERMISSION_DENIED || storagePermission == PackageManager.PERMISSION_DENIED) {
+                                    ActivityCompat.requestPermissions(HomeActivity(0),
+                                        arrayOf(Manifest.permission.CAMERA,
+                                            Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                        Constants.PermissionCondes.CAMERA_STORAGE_PERMISSION_CODE)
+                                    return@setItems
+                                }
+                                intent.putExtra(Constants.ImageCaptureConstants.SOURCE,
+                                    HomeActivity::class.java.simpleName)
+                                intent.putExtra(Constants.ImageCaptureConstants.OPEN_INTENT_PREFERENCE,
+                                    Constants.ImageCaptureConstants.OPEN_CAMERA)
+                                startActivityForResult(intent,
+                                    Constants.ImageCaptureConstants.START_CAMERA_REQUEST_CODE)
+                            } else if (items[item] == getString(R.string.select_image)) {
+                                intent.putExtra(Constants.ImageCaptureConstants.OPEN_INTENT_PREFERENCE,
+                                    Constants.ImageCaptureConstants.OPEN_MEDIA)
+                                startActivityForResult(intent,
+                                    Constants.ImageCaptureConstants.PICKFILE_REQUEST_CODE)
+                            }
+                        }
+                        builder.show()
+                    }
+
+                    // Migrated to MyProfileActivity
+                    fun getBitmapFromUri(uri: Uri?): Bitmap? {
+                        var parcelFileDescriptor: ParcelFileDescriptor? = null
+                        try {
+                            parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r")
+                            val fileDescriptor = parcelFileDescriptor.fileDescriptor
+                            return BitmapFactory.decodeFileDescriptor(fileDescriptor)
+                        } catch (e: FileNotFoundException) {
+                            //            Log.e(TAG, "Exception:", e.getCause());
+                        } finally {
+                            if (parcelFileDescriptor != null) {
+                                try {
+                                    parcelFileDescriptor.close()
+                                } catch (e: IOException) {
+
                                 }
                             }
-                    })
+                        }
+                        return null
+                    }
 
+                    // Migrated to MyProfileActivity
+                    fun getRotatedBitmap(photoPath: String?, bitmap: Bitmap?): Bitmap? {
+                        var rotatedBitmap: Bitmap? = null
+                        try {
+                            val ei = ExifInterface(photoPath!!)
+                            val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                                ExifInterface.ORIENTATION_UNDEFINED)
+                            rotatedBitmap =
+                                when (orientation) {
+                                    ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap, 90f)
+                                    ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(bitmap,
+                                        180f)
+                                    ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap,
+                                        270f)
+                                    ExifInterface.ORIENTATION_NORMAL -> bitmap
+                                    else -> bitmap
+                                }
+                        } catch (e: Exception) {
+                            //            Log.e(TAG, "Exception:", e.getCause());
+                        }
+                        return rotatedBitmap ?: bitmap
+                    }
 
+                    // Migrated to MyProfileActivity
+                    fun rotateImage(source: Bitmap?, angle: Float): Bitmap {
+                        val matrix = Matrix()
+                        matrix.postRotate(angle)
+                        return Bitmap.createBitmap(source!!, 0, 0, source.width, source.height,
+                            matrix, true)
+                    }
 
-    }
+                    // Migrated to MyProfileActivity
+                    fun getResizedBitmap(image: Bitmap?, maxSize: Int): Bitmap? {
+                        return try {
+                            var width = image!!.width
+                            var height = image.height
+                            val bitmapRatio = width.toFloat() / height.toFloat()
+                            if (bitmapRatio > 0) {
+                                width = maxSize
+                                height = (width / bitmapRatio).toInt()
+                            } else {
+                                height = maxSize
+                                width = (height * bitmapRatio).toInt()
+                            }
+                            Bitmap.createScaledBitmap(image, width, height, true)
+                        } catch (e: Exception) {
 
-    /**
-     * Updating the provider status
-     */
-    fun updateProviderStatus() {
+                            image
+                        }
+                    }
 
-        val dotImg: ImageView? = navHeaderView?.findViewById(R.id.id_dot)
-        val status: String? =
-            PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.PROVIDER_STATUS, "")
-        if (TextUtils.isEmpty(status) || status.equals(Constants.ProviderStatus.OffLine.toString(),
-                ignoreCase = true)) {
+                    // Migrated to MyProfileActivity
+                    fun onRequestPermissionsResult(
+                        requestCode: Int,
+                        permissions: Array<String?>,
+                        grantResults: IntArray,
+                    ) {
+                        super<DrawerActivity>.onRequestPermissionsResult(requestCode,
+                            permissions,
+                            grantResults)
+                        when (requestCode) {
+                            Constants.PermissionCondes.CAMERA_STORAGE_PERMISSION_CODE -> {
+                                val isGranted: Boolean =
+                                    UtilityMethods().checkPermission(this, permissions)
+                                if (isGranted) {
+                                    val intent = Intent(this, ImageCaptureActivity::class.java)
+                                    intent.putExtra(Constants.ImageCaptureConstants.OPEN_INTENT_PREFERENCE,
+                                        Constants.ImageCaptureConstants.OPEN_CAMERA)
+                                    startActivityForResult(intent,
+                                        Constants.ActivityRequestCodes.IMAGE_REQ_CODE)
+                                } else {
+                                    val permissonErr: String = getString(R.string.permission_denied)
 
-            dotImg?.setImageResource(R.drawable.ic_grey_circle)
-            homeBinding?.idDot?.setImageResource(R.drawable.ic_grey_circle)
-        } else {
+                                    CustomSnackBar.make(binding?.container,
+                                        this,
+                                        CustomSnackBar.WARNING,
+                                        permissonErr,
+                                        CustomSnackBar.TOP,
+                                        3000,
+                                        0)?.show()
+                                }
+                            }
+                        }
+                    }
 
-            dotImg?.setImageResource(R.drawable.ic_green_circle)
-            homeBinding?.idDot?.setImageResource(R.drawable.ic_green_circle)
-        }
-    }
+                    // Migrated to MyProfileActivity
+                    fun storeImgInFirebase(imageBitmap: Bitmap?) {
+                        val progressBar: ProgressBar? =
+                            navHeaderView?.findViewById(R.id.id_profile_image_pb)
+                        progressBar?.visibility = View.VISIBLE
+                        val baos = ByteArrayOutputStream()
+                        imageBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                        val dataArr = baos.toByteArray()
+                        val fileName = "image_" + System.currentTimeMillis()
+                        val dir: String =
+                            Constants.PROFILE_IMG_DIR.toString() + File.separator + fileName
+                        val key: String = PrefUtility().getFireBaseUid(context).toString() + ""
+                        val storageReference = FirebaseStorage.getInstance()
+                            .getReference(mFirebaseUser!!.uid)
+                            .child(key)
+                            .child(dir)
 
-    // Migrated to MyProfileActivity
-    private fun selectImage() {
-        val items =
-            arrayOf<CharSequence>(getString(R.string.take_photo), getString(R.string.select_image))
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.add_edit_image)
-        builder.setItems(items) { dialog: DialogInterface?, item: Int ->
-            val intent = Intent(this,
-                ImageCaptureActivity::class.java)
-            if (items[item] == getString(R.string.take_photo)) {
-
-                val cameraPermission =
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                val storagePermission = ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                if (cameraPermission == PackageManager.PERMISSION_DENIED || storagePermission == PackageManager.PERMISSION_DENIED) {
-                    ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        Constants.PermissionCondes.CAMERA_STORAGE_PERMISSION_CODE)
-                    return@setItems
-                }
-                intent.putExtra(Constants.ImageCaptureConstants.SOURCE,
-                    HomeActivity::class.java.simpleName)
-                intent.putExtra(Constants.ImageCaptureConstants.OPEN_INTENT_PREFERENCE,
-                    Constants.ImageCaptureConstants.OPEN_CAMERA)
-                startActivityForResult(intent,
-                    Constants.ImageCaptureConstants.START_CAMERA_REQUEST_CODE)
-            } else if (items[item] == getString(R.string.select_image)) {
-                intent.putExtra(Constants.ImageCaptureConstants.OPEN_INTENT_PREFERENCE,
-                    Constants.ImageCaptureConstants.OPEN_MEDIA)
-                startActivityForResult(intent,
-                    Constants.ImageCaptureConstants.PICKFILE_REQUEST_CODE)
-            }
-        }
-        builder.show()
-    }
-
-    // Migrated to MyProfileActivity
-    private fun getBitmapFromUri(uri: Uri?): Bitmap? {
-        var parcelFileDescriptor: ParcelFileDescriptor? = null
-        try {
-            parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r")
-            val fileDescriptor = parcelFileDescriptor.fileDescriptor
-            return BitmapFactory.decodeFileDescriptor(fileDescriptor)
-        } catch (e: FileNotFoundException) {
-//            Log.e(TAG, "Exception:", e.getCause());
-        } finally {
-            if (parcelFileDescriptor != null) {
-                try {
-                    parcelFileDescriptor.close()
-                } catch (e: IOException) {
-//                    Log.e(TAG, "Exception:", e.getCause());
-                }
-            }
-        }
-        return null
-    }
-
-    // Migrated to MyProfileActivity
-    fun getRotatedBitmap(photoPath: String?, bitmap: Bitmap?): Bitmap? {
-        var rotatedBitmap: Bitmap? = null
-        try {
-            val ei = ExifInterface(photoPath!!)
-            val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                ExifInterface.ORIENTATION_UNDEFINED)
-            rotatedBitmap =
-                when (orientation) {
-                    ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap, 90f)
-                    ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(bitmap, 180f)
-                    ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap, 270f)
-                    ExifInterface.ORIENTATION_NORMAL -> bitmap
-                    else -> bitmap
-                }
-        } catch (e: Exception) {
-//            Log.e(TAG, "Exception:", e.getCause());
-        }
-        return rotatedBitmap ?: bitmap
-    }
-
-    // Migrated to MyProfileActivity
-    private fun rotateImage(source: Bitmap?, angle: Float): Bitmap {
-        val matrix = Matrix()
-        matrix.postRotate(angle)
-        return Bitmap.createBitmap(source!!, 0, 0, source.width, source.height,
-            matrix, true)
-    }
-
-    // Migrated to MyProfileActivity
-    fun getResizedBitmap(image: Bitmap?, maxSize: Int): Bitmap? {
-        return try {
-            var width = image!!.width
-            var height = image.height
-            val bitmapRatio = width.toFloat() / height.toFloat()
-            if (bitmapRatio > 0) {
-                width = maxSize
-                height = (width / bitmapRatio).toInt()
-            } else {
-                height = maxSize
-                width = (height * bitmapRatio).toInt()
-            }
-            Bitmap.createScaledBitmap(image, width, height, true)
-        } catch (e: Exception) {
-
-            image
-        }
-    }
-
-    // Migrated to MyProfileActivity
-    fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String?>,
-        grantResults: IntArray, ) {
-        super<BaseActivity>.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            Constants.PermissionCondes.CAMERA_STORAGE_PERMISSION_CODE -> {
-                val isGranted: Boolean = UtilityMethods().checkPermission(this, permissions)
-                if (isGranted) {
-                    val intent = Intent(this, ImageCaptureActivity::class.java)
-                    intent.putExtra(Constants.ImageCaptureConstants.OPEN_INTENT_PREFERENCE,
-                        Constants.ImageCaptureConstants.OPEN_CAMERA)
-                    startActivityForResult(intent, Constants.ActivityRequestCodes.IMAGE_REQ_CODE)
-                } else {
-                    val permissonErr: String = getString(R.string.permission_denied)
-
-                    CustomSnackBar.make(binding?.container,
-                        this,
-                        CustomSnackBar.WARNING,
-                        permissonErr,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0)?.show()
-                }
-            }
-        }
-    }
-
-    // Migrated to MyProfileActivity
-    private fun storeImgInFirebase(imageBitmap: Bitmap?) {
-        val progressBar: ProgressBar? = navHeaderView?.findViewById(R.id.id_profile_image_pb)
-        progressBar.visibility = View.VISIBLE
-        val baos = ByteArrayOutputStream()
-        imageBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val dataArr = baos.toByteArray()
-        val fileName = "image_" + System.currentTimeMillis()
-        val dir: String = Constants.PROFILE_IMG_DIR.toString() + File.separator + fileName
-        val key: String = PrefUtility().getFireBaseUid(this).toString() + ""
-        val storageReference = FirebaseStorage.getInstance()
-            .getReference(mFirebaseUser!!.uid)
-            .child(key)
-            .child(dir)
-
-        storageReference.putBytes(dataArr).addOnCompleteListener(this,
-            OnCompleteListener<UploadTask.TaskSnapshot> { task ->
-                if (task.isSuccessful) {
-                    task.result!!.metadata!!.reference!!.downloadUrl
-                        .addOnCompleteListener(this,
-                            OnCompleteListener<Uri> { task ->
+                        storageReference.putBytes(dataArr)?.addOnCompleteListener(this,
+                            OnCompleteListener<UploadTask.TaskSnapshot> { task ->
                                 if (task.isSuccessful) {
-                                    val imageURL = task.result.toString()
-                                    PrefUtility().saveStringInPref(this,
-                                        Constants.SharedPrefConstants.PROFILE_IMG_URL,
-                                        imageURL)
-                                    val provider = Provider()
-                                    val providerId: Long? =
-                                        PrefUtility().getProviderId(this)
-                                    val status: String? =
-                                        PrefUtility().getProviderStatus(this)
-                                    provider.setId(providerId)
-                                    provider.setStatus(status)
-                                    provider.setProfilePicUrl(imageURL)
-                                    updateProfileImage(provider, imageBitmap)
+                                    task.result!!.metadata!!.reference!!.downloadUrl
+                                        .addOnCompleteListener(this,
+                                            OnCompleteListener<Uri> { task ->
+                                                if (task.isSuccessful) {
+                                                    val imageURL = task.result.toString()
+                                                    PrefUtility().saveStringInPref(context,
+                                                        Constants.SharedPrefConstants.PROFILE_IMG_URL,
+                                                        imageURL)
+                                                    val provider = Provider()
+                                                    val providerId: Long? =
+                                                        PrefUtility().getProviderId(context)
+                                                    val status: String? =
+                                                        PrefUtility().getProviderStatus(context)
+                                                    provider.setId(providerId)
+                                                    provider.setStatus(status)
+                                                    provider.setProfilePicUrl(imageURL)
+                                                    updateProfileImage(provider, imageBitmap)
+
+                                                }
+                                            })
+                                } else {
 
                                 }
                             })
-                } else {
+                    }
 
-                }
-            })
-    }
-
-    /**
-     * Handling the notification click based on the intent
-     *
-     * @param intent
-     */
-    private fun handleNotification(intent: Intent) {
-        var intent = intent
-        val userId: Long?= PrefUtility().getProviderId(this)
-        // To login activity if user is null / -1
-        if (userId == null || userId == -1L) {
-            intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
-        } // If the intent has "forward" - redirect to chat activity
-        else if (intent.hasExtra("forward")
-            && intent.getStringExtra("forward")
-                .equals(ChatActivity::class.java.getSimpleName(), ignoreCase = true)
-        ) {
-            val chatActIntent = Intent(this, ChatActivity::class.java)
-            chatActIntent.putExtras(intent.extras!!)
-            startActivity(chatActIntent)
-        }
-        // Getting the bundle data
-        val extras = intent.extras
-        if (extras != null) {
-            val select = extras.getString(Constants.IntentKeyConstants.TARGET_PAGE, "")
-            if (select == "pending") {
-                getnewpendingchange()
-                if (homeBinding?.pendingBtnLayout?.getVisibility() === View.VISIBLE) {
-                    homeBinding?.pendingBtnLayout?.performClick()
-                }
-            } else if (select == "completed") {
-                homeBinding?.completedBtnLayout?.performClick()
-            } else if (select == "active") {
-                homeBinding?.activeBtnLayout?.performClick()
-            }
-        }
-    }
-
-    /**
-     * Clearing then notification with dedicated notification ID
-     *
-     * @param notificationId
-     */
-    private fun clearNotifications(notificationId: Long?) {
-        NotificationHelper(this).clearNotification(notificationId)
-    }
-
-    /**
-     * Clearing all notfications
-     */
-    private fun clearAllNotifications() {
-        NotificationHelper(this).clearAllNotification()
-    }
-
-    /**
-     * Handling multiple click event with view
-     *
-     * @param view
-     */
-    private fun handleMultipleClick(view: View) {
-        view.isEnabled = false
-        mHandler?.postDelayed({ view.isEnabled = true }, 500)
-    }
-
-    /**
-     * Handling multiple click event with menu item
-     *
-     * @param item
-     */
-    private fun handleMultipleClick(item: MenuItem) {
-        item.isEnabled = false
-        mHandler?.postDelayed({ item.setEnabled(true) }, 500)
-    }
-
-    /**
-     * Scroll to top of the list
-     */
-    private fun scrollListToTop() {
-
-        if (homeBinding?.messageRecyclerView != null && mAdapter.getItemCount() >= 0) {
-            homeBinding?.messageRecyclerView!!!!.scrollToPosition(0)
-        }
-        mAdapter?.notifyDataSetChanged()
-    }
-
-    /**
-     * Handling tab click listener
-     */
-    private fun handleTabButtons() {
-        homeBinding?.activeBtnLayout?.setOnClickListener(tabChangeListener)
-        homeBinding?.completedBtnLayout?.setOnClickListener(tabChangeListener)
-        homeBinding?.pendingBtnLayout?.setOnClickListener(tabChangeListener)
-    }
-
-    /**
-     * Chat view click listener
-     *
-     * @param position
-     * @param provider
-     */
-  fun onClickChatView(position: Int, provider: ConsultProvider) {
-        //String path = mPath +  "/" +mFirebaseAdapter.getRef(position).getKey();
-//        startChat(mAdapter.getItem(position));
-//        consultDetailsDialog(this, mAdapter.getItem(position));
-        //Opening the chart page based on the status of the provider
-        openChartPage(provider)
-    }
-
-    /**
-     * Invite button click listener
-     *
-     * @param viewHolder
-     */
- fun onClickInviteBtn(viewHolder: PatientListAdapter.ConsultListViewHolder) {
-        viewHolder.itemBinding.inviteBtn.setEnabled(false)
-        mAdapter?.getItem(viewHolder.getAdapterPosition())?.let { acceptClick(viewHolder, it) }
-        clearNotifications(Constants.NotificationIds.NOTIFICATION_ID)
-    }
-
-    /**
-     * Details button click listener
-     *
-     * @param viewHolder
-     */
-    fun onClickDetailsButton(viewHolder: PatientListAdapter.ConsultListViewHolder) {
-        handleMultipleClick(viewHolder.itemBinding.detailsBtn)
-        val provider: ConsultProvider? = mAdapter.getItem(viewHolder.getAdapterPosition())
-        //Opening the chart page based on the status of the provider
-        if (provider != null) {
-            openChartPage(provider)
-        }
-    }
-
-    /**
-     * Reconsult button click listener
-     *
-     * @param viewHolder
-     */
-    fun onClickReconsultButton(viewHolder: PatientListAdapter.ConsultListViewHolder) {
-        handleMultipleClick(viewHolder.itemBinding.reconsultBtn)
-
-        mAdapter?.getItem(viewHolder.getAdapterPosition())?.let { reconsultClick(viewHolder, it) }
-    }
-
-    /**
-     * Arrow drop down click listener
-     *
-     * @param position
-     */
-    override fun onArrowDropDownClick(position: Int) {
-        mAdapter?.getItem(position)?.let { consultDetailsDialog(this, it) }
-    }
-
-    /**
-     * Reset acuity click listener
-     *
-     * @param position
-     */
-    override fun onResetAcuityClick(position: Int) {
-
-        showAcuityResetConfirmDialog(position)
-    }
-
-    /**
-     * Opening the chart page based on the status of the provider
-     *
-     * @param provider
-     */
-    private fun openChartPage(provider: ConsultProvider) {
-        var strCompletedByName = ""
-        if (provider.getCompleted_by() != null && !TextUtils.isEmpty(provider.getCompleted_by())) {
-            strCompletedByName = provider.getCompleted_by()!!
-        }
-        val intentConsultChart: Intent
-        if (provider.getStatus() === Constants.PatientStatus.Completed ||
-            provider.getStatus() === Constants.PatientStatus.Discharged
-        ) {
-            intentConsultChart = Intent(this, ActivityConsultChartRemote::class.java)
-        } else {
-            intentConsultChart = Intent(this, ActivityConsultChart::class.java)
-        }
-        intentConsultChart.putExtra("uid", provider.getPatientId())
-        intentConsultChart.putExtra("providerNameType", strCompletedByName)
-        intentConsultChart.putExtra("completedTime", java.lang.String.valueOf(provider.getTime()))
-        intentConsultChart.putExtra("status", provider.getStatus())
-        intentConsultChart.putExtra("path", "consults/" + provider.getPatientId())
-        intentConsultChart.putExtra("consultProviderId", "" + provider.getId())
-        intentConsultChart.putExtra("consultProviderPatientId", "" + provider.getPatientId())
-        intentConsultChart.putExtra("consultProviderText", provider.getText())
-        intentConsultChart.putExtra("consultProviderName", provider.getName())
-        intentConsultChart.putExtra("unreadMessageCount", provider.getUnread())
-        intentConsultChart.putExtra("dob", provider.getDob())
-        intentConsultChart.putExtra("gender", provider.getGender())
-        intentConsultChart.putExtra("note", provider.getNote())
-        intentConsultChart.putExtra("phone", provider.getPhone())
-        intentConsultChart.putExtra("patientId", provider.getPatientsId())
-        intentConsultChart.putExtra(Constants.IntentKeyConstants.IS_PATIENT_URGENT,
-            provider.getUrgent())
-        if (provider.getStatus() != null) {
-            intentConsultChart.putExtra("status", provider.getStatus().toString())
-            if (provider.getStatus() === Constants.PatientStatus.Invited ||
-                provider.getStatus() === Constants.PatientStatus.Handoff
-            ) {
-                intentConsultChart.putExtra(Constants.IntentKeyConstants.INVITATION, true)
-                clearNotifications(provider.patientId)
-            } else if (provider.getStatus() === Constants.PatientStatus.Completed ||
-                provider.getStatus() === Constants.PatientStatus.Discharged
-            ) {
-                intentConsultChart.putExtra(Constants.IntentKeyConstants.COMPLETED, true)
-                clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID)
-            }
-        }
-        startActivity(intentConsultChart)
-    }
-
-    /**
-     * Displaying the acuity reset confirmation dialog
-     *
-     * @param position
-     */
-    private fun showAcuityResetConfirmDialog(position: Int) {
-        val isDestroyed = AtomicBoolean(false)
-
-        val okBtnClickListener = View.OnClickListener {
-            if (!UtilityMethods().isInternetConnected(this)!!) {
-                Toast.makeText(this,
-                    getString(R.string.no_internet_connectivity),
-                    Toast.LENGTH_SHORT)
-                return@OnClickListener
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                isDestroyed.set(isDestroyed())
-            }
-            if (resetAcuityDialog != null && resetAcuityDialog?.isShowing() == true && !isDestroyed.get() && !isFinishing()) {
-                resetAcuityDialog?.dismiss()
-                resetAcuityDialog = null
-            }
-            provider = mAdapter?.getItem(position)
-
-            val providerId: Long? = PrefUtility().getProviderId(this)
-            val token: String? = PrefUtility().getToken(this)
-            val patientId: Long =
-                if (provider?.getPatientId() != null) provider!!.getPatientId()!! else 0
-            showProgressBar(getString(R.string.acuity_score_reset_pb_mgs))
-            if (providerId != null) {
-                if (token != null) {
-                    viewModel?.resetAcuityScore(providerId, token, patientId)?.observe(this,
-                        Observer<CommonResponse?> { commonResponse ->
-                            dismissProgressBar()
-                            if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
-                                val consultProvider: ConsultProvider? = providerFilteredList!![position]
-                                consultProvider?.setResetAcuityFlag(true)
-                                providerFilteredList[position] = consultProvider
-                                mAdapter?.notifyItemChanged(position)
-                            } else {
-                                var errMsg: String? = null
-                                if (commonResponse != null) {
-                                    errMsg = ErrorMessages().getErrorMessage(this,
-                                        commonResponse.getErrorMessage(),
-                                        Constants.API.resetAcuityScore)
+                    /**
+                     * Handling the notification click based on the intent
+                     *
+                     * @param intent
+                     */
+                    fun handleNotification(intent: Intent) {
+                        var intent = intent
+                        val userId: Long? = PrefUtility().getProviderId(this)
+                        // To login activity if user is null / -1
+                        if (userId == null || userId == -1L) {
+                            intent = Intent(this, LoginActivity::class.java)
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                            finish()
+                        } // If the intent has "forward" - redirect to chat activity
+                        else if (intent.hasExtra("forward")
+                            && intent.getStringExtra("forward")
+                                .equals(ChatActivity::class.java.getSimpleName(), ignoreCase = true)
+                        ) {
+                            val chatActIntent = Intent(this, ChatActivity::class.java)
+                            chatActIntent.putExtras(intent.extras!!)
+                            startActivity(chatActIntent)
+                        }
+                        // Getting the bundle data
+                        val extras = intent.extras
+                        if (extras != null) {
+                            val select =
+                                extras.getString(Constants.IntentKeyConstants.TARGET_PAGE, "")
+                            if (select == "pending") {
+                                getnewpendingchange()
+                                if (homeBinding?.pendingBtnLayout?.getVisibility() === View.VISIBLE) {
+                                    homeBinding?.pendingBtnLayout?.performClick()
                                 }
-
-                                CustomSnackBar.make(homeBinding?.getRoot(),
-                                    this,
-                                    CustomSnackBar.WARNING,
-                                    errMsg,
-                                    CustomSnackBar.TOP,
-                                    3000,
-                                    0)?.show()
+                            } else if (select == "completed") {
+                                homeBinding?.completedBtnLayout?.performClick()
+                            } else if (select == "active") {
+                                homeBinding?.activeBtnLayout?.performClick()
                             }
-                        })
+                        }
+                    }
+
+                    /**
+                     * Clearing then notification with dedicated notification ID
+                     *
+                     * @param notificationId
+                     */
+                    /**
+                     * Clearing then notification with dedicated notification ID
+                     *
+                     * @param notificationId
+                     */
+                    fun clearNotifications(notificationId: Long?) {
+                        NotificationHelper(context, null).clearNotification(notificationId)
+                    }
+
+                    /**
+                     * Clearing all notfications
+                     */
+                    private fun clearAllNotifications() {
+                        NotificationHelper(context, null).clearAllNotification()
+                    }
+
+
+                    /**
+                     * Handling multiple click event with view
+                     *
+                     * @param view
+                     */
+                    fun handleMultipleClick(view: View) {
+                        view.isEnabled = false
+                        mHandler?.postDelayed({ view.isEnabled = true }, 500)
+                    }
+
+
+                    /**
+                     * Handling multiple click event with menu item
+                     *
+                     * @param item
+                     */
+                    fun handleMultipleClick(item: MenuItem) {
+                        item.isEnabled = false
+                        mHandler?.postDelayed({ item.setEnabled(true) }, 500)
+                    }
+
+                    /**
+                     * Scroll to top of the list
+                     */
+
+                    fun scrollListToTop() {
+
+                        if (homeBinding?.messageRecyclerView != null && mAdapter?.getItemCount() >= 0) {
+                            homeBinding?.messageRecyclerView!!.scrollToPosition(0)
+                        }
+                        mAdapter?.notifyDataSetChanged()
+                    }
+
+
+                    /**
+                     * Handling tab click listener
+                     */
+                    fun handleTabButtons() {
+                        HomeActivity(0).homeBinding?.activeBtnLayout?.setOnClickListener(
+                            HomeActivity(
+                                0).tabChangeListener)
+                        HomeActivity(0).homeBinding?.completedBtnLayout?.setOnClickListener(
+                            HomeActivity(
+                                0).tabChangeListener)
+                        HomeActivity(0).homeBinding?.pendingBtnLayout?.setOnClickListener(
+                            HomeActivity(
+                                0).tabChangeListener)
+                    }
+
+                    /**
+                     * Chat view click listener
+                     *
+                     * @param position
+                     * @param provider
+                     */
+                    /**
+                     * Chat view click listener
+                     *
+                     * @param position
+                     * @param provider
+                     */
+                    fun onClickChatView(position: Int, provider: ConsultProvider) {
+                        //String path = mPath +  "/" +mFirebaseAdapter.getRef(position).getKey();
+                        //        startChat(mAdapter.getItem(position));
+                        //        consultDetailsDialog(this, mAdapter.getItem(position));
+                        //Opening the chart page based on the status of the provider
+                        HomeActivity(0).openChartPage(provider)
+                    }
+
+                    /**
+                     * Invite button click listener
+                     *
+                     * @param viewHolder
+                     */
+                    /**
+                     * Invite button click listener
+                     *
+                     * @param viewHolder
+                     */
+                    fun onClickInviteBtn(viewHolder: PatientListAdapter.ConsultListViewHolder) {
+                        viewHolder.itemBinding.inviteBtn.setEnabled(false)
+                        HomeActivity(0).mAdapter?.getItem(viewHolder.getAdapterPosition())
+                            ?.let { acceptClick(viewHolder, it) }
+                        clearNotifications(Constants.NotificationIds.NOTIFICATION_ID)
+                    }
+
+
+                    /**
+                     * Details button click listener
+                     *
+                     * @param viewHolder
+                     */
+                    fun onClickDetailsButton(viewHolder: PatientListAdapter.ConsultListViewHolder) {
+                        handleMultipleClick(viewHolder.itemBinding.detailsBtn)
+                        val provider: ConsultProvider? =
+                            HomeActivity().mAdapter?.getItem(viewHolder.getAdapterPosition())
+                        //Opening the chart page based on the status of the provider
+                        if (provider != null) {
+                            HomeActivity().openChartPage(provider)
+                        }
+                    }
+
+                    /**
+                     * Reconsult button click listener
+                     *
+                     * @param viewHolder
+                     */
+                    /**
+                     * Reconsult button click listener
+                     *
+                     * @param viewHolder
+                     */
+                    fun onClickReconsultButton(viewHolder: PatientListAdapter.ConsultListViewHolder) {
+                        handleMultipleClick(viewHolder.itemBinding.reconsultBtn)
+
+                        HomeActivity(0).mAdapter?.getItem(viewHolder.getAdapterPosition())
+                            ?.let { reconsultClick(viewHolder, it) }
+                    }
+
+                    /**
+                     * Arrow drop down click listener
+                     *
+                     * @param position
+                     */
+                    /**
+                     * Arrow drop down click listener
+                     *
+                     * @param position
+                     */
+                    fun onArrowDropDownClick(position: Int) {
+                        HomeActivity().mAdapter?.getItem(position)
+                            ?.let { HomeActivity().consultDetailsDialog(HomeActivity().context, it) }
+                    }
+
+
+                    fun showAcuityResetConfirmDialog(position: Int) {
+
+                    }
+
+
+
+                    /**
+                     * Reset acuity click listener
+                     *
+                     * @param position
+                     */
+                    fun onResetAcuityClick(position: Int) {
+
+                        showAcuityResetConfirmDialog(position)
+                    }
+
+
                 }
-            }
-        }
-        // Cancel click listener
-        val cancelBtnClickListener = View.OnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                isDestroyed.set(isDestroyed)
-            }
-            if (resetAcuityDialog != null && resetAcuityDialog?.isShowing() == true && !isDestroyed.get() && !isFinishing()) {
-                resetAcuityDialog?.dismiss()
-                resetAcuityDialog = null
-            }
-        }
-        val message: String = getString(R.string.reset_acuity_score_confirm_msg)
-        resetAcuityDialog =
-            UtilityMethods().showDialog(this, getString(R.string.confirmation), message, true,
-                R.string.ok, okBtnClickListener, R.string.cancel, cancelBtnClickListener, -1, true)
-        if ((resetAcuityDialog == null || !resetAcuityDialog!!.isShowing()) && !isFinishing() && !isDestroyed.get()) {
-            resetAcuityDialog?.show()
-        }
-    }
-
-    /**
-     * Setting up the message count
-     *
-     * @param consultProvider
-     */
-    fun setMessageCount(consultProvider: ConsultProvider?) {
-        var messageCount = 0
-        //        Log.d(TAG, "setMessageCount :  " + consultProvider);
-        if (consultProvider != null && consultProvider.getUnread() !== 0) {
-            messageCount = messageCount + consultProvider.getUnread()
-        }
-        homeBinding?.badgeCount?.setText(messageCount.toString())
-    }
-
-    class TAB {
-
-    }
-
-    /**
-     * Download image and set profile picture
-     */
-    open class ImageLoader internal constructor(activity: HomeActivity, imageURL: String) :
-        AsyncTask<Void?, Void?, Bitmap?>() {
-        var activityReference: WeakReference<HomeActivity>
-        var imageURL: String
-        @SuppressLint("StaticFieldLeak")
-        var imageProgressBar: ProgressBar
-        var imageView: ImageView
-        var cameraIcon: ImageView
-        var defaultImgView: TextView
-        override fun onPreExecute() {
-            super.onPreExecute()
-            imageProgressBar.visibility = View.VISIBLE
-            imageView.visibility = View.GONE
-            defaultImgView.visibility = View.VISIBLE
-            cameraIcon.visibility = View.VISIBLE
-            val name: String? = activityReference.get()?.let {
-                PrefUtility().getStringInPref(it,
-                    Constants.SharedPrefConstants.NAME,
-                    "")
-            }
-            defaultImgView.setText(name?.let { UtilityMethods().getNameText(it) })
-        }
 
 
-        override fun onPostExecute(bitmap: Bitmap?) {
-            super.onPostExecute(bitmap)
-            val homeActivity = activityReference.get()
-            if (homeActivity != null) {
-                imageProgressBar.visibility = View.GONE
-                if (bitmap != null) {
-                    imageView.visibility = View.VISIBLE
-                    defaultImgView.visibility = View.GONE
-                    cameraIcon.visibility = View.GONE
-                    imageView.setImageBitmap(bitmap)
-                } else {
-                    imageView.visibility = View.GONE
-                    defaultImgView.visibility = View.VISIBLE
-                    cameraIcon.visibility = View.VISIBLE
-                    val name: String? = PrefUtility().getStringInPref(homeActivity,
-                        Constants.SharedPrefConstants.NAME,
-                        "")
-                    defaultImgView.setText(name?.let { UtilityMethods().getNameText(it) })
-                }
-            }
-        }
 
-        override fun onCancelled() {
-            super.onCancelled()
-        }
 
-        init {
-            activityReference = WeakReference(activity)
-            this.imageURL = imageURL
-            imageView = activityReference.get()?.navHeaderView?.findViewById(R.id.id_profile_img)!!
-            cameraIcon = activityReference.get()?.navHeaderView?.findViewById(R.id.cameraIcon)!!
-            imageProgressBar =
-                activityReference.get()?.navHeaderView?.findViewById(R.id.id_profile_image_pb)!!
-            defaultImgView =
-                activityReference.get()?.navHeaderView?.findViewById(R.id.default_image_view)!!
-        }
 
-        override fun doInBackground(vararg params: Void?): Bitmap? {
-            var bitmap: Bitmap?
-            try {
-                val connection = URL(imageURL).openConnection()
-                connection.connectTimeout = 10000
-                bitmap = BitmapFactory.decodeStream(connection.getInputStream())
-            } catch (e: Exception) {
-                bitmap = null
-
-            }
-            return bitmap
-        }
-    }
-
-    /**
-     * Sorting the patient by time using comparator
-     */
-    class PatientSortByTime : Comparator<ConsultProvider?> {
-        override fun compare(
-            consultProvider1: ConsultProvider?,
-            consultProvider2: ConsultProvider?, ): Int {
-            return if (consultProvider2 == null || consultProvider1 == null || consultProvider2.getTime() == null || consultProvider1.getTime() == null) {
-                Int.MIN_VALUE
-            } else consultProvider2.getTime()!!.compareTo(consultProvider1.getTime()!!)
-
-        }
-    }
-
-    companion object {
-        // Varaiables
-        private val TAG = HomeActivity::class.java.simpleName
-    }
-}
-        }
-
-enum class TAB {
-    Active,pending,
-}

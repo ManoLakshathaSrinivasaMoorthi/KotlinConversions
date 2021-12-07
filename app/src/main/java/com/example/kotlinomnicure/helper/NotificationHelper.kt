@@ -22,7 +22,7 @@ class NotificationHelper: ContextWrapper {
     private var soundUri: Uri? = null
     private var isAutoCancel = false
 
-    constructor(context: Context) :super(context){
+    constructor(context: Context, nothing: Nothing?) :super(context){
 
         notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         smallIcon = R.drawable.ic_notification

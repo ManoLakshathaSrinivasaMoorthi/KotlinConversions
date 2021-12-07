@@ -2275,7 +2275,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
                 })
     }
 
-    private fun onClickDirectory() {
+    fun onClickDirectory() {
 //        Log.i(TAG, "onClickDirectory: on click of directory");
         drawerLayout.openDrawer(GravityCompat.END)
         fetchDirectory()
@@ -4283,7 +4283,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
         mHandler.postDelayed({ view.isEnabled = true }, 500)
     }
 
-    private fun getBitmapFromUri(uri: Uri?): Bitmap? {
+    fun getBitmapFromUri(uri: Uri?): Bitmap? {
         var parcelFileDescriptor: ParcelFileDescriptor? = null
         try {
             parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r")
@@ -4322,7 +4322,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
         }
     }
 
-    private fun getRotatedBitmap(photoPath: String?, bitmap: Bitmap?): Bitmap? {
+    fun getRotatedBitmap(photoPath: String?, bitmap: Bitmap?): Bitmap? {
         var rotatedBitmap: Bitmap? = null
         try {
             val ei = ExifInterface((photoPath)!!)
@@ -4368,7 +4368,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
         return angle
     }
 
-    private fun rotateImage(source: Bitmap?, angle: Float): Bitmap {
+    fun rotateImage(source: Bitmap?, angle: Float): Bitmap {
         val matrix = Matrix()
         matrix.postRotate(angle)
         return Bitmap.createBitmap(
@@ -4472,7 +4472,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
         }
     }
 
-    fun clearNotifications(notificationId: Int) {
+    fun clearNotifications(notificationId: Long?) {
         when (notificationId) {
             Constants.NotificationIds.NOTIFICATION_ID -> {
                 NotificationHelper(this).clearNotification(Constants.NotificationIds.NOTIFICATION_ID)

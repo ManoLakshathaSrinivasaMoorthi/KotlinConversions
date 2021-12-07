@@ -32,6 +32,9 @@
         android:theme="@style/Theme.KotlinOmniCure"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.NotificationActivity"
             android:exported="false" />
         <activity
@@ -89,7 +92,6 @@
         <activity android:name=".activity.ActivityCensusConsultChart" />
         <activity android:name=".activity.ActivityPatientCensusHospital" />
         <activity android:name=".activity.SplashActivity" />
-        <activity android:name=".activity.HomeActivity" />
         <activity android:name=".activity.MyDashboardActivity" />
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.RegistrationSuccessActivity" />

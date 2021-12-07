@@ -341,7 +341,7 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
                     Log.d("ahfahjfaa", "setCountryCode: $countryCodes")
 
                     providerMap.putAll(getCountryCodes(countryCodes))
-                    providerMap.putAll(getCountryCodes(response.getCountryCodeResponseList()))
+                    providerMap.putAll(getCountryCodes(response.getCountryCodeResponseList()!!))
                     countryCode.addAll(providerMap.keys)
                     setCountrySpinner(countryCode)
                 }
@@ -368,6 +368,19 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
         })
     }
 
+    private fun getCountryCodes(providers: List<CountryCodeList?>): Map<out String?, String> {
+        val providerMap = LinkedHashMap<String, String?>()
+        for (i in providers.indices) {
+            val cc: CountryCodeList? = providers.get(i)
+            if (cc != null && cc.getId() != null) {
+                providerMap[cc.getCode()!!.trim()] = cc.getId()
+            }
+        }
+//        Log.d(TAG, "getCountryCodes: "+providerMap);
+        //        Log.d(TAG, "getCountryCodes: "+providerMap);
+        return providerMap as Map<out String?, String>
+    }
+
 
     //set the spinner for the country code
     private fun setCountrySpinner(countryCode: ArrayList<String?>) {
@@ -379,7 +392,8 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long) {
+                id: Long,
+            ) {
                 val spinnerText = view as TextView
                 if (spinnerText != null) {
                     spinnerText.maxLines = 1
@@ -403,19 +417,19 @@ class ActivityLocalCareProviderSignUpFirst : BaseActivity(){
         for (i in providers.indices) {
             val cc = providers[i]
             if (cc.id != null) {
-                providerMap[cc.code?.trim { it <= ' ' }] = cc.id
+                providerMap[cc.code?.trim { it <= ' ' }] = cc.id.toString()
             }
         }
         Log.d(TAG, "getCountryCodes: $providerMap")
         return providerMap
     }
 
-    private fun getCountryCodes(countryCodes: ArrayList<HashMap<String, String>>): LinkedHashMap<String?, String?> {
+   fun getCountryCodes(countryCodes: ArrayList<HashMap<String, String>>): Map<out String?, String> {
         val providerMap = LinkedHashMap<String?, String?>()
         for (item in countryCodes) {
             providerMap[item[item.keys.iterator().next()]] = item[item.keys.toTypedArray()[2]]
         }
-        return providerMap
+        return providerMap as Map<out String?, String>
     }
 
     //check the first name

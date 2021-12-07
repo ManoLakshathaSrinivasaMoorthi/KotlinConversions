@@ -21,7 +21,7 @@ import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
 import com.google.firebase.messaging.FirebaseMessaging
-import com.mvp.omnicure.activity.ActivityConsultChartRemote
+import com.example.kotlinomnicure.activity.ActivityConsultChartRemote
 import com.mvp.omnicure.kotlinactivity.requestbodys.HealthMonitorEventRequestBody
 import omnicurekotlin.example.com.loginEndpoints.model.LoginRequest
 import retrofit2.Call

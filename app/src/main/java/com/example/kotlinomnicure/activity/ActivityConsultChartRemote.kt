@@ -1,4 +1,4 @@
-package com.mvp.omnicure.activity
+package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
 import android.app.Dialog

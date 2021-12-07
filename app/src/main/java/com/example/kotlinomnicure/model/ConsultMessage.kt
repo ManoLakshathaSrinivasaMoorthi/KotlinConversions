@@ -6,7 +6,7 @@ class ConsultMessage: Serializable {
 
     var id: String? = null
     private var messageId: Long? = null
-    private var type //text,image,video,audio,system
+    var type //text,image,video,audio,system
             : String? = null
     private var text: String? = null
     private var name: String? = null
@@ -18,7 +18,7 @@ class ConsultMessage: Serializable {
     private var thumbUrl: String? = null
     private var videoUrl: String? = null
     private var filename: String? = null
-    private var time: Long? = null
+    var time: Long? = null
     private var status //Sent, Delivered, Read
             : String? = null
 

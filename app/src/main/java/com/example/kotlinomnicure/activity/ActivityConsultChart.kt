@@ -315,7 +315,7 @@ class ActivityConsultChart : BaseActivity() {
                     mConsultProvider?.getStatus() === Constants.PatientStatus.Discharged
                 ) {
                     intentConsultChart.putExtra(Constants.IntentKeyConstants.COMPLETED, true)
-                    clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID)
+                    clearNotifications(Constants.NotificationIds.DISCHARGE_NOTIFICATION_ID.toLong())
                 }
             }
             startActivityForResult(intentConsultChart, 1)
@@ -556,7 +556,7 @@ class ActivityConsultChart : BaseActivity() {
      * @param notificationId
      */
     private fun clearNotifications(notificationId: Long?) {
-        NotificationHelper(this).clearNotification(notificationId)
+        NotificationHelper(this, null).clearNotification(notificationId)
     }
 
     /**
@@ -1515,7 +1515,7 @@ class ActivityConsultChart : BaseActivity() {
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 val pendingIntent = PendingIntent.getActivity(this, 1,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT)
-                val notificationHelper = NotificationHelper(getApplicationContext())
+                val notificationHelper = NotificationHelper(getApplicationContext(), null)
                 notificationHelper.sendNotification(pendingIntent,
                     "Acuity modified",
                     message,
