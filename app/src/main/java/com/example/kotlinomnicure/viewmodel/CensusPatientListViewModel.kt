@@ -20,8 +20,7 @@ class CensusPatientListViewModel : ViewModel(){
     private lateinit var retService: RetrofitService
 
     fun getWardHospitalList(hospitalId: Long, wardName: String): LiveData<Response<WardPatientListResponse>> =  liveData  {
-        retService =HospitalRetrofit.getRetrofits()
-                .create(RetrofitService::class.java)
+        retService =HospitalRetrofit.getRetrofits().create(RetrofitService::class.java)
         wardListObservable = MutableLiveData<WardPatientListResponse>()
 
         val response = retService.getHospitalwardList(hospitalId,wardName)

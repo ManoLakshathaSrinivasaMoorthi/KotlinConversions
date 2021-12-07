@@ -9,7 +9,8 @@ import omnicurekotlin.example.com.appointmentEndpoints.model.Appointment
 import omnicurekotlin.example.com.healthcareEndPoints.model.AddNotificationDataRequest
 import omnicurekotlin.example.com.healthcareEndPoints.model.CommonResponseProviderNotification
 import omnicurekotlin.example.com.healthcareEndPoints.model.ProviderNotificationResponse
-import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
+import omnicurekotlin.example.com.loginEndpoints.model.CommonResponse
+
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST

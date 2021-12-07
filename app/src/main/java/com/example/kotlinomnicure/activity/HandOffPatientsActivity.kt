@@ -16,7 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HandOffPatientViewModel
+import com.example.kotlinomnicure.viewmodel.HandOffPatientViewModel
 
 
 import com.example.kotlinomnicure.R

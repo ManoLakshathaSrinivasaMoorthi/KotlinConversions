@@ -99,7 +99,7 @@ interface PatientEndpoints {
 
     @POST("patientEndpoints/v1/GetProvidersForHospital")
     fun getTransferHospitalProviderListApi(
-        @Body bodyValues: HashMap<String?, String?>?
+        @Body bodyValues: HashMap<String, String>
     ): Call<CommonResponse?>?
 
 }

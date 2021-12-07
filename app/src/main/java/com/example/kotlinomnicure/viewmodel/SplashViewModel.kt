@@ -6,10 +6,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.LoginRequest
+
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.google.gson.Gson
+import omnicurekotlin.example.com.loginEndpoints.model.LoginRequest
 import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.userEndpoints.model.RedirectRequest
 import omnicurekotlin.example.com.userEndpoints.model.VersionInfoResponse

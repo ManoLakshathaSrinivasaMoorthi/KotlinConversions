@@ -20,14 +20,14 @@ import java.lang.Exception
 import java.net.SocketTimeoutException
 
 class AppointmentInfoViewModel: ViewModel() {
-    private var appointmentObservable: MutableLiveData<CommonResponse?>? = null
+    private var appointmentObservable: MutableLiveData<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>? = null
     private var patientObservable: MutableLiveData<CommonResponse?>? =
         null
     private val TAG = "Appointment"
 
-    fun addAppointment(token: String, appointment: Appointment): LiveData<CommonResponse?>? {
+    fun addAppointment(token: String, appointment: Appointment): LiveData<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>? {
         if (appointmentObservable == null) {
-            appointmentObservable = MutableLiveData<CommonResponse?>()
+            appointmentObservable = MutableLiveData<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>()
         }
 
         addPatientAppointmentRetro(token, appointment)
@@ -72,7 +72,8 @@ class AppointmentInfoViewModel: ViewModel() {
                             errMsg[0] = Constants.API_ERROR
                         }
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: CommonResponse()
+                            val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse=
+                                CommonResponse()
                             commonResponse.setErrorMessage(errMsg[0])
                             if (patientObservable == null) {
                                 patientObservable =
@@ -91,7 +92,7 @@ class AppointmentInfoViewModel: ViewModel() {
 
                     errMsg[0] = Constants.API_ERROR
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse()
+                        val commonResponse= CommonResponse()
                         commonResponse.setErrorMessage(errMsg[0])
                         if (patientObservable == null) {
                             patientObservable =
@@ -102,7 +103,7 @@ class AppointmentInfoViewModel: ViewModel() {
                 }
             })
         if (!TextUtils.isEmpty(errMsg[0])) {
-            val commonResponse: CommonResponse
+            val commonResponse= CommonResponse()
             commonResponse.setErrorMessage(errMsg[0])
             if (patientObservable == null) {
                 patientObservable =
@@ -117,21 +118,21 @@ class AppointmentInfoViewModel: ViewModel() {
     private fun addPatientAppointmentRetro(token: String, appointment: Appointment) {
         val errMsg = arrayOfNulls<String>(1)
         ApiClient().getApi(true, true)?.addAppointment(token, appointment)
-            ?.enqueue(object : Callback<CommonResponse?> {
+            ?.enqueue(object : Callback<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?> {
                 override fun onResponse(
-                    call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
+                    call: Call<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>,
+                    response: Response<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>
                 ) {
                     Log.d(TAG, "onResponse: addAppointment " + response.code())
                     if (response.isSuccessful()) {
                         if (appointmentObservable == null) {
-                            appointmentObservable = MutableLiveData<CommonResponse?>()
+                            appointmentObservable = MutableLiveData<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>()
                         }
                         appointmentObservable!!.setValue(response.body())
                     }
                 }
 
-                override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
+                override fun onFailure(call: Call<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>, t: Throwable) {
                     Log.e(TAG, "onFailure: addAppointment $t")
                     if (t is SocketTimeoutException) errMsg[0] =
                         Constants.APIErrorType.SocketTimeoutException.toString()
@@ -139,10 +140,10 @@ class AppointmentInfoViewModel: ViewModel() {
                 }
             })
         if (!TextUtils.isEmpty(errMsg[0])) {
-            val commonResponse = CommonResponse()
+            val commonResponse = omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse()
             commonResponse.setErrorMessage(errMsg[0])
             if (appointmentObservable == null) {
-                appointmentObservable = MutableLiveData<CommonResponse?>()
+                appointmentObservable = MutableLiveData<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>()
             }
             appointmentObservable!!.setValue(commonResponse)
         }

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
 import android.os.Handler
 import android.os.Looper
@@ -6,9 +6,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.CommonProviderIdBody
-import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
+
 import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.providerEndpoints.model.HandOffListResponse
 import omnicurekotlin.example.com.providerEndpoints.model.PatientHandOffRequest

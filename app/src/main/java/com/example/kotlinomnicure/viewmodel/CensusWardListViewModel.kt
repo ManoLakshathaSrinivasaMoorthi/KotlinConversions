@@ -9,9 +9,10 @@ import androidx.lifecycle.ViewModel
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.HospitalIdRequestBody
+import omnicurekotlin.example.com.hospitalEndpoints.model.HospitalListResponse
 
 import omnicurekotlin.example.com.hospitalEndpoints.model.WardPatientListResponse
-import omnicurekotlin.example.com.userEndpoints.model.HospitalListResponse
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

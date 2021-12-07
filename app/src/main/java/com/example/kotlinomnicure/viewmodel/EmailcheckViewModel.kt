@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
 import android.os.Handler
 import androidx.lifecycle.MutableLiveData
@@ -7,8 +7,9 @@ import com.google.gson.Gson
 import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
-import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
+
 import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.userEndpoints.model.Provider
 import retrofit2.Call

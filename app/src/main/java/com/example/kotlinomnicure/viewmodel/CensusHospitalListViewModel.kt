@@ -36,11 +36,8 @@ class CensusHospitalListViewModel : ViewModel() {
             ?.enqueue(object : Callback<HospitalListResponse?> {
                 override fun onResponse(
                     call: Call<HospitalListResponse?>,
-                    response: Response<HospitalListResponse?>
-                ) {
-//                Log.d(TAG, "onResponse: hospitallistresponsee "+response.code());
-//                Log.d(TAG, "onResponse: hospitallistresponse_success "+response.isSuccessful());
-//                Log.d(TAG, "onResponse: hospitallistresponsee--> "+new Gson().toJson(response.body()));
+                    response: Response<HospitalListResponse?>) {
+
                     if (response.isSuccessful) {
                         if (hospitalListObservable == null) {
                             hospitalListObservable = MutableLiveData()

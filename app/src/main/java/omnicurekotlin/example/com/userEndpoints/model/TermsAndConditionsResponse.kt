@@ -7,6 +7,7 @@ class TermsAndConditionsResponse {
 
 
     private var errorId: Int? = null
+   var errorMessage: String? = null
 
     fun getConfiguration(): TermsConditions? {
         return configuration
@@ -33,7 +34,10 @@ class TermsAndConditionsResponse {
     fun setErrorId(errorId: Int?) {
         this.errorId = errorId
     }
-
+    @JvmName("setErrorMessage1")
+    fun setErrorMessage(errorMessage: String) {
+        errorMessage = errorMessage
+    }
 
    /* operator fun set(fieldName: String?, value: Any?): TermsAndConditionsResponse? {
         return super.set(fieldName, value) as TermsAndConditionsResponse?

@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
 import android.os.Handler
 import android.os.Looper
@@ -6,9 +6,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.GetHandoffListRequestBody
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.GetReadStatusRequestBody
 import com.example.kotlinomnicure.utils.Constants
 import com.google.gson.Gson
-import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
+
 import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,9 +47,8 @@ class ENotesViewModel: ViewModel() {
 
         //Backend changed the endpoint.
         val url = "providerEndpoints/v1/getEnotes"
-        ApiClient.getApiProviderEndpoints(true, true)
-            .getHandoffList(url, GetHandoffListRequestBody(providerId, patientId))
-            .enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApiProviderEndpoints(true, true)?.getHandoffList(url, GetHandoffListRequestBody(providerId, patientId))
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
@@ -76,7 +78,7 @@ class ENotesViewModel: ViewModel() {
                     call: Call<CommonResponse?>,
                     t: Throwable
                 ) {
-//                        Log.e(TAG, "HandoffList-onFailure: " + t.toString());
+
                     Handler(Looper.getMainLooper()).post {
                         val commonResponse = CommonResponse()
                         commonResponse.setErrorMessage(Constants.API_ERROR)
@@ -96,9 +98,9 @@ class ENotesViewModel: ViewModel() {
 
         //Backend changed the endpoint.
         val url = "providerEndpoints/v1/getEnotesActivityLog"
-        ApiClient.getApiProviderEndpoints(true, true)
-            .getHandoffList(url, GetHandoffListRequestBody(0L, patientId))
-            .enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApiProviderEndpoints(true, true)
+            ?.getHandoffList(url, GetHandoffListRequestBody(0L, patientId))
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
@@ -150,8 +152,8 @@ class ENotesViewModel: ViewModel() {
         //Backend changed the endpoint.
         val url = "providerEndpoints/v1/updateMessageRead"
         ApiClient().getApiProviderEndpoints(true, true)
-            .setReadStatus(url, GetReadStatusRequestBody(providerId, patientId, messageId))
-            .enqueue(object : Callback<CommonResponse?> {
+            ?.setReadStatus(url, GetReadStatusRequestBody(providerId, patientId, messageId))
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
