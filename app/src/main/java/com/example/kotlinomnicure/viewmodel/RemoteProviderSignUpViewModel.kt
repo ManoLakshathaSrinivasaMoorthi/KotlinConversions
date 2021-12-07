@@ -1,4 +1,4 @@
-package com.example.dailytasksamplepoc.kotlinomnicure.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
 import android.os.Handler
 import android.os.Looper
@@ -25,15 +25,14 @@ class RemoteProviderSignUpViewModel: ViewModel() {
 
     fun registerProvider(provider: Provider): LiveData<CommonResponse?>? {
         providerObservable = MutableLiveData<CommonResponse?>()
-        //        doRegister(provider);
-//        Log.e("TAG", "registerProvider: api hit-->"+new Gson().toJson(provider) );
+
         doRegisterRetro(provider)
         return providerObservable
     }
 
     fun getRemoteProviderList(): LiveData<RemoteProviderListResponse?>? {
         remoteProviderListObservable = MutableLiveData<RemoteProviderListResponse?>()
-        //        getRemoteProviderType();
+
         getRemoteProviderTypeRetro()
         return remoteProviderListObservable
     }
@@ -71,7 +70,7 @@ class RemoteProviderSignUpViewModel: ViewModel() {
                             }
                         })
                 } catch (e: Exception) {
-//                    errMsg = Constants.APIErrorType.Exception.toString();
+
                     errMsg = Constants.API_ERROR
                 }
                 if (!TextUtils.isEmpty(errMsg)) {
@@ -129,7 +128,7 @@ class RemoteProviderSignUpViewModel: ViewModel() {
                             t: Throwable,
                         ) {
 
-//                            Log.i("TAG", "onFailure: ERRRORRRRRRRR " +t.getMessage() + t.getCause());
+
                             Handler(Looper.getMainLooper()).post {
                                 val remoteProviderListResponse =
                                     RemoteProviderListResponse()
@@ -142,7 +141,7 @@ class RemoteProviderSignUpViewModel: ViewModel() {
                         }
                     })
                 } catch (e: Exception) {
-//                    errMsg = Constants.APIErrorType.Exception.toString();
+
                     errMsg = Constants.API_ERROR
                 }
                 if (!TextUtils.isEmpty(errMsg)) {

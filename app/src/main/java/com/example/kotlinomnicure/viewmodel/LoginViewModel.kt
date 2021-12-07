@@ -6,13 +6,16 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.CommonResponse
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.VersionInfoResponse
+
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.LoginDetailsRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.LoginFailedRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.PhoneNumberBody
+import omnicurekotlin.example.com.loginEndpoints.model.CommonResponse
+import omnicurekotlin.example.com.userEndpoints.model.VersionInfoResponse
+
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,11 +23,9 @@ import java.util.HashMap
 
 class LoginViewModel: ViewModel() {
     private var providerObservable: MutableLiveData<CommonResponse?>? = null
-    private var loginFailedObservable: MutableLiveData<CommonResponse?>? =
-        null
+    private var loginFailedObservable: MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>? = null
     private var passwordObservable: MutableLiveData<CommonResponse?>? = null
-    private var emailObservable: MutableLiveData<CommonResponse?>? =
-        null
+    private var emailObservable: MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>? =null
     private var versionInfoObservable: MutableLiveData<VersionInfoResponse?>? = null
 
     private val TAG = "LoginViewModel"
@@ -46,19 +47,16 @@ class LoginViewModel: ViewModel() {
         return versionInfoObservable
     }
 
-    fun getEmail(phone: String): LiveData<CommonResponse?>? {
-        emailObservable = MutableLiveData<CommonResponse?>()
+    fun getEmail(phone: String): LiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>? {
+        emailObservable = MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
 
         getEmailApiRetro(phone)
         return emailObservable
     }
 
-    fun loginFailed(
-        email: String,
-        password: String,
-    ): LiveData<CommonResponse?>? {
+    fun loginFailed(email: String, password: String, ): MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>? {
         loginFailedObservable =
-            MutableLiveData<CommonResponse?>()
+            MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
 
         doLoginFailedRetro(email, password)
         return loginFailedObservable
@@ -80,13 +78,13 @@ class LoginViewModel: ViewModel() {
         //sending body through data class
         val requestBody = LoginDetailsRequestBody("", fcm, Constants.OsType.ANDROID.toString(), email, password, override.toString())
         val errMsg = arrayOf("")
-        ApiClient().getApi(true, true).doLogin(requestBody)
-            .enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApi(true, true)?.doLogin(requestBody)
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>, ) {
                     if (response.isSuccessful()) {
-                        val commonResponse: CommonResponse? = response.body()
+                        val commonResponse:CommonResponse? = response.body()
 
                         if (providerObservable == null) {
                             providerObservable = MutableLiveData<CommonResponse?>()
@@ -116,7 +114,7 @@ class LoginViewModel: ViewModel() {
 
                     errMsg[0] = Constants.API_ERROR
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse = CommonResponse()
+                        val commonResponse =CommonResponse()
                         commonResponse.setErrorMessage(errMsg[0])
                         if (providerObservable == null) {
                             providerObservable = MutableLiveData<CommonResponse?>()
@@ -136,19 +134,19 @@ class LoginViewModel: ViewModel() {
         requestBody.setPassword(password)
         requestBody.setOsType(Constants.OsType.ANDROID.toString())
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient().getApiUserEndpoints(true, true).loginFailed(requestBody)
-            .enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApiUserEndpoints(true, true)?.loginFailed(requestBody)
+            ?.enqueue(object : Callback<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?> {
                 override fun onResponse(
-                    call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>, ) {
+                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                    response: Response<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>, ) {
 
                     if (response.isSuccessful()) {
-                        val commonResponse: CommonResponse? =
+                        val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse? =
                             response.body()
 
                         if (loginFailedObservable == null) {
                             loginFailedObservable =
-                                MutableLiveData<CommonResponse?>()
+                                MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
                         }
                         loginFailedObservable!!.setValue(commonResponse)
                     } else {
@@ -160,12 +158,12 @@ class LoginViewModel: ViewModel() {
                             errMsg[0] = Constants.API_ERROR
                         }
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: CommonResponse =
-                                CommonResponse()
+                            val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
+                                omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
                             commonResponse.setErrorMessage(errMsg[0])
                             if (loginFailedObservable == null) {
                                 loginFailedObservable =
-                                    MutableLiveData<CommonResponse?>()
+                                    MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
                             }
                             loginFailedObservable!!.setValue(commonResponse)
                         }
@@ -173,16 +171,16 @@ class LoginViewModel: ViewModel() {
                 }
 
                 override fun onFailure(
-                    call: Call<CommonResponse?>, t: Throwable, ) {
+                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>, t: Throwable, ) {
 
                     errMsg[0] = Constants.APIErrorType.Exception.toString()
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
-                            CommonResponse()
+                        val commonResponse:omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
+                            omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
                         commonResponse.setErrorMessage(errMsg[0])
                         if (loginFailedObservable == null) {
                             loginFailedObservable =
-                                MutableLiveData<CommonResponse?>()
+                                MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
                         }
                         loginFailedObservable!!.setValue(commonResponse)
                     }
@@ -191,7 +189,7 @@ class LoginViewModel: ViewModel() {
         if (!TextUtils.isEmpty(errMsg[0])) {
             val finalErrMsg = errMsg[0]
             Handler(Looper.getMainLooper()).post {
-                val commonResponse = CommonResponse()
+                val commonResponse =CommonResponse()
                 commonResponse.setErrorMessage(finalErrMsg)
                 if (providerObservable == null) {
                     providerObservable = MutableLiveData<CommonResponse?>()
@@ -206,19 +204,18 @@ class LoginViewModel: ViewModel() {
     private fun getEmailApiRetro(phone: String) {
 
         val errMsg = arrayOf("")
-        ApiClient().getApiUserEndpoints(true, true).getEmailByPhoneNumber(PhoneNumberBody(phone))
-            .enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApiUserEndpoints(true, true)?.getEmailByPhoneNumber(PhoneNumberBody(phone))
+            ?.enqueue(object : Callback<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?> {
                 override fun onResponse(
-                    call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>,
-                ) {
+                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                    response: Response<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>, ) {
 
                     if (response.isSuccessful()) {
-                        val commonResponse: CommonResponse? =
+                        val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse? =
                             response.body()
                         if (emailObservable == null) {
                             emailObservable =
-                                MutableLiveData<CommonResponse?>()
+                                MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
                         }
                         emailObservable!!.setValue(commonResponse)
                     } else {
@@ -230,40 +227,40 @@ class LoginViewModel: ViewModel() {
                             errMsg[0] = Constants.API_ERROR
                         }
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: CommonResponse =
-                                CommonResponse()
+                            val commonResponse:omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
+                                omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
                             commonResponse.setErrorMessage(errMsg[0])
                             if (emailObservable == null) {
                                 emailObservable =
-                                    MutableLiveData<CommonResponse?>()
+                                    MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
                             }
                             emailObservable!!.setValue(commonResponse)
                         }
                     }
                 }
 
-                override fun onFailure(call: Call<CommonResponse?>, t: Throwable, ) {
+                override fun onFailure(call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>, t: Throwable, ) {
                     errMsg[0] = Constants.APIErrorType.Exception.toString()
 
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
-                            CommonResponse()
+                        val commonResponse:omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
+                            omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
                         commonResponse.setErrorMessage(errMsg[0])
                         if (emailObservable == null) {
                             emailObservable =
-                                MutableLiveData<CommonResponse?>()
+                                MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
                         }
                         emailObservable!!.setValue(commonResponse)
                     }
                 }
             })
         if (!TextUtils.isEmpty(errMsg[0])) {
-            val commonResponse: CommonResponse =
-                CommonResponse()
+            val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
+                omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
             commonResponse.setErrorMessage(errMsg[0])
             if (emailObservable == null) {
                 emailObservable =
-                    MutableLiveData<CommonResponse?>()
+                    MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>()
             }
             emailObservable!!.setValue(commonResponse)
         }
@@ -279,14 +276,14 @@ class LoginViewModel: ViewModel() {
         bodyValues["email"] = email
         bodyValues["password"] = password
         bodyValues["token"] = token
-        ApiClient().getApi(true, true).loginWithPassword(bodyValues).enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApi(true, true)?.loginWithPassword(bodyValues)?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>, ) {
                     if (response.isSuccessful()) {
 
-                        val commonResponse: CommonResponse? =
-                            response.body()
+                        val commonResponse: CommonResponse=CommonResponse()
+
                         if (passwordObservable == null) {
                             passwordObservable = MutableLiveData<CommonResponse?>()
                         }
@@ -300,7 +297,7 @@ class LoginViewModel: ViewModel() {
                             errMsg[0] = Constants.API_ERROR
                         }
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse = CommonResponse()
+                            val commonResponse =CommonResponse()
                             commonResponse.setErrorMessage(errMsg[0])
                             if (passwordObservable == null) {
                                 passwordObservable = MutableLiveData<CommonResponse?>()
@@ -314,7 +311,7 @@ class LoginViewModel: ViewModel() {
 //                        Log.d("discharge", "onFailure: " + t.toString());
                     val finalErrMsg = errMsg[0]
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
+                        val commonResponse:CommonResponse=
                             CommonResponse()
                         commonResponse.setErrorMessage(finalErrMsg)
                         if (passwordObservable == null) {
@@ -327,8 +324,7 @@ class LoginViewModel: ViewModel() {
         if (!TextUtils.isEmpty(errMsg[0])) {
             val finalErrMsg = errMsg[0]
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: CommonResponse =
-                    CommonResponse()
+                val commonResponse: CommonResponse = CommonResponse()
                 commonResponse.setErrorMessage(finalErrMsg)
                 if (passwordObservable == null) {
                     passwordObservable = MutableLiveData<CommonResponse?>()
@@ -347,8 +343,8 @@ class LoginViewModel: ViewModel() {
         val creds = HashMap<String, String>()
         creds["osType"] = osType
 
-        ApiClient().getApiUserEndpoints(false, false).getVersionInfo()
-            .enqueue(object : Callback<VersionInfoResponse?> {
+        ApiClient().getApiUserEndpoints(false, false)?.getVersionInfo()
+            ?.enqueue(object : Callback<VersionInfoResponse?> {
                 override fun onResponse(
                     call: Call<VersionInfoResponse?>, response: Response<VersionInfoResponse?>, ) {
                     if (response.isSuccessful()) {

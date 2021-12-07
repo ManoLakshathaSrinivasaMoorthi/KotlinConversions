@@ -9,8 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.CommonPatientIdRequestBody
 import com.example.kotlinomnicure.model.SOSResponse
-import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
+
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.TeamDetailsByNameRequestBody
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
@@ -115,7 +116,7 @@ class PatientDetailViewModel: ViewModel() {
 
 
         // Parsing the values in body
-        val bodyValues = HashMap<String, String>()
+        val bodyValues = HashMap<String?, String?>()
         bodyValues["id"] = callerId.toString()
         bodyValues["token"] = token
         bodyValues["patientId"] = patientId.toString()

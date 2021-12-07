@@ -10,7 +10,7 @@ import android.widget.TextView.OnEditorActionListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.PatientOTPViewModel
+import com.example.kotlinomnicure.viewmodel.PatientOTPViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.customview.PinEntryView
 import com.example.kotlinomnicure.databinding.ActivityPatientOtpBinding

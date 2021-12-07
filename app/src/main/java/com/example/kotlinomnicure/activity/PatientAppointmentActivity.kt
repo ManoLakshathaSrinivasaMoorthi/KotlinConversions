@@ -23,8 +23,8 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.AppointmentViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.EmailcheckViewModel
+import com.example.kotlinomnicure.viewmodel.AppointmentViewModel
+import com.example.kotlinomnicure.viewmodel.EmailcheckViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityPatientAppointmentBinding
 import com.example.kotlinomnicure.helper.MobileNumberFormatter

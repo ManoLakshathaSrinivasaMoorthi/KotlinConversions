@@ -6,10 +6,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.google.gson.Gson
 
-import com.mvp.omnicure.kotlinactivity.retrofit.ApiClient
+
 import omnicurekotlin.example.com.userEndpoints.model.CountryCodeListResponse
 import omnicurekotlin.example.com.userEndpoints.model.HospitalListResponse
 
@@ -38,8 +39,7 @@ class LocalCareProviderSignUpFirstViewModel:ViewModel() {
             Callback<CountryCodeListResponse?> {
             override fun onResponse(
                 call: Call<CountryCodeListResponse?>,
-                response: Response<CountryCodeListResponse?>
-            ) {
+                response: Response<CountryCodeListResponse?>) {
                 Log.d("getCountryCodesRetro", "onResponse: " + response.code())
                 if (response.isSuccessful) {
                     val countryCodeListResponse = response.body()

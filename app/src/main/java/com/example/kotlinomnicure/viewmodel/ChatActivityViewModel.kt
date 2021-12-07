@@ -55,6 +55,52 @@ class ChatActivityViewModel: ViewModel() {
         MultiplecallRetro(content)
         return providerObservable
     }
+
+    private fun MultiplecallRetro(content: GroupCall?) {
+
+        val call: Call<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>? =
+            ApiClient().getApiProviderEndpoints(true, true)?.Multiplecall(content)
+        call?.enqueue(object : Callback<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?> {
+            override fun onResponse(
+                call: Call<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>,
+                response: Response<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>, ) {
+
+
+                if (response.isSuccessful()) {
+
+                    if (providerObservable == null) {
+                        providerObservable = MutableLiveData()
+                    }
+                    providerObservable!!.setValue(response.body())
+                } else {
+
+                    val commonResponse: omnicurekotlin.example.com.providerEndpoints.model.CommonResponse =
+                        omnicurekotlin.example.com.providerEndpoints.model.CommonResponse()
+                    commonResponse.setErrorMessage(Constants.API_ERROR)
+                    if (providerObservable == null) {
+                        providerObservable = MutableLiveData()
+                    }
+                    providerObservable!!.setValue(commonResponse)
+                }
+            }
+
+            override fun onFailure(
+                call: Call<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>,
+                t: Throwable,
+            ) {
+
+                val commonResponse: omnicurekotlin.example.com.providerEndpoints.model.CommonResponse =
+                    omnicurekotlin.example.com.providerEndpoints.model.CommonResponse()
+                commonResponse.setErrorMessage(Constants.API_ERROR)
+                if (providerObservable == null) {
+                    providerObservable = MutableLiveData()
+                }
+                providerObservable!!.setValue(commonResponse)
+            }
+        })
+
+    }
+
     fun getPatientDetails(providerId: Long?): LiveData<PatientDetail?>? {
         commonResponseMutableLiveData = MutableLiveData()
 

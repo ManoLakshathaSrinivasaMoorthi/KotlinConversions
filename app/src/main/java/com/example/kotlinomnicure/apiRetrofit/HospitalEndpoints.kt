@@ -30,12 +30,12 @@ interface HospitalEndpoints {
         @Query("wardName") wardName: String?
     ): Call<WardPatientListResponse?>?
 
-    @GET("hospitalEndpoints/v1/hospitalresponse/{hospitalId}")
+    /*@GET("hospitalEndpoints/v1/hospitalresponse/{hospitalId}")
     fun getAddNewPatientWardList(@Path("hospitalId") hospitalId: Long?): Call<AddNewPatientWardResponse?>?
-
+*/
 
     @POST("hospitalEndpoints/v1/getHospitalById")
-    fun getAddNewPatientWardList(@Body bodyValues: HashMap<String?, String?>?): Call<AddNewPatientWardResponse?>?
+    fun getAddNewPatientWardList(@Body bodyValues: HashMap<String, String>): Call<AddNewPatientWardResponse?>?
 
 
     @POST("hospitalEndpoints/v1/getWards")
@@ -49,6 +49,6 @@ interface HospitalEndpoints {
 
 
     @POST("hospitalEndpoints/v1/getHospitals")
-    fun hospitallistresponseUser(@Body bodyValues: HashMap<String, String>): Call<HospitalListResponse?>?
+    fun hospitallistresponseUser(@Body bodyValues: HashMap<String, String>): Call<HospitalListResponse?>
 
 }

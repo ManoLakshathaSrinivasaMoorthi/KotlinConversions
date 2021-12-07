@@ -4,8 +4,8 @@ class CountryCodeListResponse {
 
     private var status: Boolean? = null
     private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var countryCodeResponseList: List<CountryCodeList?>? = null
+    var errorMessage: String? = null
+    var countryCodeResponseList: List<CountryCodeList?>? = null
 
     fun getErrorMessage(): String? {
         return errorMessage

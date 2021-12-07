@@ -1,11 +1,12 @@
 package com.example.kotlinomnicure.apiRetrofit
 
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.GetHandoffListRequestBody
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.GetReadStatusRequestBody
 import com.example.kotlinomnicure.model.CommonResponseRetro
 import com.example.kotlinomnicure.model.HealthMonitoring
 import com.google.gson.JsonObject
-import com.mvp.omnicure.kotlinactivity.requestbodys.CommonProviderIdBody
-import com.mvp.omnicure.kotlinactivity.requestbodys.HealthMonitorEventRequestBody
-import com.mvp.omnicure.kotlinactivity.requestbodys.TeamDetailsByNameRequestBody
+import com.mvp.omnicure.kotlinactivity.requestbodys.*
+import omnicurekotlin.example.com.providerEndpoints.HandOffAcceptRequest
 import omnicurekotlin.example.com.providerEndpoints.model.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -73,18 +74,16 @@ interface ProviderEndpoints {
     @POST("providerEndpoints/v1/updateProvider")
     fun updateStatus(@Body provider: Provider?): Call<CommonResponse?>?
 
+    @POST
+    fun getHandoffList(@Url url: String?, @Body body: GetHandoffListRequestBody?, ): Call<CommonResponse?>?
+
+    @POST
+    fun setReadStatus(@Url url: String?, @Body body: GetReadStatusRequestBody?, ): Call<CommonResponse?>?
+    @GET
+    fun getProviderList(@Url url: String?, @Query("role") role: String?, ): Call<ProviderListResponse?>?
 
     @GET
-    fun getProviderList(
-        @Url url: String?,
-        @Query("role") role: String?
-    ): Call<ProviderListResponse?>?
-
-    @GET
-    fun sendMessage(
-        @Url url: String?,
-        @Query("patientId") patientId: String?
-    ): Call<CommonResponse?>?
+    fun sendMessage(@Url url: String?, @Query("patientId") patientId: String?, ): Call<CommonResponse?>?
 
     @POST
     fun getProviderList(@Url url: String?, @Body body: GetProviderListRequestBody?): Call<ProviderListResponse?>?
@@ -99,7 +98,7 @@ interface ProviderEndpoints {
         @Path("token") token: String?,
         @Path("receiverId") receiverId: Long?,
         @Path("message") channelName: String?,
-        @Path("type") messageType: String?
+        @Path("type") messageType: String?,
     ): Call<CommonResponse?>?
 
     @POST("providerEndpoints/v1/sendMessageNotification")

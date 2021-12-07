@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
+import com.example.kotlinomnicure.model.CommonResponseRetro
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.GetProviderByIdRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.SaveAuditCallRequestBody

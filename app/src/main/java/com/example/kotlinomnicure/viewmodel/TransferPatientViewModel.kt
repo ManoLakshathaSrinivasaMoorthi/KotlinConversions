@@ -8,8 +8,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
+import com.example.kotlinomnicure.apiRetrofit.RequestBodys.CommonPatientIdRequestBody
 import com.example.kotlinomnicure.backend.EndPointBuilder
-import com.example.kotlinomnicure.requestbodys.CommonPatientIdRequestBody
+
 import com.example.kotlinomnicure.utils.Constants
 import com.google.gson.Gson
 
@@ -54,10 +55,9 @@ class TransferPatientViewModel : ViewModel() {
         val bodyValues = HashMap<String, String>()
         bodyValues["hospitalId"] = hospitalId.toString()
 
-//        Call<AddNewPatientWardResponse> call = ApiClient.getApiHospital(false, false).getAddNewPatientWardList(hospitalId);
-        val call: Call<AddNewPatientWardResponse> =
-            ApiClient().getApiHospital(true, true).getAddNewPatientWardList(bodyValues)
-        call.enqueue(object : Callback<AddNewPatientWardResponse?> {
+        val call: Call<AddNewPatientWardResponse?>? =
+            ApiClient().getApiHospital(true, true)?.getAddNewPatientWardList(bodyValues)
+        call?.enqueue(object : Callback<AddNewPatientWardResponse?> {
             override fun onResponse(
                 call: Call<AddNewPatientWardResponse?>,
                 response: Response<AddNewPatientWardResponse?>
@@ -87,42 +87,7 @@ class TransferPatientViewModel : ViewModel() {
             }
         })
 
-        /*new Thread(new Runnable() {
-            String errMsg = "";
 
-            @Override
-            public void run() {
-                try {
-                    final AddNewPatientWardResponse transferWardResponse = EndPointBuilder.getHospitalEndpoints()
-                            .getAddNewPatientWardList(hospitalId)
-                            .execute();
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        if (wardResponseObservable == null) {
-                            wardResponseObservable = new MutableLiveData<>();
-                        }
-                        wardResponseObservable.setValue(transferWardResponse);
-                        Log.d(TAG, "Wards hospitalId" + hospitalId);
-                        Log.i("TAG", "Wards transferWardResponse " + new Gson().toJson(transferWardResponse));
-
-                    });
-                } catch (SocketTimeoutException e) {
-                    errMsg = Constants.APIErrorType.SocketTimeoutException.toString();
-                } catch (Exception e) {
-//                    errMsg = Constants.APIErrorType.Exception.toString();
-                    errMsg = Constants.API_ERROR;
-
-                }
-                if (!TextUtils.isEmpty(errMsg)) {
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        AddNewPatientWardResponse response = new AddNewPatientWardResponse();
-                        if (wardResponseObservable == null) {
-                            wardResponseObservable = new MutableLiveData<>();
-                        }
-                        wardResponseObservable.setValue(response);
-                    });
-                }
-            }
-        }).start();*/
     }
 
 
@@ -210,12 +175,11 @@ class TransferPatientViewModel : ViewModel() {
         val bodyValues = HashMap<String, String>()
         bodyValues["hospitalId"] = hospitalId.toString()
         bodyValues["providerId"] = providerId.toString()
-        ApiClient().getApiPatientEndpoints(true, true)?.getTransferHospitalProviderListApi() //                getTransferHospitalProviderListApi(hospitalId.toString(), providerId.toString())
-        bodyValues?.enqueue(object : Callback<CommonResponse?> {
+        ApiClient().getApiPatientEndpoints(true, true)?.getTransferHospitalProviderListApi( //                getTransferHospitalProviderListApi(hospitalId.toString(), providerId.toString())
+        bodyValues)?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
-                response: Response<CommonResponse?>
-            ) {
+                response: Response<CommonResponse?>) {
                 if (response.isSuccessful) {
                     Log.d("discharge", "onResponse: $response")
                     val commonResponse: CommonResponse? =
@@ -254,7 +218,7 @@ class TransferPatientViewModel : ViewModel() {
         if (!TextUtils.isEmpty(errMsg[0])) {
             val finalErrMsg = errMsg[0]
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: omnicure.mvp.com.patientEndpoints.model.CommonResponse =
+                val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse =
                     CommonResponse()
                 commonResponse.setErrorMessage(finalErrMsg)
                 if (providerListResponseObservable == null) {
@@ -265,38 +229,7 @@ class TransferPatientViewModel : ViewModel() {
         }
     }
 
-    private fun getTransferProviderListOld(hospitalId: Long, providerId: Long) {
-        Thread(object : Runnable {
-            var errMsg = ""
-            override fun run() {
-                try {
-                    val wardListResponse: CommonResponse = EndPointBuilder.getPatientEndpoints()
-                        .getTransferHospitalProviderList(hospitalId, providerId)
-                        .execute()
-                    Handler(Looper.getMainLooper()).post {
-                        if (providerListResponseObservable == null) {
-                            providerListResponseObservable = MutableLiveData<CommonResponse?>()
-                        }
-                        providerListResponseObservable!!.setValue(wardListResponse)
-                    }
-                } catch (e: SocketTimeoutException) {
-                    errMsg = Constants.APIErrorType.SocketTimeoutException.toString()
-                } catch (e: Exception) {
-//                    errMsg = Constants.APIErrorType.Exception.toString();
-                    errMsg = Constants.API_ERROR
-                }
-                if (!TextUtils.isEmpty(errMsg)) {
-                    Handler(Looper.getMainLooper()).post {
-                        val response = CommonResponse()
-                        if (providerListResponseObservable == null) {
-                            providerListResponseObservable = MutableLiveData<CommonResponse?>()
-                        }
-                        providerListResponseObservable!!.setValue(response)
-                    }
-                }
-            }
-        }).start()
-    }
+
 
 
     override fun onCleared() {
