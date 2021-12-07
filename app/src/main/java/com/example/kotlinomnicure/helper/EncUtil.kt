@@ -25,8 +25,7 @@ class EncUtil{
 
     private val AndroidKeyStore = "AndroidKeyStore"
     private val AES_MODE = "AES/CBC/PKCS5Padding"
-    private val FIXED_IV =
-        "randomizemsg" // to randomize the encrypted data( give any values to randomize)
+    private val FIXED_IV = "randomizemsg" // to randomize the encrypted data( give any values to randomize)
 
     private val RSA_MODE =
         "RSA/ECB/PKCS1Padding" // RSA algorithm which has to be used for OS version less than M
@@ -37,11 +36,7 @@ class EncUtil{
     fun generateKey(context: Context?) {
         try {
             val KEY_ALIAS: String? = context?.let {
-                PrefUtility().getStringInPref(
-                    it,
-                    Constants.SharedPrefConstants.ENCRYPTIONKEY,
-                    ""
-                )
+                PrefUtility().getStringInPref(it, Constants.SharedPrefConstants.ENCRYPTIONKEY, "")
             }
             keyStore = KeyStore.getInstance(AndroidKeyStore)
             keyStore?.load(null)
@@ -194,8 +189,7 @@ class EncUtil{
 
     @Throws(Exception::class)
     private fun rsaDecrypt(encrypted: String, context: Context): ByteArray? {
-        val KEY_ALIAS: String? =
-            PrefUtility().getStringInPref(context, Constants.SharedPrefConstants.ENCRYPTIONKEY, "")
+        val KEY_ALIAS: String = PrefUtility().getStringInPref(context, Constants.SharedPrefConstants.ENCRYPTIONKEY, "")
         val privateKeyEntry = keyStore!!.getEntry(KEY_ALIAS, null) as KeyStore.PrivateKeyEntry
         //        Cipher output = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL");
 //        Cipher output = Cipher.getInstance("RSA/ECB/PKCS1Padding", "AndroidOpenSSL");

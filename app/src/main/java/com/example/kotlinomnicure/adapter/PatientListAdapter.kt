@@ -1,6 +1,5 @@
 package com.example.kotlinomnicure.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.text.Html
@@ -9,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
+import android.widget.Filter.FilterResults
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -22,12 +22,8 @@ import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import java.util.*
 
-class PatientListAdapter(
-    homeActivity: HomeActivity,
-    providerFilteredList: MutableList<ConsultProvider?>?
-) : RecyclerView.Adapter<PatientListAdapter.ConsultListViewHolder>() {
+class PatientListAdapter: RecyclerView.Adapter<PatientListAdapter.ConsultListViewHolder> {
 
-    private val TAG = ConsultListViewHolder::class.java.simpleName
     private var itemClickListener: OnListItemClickListener? = null
 
     //int expandedPosition = -1;
@@ -38,17 +34,17 @@ class PatientListAdapter(
     private var context: Context? = null
 
 
-    fun PatientListAdapter(context: Context?, providerList: List<ConsultProvider>?) {
+    constructor(context: Context?, providerList: List<ConsultProvider>?) {
         itemClickListener = context as HomeActivity?
         originalProviderList = providerList
         this.providerList = providerList
         this.context = context
     }
-
+     constructor()
     fun isCompleted(consultProvider: ConsultProvider): Boolean {
-        return consultProvider.getStatus()
-            ?.equals(Constants.PatientStatus.Completed) == true || consultProvider.getStatus()
-            ?.equals(Constants.PatientStatus.Discharged) == true
+        return consultProvider.getStatus()!!
+            .equals(Constants.PatientStatus.Completed) || consultProvider.getStatus()!!
+            .equals(Constants.PatientStatus.Discharged)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConsultListViewHolder {
@@ -60,18 +56,18 @@ class PatientListAdapter(
 
         // Invite button click listener
         itemBinding.inviteBtn.setOnClickListener { view ->
-            itemBinding.inviteBtn.setEnabled(false)
-            itemClickListener?.onClickInviteBtn(viewHolder)
+            itemBinding.inviteBtn.isEnabled = false
+            itemClickListener!!.onClickInviteBtn(viewHolder)
         }
         // Details button click listener
         itemBinding.detailsBtn.setOnClickListener { view ->
 //            itemBinding.detailsBtn.setEnabled(false);
-            itemClickListener?.onClickDetailsButton(viewHolder)
+            itemClickListener!!.onClickDetailsButton(viewHolder)
         }
         // Reconsult button click listener
         itemBinding.reconsultBtn.setOnClickListener { view ->
-            itemBinding.reconsultBtn.setEnabled(false)
-            itemClickListener?.onClickReconsultButton(viewHolder)
+            itemBinding.reconsultBtn.isEnabled = false
+            itemClickListener!!.onClickReconsultButton(viewHolder)
         }
         return viewHolder
     }
@@ -79,8 +75,8 @@ class PatientListAdapter(
 
     override fun onBindViewHolder(holder: ConsultListViewHolder, position: Int) {
         // Consult provider object
-        val consultProvider: ConsultProvider = providerList!![position]
-        val provider: ConsultProvider? = getItem(holder.adapterPosition)
+        val consultProvider = providerList!![position]
+        val provider = getItem(holder.adapterPosition)
         if (provider != null && expandedPatientId != null && expandedPatientId == provider.getId()) {
             holder.bind(consultProvider, expandedPatientId)
         } else {
@@ -114,11 +110,11 @@ class PatientListAdapter(
      * Provider list update
      * @param providerLists
      */
-    infix fun updateList(providerLists: List<ConsultProvider>) {
+    fun updateList(providerLists: List<ConsultProvider>?) {
         if (providerLists != null) {
             providerList = providerLists
             originalProviderList = providerLists
-            //notifyDataSetChanged()
+            notifyDataSetChanged()
         }
     }
 
@@ -154,10 +150,7 @@ class PatientListAdapter(
         return -1
     }
 
-    /**
-     * Getting the expanded patient id
-     * @return
-     */
+
     @JvmName("getExpandedPatientId1")
     fun getExpandedPatientId(): Long? {
         return expandedPatientId
@@ -174,10 +167,10 @@ class PatientListAdapter(
                 if (charString.isEmpty()) {
                     //providerList = originalProviderList;
                 } else {
-                    val filteredList: MutableList<ConsultProvider> = ArrayList<ConsultProvider>()
+                    val filteredList: MutableList<ConsultProvider> = ArrayList()
                     for (provider in originalProviderList!!) {
-                        var firstName: String? = provider.getFname()
-                        val lastName: String? = provider.getLname()
+                        var firstName = provider.getFname()
+                        val lastName = provider.getLname()
                         if (!TextUtils.isEmpty(provider.getName())) {
                             firstName = provider.getName()
                         }
@@ -204,7 +197,7 @@ class PatientListAdapter(
                     getOnSearchResultListener()!!.onSearchResult(providerList!!.size)
                 }
                 // Updating the adapter
-               // notifyDataSetChanged()
+                notifyDataSetChanged()
             }
         }
     }
@@ -219,12 +212,11 @@ class PatientListAdapter(
     /**
      * Consult list view holder
      */
-    class ConsultListViewHolder(context: Context?, itemBinding: ItemConsultListBinding) :
-        RecyclerView.ViewHolder(itemBinding.getRoot()) {
-        // Item consult list binding
+    class ConsultListViewHolder(
+        var context1: Context?, // Item consult list binding
         val itemBinding: ItemConsultListBinding
-        var context1: Context?
-
+    ) :
+        RecyclerView.ViewHolder(itemBinding.root) {
         // Handling the multiple click event
         private fun handleMultipleClick(view: View) {
             view.isEnabled = false
@@ -232,41 +224,40 @@ class PatientListAdapter(
         }
 
         // Binding the view with consult provider
-        @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
         fun bind(consultProvider: ConsultProvider, expandedPatientId: Long?) {
-            var firstName: String? = consultProvider.getFname()
-            val lastName: String? = consultProvider.getLname()
+            var firstName = consultProvider.getFname()
+            val lastName = consultProvider.getLname()
             var nameStr = ""
             if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
-                if (firstName != null) {
-                    nameStr = firstName.trim { it <= ' ' } + " " + lastName?.trim { it <= ' ' }
-                }
+                nameStr = firstName!!.trim { it <= ' ' } + " " + lastName!!.trim { it <= ' ' }
             } else if (!TextUtils.isEmpty(consultProvider.getName())) {
-                nameStr = consultProvider.getName()?.trim().toString()
-                firstName = consultProvider.getName()?.trim()
+                nameStr = consultProvider.getName()!!.trim()
+                firstName = consultProvider.getName()!!.trim()
             } else if (!TextUtils.isEmpty(firstName)) {
-                nameStr = firstName?.trim { it <= ' ' }.toString()
+                nameStr = firstName!!.trim { it <= ' ' }
             }
             // Container view click listener
             itemBinding.containerView.setOnClickListener { view ->
-                if (!PatientListAdapter(this, providerFilteredList).isCompleted(consultProvider)) {
+                if (! PatientListAdapter().isCompleted(consultProvider)) {
                     handleMultipleClick(itemBinding.containerView)
-                    PatientListAdapter(this, providerFilteredList).itemClickListener?.onClickChatView(adapterPosition,
-                        consultProvider)
+                    PatientListAdapter().itemClickListener?.onClickChatView(
+                        adapterPosition,
+                        consultProvider
+                    )
                 }
             }
             // Dropdown arrow click listener
             itemBinding.dropdownArrow.setOnClickListener { view ->
 //            itemBinding.detailsBtn.setEnabled(false);
                 handleMultipleClick(itemBinding.dropdownArrow)
-                PatientListAdapter(this, providerFilteredList).itemClickListener?.onArrowDropDownClick(adapterPosition)
+                PatientListAdapter().itemClickListener?.onArrowDropDownClick(adapterPosition)
             }
 
             // Name text click listener
             itemBinding.nameTextView.setOnClickListener { view ->
 //            itemBinding.detailsBtn.setEnabled(false);
                 handleMultipleClick(itemBinding.nameTextView)
-                PatientListAdapter(this, providerFilteredList).itemClickListener?.onArrowDropDownClick(adapterPosition)
+                PatientListAdapter(). itemClickListener?.onArrowDropDownClick(adapterPosition)
             }
             var time = 0L
             if (consultProvider.getInviteTime() != null && consultProvider.getInviteTime()!! > 0) {
@@ -275,14 +266,14 @@ class PatientListAdapter(
                 time = consultProvider.getTime()!!
             }
             // If completed
-            if (PatientListAdapter(this, providerFilteredList).isCompleted(consultProvider)) {
+            if ( PatientListAdapter().isCompleted(consultProvider)) {
                 if (consultProvider.getTime() != null && consultProvider.getTime()!! > 0) {
                     time = consultProvider.getTime()!!
                 }
-                itemBinding.cardview.setVisibility(View.GONE)
-                itemBinding.completedCardview.setVisibility(View.VISIBLE)
+                itemBinding.cardview.visibility = View.GONE
+                itemBinding.completedCardview.visibility = View.VISIBLE
                 if (consultProvider.getCompleted_by() != null && !TextUtils.isEmpty(consultProvider.getCompleted_by())) {
-                    itemBinding.completedConsultName.setVisibility(View.VISIBLE)
+                    itemBinding.completedConsultName.visibility = View.VISIBLE
                     val vals: MutableList<String> = consultProvider.getCompleted_by()!!.split(",").toMutableList()
                     var completedName = ""
                     if (vals.size > 1 && vals[0].length > 12) {
@@ -292,72 +283,97 @@ class PatientListAdapter(
                     completedName =
                         completedName.substring(0, 1).toUpperCase() + completedName.substring(1)
                     // Completed consult name
-                    itemBinding.completedConsultName.setText(Html.fromHtml("$completedName    <b>\u00b7</b>    "))
+                    itemBinding.completedConsultName.text =
+                        Html.fromHtml("$completedName    <b>\u00b7</b>    ")
                 } else {
-                    itemBinding.completedConsultName.setVisibility(View.GONE)
+                    itemBinding.completedConsultName.visibility = View.GONE
                 }
                 // Complete time text
                 itemBinding.completedTimeText.setText(Utils().timestampToDate(time))
                 if (nameStr.trim { it <= ' ' }.length > 15) {
                     nameStr = nameStr.substring(0, 15) + "..."
                 }
-                itemBinding.completedNameTextView.setText(nameStr)
+                itemBinding.completedNameTextView.text = nameStr
                 var status = ""
-                if (consultProvider.getStatus()?.equals(Constants.PatientStatus.Discharged) == true) {
+                if (consultProvider.getStatus()!!.equals(Constants.PatientStatus.Discharged)) {
                     status = "Discharged"
-                } else if (consultProvider.getStatus()?.equals(Constants.PatientStatus.Completed) == true) {
+                } else if (consultProvider.getStatus()!!
+                        .equals(Constants.PatientStatus.Completed)
+                ) {
                     status = "Completed"
                 }
                 // Completed status text
                 if (status.equals("Discharged", ignoreCase = true)) {
-                    itemBinding.completedStatus.setText(context1!!.resources.getString(R.string.discharged))
+                    itemBinding.completedStatus.text =
+                        context1!!.resources.getString(R.string.discharged)
                 } else if (status.equals("Completed", ignoreCase = true)) {
-                    itemBinding.completedStatus.setText(context1!!.resources.getString(R.string.completed))
+                    itemBinding.completedStatus.text =
+                        context1!!.resources.getString(R.string.completed)
                 }
 
 //                itemBinding.completedStatus.setText(status);
-                val strDesignation: String? =
-                    PrefUtility().getStringInPref(itemBinding.getRoot().getContext(),
-                        Constants.SharedPrefConstants.R_PROVIDER_TYPE,
-                        "")
+                val strDesignation: String = PrefUtility().getStringInPref(
+                    itemBinding.root.context,
+                    Constants.SharedPrefConstants.R_PROVIDER_TYPE,
+                    ""
+                )
 
-
-                // Role based reconsult button visibility
-                val role: String? = PrefUtility().getRole(itemBinding.getRoot().getContext())
-                if (role != null && role.equals(Constants.ProviderRole.BD.toString(),
-                        ignoreCase = true) && consultProvider.getStatus()
-                        ?.equals(Constants.PatientStatus.Completed) == true
-                ) {
-                    itemBinding.reconsultBtn.setVisibility(View.VISIBLE)
+                /*    if (strDesignation.equalsIgnoreCase("md/do") || consultProvider.getStatus().equals(Constants.PatientStatus.Discharged)) {
+                    itemBinding.reconsultBtn.setVisibility(View.GONE);
                 } else {
-                    itemBinding.reconsultBtn.setVisibility(View.GONE)
+                    itemBinding.reconsultBtn.setVisibility(View.VISIBLE);
+                }*/
+                // Role based reconsult button visibility
+                val role: String? = PrefUtility().getRole(itemBinding.root.context)
+                if (role != null && role.equals(
+                        Constants.ProviderRole.BD.toString(),
+                        ignoreCase = true
+                    ) && consultProvider.getStatus()!!
+                        .equals(Constants.PatientStatus.Completed)
+                ) {
+                    itemBinding.reconsultBtn.visibility = View.VISIBLE
+                } else {
+                    itemBinding.reconsultBtn.visibility = View.GONE
                 }
                 return
             } else {
-                itemBinding.cardview.setVisibility(View.VISIBLE)
-                itemBinding.completedCardview.setVisibility(View.GONE)
+                itemBinding.cardview.visibility = View.VISIBLE
+                itemBinding.completedCardview.visibility = View.GONE
             }
             //  Hospital text view
-            itemBinding.hospitalTextView.setText(consultProvider.getHospital())
+            itemBinding.hospitalTextView.text = consultProvider.getHospital()
             // Ward text
             if (!TextUtils.isEmpty(consultProvider.getWardName())) {
-                itemBinding.wardText.setVisibility(View.VISIBLE)
-                itemBinding.wardText.setText(Html.fromHtml("<b>\u00b7</b>   " + consultProvider.getWardName()))
+                itemBinding.wardText.visibility = View.VISIBLE
+                itemBinding.wardText.text =
+                    Html.fromHtml("<b>\u00b7</b>   " + consultProvider.getWardName())
             } else {
-                itemBinding.wardText.setVisibility(View.INVISIBLE)
+                itemBinding.wardText.visibility = View.INVISIBLE
             }
 
-
+            /*    if (consultProvider.getText() != null) {
+             */
+            /*String txt = consultProvider.getText();
+                if (consultProvider.getMsgName() != null) {
+                    txt = "<font color=black><b>" + consultProvider.getMsgName().trim() + "</b></font>".trim() + ": " + txt;
+                }
+                itemBinding.messageTextView.setText(Html.fromHtml(txt));
+                itemBinding.messageTextView.setVisibility(TextView.VISIBLE);*/
+            /*
+            } */
             // Message text for notes
             if (consultProvider.getNote() != null) {
-                var txt: String = consultProvider.getNote()!!
-                txt = txt.substring(txt.indexOf(":") + 1)
-
-                itemBinding.messageTextView.setText(txt.trim { it <= ' ' })
-                itemBinding.messageTextView.setVisibility(TextView.VISIBLE)
+                var txt = consultProvider.getNote()
+                txt = txt!!.substring(txt.indexOf(":") + 1)
+                /* if (consultProvider.getBdProviderName() != null) {
+                    txt = "<font color=black><b>" + consultProvider.getBdProviderName().trim() + "</b></font>".trim() + ": " + txt;
+                }*/
+//                itemBinding.messageTextView.setText(Html.fromHtml(txt));
+                itemBinding.messageTextView.text = txt.trim { it <= ' ' }
+                itemBinding.messageTextView.visibility = TextView.VISIBLE
             } else {
-                itemBinding.messageTextView.setText("")
-                itemBinding.messageTextView.setVisibility(TextView.VISIBLE)
+                itemBinding.messageTextView.text = ""
+                itemBinding.messageTextView.visibility = TextView.VISIBLE
             }
             if (consultProvider.getDob() != null) {
                 val calendar = Calendar.getInstance()
@@ -366,109 +382,152 @@ class PatientListAdapter(
                 val age = year - calendar[Calendar.YEAR]
                 //                nameStr += " · " + age;
             }
-
+            //            if ("Female".equalsIgnoreCase(consultProvider.getGender())) {
+//                nameStr += " F";
+//            } else {
+//                nameStr += " M";
+//            }
             if (nameStr.trim { it <= ' ' }.length > 15) {
                 nameStr = nameStr.substring(0, 15) + "..."
             }
-            itemBinding.nameTextView.setText(nameStr)
+            itemBinding.nameTextView.text = nameStr
 
-//
+//            if (consultProvider.getTime() != null && consultProvider.getTime() > 0) {
+//                itemBinding.timeTextView.setText(ChatUtils.getTimeAgo(consultProvider.getTime()));
+//            } else if (consultProvider.getJoiningTime() != null && consultProvider.getJoiningTime() > 0) {
+//                itemBinding.timeTextView.setText(ChatUtils.getTimeAgo(consultProvider.getJoiningTime()));
+//            } else {
+//                itemBinding.timeTextView.setText("");
+//            }
+
+            /*if (consultProvider.getMemberCount() == 1) {
+                itemBinding.consultTextView.setText(consultProvider.getMemberCount()+ " "+ itemBinding.getRoot().getContext().getString(R.string.consultant));
+            } else if (consultProvider.getMemberCount() > 1) {
+                itemBinding.consultTextView.setText(consultProvider.getMemberCount()+ " " + itemBinding.getRoot().getContext().getString(R.string.consulatants));
+            } else {
+                if (consultProvider.getText() == null) {
+                    if(consultProvider.getMsgName() != null) {
+                        itemBinding.messageTextView.setText(consultProvider.getMsgName() + ": "+itemBinding.getRoot().getContext().getString(R.string.patient_added) );
+                    } else {
+                        itemBinding.messageTextView.setText(itemBinding.getRoot().getContext().getString(R.string.patient_added));
+                    }
+                    itemBinding.messageTextView.setVisibility(TextView.VISIBLE);
+                }
+            }*/
+
 //            System.out.println("patient status details " + consultProvider.getStatus());
             // Invite button text
-            itemBinding.inviteBtn.setText(itemBinding.getRoot().getContext()
-                .getString(R.string.accept))
+            itemBinding.inviteBtn.text = itemBinding.root.context.getString(R.string.accept)
             if (consultProvider.getStatus() === Constants.PatientStatus.Pending) {
                 //Todo: handle invited member OR new patient added case
                 //itemBinding.consultTextView.setText(itemBinding.getRoot().getContext().getString(R.string.pending));
                 //Show watch timer logo
-                itemBinding.messageView.setVisibility(TextView.GONE)
-                itemBinding.inviteBtn.setVisibility(TextView.GONE)
-                itemBinding.inviteTime.setVisibility(View.GONE)
-                itemBinding.watchTimerView.setVisibility(TextView.VISIBLE)
+                itemBinding.messageView.visibility = TextView.GONE
+                itemBinding.inviteBtn.visibility = TextView.GONE
+                itemBinding.inviteTime.visibility = View.GONE
+                itemBinding.watchTimerView.visibility = TextView.VISIBLE
             } else if (consultProvider.getStatus() === Constants.PatientStatus.Invited) {
-                itemBinding.messageView.setVisibility(TextView.GONE)
-                itemBinding.inviteBtn.setEnabled(true)
-                itemBinding.inviteBtn.setVisibility(TextView.VISIBLE)
-                itemBinding.inviteTime.setVisibility(View.VISIBLE)
+                itemBinding.messageView.visibility = TextView.GONE
+                itemBinding.inviteBtn.isEnabled = true
+                itemBinding.inviteBtn.visibility = TextView.VISIBLE
+                itemBinding.inviteTime.visibility = View.VISIBLE
 
 //                itemBinding.inviteTimeText.setText("Request sent: " + Utils.getTimeAgo(time));
-                itemBinding.inviteTimeText.setText(context1!!.resources.getString(R.string.patient_request_sent) + " " + Utils().getTimeAgo(
-                    time))
+                itemBinding.inviteTimeText.text =
+                    context1!!.resources.getString(R.string.patient_request_sent) + " " + Utils().getTimeAgo(
+                        time
+                    )
 
                 //itemBinding.consultTextView.setText("");
-                itemBinding.watchTimerView.setVisibility(TextView.GONE)
+                itemBinding.watchTimerView.visibility = TextView.GONE
             } else {
                 //Show badge count
                 if (consultProvider.getUnread() > 0) {
-                    itemBinding.messageView.setVisibility(TextView.VISIBLE)
+                    itemBinding.messageView.visibility = TextView.VISIBLE
                 } else {
-                    itemBinding.messageView.setVisibility(TextView.GONE)
+                    itemBinding.messageView.visibility = TextView.GONE
                 }
-                itemBinding.watchTimerView.setVisibility(TextView.GONE)
+                itemBinding.watchTimerView.visibility = TextView.GONE
                 // Handoff status handling
                 if (consultProvider.getStatus() === Constants.PatientStatus.Handoff) {
-                    itemBinding.inviteBtn.setEnabled(true)
-                    itemBinding.inviteBtn.setVisibility(View.VISIBLE)
-                    itemBinding.inviteBtn.setText(itemBinding.getRoot().getContext()
-                        .getString(R.string.handoff_accept))
-                    itemBinding.inviteTime.setVisibility(View.VISIBLE)
-
-                    itemBinding.inviteTimeText.setText(context1!!.resources.getString(R.string.patient_request_sent) + " " + Utils().getTimeAgo(
-                        time))
+                    itemBinding.inviteBtn.isEnabled = true
+                    itemBinding.inviteBtn.visibility = View.VISIBLE
+                    itemBinding.inviteBtn.text =
+                        itemBinding.root.context.getString(R.string.handoff_accept)
+                    itemBinding.inviteTime.visibility = View.VISIBLE
+                    //                    itemBinding.inviteTimeText.setText("Request sent: " + Utils.getTimeAgo(time));
+                    itemBinding.inviteTimeText.text = context1!!.resources.getString(R.string.patient_request_sent)+ " " + Utils().getTimeAgo(time)
                 } else {
-                    itemBinding.inviteBtn.setVisibility(View.GONE)
-                    itemBinding.inviteTime.setVisibility(View.GONE)
-
-                    itemBinding.inviteTimeText.setText(context1!!.resources.getString(R.string.patient_request_sent) + " " + Utils().getTimeAgo(
-                        time))
+                    itemBinding.inviteBtn.visibility = View.GONE
+                    itemBinding.inviteTime.visibility = View.GONE
+                    //                    itemBinding.inviteTimeText.setText("Request sent: " + Utils.getTimeAgo(time));
+                    itemBinding.inviteTimeText.text =
+                        context1!!.resources.getString(R.string.patient_request_sent) +
+                                " " + Utils().getTimeAgo(time)
                 }
             }
 
 
+//            boolean calAcuityLevel = consultProvider.getResetAcuityFlag() != null;
+
+//            System.out.println("acuity level " + consultProvider.getScore() + " " + consultProvider.getName());
             // Acuity level handling
-            var acuityLevel: Constants.AcuityLevel? = consultProvider.getScore()
+            val acuityLevel: Constants.AcuityLevel? = consultProvider.getScore()
             if (acuityLevel != null) {
                 if (acuityLevel === Constants.AcuityLevel.Low) {
-                    itemBinding.acuityTextview.setBackground(itemBinding.acuityTextview.getResources()
-                        .getDrawable(R.drawable.acuity_level_low))
-                    itemBinding.acuityTextview.setTextColor(itemBinding.acuityTextview.getResources()
-                        .getColor(R.color.acuity_low_border))
-
-                    itemBinding.acuityTextview.setText(context1!!.resources.getString(R.string.patient_low))
+                    itemBinding.acuityTextview.background =
+                        itemBinding.acuityTextview.resources.getDrawable(R.drawable.acuity_level_low)
+                    itemBinding.acuityTextview.setTextColor(
+                        itemBinding.acuityTextview.resources.getColor(
+                            R.color.acuity_low_border
+                        )
+                    )
+                    //                    itemBinding.acuityTextview.setText(Constants.AcuityLevel.Low.toString());
+                    itemBinding.acuityTextview.text =
+                        context1!!.resources.getString(R.string.patient_low)
                 } else if (acuityLevel === Constants.AcuityLevel.Medium) {
-                    itemBinding.acuityTextview.setBackground(itemBinding.acuityTextview.getResources()
-                        .getDrawable(R.drawable.acuity_level_med))
-                    itemBinding.acuityTextview.setTextColor(itemBinding.acuityTextview.getResources()
-                        .getColor(R.color.acuity_med_border))
+                    itemBinding.acuityTextview.background =
+                        itemBinding.acuityTextview.resources.getDrawable(R.drawable.acuity_level_med)
+                    itemBinding.acuityTextview.setTextColor(
+                        itemBinding.acuityTextview.resources.getColor(
+                            R.color.acuity_med_border
+                        )
+                    )
                     //                    itemBinding.acuityTextview.setText(Constants.AcuityLevel.Medium.toString().substring(0, 3));
-                    itemBinding.acuityTextview.setText(context1!!.resources.getString(R.string.patient_med))
-                } else if (acuityLevel ===Constants.AcuityLevel.High) {
-                    itemBinding.acuityTextview.setBackground(itemBinding.acuityTextview.getResources()
-                        .getDrawable(R.drawable.acuity_level_high))
-                    itemBinding.acuityTextview.setTextColor(itemBinding.acuityTextview.getResources()
-                        .getColor(R.color.acuity_high_border))
+                    itemBinding.acuityTextview.text =
+                        context1!!.resources.getString(R.string.patient_med)
+                } else if (acuityLevel === Constants.AcuityLevel.High) {
+                    itemBinding.acuityTextview.background =
+                        itemBinding.acuityTextview.resources.getDrawable(R.drawable.acuity_level_high)
+                    itemBinding.acuityTextview.setTextColor(
+                        itemBinding.acuityTextview.resources.getColor(
+                            R.color.acuity_high_border
+                        )
+                    )
                     //                    itemBinding.acuityTextview.setText(Constants.AcuityLevel.High.toString());
-                    itemBinding.acuityTextview.setText(context1!!.resources.getString(R.string.patient_high))
+                    itemBinding.acuityTextview.text =
+                        context1!!.resources.getString(R.string.patient_high)
                 }
             } else {
-                itemBinding.acuityTextview.setBackground(itemBinding.acuityTextview.getResources()
-                    .getDrawable(R.drawable.acuity_level_low))
-                itemBinding.acuityTextview.setTextColor(itemBinding.acuityTextview.getResources()
-                    .getColor(R.color.acuity_low_border))
+                itemBinding.acuityTextview.background =
+                    itemBinding.acuityTextview.resources.getDrawable(R.drawable.acuity_level_low)
+                itemBinding.acuityTextview.setTextColor(
+                    itemBinding.acuityTextview.resources.getColor(
+                        R.color.acuity_low_border
+                    )
+                )
                 //                itemBinding.acuityTextview.setText(Constants.AcuityLevel.NA.toString());
-                itemBinding.acuityTextview.setText(context1!!.resources.getString(R.string.patient_na))
+                itemBinding.acuityTextview.text =
+                    context1!!.resources.getString(R.string.patient_na)
             }
             // Urgent icon visibility handling
             if (consultProvider.getUrgent() != null && consultProvider.getUrgent()!!) {
-                itemBinding.urgentIcon.setVisibility(View.VISIBLE)
+                itemBinding.urgentIcon.visibility = View.VISIBLE
             } else {
-                itemBinding.urgentIcon.setVisibility(View.GONE)
+                itemBinding.urgentIcon.visibility = View.GONE
             }
         }
-
-        init {
-            this.itemBinding = itemBinding
-            context1 = context
-        }
     }
+
 }
+

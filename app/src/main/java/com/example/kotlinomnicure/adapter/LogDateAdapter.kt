@@ -13,14 +13,16 @@ import com.example.kotlinomnicure.model.ENotesList
 import com.example.kotlinomnicure.model.ENotesMessageList
 
 
-class LogDateAdapter() : RecyclerView.Adapter<LogDateAdapter.ViewHolder> {
+class LogDateAdapter : RecyclerView.Adapter<LogDateAdapter.ViewHolder> {
+
     private var eNoteslist: List<ENotesList>? = null
     private var context: Context? = null
     val recycledViewPool = RecycledViewPool()
     private var logsRecycler: RecyclerView? = null
     private var iterator: Iterator<ENotesList>? = null
+    constructor()
 
-    fun LogDateAdapter(context: Context?, list: List<ENotesList>) {
+    constructor(context: Context?, list: List<ENotesList>){
         eNoteslist = list
         iterator = list.iterator()
         this.context = context
@@ -38,32 +40,27 @@ class LogDateAdapter() : RecyclerView.Adapter<LogDateAdapter.ViewHolder> {
         linearLayoutManager.initialPrefetchItemCount = 30
         logsRecycler!!.layoutManager = linearLayoutManager
         logsRecycler!!.setRecycledViewPool(recycledViewPool)
-        holder.date.setText(eNoteslist!![position].getDate())
+        holder.date.text = eNoteslist!![position].getDate()
         if (iterator!!.hasNext()) {
-            val date: String? = eNoteslist!!.iterator().next().getDate()
+            val date = eNoteslist?.iterator()?.next()?.getDate()
             logsRecycler!!.adapter =
                 InnerLogsAdapter(eNoteslist!![position].getMessages(), context, this)
-
+            //            holder.date.setText(date);
         }
     }
 
     override fun getItemCount(): Int {
-
+//        System.out.println("getting count "+eNoteslist.size());
         return eNoteslist!!.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var date: TextView
+        var date: TextView = itemView.findViewById(R.id.datesTxt)
 
         init {
-            date = itemView.findViewById(R.id.datesTxt)
-           LogDateAdapter(LogDateAdapter().context!!, LogDateAdapter().eNoteslist).logsRecycler = itemView.findViewById(R.id.logsRecycler)
+            LogDateAdapter().logsRecycler = itemView.findViewById(R.id.logsRecycler)
         }
     }
-
-    constructor(context: Context, eNoteslist: List<ENotesList>?) : super()
-
-    constructor(context: Context, eNoteslist: List<ENotesMessageList>?) : super()
 
     fun getLogsRecycler(): RecyclerView? {
         return logsRecycler

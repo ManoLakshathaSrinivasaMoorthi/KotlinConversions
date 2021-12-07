@@ -22,7 +22,10 @@ import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
 import com.google.firebase.messaging.FirebaseMessaging
 import com.example.kotlinomnicure.activity.ActivityConsultChartRemote
+import com.example.kotlinomnicure.model.HealthMonitoring
+import com.example.kotlinomnicure.utils.AESUtils
 import com.mvp.omnicure.kotlinactivity.requestbodys.HealthMonitorEventRequestBody
+import omnicurekotlin.example.com.loginEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.loginEndpoints.model.LoginRequest
 import retrofit2.Call
 import retrofit2.Callback
@@ -325,7 +328,7 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
                             }*/
 
                                 // Update the global notification enable/disable flag for acuity IAP notification
-                                if (commonResponse.getNotificationRequests() != null && commonResponse.getNotificationRequests()
+                                if (commonResponse.getNotificationRequests() != null && commonResponse.getNotificationRequests()!!
                                         .get(0) != null
                                 ) {
 //                                        Log.d(TAG, "SendHealthMonitorEvent: getnotificationEnabled-->" + commonResponse.getNotificationRequests().get(0).getNotificationEnabled());
@@ -333,12 +336,14 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
                                     // Saving the current status of Acuity score & notification enable/disabling in shared preference dynamically from backend
                                     currentActivity?.let {
                                         PrefUtility().saveStringInPref(it, Constants.SharedPrefConstants.ALERT_ACUITY,
-                                            java.lang.String.valueOf(commonResponse.getNotificationRequests().get(0)
+                                            java.lang.String.valueOf(
+                                                commonResponse.getNotificationRequests()!!.get(0)
                                                 .getAcuity().replace("[", "").replace("]", "").replace("\"", "")))
                                     }
                                     currentActivity?.let {
                                         PrefUtility().saveStringInPref(it, Constants.SharedPrefConstants.ALERT_ACUITY_STATUS,
-                                            java.lang.String.valueOf(commonResponse.getNotificationRequests().get(0)
+                                            java.lang.String.valueOf(
+                                                commonResponse.getNotificationRequests()!!.get(0)
                                                     .getNotificationEnabled()))
                                     }
                                 }
@@ -378,7 +383,7 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
                                     }
                                     var title = "Error"
                                     if (commonResponse.getTitle() != null) {
-                                        title = commonResponse.getTitle()
+                                        title = commonResponse.getTitle()!!
                                     }
 
 //                                        Log.d(TAG, "commonResponse.getErrorId() : " + commonResponse.getErrorId());
@@ -388,12 +393,12 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
                                             currentActivity!!.finish()
                                         }
                                         PrefUtility().saveStringInPref(
-                                            currentActivity,
+                                            currentActivity!!,
                                             Constants.SharedPrefConstants.SESSION_TIMEOUT_MESSAGE,
                                             commonResponse.getErrorMessage()
                                         )
                                         PrefUtility().saveStringInPref(
-                                            currentActivity,
+                                            currentActivity!!,
                                             Constants.SharedPrefConstants.SESSION_TIMEOUT_TITLE,
                                             title
                                         )
@@ -486,12 +491,12 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
 //                            } else if (commonResponse != null && TextUtils.isEmpty(commonResponse.getErrorMessage())) {
 //                                errorMsg[0] = commonResponse.getErrorMessage();
                             if (commonResponse.getStatus()) {
-                                val time: Long = PrefUtility.getLongInPref(
+                                val time: Long = PrefUtility().getLongInPref(
                                     activity,
                                     Constants.SharedPrefConstants.APP_ACTIVE_TIME,
                                     0
                                 )
-                                val autoLogOutTIme: Long = PrefUtility.getLongInPref(
+                                val autoLogOutTIme: Long = PrefUtility().getLongInPref(
                                     activity,
                                     Constants.SharedPrefConstants.AUTO_LOGOUT_TIME,
                                     30
@@ -556,14 +561,14 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
 //                                    Log.e(TAG, "onResponse:status falsecheck--> "+ commonResponse.getStatus());
 //                                    Log.e(TAG, "onResponse:status falseErrorid--> "+ commonResponse.getErrorId());
                                 if (activity is SplashActivity) {
-                                    PrefUtility.saveBooleanInPref(
+                                    PrefUtility().saveBooleanInPref(
                                         currentActivity,
                                         Constants.SharedPrefConstants.IS_ERROR,
                                         true
                                     )
                                     return
                                 }
-                                PrefUtility.saveBooleanInPref(
+                                PrefUtility().saveBooleanInPref(
                                     currentActivity,
                                     Constants.SharedPrefConstants.IS_ERROR,
                                     true
@@ -812,7 +817,7 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
         val errorMsg = arrayOfNulls<String>(1)
         val loginRequest = LoginRequest()
         loginRequest.setToken(
-            PrefUtility.getStringInPref(
+            PrefUtility().getStringInPref(
                 activity,
                 Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
                 ""
@@ -838,16 +843,16 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
 //                    commonResponse[0] = response.body();
                         val commonResponse1: CommonResponse = response.body()!!
                         if (commonResponse1.getRefreshToken() != null && commonResponse1.getIdToken() != null) {
-                            PrefUtility.saveStringInPref(
+                            PrefUtility().saveStringInPref(
                                 activity,
                                 Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
                                 commonResponse1.getRefreshToken()
                             )
-                            val encKey: String = PrefUtility.getAESAPIKey(activity)
-                            PrefUtility.saveStringInPref(
+                            val encKey: String? = PrefUtility().getAESAPIKey(activity)
+                            PrefUtility().saveStringInPref(
                                 activity,
                                 Constants.SharedPrefConstants.FIREBASE_IDTOKEN,
-                                AESUtils.decryptData(commonResponse1.getIdToken(), encKey)
+                                AESUtils().decryptData(commonResponse1.getIdToken(), encKey)
                             )
 
 //                        PrefUtility.saveStringInPref(activity, Constants.SharedPrefConstants.FIREBASE_IDTOKEN, commonResponse1.getIdToken());
@@ -867,7 +872,7 @@ class AppStatusHelper: ActivityLifecycleCallbacks {
                 }
 
                 override fun onFailure(
-                    call: Call<omnicure.mvp.com.userEndpoints.model.CommonResponse?>,
+                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
                     t: Throwable
                 ) {
 //                Log.e(TAG, "onFailure: "+t.toString() );

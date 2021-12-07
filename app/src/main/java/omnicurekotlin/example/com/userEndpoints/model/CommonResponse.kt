@@ -26,7 +26,7 @@ class CommonResponse {
     private var idToken: String? = null
     private var refreshToken: String? = null
 
-    private var email: String? = null
+    var email: String? = null
 
     private var unit: Unit? = null
     private var ward: Ward? = null
@@ -66,10 +66,12 @@ class CommonResponse {
         this.tutorial_url = tutorial_url
     }
 
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
 
+    @JvmName("setEmail1")
     fun setEmail(email: String?) {
         this.email = email
     }

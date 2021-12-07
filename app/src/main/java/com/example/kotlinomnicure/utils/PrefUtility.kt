@@ -50,7 +50,7 @@ class PrefUtility {
      * @param defaultValue
      * @return
      */
-    fun getStringInPref(context: Context, key: String?, defaultValue: String?): String? {
+    fun getStringInPref(context: Context, key: String?, defaultValue: String?): String {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             return prefs.getString(key, defaultValue)

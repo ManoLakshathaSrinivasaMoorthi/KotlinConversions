@@ -510,7 +510,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
         //appname
         binding?.idWelcomeText?.text =
-            java.lang.String.format(getString(R.string.welcome_to_omnicurenow), Buildconfic.value())
+            java.lang.String.format(getString(R.string.welcome_to_omnicurenow), Buildconfic().value())
         binding?.signinAuth?.let { handleMultipleClicknew(it) }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //generateKey();

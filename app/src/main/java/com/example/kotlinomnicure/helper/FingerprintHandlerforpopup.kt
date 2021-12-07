@@ -189,7 +189,7 @@ class FingerprintHandlerforpopup : FingerprintManager.AuthenticationCallback {
                    ?.observe((activity as FragmentActivity?)!!) { commonResponse ->
                         // dismissProgressBar();
                         //            Log.i(TAG, "Check password response " + commonResponse);
-                        if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
+                        if (commonResponse != null && commonResponse?.getStatus() != null && commonResponse.getStatus()) {
                             EncUtil().generateKey(dialogview!!.context)
                             val encryptpassword: String? =
                                 EncUtil().encrypt(dialogview!!.context, password)
