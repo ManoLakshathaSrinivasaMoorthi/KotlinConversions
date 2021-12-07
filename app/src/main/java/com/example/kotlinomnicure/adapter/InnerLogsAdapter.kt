@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.kotlinomnicure.activity.EncUtil
 import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.model.ENotesMessageList
 import com.example.kotlinomnicure.utils.AESUtils
 
 import com.example.kotlinomnicure.utils.PrefUtility
 
 class InnerLogsAdapter(
-    messages: MutableList<ENotesMessageList>,
+    messages: List<ENotesMessageList?>?,
     context: Context?,
-    logDateAdapter: LogDateAdapter
-) : RecyclerView.Adapter<InnerLogsAdapter.ViewHolder>() {
+    logDateAdapter: LogDateAdapter) : RecyclerView.Adapter<InnerLogsAdapter.ViewHolder>() {
     private var messagesList: List<ENotesMessageList>? = null
     private var context: Context? = null
     private var logDateAdapter: LogDateAdapter? = null
@@ -29,8 +29,7 @@ class InnerLogsAdapter(
     fun InnerLogsAdapter(
         list: List<ENotesMessageList>?,
         context: Context?,
-        logDateAdapter: LogDateAdapter?
-    ) {
+        logDateAdapter: LogDateAdapter?) {
         messagesList = list
         this.context = context
         this.logDateAdapter = logDateAdapter
@@ -39,7 +38,7 @@ class InnerLogsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        logDateAdapter!!.getLogsRecycler()!!.setRecycledViewPool(LogDateAdapter(applicationContext, eNotesList).recycledViewPool)
+        logDateAdapter!!.getLogsRecycler()!!.setRecycledViewPool(context?.let { LogDateAdapter(it, messagesList).recycledViewPool })
         return ViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.activites_log_logs_item, parent, false)
@@ -57,7 +56,10 @@ class InnerLogsAdapter(
         val data: ENotesMessageList = messagesList!![position]
 
         holder.time.setText(data.getMessageTime())
-        val message: String? = encKey?.let { AESUtils().decryptData(data.getMessage(), it) }
+        val message: String? = encKey?.let { data.getMessage()?.let { it1 ->
+            AESUtils().decryptData(
+                it1, it)
+        } }
         holder.message.text = message?.trim { it <= ' ' }
     }
 

@@ -32,7 +32,7 @@ import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import omnicurekotlin.example.com.providerEndpoints.model.Members
 
 class MembersDialogAdapter(
-    baseActivity: BaseActivity,
+    baseActivity: ViewHolder,
     context: Context,
     members: List<Members?>?,
     param: CallbackDirectory
@@ -170,7 +170,7 @@ class MembersDialogAdapter(
         when (requestCode) {
             ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
                 checkSelfPermission(Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA)
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA)
             }
             ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
             }

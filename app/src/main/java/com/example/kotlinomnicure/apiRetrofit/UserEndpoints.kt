@@ -5,6 +5,7 @@ import com.example.dailytasksamplepoc.kotlinomnicure.requestbodys.RegistrationEm
 import com.example.dailytasksamplepoc.kotlinomnicure.requestbodys.RegistrationPhoneOtpRequestBody
 import com.example.kotlinomnicure.apiRetrofit.RequestBodys.CommonPatientIdRequestBody
 import com.example.kotlinomnicure.apiRetrofit.RequestBodys.RegistrationVerifyRequestBody
+import com.example.kotlinomnicure.model.CommonResponseRetro
 
 import com.mvp.omnicure.kotlinactivity.requestbodys.LoginFailedRequestBody
 import com.mvp.omnicure.kotlinactivity.requestbodys.PhoneNumberBody

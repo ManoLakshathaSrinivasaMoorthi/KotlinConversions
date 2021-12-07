@@ -37,7 +37,7 @@ import java.util.ArrayList
 
 class UrgentMessageAdapter(
     context: ViewUrgentMessagesActivity,
-    list: ArrayList<ConsultMessage?>,
+    list: ArrayList<ConsultMessage>,
     key: String,
     sid: String,
     strUID: String,
@@ -763,17 +763,16 @@ class UrgentMessageAdapter(
             chatViewModel?.sendChatMessageCall(sendChatMessageInputRequestModel,
                 consultMessage.getId())?.observe(context) { sendChatMessageOutuputResponseModel1 ->
 
-                if (sendChatMessageOutuputResponseModel1 != null && sendChatMessageOutuputResponseModel1.getStatus() != null && sendChatMessageOutuputResponseModel1.getStatus()) {
+                if (sendChatMessageOutuputResponseModel1 != null && sendChatMessageOutuputResponseModel1.status != null && sendChatMessageOutuputResponseModel1.status!!) {
 
                     // Firebase uid
                     val mFirebaseUserProviderUid: String? =
                         PrefUtility().getFireBaseUid(context)
 
 
-
                     // Success response
 
-                    if (sendChatMessageOutuputResponseModel1.getStatus()) {
+                    if (sendChatMessageOutuputResponseModel1.status!!){
                         context.runOnUiThread {
 
                             // Dismiss progress bar
@@ -794,7 +793,7 @@ class UrgentMessageAdapter(
 
                         // Failure response
                         val errMsg: String? = ErrorMessages().getErrorMessage(context,
-                            java.lang.String.valueOf(sendChatMessageOutuputResponseModel1.getErrorMessage()),
+                            java.lang.String.valueOf(sendChatMessageOutuputResponseModel1.errorMessage),
                             Constants.API.getHospital)
                         context.runOnUiThread {
 
@@ -826,7 +825,7 @@ class UrgentMessageAdapter(
                 } else {
                     // Failure response
                     val errMsg: String? = ErrorMessages().getErrorMessage(context,
-                        java.lang.String.valueOf(sendChatMessageOutuputResponseModel1.getErrorMessage()),
+                        java.lang.String.valueOf(sendChatMessageOutuputResponseModel1?.errorMessage),
                         Constants.API.getHospital)
                     context.runOnUiThread {
 

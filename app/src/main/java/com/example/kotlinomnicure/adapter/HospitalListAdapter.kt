@@ -17,8 +17,7 @@ import java.util.ArrayList
 class HospitalListAdapter(
     param: HospitalRecyclerListener,
     hospitalList: Any,
-    selectedHosp: String
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    selectedHosp: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var selectedHospital: String? = null
     private var hospitalRecyclerListener: HospitalRecyclerListener? = null
     private var hospitalList: List<Hospital>? = null

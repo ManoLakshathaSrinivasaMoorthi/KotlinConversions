@@ -16,8 +16,7 @@ import java.util.ArrayList
 class GroupListAdapter(
     groupCallActivity: GroupCallActivity,
     providerList: ArrayList<Provider>,
-    selectedProviderIds: ArrayList<Int>
-) : RecyclerView.Adapter<GroupListAdapter.ViewHolder>() {
+    selectedProviderIds: ArrayList<Int>) : RecyclerView.Adapter<GroupListAdapter.ViewHolder>() {
     private var inflater: LayoutInflater? = null
     var context: Context? = null
     var selectedProviderIds = ArrayList<Int>()
@@ -26,8 +25,8 @@ class GroupListAdapter(
 
     fun GroupListAdapter(context: Context, arr: ArrayList<Provider>, selected: ArrayList<Int>) {
         this.context = context
-        this@GroupListAdapter.providerList = arr
-        this@GroupListAdapter.selectedProviderIds = selected
+        this.providerList = arr
+        this.selectedProviderIds = selected
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         setHasStableIds(true)
     }
