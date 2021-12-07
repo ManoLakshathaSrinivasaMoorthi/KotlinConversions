@@ -183,6 +183,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }

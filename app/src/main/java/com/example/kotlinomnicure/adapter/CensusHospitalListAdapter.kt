@@ -3,33 +3,25 @@ package com.example.kotlinomnicure.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ItemChildCensusListBinding
 import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
-import java.util.ArrayList
+import java.util.*
 
-class CensusHospitalListAdapter: RecyclerView.Adapter<CensusHospitalListAdapter.ViewHolder>(),
+class CensusHospitalListAdapter(
+    hospitalRecyclerListener: HospitalRecyclerListener,
+    hospitalLists: List<Hospital?>,
+    selectedHosp: String?
+) : RecyclerView.Adapter<CensusHospitalListAdapter.ViewHolder>(),
     Filterable {
-    private var selectedHospital: String? = null
-    private var hospitalRecyclerListener: HospitalRecyclerListener? = null
-    private var hospitalList: List<Hospital>? = null
-    private var hospitalListFiltered: List<Hospital>? = null
-    private var onSearchResultListener: OnSearchResultListener? = null
-
-    fun CensusHospitalListAdapter(
-        hospitalRecyclerListener: HospitalRecyclerListener?,
-        hospitalList: List<Hospital>?,
-        selectedHosp: String?,
-    ) {
-        this.hospitalRecyclerListener = hospitalRecyclerListener
-        this.hospitalList = hospitalList
-        hospitalListFiltered = hospitalList
-        selectedHospital = selectedHosp
-    }
+    private var selectedHospital: String? = selectedHosp
+    private var hospitalRecyclerListener: HospitalRecyclerListener? = hospitalRecyclerListener
+    private var hospitalList: List<Hospital?> = hospitalLists
+    private var hospitalListFiltered: List<Hospital?> = hospitalLists
+    var onSearchResultListener: OnSearchResultListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -58,18 +50,20 @@ class CensusHospitalListAdapter: RecyclerView.Adapter<CensusHospitalListAdapter.
         }
     }
 
+    @JvmName("getOnSearchResultListener1")
     fun getOnSearchResultListener(): OnSearchResultListener? {
         return onSearchResultListener
     }
 
+    @JvmName("setOnSearchResultListener1")
     fun setOnSearchResultListener(onSearchResultListener: OnSearchResultListener?) {
         this.onSearchResultListener = onSearchResultListener
     }
 
     private fun setHospitalList(holder: ViewHolder, position: Int) {
-        val hospital: Hospital = hospitalListFiltered!![position]
-        holder.itemBinding.txtHospitalName.setText(hospital.getName())
-        holder.itemBinding.txtAddress.setText(hospital.getSubRegionName())
+        val hospital: Hospital? = hospitalListFiltered!![position]
+        holder.itemBinding.txtHospitalName.setText(hospital?.getName())
+        holder.itemBinding.txtAddress.setText(hospital?.getSubRegionName())
         holder.itemView.setOnClickListener { hospitalRecyclerListener!!.onItemSelected(hospital) }
     }
 
@@ -90,8 +84,8 @@ class CensusHospitalListAdapter: RecyclerView.Adapter<CensusHospitalListAdapter.
                 } else {
                     val filteredList: MutableList<Hospital> = ArrayList<Hospital>()
                     for (hospital in hospitalList!!) {
-                        if (hospital.getName()?.toLowerCase()?.contains(charString.toLowerCase()) == true ||
-                            hospital.getSubRegionName()?.toLowerCase()
+                        if (hospital?.getName()?.toLowerCase()?.contains(charString.toLowerCase()) == true ||
+                            hospital?.getSubRegionName()?.lowercase(Locale.getDefault())
                                 ?.contains(charString.toLowerCase()) == true
                         ) {
                             filteredList.add(hospital)

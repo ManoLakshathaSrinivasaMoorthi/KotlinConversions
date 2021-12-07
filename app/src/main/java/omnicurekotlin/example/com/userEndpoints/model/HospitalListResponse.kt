@@ -6,9 +6,9 @@ class HospitalListResponse {
 
     private var count: Int? = null
     private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var hospitalList: List<Hospital?>? = null
-    private var id: Long? = null
+    var errorMessage: String? = null
+    var hospitalList: List<Hospital?>? = null
+    var id: Long? = null
     private var status: Boolean? = null
 
 
@@ -33,6 +33,7 @@ class HospitalListResponse {
     }
 
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -42,6 +43,7 @@ class HospitalListResponse {
         return this
     }
 
+    @JvmName("getHospitalList1")
     fun getHospitalList(): List<Hospital?>? {
         return hospitalList
     }
@@ -53,6 +55,7 @@ class HospitalListResponse {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
