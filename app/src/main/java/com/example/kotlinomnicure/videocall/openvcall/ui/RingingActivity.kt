@@ -2,10 +2,13 @@ package com.example.kotlinomnicure.videocall.openvcall.ui
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
+
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.getIntent
+
 import android.content.IntentFilter
+
 import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -23,6 +26,7 @@ import androidx.appcompat.app.ActionBar
 import com.bumptech.glide.Glide
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
+import com.example.kotlinomnicure.utils.Buildconfic
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
@@ -69,12 +73,12 @@ class RingingActivity:BaseActivity() {
             ab.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
             ab.setCustomView(R.layout.ard_agora_actionbar)
         }
-        val sosImageView = findViewById(R.id.sos_icon) as ImageView
-        val patient_title = findViewById(R.id.patient_title) as TextView
+        val sosImageView = findViewById<ImageView>(R.id.sos_icon)
+        val patient_title = findViewById<TextView>(R.id.patient_title)
 
         //appname
-        val header = findViewById(R.id.header) as TextView
-        header.text = java.lang.String.format(getString(R.string.omnicure_now), Buildconfic.value())
+        val header = findViewById<TextView>(R.id.header)
+        header.text = java.lang.String.format(getString(R.string.omnicure_now), Buildconfic().value())
         val patientInfoLayout = findViewById<LinearLayout>(R.id.patient_info_layout)
         if (intent.hasExtra("sos")) {
             sosImageView.visibility = View.VISIBLE
@@ -95,7 +99,7 @@ class RingingActivity:BaseActivity() {
         }
         val caller_image_view: CircularImageView =
             findViewById(R.id.caller_image_view)
-        caller_image_view.setVisibility(View.GONE)
+        caller_image_view.visibility = View.GONE
         val caller_image_text = findViewById<TextView>(R.id.caller_image_text)
         val caller_name = findViewById<TextView>(R.id.caller_name)
         val providerName = intent.getStringExtra("providerName")
@@ -267,7 +271,7 @@ $providerName$pt"""
                     }
                     var groupCall = false
                     //                    Log.i("RingingActivity", "provider_list " + mProviderList);
-                    if (providerListNotification != null && providerListNotification.size > 2) {
+                    if (providerListNotification.size > 2) {
                         groupCall = true
                     } else if (getIntent().hasExtra("sos")) {
                         groupCall = true
@@ -635,22 +639,22 @@ $providerName$pt"""
 
 
     class ScreenReceiver : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
+        override fun onReceive(context: Context?, intent: Intent) {
             if (intent.action == Intent.ACTION_SCREEN_OFF) {
                 // do whatever you need to do here
-                if (player != null) {
-                    player.stop()
+                if (RingingActivity().player != null) {
+                    RingingActivity().player?.stop()
                 }
             } else if (intent.action.equals("sos-dismiss", ignoreCase = true)) {
                 val channel = intent.getStringExtra(ConstantApp().ACTION_KEY_CHANNEL_NAME)
-                if (getIntent()?.hasExtra("sos") == true && channel.equals(
-                        getIntent().getStringExtra(
+                if (getIntent("")?.hasExtra("sos") == true && channel.equals(
+                        getIntent("").getStringExtra(
                             ConstantApp().ACTION_KEY_CHANNEL_NAME
                         ), ignoreCase = true
                     )
                 ) {
-                    sendAuditId(Constants.FCMMessageType.CALLER_NOT_ANSWER, false)
-                    Handler().postDelayed({ finish() }, 1000)
+                   RingingActivity(). sendAuditId(Constants.FCMMessageType.CALLER_NOT_ANSWER, false)
+                    Handler().postDelayed({ RingingActivity().finish() }, 1000)
                 }
             }
         }

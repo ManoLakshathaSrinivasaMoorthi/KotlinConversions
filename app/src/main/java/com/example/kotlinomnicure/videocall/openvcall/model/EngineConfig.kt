@@ -1,9 +1,9 @@
 package com.example.kotlinomnicure.videocall.openvcall.model
 
 class EngineConfig {
-    private var mUid = 0
+     var mUid = 0
 
-    private var mChannel: String? = null
+     var mChannel: String? = null
 
     fun getmUid(): Int {
         return mUid

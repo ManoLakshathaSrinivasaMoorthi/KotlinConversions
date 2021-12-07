@@ -11,27 +11,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 
-class VideoEncResolutionAdapter: RecyclerView.Adapter<*> {
-
+class VideoEncResolutionAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var mContext: Context? = null
 
     private var mSelectedIdx = 0
 
-    constructor(context: Context?, selected: Int) {
+    fun VideoEncResolutionAdapter(context: Context?, selected: Int) {
         mContext = context
         mSelectedIdx = selected
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val v: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.video_enc_resolution_item, parent, false)
         return VideoEncResolutionViewHolder(v)
     }
 
 
-
     override fun getItemCount(): Int {
-        return mContext!!.resources.getStringArray(R.array.string_array_resolutions).size
+        return mContext!!.resources.getStringArray(R.array.phoneTypes).size
     }
 
     class VideoEncResolutionViewHolder(itemView: View) :
@@ -55,8 +53,12 @@ class VideoEncResolutionAdapter: RecyclerView.Adapter<*> {
     }
 
     override fun onBindViewHolder(holder: Nothing, position: Int) {
+
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val resolution =
-            mContext!!.resources.getStringArray(R.array.string_array_resolutions)[position]
+            mContext!!.resources.getStringArray(R.array.postalAddressTypes)[position]
         (holder as VideoEncResolutionViewHolder).mTextResolution.text = resolution
         holder.itemView.setBackgroundResource(if (position == mSelectedIdx) R.drawable.rounded_bg_for_btn else R.drawable.rounded_bg_for_btn_normal)
         holder.mTextResolution.setTextColor(mContext!!.resources.getColor(if (position == mSelectedIdx) R.color.white else R.color.dark_black))

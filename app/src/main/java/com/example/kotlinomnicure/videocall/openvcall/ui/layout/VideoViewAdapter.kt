@@ -156,7 +156,7 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     protected fun setProfileInUsers() {
         for (i in mUsers!!.indices) {
-            val provider: Provider? = getProviderFromList(mUsers!![i].getmUid())
+            val provider: Provider? = getProviderFromList(mUsers!![i].getmUid().toLong())
             if (provider != null) {
                 mUsers!![i].setmName(provider.getName())
                 mUsers!![i].setmProfilePic(provider.getProfilePicUrl())
@@ -164,9 +164,9 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         }
     }
 
-    private fun getProviderFromList(uid: Int): Provider? {
+    open fun getProviderFromList(uid: Long): Provider? {
         for (provider in mProviderList!!) {
-            if (provider?.getId()?.equals(Any?) === uid) run run {
+            if (provider.getId() === uid) {
                 return provider
             }
         }

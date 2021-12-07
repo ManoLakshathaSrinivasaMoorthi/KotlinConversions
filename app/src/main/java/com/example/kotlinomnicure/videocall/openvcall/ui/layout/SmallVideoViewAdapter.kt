@@ -15,24 +15,19 @@ import org.slf4j.LoggerFactory
 import java.util.ArrayList
 import java.util.HashMap
 
-abstract class SmallVideoViewAdapter: VideoViewAdapter {
+abstract class SmallVideoViewAdapter//        log.debug("SmallVideoViewAdapter " + (mLocalUid & 0xFFFFFFFFL) + " " + (mExceptedUid & 0xFFFFFFFFL));
+    (
+    activity: Activity?,
+    localUid: Int,
+    localStatus: Int,
+    localAudioStatus: Int,
+    exceptedUid: Int,
+    uids: HashMap<Int?, SurfaceView?>?,
+    providerList: ArrayList<Provider?>?
+) : VideoViewAdapter() {
     private val log = LoggerFactory.getLogger(SmallVideoViewAdapter::class.java)
 
-    private var mExceptedUid = 0
-
-   constructor(
-        activity: Activity?,
-        localUid: Int,
-        localStatus: Int,
-        localAudioStatus: Int,
-        exceptedUid: Int,
-        uids: HashMap<Int?, SurfaceView?>?,
-        providerList: ArrayList<Provider?>?
-    ) :
-        super() {
-       mExceptedUid = exceptedUid
-//        log.debug("SmallVideoViewAdapter " + (mLocalUid & 0xFFFFFFFFL) + " " + (mExceptedUid & 0xFFFFFFFFL));
-   }
+    private var mExceptedUid = exceptedUid
 
     override fun notifyUiChanged(
        uids: HashMap<Int?, SurfaceView?>?,
@@ -122,7 +117,7 @@ abstract class SmallVideoViewAdapter: VideoViewAdapter {
             val audioStatus = HashMap<Int, Int>()
             audioStatus[smallVideoViewAdapter.mLocalUid] = smallVideoViewAdapter.mLocalAudioStatus
             smallVideoViewAdapter.mUsers?.let {
-                VideoViewAdapterUtil().composeDataItem(it, uids,
+                VideoViewAdapterUtil().composeDataItems(it, uids,
                     smallVideoViewAdapter.mLocalUid, status, audioStatus, null,
                     smallVideoViewAdapter.mVideoInfo,
                     smallVideoViewAdapter.mExceptedUid

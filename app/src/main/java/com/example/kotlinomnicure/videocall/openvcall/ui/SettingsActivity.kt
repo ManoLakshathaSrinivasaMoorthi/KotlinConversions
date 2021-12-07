@@ -1,7 +1,7 @@
 package com.example.kotlinomnicure.videocall.openvcall.ui
 
-import android.R
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.Menu
@@ -13,19 +13,19 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import com.example.kotlinomnicure.videocall.openvcall.ui.layout.SettingsButtonDecoration
 import com.example.kotlinomnicure.videocall.openvcall.ui.layout.VideoEncResolutionAdapter
 
-class SettingsActivity:AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_item)
+        setContentView(R.layout.activity_settings)
         val ab = supportActionBar
         if (ab != null) {
             ab.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
@@ -59,7 +59,7 @@ class SettingsActivity:AppCompatActivity() {
             this,
             R.array.string_array_frame_rate, R.layout.simple_spinner_item_light
         )
-        videoFpsAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        videoFpsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         videoFpsSpinner.adapter = videoFpsAdapter
         videoFpsSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
@@ -87,6 +87,10 @@ class SettingsActivity:AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return false
+    }
+
+  override  fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 
 }

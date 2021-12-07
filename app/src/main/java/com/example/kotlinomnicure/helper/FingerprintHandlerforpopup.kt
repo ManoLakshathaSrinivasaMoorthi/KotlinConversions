@@ -17,9 +17,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.example.kotlinomnicure.R
+import com.example.kotlinomnicure.activity.NotificationActivity
 import com.example.kotlinomnicure.customview.CustomProgressDialog
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
+import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -91,31 +93,37 @@ class FingerprintHandlerforpopup : FingerprintManager.AuthenticationCallback {
         //alertDialog.dismiss();
     }
 
-    override fun onAuthenticationFailed() {
+    override fun onAuthenticationFailed(){
+
         update("Auth Failed. ", false)
+
         if (i == 3) {
             i = 0
-            dialogview?.context?.let {
-                PrefUtility().saveBooleanInPref(it, Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
-            }
-            dialogview?.context?.let {
-                PrefUtility().saveStringInPref(it, Constants.SharedPrefConstants.PASSWORD, "")
-            }
+            PrefUtility().saveBooleanInPref(
+                dialogview!!.context,
+                Constants.SharedPrefConstants.FINGERPRINTFLAG,
+                false
+            )
+            PrefUtility().saveStringInPref(
+                dialogview!!.context,
+                Constants.SharedPrefConstants.PASSWORD,
+                ""
+            )
             //PrefUtility.saveBooleanInPref(dialogview.getContext(), Constants.SharedPrefConstants.LOCKFP, true);
 //            Intent intent = new Intent(context, LoginActivity.class);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //            context.startActivity(intent);
             stopAuth()
-            activity as FragmentActivity??. let {
-                CustomSnackBar.make(dialogview,
-                    it,
-                    CustomSnackBar.WARNING,
-                    context!!.getString(R.string.Authfaildnew),
-                    CustomSnackBar.TOP,
-                    3000,
-                    0
-                ).show()
-            }
+            CustomSnackBar.make(
+                dialogview,
+                activity as FragmentActivity?,
+                CustomSnackBar.WARNING,
+                context!!.getString(R.string.Authfaildnew),
+                CustomSnackBar.TOP,
+                3000,
+                0
+            )!!
+                .show()
             if (redirection == "myprofile") {
                 fp!!.isChecked = false
                 alertDialog!!.dismiss()
@@ -123,7 +131,7 @@ class FingerprintHandlerforpopup : FingerprintManager.AuthenticationCallback {
 
             //alertDialog.dismiss();
         } else {
-            val finerprintstate: Boolean = PrefUtility.getBooleanInPref(
+            val finerprintstate: Boolean = PrefUtility().getBooleanInPref(
                 dialogview!!.context,
                 Constants.SharedPrefConstants.FINGERPRINTFLAG,
                 false
@@ -137,12 +145,14 @@ class FingerprintHandlerforpopup : FingerprintManager.AuthenticationCallback {
                     CustomSnackBar.TOP,
                     3000,
                     0
-                ).show()
+                )!!
+                    .show()
 
                 // diaalog("Authentication Failed Please Try Again");
             }
         }
         i++
+
     }
 
     override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence) {
@@ -152,152 +162,153 @@ class FingerprintHandlerforpopup : FingerprintManager.AuthenticationCallback {
     override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult?) {
         update("You can now access the app.", true)
         //   CustomSnackBar.make(dialogview, (Activity)context,CustomSnackBar.SUCCESS,context.getString(R.string.auth),CustomSnackBar.TOP,3000,0).show();
-        val password: String = PrefUtility.getStringInPref(
+        val password: String? = PrefUtility().getStringInPref(
             dialogview!!.context,
             Constants.SharedPrefConstants.PASSWORD,
             ""
         )
-        EncUtil.generateKey(activity)
+        EncUtil().generateKey(activity)
         viewModel =
             ViewModelProviders.of((activity as FragmentActivity?)!!).get(LoginViewModel::class.java)
-        val decryptpassword: String = EncUtil.decrypt(dialogview!!.context, password)
-        checkPasswordApifingerprint(decryptpassword)
+        val decryptpassword: String? = EncUtil().decrypt(dialogview!!.context, password)
+        decryptpassword?.let { checkPasswordApifingerprint(it) }
     }
 
     private fun checkPasswordApifingerprint(password: String) {
         //  showProgressBar(dialogview.getContext().getString(R.string.password_verify));
-        val token: String = PrefUtility.getStringInPref(
-            dialogview!!.context,
-            com.mvp.omnicure.utils.Constants.SharedPrefConstants.TOKEN,
-            ""
-        )
-        val strEmail: String = PrefUtility.getStringInPref(
+        val token: String? = PrefUtility().getStringInPref(
+            dialogview!!.context, Constants.SharedPrefConstants.TOKEN, "")
+        val strEmail: String? = PrefUtility().getStringInPref(
             dialogview!!.context,
             Constants.SharedPrefConstants.EMAIL,
             ""
         )
-        viewModel.checkPassword(strEmail, password, token)
-            .observe(activity as FragmentActivity?) { commonResponse ->
-                // dismissProgressBar();
-//            Log.i(TAG, "Check password response " + commonResponse);
-                if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                    EncUtil.generateKey(dialogview!!.context)
-                    val encryptpassword: String =
-                        EncUtil.encrypt(dialogview!!.context, password)
-                    PrefUtility.saveStringInPref(
-                        dialogview!!.context,
-                        Constants.SharedPrefConstants.PASSWORD,
-                        encryptpassword
-                    )
-                    PrefUtility.saveBooleanInPref(
-                        dialogview!!.context,
-                        Constants.SharedPrefConstants.FINGERPRINTFLAG,
-                        true
-                    )
-                    CustomSnackBar.make(
-                        dialogview,
-                        activity as FragmentActivity?,
-                        CustomSnackBar.SUCCESS,
-                        context!!.getString(R.string.auth),
-                        CustomSnackBar.TOP,
-                        3000,
-                        0
-                    ).show()
-                    if (redirection == "notification") {
-                        handledisable()
-                        activity!!.finish()
-                    } else if (redirection == "myprofile") {
-                        handledisable()
+        strEmail?.let {
+            token?.let { it1 ->
+                viewModel?.checkPassword(it, password, it1)
+                   ?.observe((activity as FragmentActivity?)!!) { commonResponse ->
+                        // dismissProgressBar();
+                        //            Log.i(TAG, "Check password response " + commonResponse);
+                        if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
+                            EncUtil().generateKey(dialogview!!.context)
+                            val encryptpassword: String? =
+                                EncUtil().encrypt(dialogview!!.context, password)
+                            PrefUtility().saveStringInPref(
+                                dialogview!!.context,
+                                Constants.SharedPrefConstants.PASSWORD,
+                                encryptpassword
+                            )
+                            PrefUtility().saveBooleanInPref(
+                                dialogview!!.context,
+                                Constants.SharedPrefConstants.FINGERPRINTFLAG,
+                                true
+                            )
+                            CustomSnackBar.make(
+                                dialogview,
+                                activity as FragmentActivity?,
+                                CustomSnackBar.SUCCESS,
+                                context!!.getString(R.string.auth),
+                                CustomSnackBar.TOP,
+                                3000,
+                                0
+                            )?.show()
+                            if (redirection == "notification") {
+                                handledisable()
+                                activity!!.finish()
+                            } else if (redirection == "myprofile") {
+                                handledisable()
+                            }
+
+
+                            //Do nothing
+                            //  new LogoutHelper(dialogview.getContext(), null).doLogout();
+                        } else {
+                            //  PrefUtility.saveBooleanInPref(dialogview.getContext(), Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
+                            // PrefUtility.saveStringInPref(dialogview.getContext(), Constants.SharedPrefConstants.PASSWORD, "");
+                            val errMsg: String? = ErrorMessages().getErrorMessage(
+                                dialogview!!.context,
+                                commonResponse.getErrorMessage(),
+                                Constants.API.getDocBoxPatientList
+                            )
+                            // Toast.makeText(context, errMsg, Toast.LENGTH_SHORT).show();
+                            //                UtilityMethods.showErrorSnackBar(dialogView, errMsg, Snackbar.LENGTH_LONG);
+                            if (commonResponse.getErrorId() === 0) {
+                                CustomSnackBar.make(
+                                    dialogview,
+                                    activity as FragmentActivity?,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0
+                                )?.show()
+                                if (redirection == "myprofile") {
+                                    fp!!.isChecked = false
+                                    handledisable()
+                                }
+                            } else if (commonResponse.getErrorId() === 106) {
+                                //finger print
+                                val errMsg1 = context!!.getString(R.string.temporarily_locked)
+                                CustomSnackBar.make(
+                                    dialogview,
+                                    activity as FragmentActivity?,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0
+                                )?.show()
+                                PrefUtility().saveBooleanInPref(
+                                    dialogview!!.context,
+                                    Constants.SharedPrefConstants.FINGERPRINTFLAG,
+                                    false
+                                )
+                                PrefUtility().saveStringInPref(
+                                    dialogview!!.context,
+                                    Constants.SharedPrefConstants.PASSWORD,
+                                    ""
+                                )
+                                if (redirection == "myprofile") {
+                                    fp!!.isChecked = false
+                                }
+                                handledisable()
+                                //                    Intent intent = new Intent(context, LoginActivity.class);
+                                //                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                //                    context.startActivity(intent);
+                                val intent = Intent(context, NotificationActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                //                                        dialogIntent.putExtra("remoteTitle", activity.getString(R.string.user_locked_title));
+                                intent.putExtra(
+                                    "remoteTitle",
+                                    context!!.getString(R.string.user_locked_title)
+                                )
+                                intent.putExtra("remoteMessage", commonResponse.getErrorMessage())
+                                intent.putExtra("messageType", Constants.FCMMessageType.TEMP_LOCK)
+                                context!!.startActivity(intent)
+                            } else {
+                                CustomSnackBar.make(
+                                    dialogview,
+                                    activity as FragmentActivity?,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0
+                                )?.show()
+                                if (redirection == "myprofile") {
+                                    fp!!.isChecked = false
+                                    handledisable()
+                                }
+
+                                //  alertDialog.dismiss();
+                            }
+
+
+                            //    new LogoutHelper(NotificationActivity.this, null).doLogout();
+                        }
                     }
-
-
-                    //Do nothing
-                    //  new LogoutHelper(dialogview.getContext(), null).doLogout();
-                } else {
-                    //  PrefUtility.saveBooleanInPref(dialogview.getContext(), Constants.SharedPrefConstants.FINGERPRINTFLAG, false);
-                    // PrefUtility.saveStringInPref(dialogview.getContext(), Constants.SharedPrefConstants.PASSWORD, "");
-                    val errMsg: String = ErrorMessages.getErrorMessage(
-                        dialogview!!.context,
-                        commonResponse.getErrorMessage(),
-                        Constants.API.getDocBoxPatientList
-                    )
-                    // Toast.makeText(context, errMsg, Toast.LENGTH_SHORT).show();
-//                UtilityMethods.showErrorSnackBar(dialogView, errMsg, Snackbar.LENGTH_LONG);
-                    if (commonResponse.getErrorId() === 0) {
-                        CustomSnackBar.make(
-                            dialogview,
-                            activity as FragmentActivity?,
-                            CustomSnackBar.WARNING,
-                            errMsg,
-                            CustomSnackBar.TOP,
-                            3000,
-                            0
-                        ).show()
-                        if (redirection == "myprofile") {
-                            fp!!.isChecked = false
-                            handledisable()
-                        }
-                    } else if (commonResponse.getErrorId() === 106) {
-                        //finger print
-                        val errMsg1 = context!!.getString(R.string.temporarily_locked)
-                        CustomSnackBar.make(
-                            dialogview,
-                            activity as FragmentActivity?,
-                            CustomSnackBar.WARNING,
-                            errMsg,
-                            CustomSnackBar.TOP,
-                            3000,
-                            0
-                        ).show()
-                        PrefUtility.saveBooleanInPref(
-                            dialogview!!.context,
-                            Constants.SharedPrefConstants.FINGERPRINTFLAG,
-                            false
-                        )
-                        PrefUtility.saveStringInPref(
-                            dialogview!!.context,
-                            Constants.SharedPrefConstants.PASSWORD,
-                            ""
-                        )
-                        if (redirection == "myprofile") {
-                            fp!!.isChecked = false
-                        }
-                        handledisable()
-                        //                    Intent intent = new Intent(context, LoginActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    context.startActivity(intent);
-                        val intent = Intent(context, NotificationActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        //                                        dialogIntent.putExtra("remoteTitle", activity.getString(R.string.user_locked_title));
-                        intent.putExtra(
-                            "remoteTitle",
-                            context!!.getString(R.string.user_locked_title)
-                        )
-                        intent.putExtra("remoteMessage", commonResponse.getErrorMessage())
-                        intent.putExtra("messageType", Constants.FCMMessageType.TEMP_LOCK)
-                        context!!.startActivity(intent)
-                    } else {
-                        CustomSnackBar.make(
-                            dialogview,
-                            activity as FragmentActivity?,
-                            CustomSnackBar.WARNING,
-                            errMsg,
-                            CustomSnackBar.TOP,
-                            3000,
-                            0
-                        ).show()
-                        if (redirection == "myprofile") {
-                            fp!!.isChecked = false
-                            handledisable()
-                        }
-
-                        //  alertDialog.dismiss();
-                    }
-
-
-                    //    new LogoutHelper(NotificationActivity.this, null).doLogout();
-                }
             }
+        }
     }
 
     private fun handledisable() {
@@ -318,8 +329,8 @@ class FingerprintHandlerforpopup : FingerprintManager.AuthenticationCallback {
                     isDestroyed = true
                 }
             }
-            if (!(context as Activity?)!!.isFinishing && !isDestroyed && progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss()
+            if (!(context as Activity?)!!.isFinishing && !isDestroyed && progressDialog != null && progressDialog!!.isShowing()) {
+                progressDialog?.dismiss()
             }
             progressDialog = null
         } catch (e: Exception) {
@@ -330,16 +341,16 @@ class FingerprintHandlerforpopup : FingerprintManager.AuthenticationCallback {
     fun showProgressBar(text: String?) {
         dismissProgressBar()
         try {
-            progressDialog = CustomProgressDialog(context as Activity?)
-            progressDialog.setText(text)
-            progressDialog.setCancelable(false)
+            progressDialog = CustomProgressDialog((context as Activity?)!!)
+            progressDialog?.setText(text)
+            progressDialog?.setCancelable(false)
             var isDestyoed = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 isDestyoed = (context as Activity?)!!.isDestroyed
             }
             if (!(context as Activity?)!!.isFinishing && !isDestyoed) {
-                if (progressDialog != null && !progressDialog.isShowing()) {
-                    progressDialog.show()
+                if (progressDialog != null && !progressDialog!!.isShowing()) {
+                    progressDialog?.show()
                 }
             }
         } catch (e: Exception) {
@@ -357,7 +368,7 @@ class FingerprintHandlerforpopup : FingerprintManager.AuthenticationCallback {
             paraLabel.setTextColor(ContextCompat.getColor(context!!, R.color.colorAccent))
         } else {
             paraLabel.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
-            imageView.setImageResource(R.mipmap.action_done)
+            imageView.setImageResource(R.mipmap.ic_launcher)
         }
     }
 

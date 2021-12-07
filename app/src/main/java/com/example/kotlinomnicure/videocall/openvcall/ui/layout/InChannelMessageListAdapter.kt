@@ -11,14 +11,14 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.videocall.openvcall.model.Message
 import java.util.ArrayList
 
-class InChannelMessageListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private var mMsgList: ArrayList<Message>? = null
+class InChannelMessageListAdapter(activity: Activity, list: ArrayList<Message>?) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var mMsgList: ArrayList<Message>? = list
 
     private var mInflater: LayoutInflater? = null
 
-    constructor(activity: Activity, list: ArrayList<Message>?) {
+    init {
         mInflater = activity.layoutInflater
-        mMsgList = list
     }
 
 

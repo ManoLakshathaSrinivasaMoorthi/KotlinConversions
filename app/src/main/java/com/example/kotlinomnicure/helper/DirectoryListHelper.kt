@@ -61,7 +61,7 @@ class DirectoryListHelper {
                             if (listResponse.getProviderList() != null && !listResponse.getProviderList()!!
                                     .isEmpty()
                             ) {
-                                setDirectoryList(listResponse.getProviderList())
+                                setDirectoryList(listResponse.getProviderList() as List<Provider>)
                             } else {
                                 erroMsg = context!!.getString(R.string.directory_list_empty)
                             }
@@ -107,7 +107,7 @@ class DirectoryListHelper {
         if (!statusActiveProviders.isEmpty()) {
             Collections.sort(statusActiveProviders,
                 Comparator<Any?> { provider1, provider2 ->
-                    provider1.getName().compareToIgnoreCase(provider2.getName())
+                    provider1().getName().compareToIgnoreCase(provider2.getName())
                 })
         }
         if (!providers.isEmpty()) {
@@ -138,14 +138,14 @@ class DirectoryListHelper {
             return
         }
         val hospitalNames = ArrayList(directoryMap.keys)
-        if (binding?.idList?.idExapandableListview.getExpandableListAdapter() == null) {
+        if (binding?.idList?.idExapandableListview?.getExpandableListAdapter() == null) {
             val directoryAdapter = DirectoryExpandableListAdapter(context)
             directoryAdapter.setItems(hospitalNames, directoryMap)
             binding?.idList?.idExapandableListview?.setAdapter(directoryAdapter)
-            binding.idList.idExapandableListview.expandGroup(lastExpandedGroupPosition) //1st group default exapanded
+            binding?.idList?.idExapandableListview?.expandGroup(lastExpandedGroupPosition) //1st group default exapanded
         } else {
             val directoryAdapter: DirectoryExpandableListAdapter =
-                binding.idList.idExapandableListview.getExpandableListAdapter() as DirectoryExpandableListAdapter
+                binding?.idList.idExapandableListview.expandableListAdapter as DirectoryExpandableListAdapter
             directoryAdapter.setItems(hospitalNames, directoryMap)
             lastExpandedGroupPosition = directoryAdapter.getExpandedGroupPos()
             directoryAdapter.notifyDataSetChanged()
