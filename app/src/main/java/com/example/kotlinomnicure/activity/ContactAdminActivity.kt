@@ -1,6 +1,7 @@
 package com.example.kotlinomnicure.activity
 
 import android.annotation.SuppressLint
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
@@ -67,7 +68,7 @@ class ContactAdminActivity : BaseActivity() {
         val params = ContactAdminParams()
         params.setProviderId(providerId)
         params.setMessage(binding?.textAdmin?.getText().toString().trim())
-        params.setAppVersion(getVersion())
+        params.setAppVersion(getVersions())
         params.setUserDevice("android")
 
         if (email != null) {
@@ -111,6 +112,18 @@ class ContactAdminActivity : BaseActivity() {
         }
     }
 
+   private fun getVersions(): String? {
+        var version = "0"
+        try {
+            val packageInfo = packageManager.getPackageInfo(packageName, 0)
+            version = packageInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+//            Log.e(TAG, "Exception:", e.getCause());
+        }
+        return version
+    }
+
+
     private fun getCurrentUser(): Provider? {
         if (currentUser == null) {
             currentUser = PrefUtility().getProviderObject(this)
@@ -140,16 +153,7 @@ class ContactAdminActivity : BaseActivity() {
         mHandler?.postDelayed({ view.isEnabled = true }, 500)
     }
 
-    fun getVersion(): String? {
-        var version = "0"
-        try {
-            val packageInfo = packageManager.getPackageInfo(packageName, 0)
-            version = packageInfo.versionName
-        } catch (e: PackageManager.NameNotFoundException) {
-            Log.e(TAG, "Exception:", e.cause)
-        }
-        return version
-    }
+
 
     fun onSuccess() {
 
@@ -182,7 +186,8 @@ class ContactAdminActivity : BaseActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String?>,
-        grantResults: IntArray) {
+        grantResults: IntArray,
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == RecordAudioRequestCode && grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) Toast.makeText(
             this,

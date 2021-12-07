@@ -17,7 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
 import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
+import com.example.kotlinomnicure.viewmodel.RemoteHandOffViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.CompletePatientBinding
 import com.example.kotlinomnicure.utils.Constants

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 class HandOffListResponse {
-    private var currentProvider: CurrentProvider? = null
+    var currentProvider: CurrentProvider? = null
 
     @Expose
     @SerializedName("otherBspList")
@@ -17,11 +17,11 @@ class HandOffListResponse {
 
     @Expose
     @SerializedName("status")
-    private var status = false
+    var status = false
 
     @Expose
     @SerializedName("errorMessage")
-    private var errorMessage: String? = null
+    var errorMessage: String? = null
 
     fun isStatus(): Boolean {
         return status

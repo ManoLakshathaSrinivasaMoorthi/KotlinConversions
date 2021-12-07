@@ -1,14 +1,12 @@
 package com.example.kotlinomnicure.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.adapter.TeamMembersListAdapter
 import com.example.kotlinomnicure.databinding.ActivityTeamGroupChatBinding

@@ -7,14 +7,15 @@ import android.view.View
 import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.healthcareEndPoints.Model.AddNotificationDataRequest
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityCustomNotificationBinding
 
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.*
 import com.google.gson.Gson
+import omnicurekotlin.example.com.healthcareEndPoints.model.AddNotificationDataRequest
 
 class CustomNotificationActivity : BaseActivity(){
     // Variables
@@ -173,29 +174,36 @@ class CustomNotificationActivity : BaseActivity(){
             if (notificationResponse != null) {
                 val gson = Gson()
 
+
+
                 // Saving the Id for addorupdateProviderNotification API
-                PrefUtility().saveStringInPref(this,
+                PrefUtility().saveStringInPref(this@CustomNotificationActivity,
                     Constants.SharedPrefConstants.ALERT_NOTIFTY_ID,
-                    java.lang.String.valueOf(notificationResponse.getNotificationSettings()
-                        .id))
+                    java.lang.String.valueOf(notificationResponse.notificationSettings.id))
+
+
 
                 // Saving the current status of Acuity in shared preference
-
-                PrefUtility().saveStringInPref(this,
+                PrefUtility().saveStringInPref(this@CustomNotificationActivity,
                     Constants.SharedPrefConstants.ALERT_ACUITY,
-                    (notificationResponse.getNotificationRequests().get(0)
-                        .getAcuity()))
-                PrefUtility().saveStringInPref(this,
-                    Constants.SharedPrefConstants.ALERT_ACUITY_STATUS, (notificationResponse.getNotificationRequests().get(0)
-                        .getNotificationEnabled()))
+                    java.lang.String.valueOf(
+                        notificationResponse.notificationRequests[0].acuity))
+
+                PrefUtility().saveStringInPref(this@CustomNotificationActivity,
+                    Constants.SharedPrefConstants.ALERT_ACUITY_STATUS,
+                    java.lang.String.valueOf(
+                        notificationResponse.notificationRequests[0].notificationEnabled))
+
                 // Saving the current mobile acuity status in shared preference
-                PrefUtility().saveStringInPref(this,
+                PrefUtility().saveStringInPref(this@CustomNotificationActivity,
                     Constants.SharedPrefConstants.ALERT_MOBILE_ACUITY_STATUS,
-                    java.lang.String.valueOf(notificationResponse.getNotificationSettings()
-                        .getMobileAcuity()))
+                    java.lang.String.valueOf(notificationResponse.notificationSettings.mobileAcuity))
+
+                //Initiating alerts switch views and updating the data
 
                 //Initiating alerts switch views and updating the data
                 initSwitchViews()
+
             } else {
                 val errMsg: String? = ErrorMessages().getErrorMessage(this,
                     this.resources.getString(R.string.api_error),

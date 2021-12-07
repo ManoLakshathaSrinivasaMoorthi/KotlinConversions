@@ -21,13 +21,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.CommonResponse
+
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityChangePasswordBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.viewmodel.ChangePasswordViewModel
 import com.google.gson.Gson
+import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.userEndpoints.model.ResetPasswordRequest
 
 class ChangePasswordActivity : BaseActivity() {
@@ -320,10 +321,12 @@ class ChangePasswordActivity : BaseActivity() {
         if (strFirstName?.let {
                 strLastName?.let { it1 ->
                     emailID?.let { it2 ->
-                        ValidationUtil().checkPassword(
-                            binding?.edtNewPassword?.getText().toString(), binding,
-                            it, it1, it2
-                        )
+                        binding?.let { it3 ->
+                            ValidationUtil().checkPassword(
+                                binding?.edtNewPassword?.getText().toString(), it3,
+                                it, it1, it2
+                            )
+                        }
                     }
                 }
             } != null
@@ -331,10 +334,12 @@ class ChangePasswordActivity : BaseActivity() {
             if (showError) {
                 strLastName?.let {
                     emailID?.let { it1 ->
-                        ValidationUtil().checkPassword(
-                            binding?.edtNewPassword?.getText().toString(), binding,
-                            strFirstName!!, it, it1
-                        )
+                        binding?.let { it2 ->
+                            ValidationUtil().checkPassword(
+                                binding?.edtNewPassword?.getText().toString(), it2,
+                                strFirstName!!, it, it1
+                            )
+                        }
                     }
                 }?.let {
                     binding?.edtNewPassword?.setErrorMessage(
@@ -358,10 +363,12 @@ class ChangePasswordActivity : BaseActivity() {
             if (strFirstName?.let {
                     strLastName?.let { it1 ->
                         emailID?.let { it2 ->
-                            ValidationUtil().checkPassword(
-                                binding?.edtConfirmPassword?.getText().toString(), binding,
-                                it, it1, it2
-                            )
+                            binding?.let { it3 ->
+                                ValidationUtil().checkPassword(
+                                    binding?.edtConfirmPassword?.getText().toString(), it3,
+                                    it, it1, it2
+                                )
+                            }
                         }
                     }
                 } != null
@@ -369,10 +376,12 @@ class ChangePasswordActivity : BaseActivity() {
                 if (showError) {
                     strLastName?.let {
                         emailID?.let { it1 ->
-                            ValidationUtil().checkPassword(
-                                binding?.edtConfirmPassword?.getText().toString(), binding,
-                                strFirstName!!, it, it1
-                            )
+                            binding?.let { it2 ->
+                                ValidationUtil().checkPassword(
+                                    binding?.edtConfirmPassword?.getText().toString(), it2,
+                                    strFirstName!!, it, it1
+                                )
+                            }
                         }
                     }?.let {
                         binding?.edtConfirmPassword?.setErrorMessage(

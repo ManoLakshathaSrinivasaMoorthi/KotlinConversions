@@ -1,6 +1,6 @@
 package com.example.kotlinomnicure.helper
 
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.kotlinomnicure.adapter.MembersDialogAdapter
 import com.example.kotlinomnicure.databinding.ActivityDrawerBinding
 

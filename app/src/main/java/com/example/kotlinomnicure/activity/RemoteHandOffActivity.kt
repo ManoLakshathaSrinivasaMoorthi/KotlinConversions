@@ -13,11 +13,9 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
+import com.example.kotlinomnicure.viewmodel.RemoteHandOffViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityRemoteHandOffBinding
 import com.example.kotlinomnicure.utils.Constants

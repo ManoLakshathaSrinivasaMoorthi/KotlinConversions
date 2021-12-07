@@ -18,7 +18,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 
 import com.example.kotlinomnicure.viewmodel.ChatActivityViewModel
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.RemoteHandOffViewModel
+import com.example.kotlinomnicure.viewmodel.RemoteHandOffViewModel
 
 
 import com.example.kotlinomnicure.R

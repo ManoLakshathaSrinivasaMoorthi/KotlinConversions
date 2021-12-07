@@ -28,7 +28,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.HomeViewModel
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.kotlinomnicure.OmnicureApp
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
@@ -42,6 +42,7 @@ import com.example.kotlinomnicure.interfaces.OnNetConnectedListener
 import com.example.kotlinomnicure.model.ConsultProvider
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.example.kotlinomnicure.videocall.openvcall.ui.CallActivity
 import com.example.kotlinomnicure.viewmodel.ChatActivityViewModel
 import com.example.kotlinomnicure.viewmodel.SplashViewModel
 import com.google.gson.Gson
@@ -416,7 +417,7 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
         ChatActivityViewModel().multipleCall(content)?.observe(this) { commonResponse ->
             dismissProgressBar()
             //            System.out.println("callresponse " + commonResponse);
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
+            if (commonResponse != null && commonResponse.status != null && commonResponse.status) {
                 //Redirected to Call activity with required inputs
                 val callScreen = Intent(context, CallActivity::class.java)
                 callScreen.putExtra("providerName",
@@ -436,15 +437,15 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
                     resources.getStringArray(R.array.encryption_mode_values)[0])
                 callScreen.putExtra("patientId", mConsultProvider.getPatientsId())
                 callScreen.putExtra(Constants.IntentKeyConstants.AUDIT_ID,
-                    commonResponse.getAuditId())
+                    commonResponse.auditId)
                 var receiverId = 0L
-                if (commonResponse.getProviderList().size() <= 2) {
-                    for (i in 0 until commonResponse.getProviderList().size()) {
-                        val pr: Provider = commonResponse.getProviderList().get(i)
-                        if (pr.getId() != null && !pr.getId()!!
+                if (commonResponse.getProviderList()?.size!! <= 2) {
+                    for (i in 0 until commonResponse.getProviderList()!!.size) {
+                        val pr: Provider? = commonResponse.getProviderList()!!.get(i)
+                        if (pr?.getId() != null && !pr?.getId()!!
                                 .equals(context?.let { PrefUtility().getProviderId(it) })
                         ) {
-                            receiverId = pr.getId()!!
+                            receiverId = pr?.getId()!!
                             break
                         }
                     }
@@ -462,7 +463,7 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
             } else {
                 val errMsg: String? = context?.let {
                     ErrorMessages().getErrorMessage(it,
-                        commonResponse.getErrorMessage(),
+                        commonResponse?.getErrorMessage(),
                         Constants.API.startCall)
                 }
 

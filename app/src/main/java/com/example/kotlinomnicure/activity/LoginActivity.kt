@@ -35,10 +35,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.biometric.BiometricManager.from
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.CommonResponse
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.Provider
 
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.loginEndpoints.model.VersionInfoResponse
 import com.example.kotlinomnicure.OmnicureApp
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityLoginBinding
@@ -54,6 +51,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
+import omnicurekotlin.example.com.loginEndpoints.model.CommonResponse
+import omnicurekotlin.example.com.loginEndpoints.model.Provider
 import java.security.KeyStore
 import java.util.*
 import java.util.concurrent.Executor
@@ -69,7 +68,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     private var mFirebaseAuth: FirebaseAuth? = null
     private var fcmToken: String? = null
     private var strFeedbackForm = ""
-    var version = ""
+   var versions = ""
 
     //fingerprint
     private val keyStore: KeyStore? = null
@@ -92,7 +91,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         setOnclickListener()
         try {
             val packageInfo = packageManager.getPackageInfo(packageName, 0)
-            version = packageInfo.versionName
+            versions = packageInfo.versionName
         } catch (e: PackageManager.NameNotFoundException) {
             Log.e(TAG, "exception", e.cause)
         }
@@ -467,7 +466,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun belowversionV9() {
-        binding?.signinAuth.setVisibility(View.VISIBLE)
+        binding?.signinAuth?.setVisibility(View.VISIBLE)
         val fingerprintManager2 = getSystemService(FINGERPRINT_SERVICE) as FingerprintManager
         if (fingerprintManager2 == null) {
             PrefUtility().saveBooleanInPref(
@@ -569,8 +568,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         binding?.editTextPassword?.addTextChangedListener(ValidationTextWatcher(binding!!.editTextPassword))
     }
 
+    @SuppressLint("WrongConstant")
     fun checkfingerprintabove29() {
-        val biometricManager: BiometricManager = from(this)
+        val biometricManager: androidx.biometric.BiometricManager = from(this)
         binding?.signinAuth?.visibility = View.VISIBLE
         if (biometricManager.canAuthenticate() === BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE) {
             PrefUtility().saveBooleanInPref(
@@ -583,8 +583,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 Constants.SharedPrefConstants.PASSWORD,
                 ""
             )
-            binding.signinAuth.visibility = View.GONE
-            binding.signinBtn.layoutParams = LinearLayout.LayoutParams(
+            binding?.signinAuth?.visibility = View.GONE
+            binding?.signinBtn?.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1f
@@ -621,97 +621,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun stopAuth() {
-        if (biometricPrompt != null) biometricPrompt?.cancelAuthentication()
+        //if (biometricPrompt != null) biometricPrompt?.cancelAuthentication()
     }
 
-    fun biometric(status: Boolean, normal: String) {
-        //   Executor executor = Executors.newSingleThreadExecutor();
-        val activity: FragmentActivity = this
-        biometricPrompt =
-            BiometricPrompt(activity, getMainThreadExecutor(), object : AuthenticationCallback() {
-                fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    if (errorCode == BiometricPrompt.ERROR_HW_NOT_PRESENT) {
-                        /**
-                         * The device does not have a biometric sensor.
-                         */
-                        binding.signinAuth.visibility = View.GONE
-                        binding.signinBtn.layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            1f
-                        )
-                    } else if (errorCode == BiometricPrompt.ERROR_HW_UNAVAILABLE) {
-                        /**
-                         * The hardware is unavailable. Try again later.
-                         */
-//                    binding.signinAuth.setVisibility(View.GONE);
-//                    binding.signinBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-                    } else if (errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS) {
-                        /**
-                         * The user does not have any biometrics enrolled.
-                         */
-                        binding?.signinAuth?.visibility = View.GONE
-                        binding?.signinBtn?.layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            1f
-                        )
-                    } else if (errorCode == BiometricPrompt.ERROR_LOCKOUT_PERMANENT) {
-                        /**
-                         * The operation was canceled because ERROR_LOCKOUT occurred too many times.
-                         * Biometric authentication is disabled until the user unlocks with strong authentication
-                         * (PIN/Pattern/Password)
-                         */
-                        binding.signinAuth.visibility = View.GONE
-                        binding.signinBtn.layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            1f
-                        )
-                    } else if (errorCode == BiometricPrompt.ERROR_VENDOR) {
-                        /**
-                         * Hardware vendors may extend this list if there are conditions that do not fall under one of
-                         * the above categories. Vendors are responsible for providing error strings for these errors.
-                         * These messages are typically reserved for internal operations such as enrollment, but may be
-                         * used to express vendor errors not otherwise covered. Applications are expected to show the
-                         * error message string if they happen, but are advised not to rely on the message id since they
-                         * will be device and vendor-specific
-                         */
-                    } else if (errorCode == BiometricPrompt.ERROR_LOCKOUT) {
-                        /**
-                         * The operation was canceled because the API is locked out due to too many attempts.
-                         * This occurs after 5 failed attempts, and lasts for 30 seconds.
-                         */
-                        CustomSnackBar.make(binding?.rootLayout, context,
-                            CustomSnackBar.WARNING, getString(R.string.Authfaildnew),
-                            CustomSnackBar.TOP, 3000, 0)?.show()
-                        PrefUtility().saveBooleanInPref(context,
-                            Constants.SharedPrefConstants.FINGERPRINTFLAG, false)
-                        PrefUtility().saveStringInPref(
-                            context, Constants.SharedPrefConstants.PASSWORD, "")
-                        PrefUtility().saveBooleanInPref(context,
-                            Constants.SharedPrefConstants.LOCKFP, true)
-                        PrefUtility().saveBooleanInPref(context,
-                            Constants.SharedPrefConstants.LOCKFPemailchange, false)
-                        stopAuth()
-                        binding?.signinAuth?.isEnabled = false
-                        //   binding.editTextUserId.setText("");
-                        binding?.editTextPassword?.setText("")
+   /* fun biometric(status: Boolean, normal: String) {
 
-                        //handleMultipleClicknew(binding.signinAuth);
-                    } else if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
-                        // user clicked negative button
-                    } else if (errorCode == BiometricPrompt.ERROR_TIMEOUT) {
-                        /**
-                         * Error state returned when the current request has been running too long. This is intended to
-                         * prevent programs from waiting for the biometric sensor indefinitely. The timeout is platform
-                         * and sensor-specific, but is generally on the order of 30 seconds.
-                         */
-//
-                    } else if (errorCode == BiometricPrompt.ERROR_CANCELED) {
-
-                    }
                 }
 
                 fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -771,15 +685,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
                     }
                     super.onAuthenticationFailed()
-                    //TODO: Called when a biometric is valid but not recognized.
-                }
-            })
-        val promptInfo: BiometricPrompt.PromptInfo = OkHttpClient.Builder()
-            .setTitle("Authentication Required")
-            .setNegativeButtonText("Cancel")
-            .build()
-        biometricPrompt?.authenticate(promptInfo)
-    }
+
+                }*/
+
+
+
 
     private fun getMainThreadExecutor(): Executor? {
         return MainThreadExecutor()
@@ -826,7 +736,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 binding?.editTextUserId?.setText(email)
                 checkEmail(true)
                 binding?.signinAuth?.isEnabled = true
-                biometric(false, "normal")
+                //biometric(false, "normal")
             }
         } else {
             binding?.signinAuth?.isEnabled = false
@@ -850,7 +760,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     if (binding?.editTextPassword?.text.toString().length > 0) {
                         checkPasswordforpopup(true)
                     } else {
-                        biometric(true, "n")
+                        //biometric(true, "n")
                     }
                 } else {
                     checkPasswordforpopup(true)
@@ -990,8 +900,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                                     commonResponse.refreshToken
                                 )
                             }
-                            if (commonResponse.provider.role
-                                    .equalsIgnoreCase(Constants.ProviderRole.RD.toString())
+                            if (commonResponse.provider?.role
+                                    .equals(Constants.ProviderRole.RD.toString(),ignoreCase = true)
                             ) {
                                 val topic: String? = UtilityMethods().getFCMTopic()
                                 if (topic != null) {
@@ -1450,7 +1360,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }, 500)
     }
 
-    fun checkSelfPermissionsMediaCheck(): Boolean {
+    override fun checkSelfPermissionsMediaCheck(): Boolean {
         return checkSelfPermissionGrantedCheck(
             Manifest.permission.RECORD_AUDIO,
             ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO
@@ -1466,7 +1376,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-    fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
+    override fun checkSelfPermissionGrantedCheck(permission: String, requestCode: Int): Boolean {
         Log.i("checkSelfPermission ", "$permission $requestCode")
         if (ContextCompat.checkSelfPermission(
                 this,

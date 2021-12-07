@@ -15,6 +15,7 @@ import com.example.kotlinomnicure.adapter.GroupListAdapter
 import com.example.kotlinomnicure.databinding.ActivityGroupsListBinding
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.example.kotlinomnicure.videocall.openvcall.ui.CallActivity
 import com.example.kotlinomnicure.viewmodel.GroupCallViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
@@ -88,7 +89,7 @@ class GroupCallActivity :  BaseActivity() , GroupListAdapter.GroupListListener {
         viewModel?.multipleCall(content)?.observe(this) { commonResponse ->
             Toast.makeText(this, commonResponse?.getErrorMessage(), Toast.LENGTH_LONG).show()
             dismissProgressBar()
-            if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
+            if (commonResponse?.status != null && commonResponse.status!!) {
                 val callScreen = Intent(this, CallActivity::class.java)
                 callScreen.putExtra("providerName",
                     PrefUtility().getStringInPref(this,

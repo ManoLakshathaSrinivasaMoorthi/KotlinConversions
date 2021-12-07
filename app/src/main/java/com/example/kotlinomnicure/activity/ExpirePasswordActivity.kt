@@ -307,9 +307,11 @@ class ExpirePasswordActivity :BaseActivity() {
         if (strFirstName?.let {
                 strLastName?.let { it1 ->
                     emailID?.let { it2 ->
-                        ValidationUtil().checkPassword(Objects.requireNonNull(binding?.edtNewPassword?.getText())
-                            .toString(), binding,
-                            it, it1, it2)
+                        binding?.let { it3 ->
+                            ValidationUtil().checkPassword(Objects.requireNonNull(binding?.edtNewPassword?.getText())
+                                .toString(), it3,
+                                it, it1, it2)
+                        }
                     }
                 }
             } != null
@@ -317,14 +319,20 @@ class ExpirePasswordActivity :BaseActivity() {
             if (showError) {
                 Objects.requireNonNull(strLastName?.let {
                     emailID?.let { it1 ->
-                        ValidationUtil().checkPassword(
-                            binding?.edtNewPassword?.getText().toString(),
-                            binding,
-                            strFirstName!!,
-                            it,
-                            it1)
+                        binding?.let { it2 ->
+                            ValidationUtil().checkPassword(
+                                binding?.edtNewPassword?.getText().toString(),
+                                it2,
+                                strFirstName!!,
+                                it,
+                                it1)
+                        }
                     }
-                })?.let { binding?.edtNewPassword?.setErrorMessage(it) }
+                }).let {
+                    if (it != null) {
+                        binding?.edtNewPassword?.setErrorMessage(it)
+                    }
+                }
                 binding?.passwordLayout?.setBackground(ContextCompat.getDrawable(this,
                     R.drawable.error_edittext_bg))
                 binding?.passwordInfo?.setVisibility(View.VISIBLE)
@@ -344,9 +352,11 @@ class ExpirePasswordActivity :BaseActivity() {
             if (strFirstName?.let {
                     strLastName?.let { it1 ->
                         emailID?.let { it2 ->
-                            ValidationUtil().checkPassword(Objects.requireNonNull(binding?.edtConfirmPassword?.getText())
-                                .toString(), binding,
-                                it, it1, it2)
+                            binding?.let { it3 ->
+                                ValidationUtil().checkPassword(Objects.requireNonNull(binding?.edtConfirmPassword?.getText())
+                                    .toString(), it3,
+                                    it, it1, it2)
+                            }
                         }
                     }
                 } != null
@@ -354,12 +364,14 @@ class ExpirePasswordActivity :BaseActivity() {
                 if (showError) {
                     Objects.requireNonNull(strLastName?.let {
                         emailID?.let { it1 ->
-                            ValidationUtil().checkPassword(
-                                binding?.edtConfirmPassword?.getText().toString(),
-                                binding,
-                                strFirstName!!,
-                                it,
-                                it1)
+                            binding?.let { it2 ->
+                                ValidationUtil().checkPassword(
+                                    binding?.edtConfirmPassword?.getText().toString(),
+                                    it2,
+                                    strFirstName!!,
+                                    it,
+                                    it1)
+                            }
                         }
                     })?.let { binding?.edtConfirmPassword?.setErrorMessage(it) }
                     binding?.confirmPasswordLayout?.setBackground(ContextCompat.getDrawable(this,

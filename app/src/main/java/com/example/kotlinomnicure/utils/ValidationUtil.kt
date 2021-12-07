@@ -228,6 +228,57 @@ class ValidationUtil {
         }
         return false
     }
+    fun checkPassword(
+        str: String, binding: ActivityChangePasswordBinding,
+        strFirstName: String, strLastName: String, strEmail: String,
+    ): String? {
+        var str = str
+        var strFirstName = strFirstName
+        var strLastName = strLastName
+        var strEmail = strEmail
+        val context = binding.root.context
+        val specialCharPattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE)
+        val UpperCasePattern = Pattern.compile("[A-Z ]")
+        val lowerCasePattern = Pattern.compile("[a-z ]")
+        val digitCasePattern = Pattern.compile("[0-9 ]")
+        if (str.length < 8) {
+            return context.getString(R.string.invalid_password_try_again)
+        } else if (!specialCharPattern.matcher(str).find()) {
+            return context.getString(R.string.invalid_password_try_again)
+        } else if (!UpperCasePattern.matcher(str).find()) {
+            return context.getString(R.string.invalid_password_try_again)
+        } else if (!lowerCasePattern.matcher(str).find()) {
+            return context.getString(R.string.invalid_password_try_again)
+        } else if (!digitCasePattern.matcher(str).find()) {
+            return context.getString(R.string.invalid_password_try_again)
+        }
+        if (!TextUtils.isEmpty(strFirstName) || !TextUtils.isEmpty(strLastName)) {
+            strFirstName = strFirstName.toLowerCase()
+            strLastName = strLastName.toLowerCase()
+            str = str.toLowerCase()
+            if (str.startsWith(strFirstName) || str.matches(strFirstName) || str.contains(
+                    strFirstName)
+                || str.startsWith(strLastName) || str.matches(strLastName) || str.contains(
+                    strLastName)
+            ) {
+                return context.getString(R.string.invalid_password_try_again)
+            }
+        }
+        if (!TextUtils.isEmpty(strEmail)) {
+            strEmail = strEmail.toLowerCase()
+            str = str.toLowerCase()
+            val split = strEmail.split("@").toTypedArray()
+            if (split.size > 0) {
+                strEmail = split[0]
+                if (str.startsWith(strEmail) || str.matches(strEmail) || str.contains(strEmail)) {
+                    return context.getString(R.string.invalid_password_try_again)
+                }
+            }
+        }
+        return if (ValidationUtil().isRegularPassword(str)) {
+            context.getString(R.string.invalid_password_try_again)
+        } else null
+    }
 
 
     fun checkPassword(

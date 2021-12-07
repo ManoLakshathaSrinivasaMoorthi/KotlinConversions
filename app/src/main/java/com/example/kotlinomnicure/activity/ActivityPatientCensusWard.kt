@@ -22,7 +22,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dailytasksamplepoc.kotlinomnicure.viewmodel.CensusWardListViewModel
+import com.example.kotlinomnicure.viewmodel.CensusWardListViewModel
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.adapter.CensusHospitalListViewAdapter
 import com.example.kotlinomnicure.adapter.CensusWardListAdapter
