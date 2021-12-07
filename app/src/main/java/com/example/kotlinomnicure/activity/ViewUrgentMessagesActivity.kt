@@ -105,18 +105,18 @@ class ViewUrgentMessagesActivity : BaseActivity() {
 
     fun handleVisibility() {
         if (messageList.size <= 0) {
-            binding?.noRecordsLayout?.setVisibility(View.VISIBLE)
-            binding?.recyclerView?.setVisibility(View.GONE)
+            binding?.noRecordsLayout?.visibility = View.VISIBLE
+            binding?.recyclerView?.visibility = View.GONE
         } else {
-            binding?.noRecordsLayout?.setVisibility(View.GONE)
-            binding?.recyclerView?.setVisibility(View.VISIBLE)
+            binding?.noRecordsLayout?.visibility = View.GONE
+            binding?.recyclerView?.visibility = View.VISIBLE
         }
     }
 
     fun setAdapter() {
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.reverseLayout = true
-        binding?.recyclerView?.setLayoutManager(linearLayoutManager)
+        binding?.recyclerView?.layoutManager = linearLayoutManager
 
         val encKey: String? = PrefUtility().getAESAPIKey(this)
         adapter = encKey?.let { senderId?.let { it1 ->
@@ -177,7 +177,7 @@ class ViewUrgentMessagesActivity : BaseActivity() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
                 //Log.d(TAG, "onItemRangeInserted: "+ positionStart +", "+ itemCount);
-                val friendlyMessageCount: Int = adapter!!.getItemCount()
+                val friendlyMessageCount: Int = adapter!!.itemCount
                 val lastVisiblePosition =
                     mLinearLayoutManager!!.findLastCompletelyVisibleItemPosition()
                 // If the recycler view is initially being loaded or the
@@ -224,7 +224,7 @@ class ViewUrgentMessagesActivity : BaseActivity() {
 
         encKey = PrefUtility().getAESAPIKey(this)
         // Back button click listener
-        binding?.imgBack?.setOnClickListener { v -> finish() }
+        binding?.imgBack?.setOnClickListener { finish() }
     }
 
 
@@ -258,16 +258,16 @@ class ViewUrgentMessagesActivity : BaseActivity() {
         if (consultMessage == null || TextUtils.isEmpty(consultMessage.getFilename())) {
             return R.drawable.ic_generic
         }
-        var fileName: String? = consultMessage.getFilename()?.lowercase(Locale.getDefault())
-        if (fileName?.contains(".txt") == true) {
-            return R.drawable.ic_txt
+        val fileName: String? = consultMessage.getFilename()?.lowercase(Locale.getDefault())
+        return if (fileName?.contains(".txt") == true) {
+            R.drawable.ic_txt
         } else if (fileName?.contains(".doc") == true || fileName?.contains(".docx") == true) {
-            return R.drawable.ic_doc
+            R.drawable.ic_doc
         } else if (fileName?.contains(".pdf") == true) {
-            return R.drawable.ic_pdf
+            R.drawable.ic_pdf
         } else if (fileName?.contains(".xls") == true || fileName?.contains(".xlsx") == true) {
-            return R.drawable.ic_xls
-        } else return if (fileName?.contains(".ppt") == true || fileName?.contains(".pptx") == true) {
+            R.drawable.ic_xls
+        } else if (fileName?.contains(".ppt") == true || fileName?.contains(".pptx") == true) {
             R.drawable.ic_ppt
         } else {
             R.drawable.ic_generic
@@ -299,7 +299,7 @@ class ViewUrgentMessagesActivity : BaseActivity() {
         return isTypeIncluded && consultMessage?.isUrgent() == true
     }
 
-    protected override fun addBackButton() {
+    override fun addBackButton() {
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -307,22 +307,9 @@ class ViewUrgentMessagesActivity : BaseActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     override fun onStop() {
         super.onStop()
         messageDB!!.removeEventListener(dbListener)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        //Stop listening the firebase path data
     }
 
 }

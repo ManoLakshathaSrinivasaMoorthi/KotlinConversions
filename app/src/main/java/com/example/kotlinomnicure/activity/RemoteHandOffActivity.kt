@@ -36,7 +36,7 @@ class RemoteHandOffActivity :BaseActivity(){
     private var strScreenCensus = ""
     var alertDialog: AlertDialog? = null
 
-    protected override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Databinding and view model intialization
         binding = DataBindingUtil.setContentView(this, R.layout.activity_remote_hand_off)
@@ -54,22 +54,22 @@ class RemoteHandOffActivity :BaseActivity(){
         val typeAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(this, R.layout.spinner_disabled_text, vals)
 
-        binding?.typeSpinner?.setAdapter(typeAdapter)
-        binding?.typeSpinner?.setEnabled(false)
-        patientID = java.lang.String.valueOf(getIntent().getLongExtra("patient_id", 0))
-        patientName = getIntent().getStringExtra("patient_name")
-        strScreenCensus = getIntent().getStringExtra(Constants.IntentKeyConstants.SCREEN_TYPE).toString()
+        binding?.typeSpinner?.adapter = typeAdapter
+        binding?.typeSpinner?.isEnabled = false
+        patientID = java.lang.String.valueOf(intent.getLongExtra("patient_id", 0))
+        patientName = intent.getStringExtra("patient_name")
+        strScreenCensus = intent.getStringExtra(Constants.IntentKeyConstants.SCREEN_TYPE).toString()
 
         binding?.editTextUserName?.setText(patientName)
 
         // Remote hand off click listener
-        binding?.btnRemoteHandoff?.setOnClickListener(View.OnClickListener {
+        binding?.btnRemoteHandoff?.setOnClickListener {
             if (validate()) {
                 //Performing the Remote HandOff via "performRemoteHandOff" API call ith remote handoff object
                 showConfirmationPopup()
             }
-        })
-        binding?.imgBack?.setOnClickListener(View.OnClickListener { finish() })
+        }
+        binding?.imgBack?.setOnClickListener { finish() }
         binding?.eConsultText?.let { addMandatoryText(it) }
         binding?.eNoteText?.let { addMandatoryText(it) }
         binding?.planDetailsText?.let { addMandatoryText(it) }
@@ -80,18 +80,18 @@ class RemoteHandOffActivity :BaseActivity(){
     }
 
 
-    fun showConfirmationPopup() {
+    private fun showConfirmationPopup() {
         val builder = AlertDialog.Builder(this,
             R.style.CustomAlertDialog)
         val viewGroup: ViewGroup = findViewById(R.id.content)
-        val dialogView: View = LayoutInflater.from(getApplicationContext())
+        val dialogView: View = LayoutInflater.from(applicationContext)
             .inflate(R.layout.alert_custom_dialog, viewGroup, false)
         val alertTitle = dialogView.findViewById<TextView>(R.id.alertTitle)
         val alertMsg = dialogView.findViewById<TextView>(R.id.alertMessage)
-        alertTitle.setText(getString(R.string.handoff_confirm_title))
-        alertMsg.setText(getString(R.string.handoff_confirm_text))
+        alertTitle.text = getString(R.string.handoff_confirm_title)
+        alertMsg.text = getString(R.string.handoff_confirm_text)
         val buttonYes = dialogView.findViewById<TextView>(R.id.buttonYes)
-        buttonYes.setTextColor(getResources().getColor(R.color.red))
+        buttonYes.setTextColor(resources.getColor(R.color.red))
         val buttonNo = dialogView.findViewById<TextView>(R.id.buttonNo)
         builder.setView(dialogView)
         alertDialog = builder.create()
@@ -110,7 +110,7 @@ class RemoteHandOffActivity :BaseActivity(){
         alertDialog!!.show()
     }
 
-    protected override fun onPause() {
+    override fun onPause() {
         super.onPause()
         if (alertDialog != null) {
             alertDialog!!.dismiss()
@@ -140,11 +140,11 @@ class RemoteHandOffActivity :BaseActivity(){
         // Triggering the "performRemoteHandOff" API call ith remote handoff object
         viewModel?.performRemoteHandOff(remoteHandOffRequest)?.observe(this) { commonResponse ->
             dismissProgressBar()
-            if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
+            if (commonResponse?.status != null && commonResponse.status!!) {
                 //Handoff success snack bar handling
                 handOffInitiateSuccess(commonResponse)
             } else {
-                binding?.btnRemoteHandoff?.setEnabled(true)
+                binding?.btnRemoteHandoff?.isEnabled = true
                 val errMsg: String?= ErrorMessages().getErrorMessage(this,
                     commonResponse?.getErrorMessage(),
                     Constants.API.register)
@@ -170,11 +170,8 @@ class RemoteHandOffActivity :BaseActivity(){
     }
 
     fun buttonValidation() {
-        if (binding?.etxtRemoteHandoffSummaryNote?.getText().toString().trim().length > 0) {
-            binding?.btnRemoteHandoff?.setEnabled(true)
-        } else {
-            binding?.btnRemoteHandoff?.setEnabled(false)
-        }
+        binding?.btnRemoteHandoff?.isEnabled =
+            binding?.etxtRemoteHandoffSummaryNote?.text.toString().trim().isNotEmpty()
     }
 
     /**
@@ -182,7 +179,7 @@ class RemoteHandOffActivity :BaseActivity(){
      * @return
      */
     private fun validate(): Boolean {
-        if (binding?.etxtRemoteHandoffSummaryNote?.getText().toString().equals("",ignoreCase = true)) {
+        if (binding?.etxtRemoteHandoffSummaryNote?.text.toString().equals("",ignoreCase = true)) {
             CustomSnackBar.make(binding?.idContainerLayout,
                 this,
                 CustomSnackBar.WARNING,

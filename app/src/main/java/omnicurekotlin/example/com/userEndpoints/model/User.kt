@@ -91,6 +91,7 @@ class User {
     }
 
 
+    @JvmName("getCountryCode1")
     fun getCountryCode(): String? {
         return countryCode
     }
@@ -118,6 +119,7 @@ class User {
         return this
     }
 
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
@@ -241,6 +243,7 @@ class User {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -342,6 +345,7 @@ class User {
         return this
     }
 
+    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }

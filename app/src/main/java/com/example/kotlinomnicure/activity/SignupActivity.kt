@@ -12,6 +12,7 @@ import com.example.kotlinomnicure.activity.BaseActivity
 
 import com.example.kotlinomnicure.activity.PatientAppointmentActivity
 import com.example.kotlinomnicure.databinding.ActivitySignupBinding
+import com.example.kotlinomnicure.utils.Buildconfic
 
 import com.example.kotlinomnicure.utils.Constants
 
@@ -32,7 +33,7 @@ class SignupActivity : BaseActivity(){
 
         //appname
         binding!!.idWelcomeText.text =
-            String.format(getString(R.string.welcome_to_omnicurenow), Buildconfic.value())
+            String.format(getString(R.string.welcome_to_omnicurenow), Buildconfic().value())
 
 
         val labelColor = resources.getColor(R.color.btn_bg)

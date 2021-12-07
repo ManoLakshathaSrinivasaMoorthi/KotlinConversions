@@ -2,20 +2,20 @@ package omnicurekotlin.example.com.userEndpoints.model
 
 class Provider {
 
-    private var access: List<String?>? = null
-    private var activeHour: Float? = null
-    private var address: String? = null
+    var access: List<String?>? = null
+    var activeHour: Float? = null
+    var address: String? = null
     var userType: String? = null
     var userSubType: String? = null
-    private var consultationFee: Float? = null
+    var consultationFee: Float? = null
     var countryCode: String? = null
-    private var designation: String? = null
+    var designation: String? = null
     var remoteProviderType: String? = null
-    private var dob: Long? = null
+    var dob: Long? = null
     var email: String? = null
-    private var emailOtp: String? = null
-    private var emailOtpVerified: Boolean? = null
-    private var experience: Float? = null
+    var emailOtp: String? = null
+    var emailOtpVerified: Boolean? = null
+    var experience: Float? = null
     private var fcmKey: String? = null
     private var firebaseUid: String? = null
     var fname: String? = null
@@ -26,18 +26,18 @@ class Provider {
     private var id: Long? = null
     private var joiningTime: Long? = null
     var lname: String? = null
-    private var name: String? = null
+     var name: String? = null
     var npiNumber: String? = null
-    private var numberOfPatient: Int? = null
-    private var osType: String? = null
-    private var otp: String? = null
+    var numberOfPatient: Int? = null
+     var osType: String? = null
+    var otp: String? = null
     var password: String? = null
     var phone: String? = null
-    private var profilePicUrl: String? = null
-    private var qualification: String? = null
+    var profilePicUrl: String? = null
+     var qualification: String? = null
     var role: String? = null
-    private var roles: List<Role?>? = null
-    private var screenName: String? = null
+   var roles: List<Role?>? = null
+     var screenName: String? = null
     private var smsOtpVerified: Boolean? = null
     private var specialization: String? = null
     private var status: String? = null
@@ -48,6 +48,7 @@ class Provider {
     var remoteProviderId: Long? = null
 
 
+    @JvmName("getAccess1")
     fun getAccess(): List<String?>? {
         return access
     }
@@ -57,6 +58,7 @@ class Provider {
         return this
     }
 
+    @JvmName("getActiveHour1")
     fun getActiveHour(): Float? {
         return activeHour
     }
@@ -66,6 +68,7 @@ class Provider {
         return this
     }
 
+    @JvmName("getAddress1")
     fun getAddress(): String? {
         return address
     }
@@ -77,6 +80,7 @@ class Provider {
     }
 
 
+    @JvmName("getConsultationFee1")
     fun getConsultationFee(): Float? {
         return consultationFee
     }
@@ -88,6 +92,7 @@ class Provider {
     }
 
 
+    @JvmName("getCountryCode1")
     fun getCountryCode(): String? {
         return countryCode
     }
@@ -99,6 +104,7 @@ class Provider {
     }
 
 
+    @JvmName("getDesignation1")
     fun getDesignation(): String? {
         return designation
     }
@@ -108,6 +114,7 @@ class Provider {
         return this
     }
 
+    @JvmName("getDob1")
     fun getDob(): Long? {
         return dob
     }
@@ -118,6 +125,7 @@ class Provider {
         return this
     }
 
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
@@ -128,6 +136,7 @@ class Provider {
     }
 
 
+    @JvmName("getEmailOtp1")
     fun getEmailOtp(): String? {
         return emailOtp
     }
@@ -138,6 +147,7 @@ class Provider {
         return this
     }
 
+    @JvmName("getEmailOtpVerified1")
     fun getEmailOtpVerified(): Boolean? {
         return emailOtpVerified
     }
@@ -148,6 +158,7 @@ class Provider {
         return this
     }
 
+    @JvmName("getExperience1")
     fun getExperience(): Float? {
         return experience
     }
@@ -179,6 +190,7 @@ class Provider {
     }
 
 
+    @JvmName("getFname1")
     fun getFname(): String? {
         return fname
     }
@@ -189,18 +201,22 @@ class Provider {
         return this
     }
 
+    @JvmName("getUserType1")
     fun getUserType(): String? {
         return userType
     }
 
+    @JvmName("setUserType1")
     fun setUserType(userType: String?) {
         this.userType = userType
     }
 
+    @JvmName("getUserSubType1")
     fun getUserSubType(): String? {
         return userSubType
     }
 
+    @JvmName("setUserSubType1")
     fun setUserSubType(userSubType: String?) {
         this.userSubType = userSubType
     }
@@ -227,6 +243,7 @@ class Provider {
     }
 
 
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
@@ -238,6 +255,7 @@ class Provider {
     }
 
 
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
@@ -264,10 +282,12 @@ class Provider {
         return joiningTime
     }
 
+    @JvmName("getRemoteProviderType1")
     fun getRemoteProviderType(): String? {
         return remoteProviderType
     }
 
+    @JvmName("setRemoteProviderType1")
     fun setRemoteProviderType(remoteProviderType: String?) {
         this.remoteProviderType = remoteProviderType
     }
@@ -278,6 +298,7 @@ class Provider {
         return this
     }
 
+    @JvmName("getLname1")
     fun getLname(): String? {
         return lname
     }
@@ -289,6 +310,7 @@ class Provider {
     }
 
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -300,6 +322,7 @@ class Provider {
     }
 
 
+    @JvmName("getNpiNumber1")
     fun getNpiNumber(): String? {
         return npiNumber
     }
@@ -311,6 +334,7 @@ class Provider {
     }
 
 
+    @JvmName("getNumberOfPatient1")
     fun getNumberOfPatient(): Int? {
         return numberOfPatient
     }
@@ -322,6 +346,7 @@ class Provider {
 
 
 
+    @JvmName("getOsType1")
     fun getOsType(): String? {
         return osType
     }
@@ -335,6 +360,7 @@ class Provider {
     }
 
 
+    @JvmName("getOtp1")
     fun getOtp(): String? {
         return otp
     }
@@ -346,6 +372,7 @@ class Provider {
     }
 
 
+    @JvmName("getPassword1")
     fun getPassword(): String? {
         return password
     }
@@ -356,6 +383,7 @@ class Provider {
     }
 
 
+    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }
@@ -366,6 +394,7 @@ class Provider {
         return this
     }
 
+    @JvmName("getProfilePicUrl1")
     fun getProfilePicUrl(): String? {
         return profilePicUrl
     }
@@ -377,6 +406,7 @@ class Provider {
     }
 
 
+    @JvmName("getQualification1")
     fun getQualification(): String? {
         return qualification
     }
@@ -389,6 +419,7 @@ class Provider {
     /**
      * @return value or `null` for none
      */
+    @JvmName("getRole1")
     fun getRole(): String? {
         return role
     }
@@ -400,6 +431,7 @@ class Provider {
     }
 
 
+    @JvmName("getRoles1")
     fun getRoles(): List<Role?>? {
         return roles
     }
@@ -411,6 +443,7 @@ class Provider {
     }
 
 
+    @JvmName("getScreenName1")
     fun getScreenName(): String? {
         return screenName
     }
@@ -475,26 +508,32 @@ class Provider {
         return this
     }
 
+    @JvmName("getProviderType1")
     fun getProviderType(): String? {
         return providerType
     }
 
+    @JvmName("setProviderType1")
     fun setProviderType(providerType: String?) {
         this.providerType = providerType
     }
 
+    @JvmName("getLcpType1")
     fun getLcpType(): String? {
         return lcpType
     }
 
+    @JvmName("setLcpType1")
     fun setLcpType(lcpType: String?) {
         this.lcpType = lcpType
     }
 
+    @JvmName("getRemoteProviderId1")
     fun getRemoteProviderId(): Long? {
         return remoteProviderId
     }
 
+    @JvmName("setRemoteProviderId1")
     fun setRemoteProviderId(remoteProviderId: Long?) {
         this.remoteProviderId = remoteProviderId
     }

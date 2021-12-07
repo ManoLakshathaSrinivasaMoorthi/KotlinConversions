@@ -5,18 +5,19 @@ import omnicurekotlin.example.com.loginEndpoints.model.AppConfig
 
 class VersionInfoResponse {
 
-  var appConfig: AppConfig? = null
-  private var errorId: Int? = null
-  var errorMessage: String? = null
+   var appConfig: AppConfig? = null
+  var errorId: Int? = null
+   var errorMessage: String? = null
 
   var aesKey: String? = null
 
 
-  private var id: Long? = null
+   var id: Long? = null
 
   var status: Boolean? = null
 
 
+  @JvmName("getAppConfig1")
   fun getAppConfig(): AppConfig? {
     return appConfig
   }
@@ -28,6 +29,7 @@ class VersionInfoResponse {
   }
 
 
+  @JvmName("getErrorId1")
   fun getErrorId(): Int? {
     return errorId
   }
@@ -38,14 +40,17 @@ class VersionInfoResponse {
     return this
   }
 
+  @JvmName("getAesKey1")
   fun getAesKey(): String? {
     return aesKey
   }
 
+  @JvmName("setAesKey1")
   fun setAesKey(aesKey: String?) {
     this.aesKey = aesKey
   }
 
+  @JvmName("getErrorMessage1")
   fun getErrorMessage(): String? {
     return errorMessage
   }
@@ -57,6 +62,7 @@ class VersionInfoResponse {
   }
 
 
+  @JvmName("getId1")
   fun getId(): Long? {
     return id
   }
@@ -68,6 +74,7 @@ class VersionInfoResponse {
   }
 
 
+  @JvmName("getStatus1")
   fun getStatus(): Boolean? {
     return status
   }

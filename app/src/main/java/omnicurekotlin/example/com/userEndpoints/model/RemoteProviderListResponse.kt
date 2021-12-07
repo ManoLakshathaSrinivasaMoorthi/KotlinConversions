@@ -3,8 +3,8 @@ package omnicurekotlin.example.com.userEndpoints.model
 class RemoteProviderListResponse {
 
     var status: Boolean? = null
-    var errorId: Int? = null
-    var remoteProviderTypeList: List<RemoteProvider>? = null
+     var errorId: Int? = null
+     var remoteProviderTypeList: List<RemoteProvider?>? = null
 
     @JvmName("getStatus1")
     fun getStatus(): Boolean? {
@@ -16,10 +16,12 @@ class RemoteProviderListResponse {
         this.status = status
     }
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
 
+    @JvmName("setErrorId1")
     fun setErrorId(errorId: Int?) {
         this.errorId = errorId
     }
@@ -47,7 +49,7 @@ class RemoteProviderListResponse {
     }
 
     @JvmName("setRemoteProviderTypeList1")
-    fun setRemoteProviderTypeList(remoteProviderTypeList: List<RemoteProvider>?) {
+    fun setRemoteProviderTypeList(remoteProviderTypeList: List<RemoteProvider?>?) {
         this.remoteProviderTypeList = remoteProviderTypeList
     }
 

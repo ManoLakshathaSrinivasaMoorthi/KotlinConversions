@@ -23,6 +23,7 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.RemoteProviderSignUpSecondBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.*
+import com.google.android.gms.common.config.GservicesValue.value
 import com.google.gson.Gson
 import omnicurekotlin.example.com.userEndpoints.model.*
 
@@ -59,8 +60,8 @@ class RemoteProviderSignUpSecond : BaseActivity() {
                 )
             )
         )
-        binding?.txtTermsAndCondition?.setText(Html.fromHtml("By signing up you agree to " + Buildconfic.value() + " <u>Terms & Conditions</u>"))
-        binding?.txtAlreadySignIn?.setOnClickListener(View.OnClickListener {
+        binding?.txtTermsAndCondition?.setText(Html.fromHtml("By signing up you agree to " + Buildconfic().value() + " <u>Terms & Conditions</u>"))
+        binding?.txtAlreadySignIn?.setOnClickListener({
             Log.d(TAG, "onClick: of already signin ")
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -249,7 +250,7 @@ class RemoteProviderSignUpSecond : BaseActivity() {
                 if (response.remoteProviderTypeList != null && !response.remoteProviderTypeList!!
                         .isEmpty()
                 ) {
-                    providerMap.putAll(getRemoteProviderNames(response.remoteProviderTypeList!!))
+                    providerMap.putAll(getRemoteProviderNames(response.remoteProviderTypeList!! as List<RemoteProvider>))
                     remoteProvider.addAll(providerMap.keys)
                     setRemoteSpinner(remoteProvider, providerMap)
                 }

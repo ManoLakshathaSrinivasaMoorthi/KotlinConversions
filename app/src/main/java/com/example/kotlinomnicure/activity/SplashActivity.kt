@@ -1,5 +1,6 @@
 package com.example.kotlinomnicure.activity
 
+
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,26 +11,19 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.kotlinomnicure.activity.BaseActivity
-import com.example.kotlinomnicure.activity.MyDashboardActivity
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
 import com.example.kotlinomnicure.databinding.ActivitySplashBinding
 import com.example.kotlinomnicure.interfaces.OnNetConnectedListener
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.viewmodel.SplashViewModel
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.gson.Gson
-
-
 import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.userEndpoints.model.RedirectRequest
 import omnicurekotlin.example.com.userEndpoints.model.User
 import omnicurekotlin.example.com.userEndpoints.model.VersionInfoResponse
-
-import java.lang.Exception
 
 class SplashActivity : BaseActivity(), OnNetConnectedListener {
     private val TAG = SplashActivity::class.java.simpleName
@@ -38,10 +32,10 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
     private var viewModel: SplashViewModel? = null
     private var isConnectedCalled = false
     private var strEmail: String? = null
-    private  var strPassword:kotlin.String? = null
-    private  var strId:kotlin.String? = null
+    private  var strPassword: String? = null
+    private  var strId: String? = null
     var encKey: String? = null
-    var launchingRunnable = Runnable {
+    private var launchingRunnable = Runnable {
         if (!isConnectedCalled) {
 
             val isInternet = UtilityMethods().isInternetConnected(this)
@@ -87,19 +81,16 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
 
     override fun onResume() {
         super.onResume()
-        Log.e(
-            TAG,
-            "onResume:FIREBASE_REFRESH_TOKEN-->" + PrefUtility().getStringInPref(
-                this,
-                Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
-                ""
-            )
-        )
+//        Log.e(TAG, "onResume:FIREBASE_REFRESH_TOKEN-->"+PrefUtility.getStringInPref(this, Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN, ""));
+        //        Log.e(TAG, "onResume:FIREBASE_REFRESH_TOKEN-->"+PrefUtility.getStringInPref(this, Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN, ""));
         if (!TextUtils.isEmpty(
                 PrefUtility().getStringInPref(
                     this,
                     Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
-                    ""))) {
+                    ""
+                )
+            )
+        ) {
             EncUtil().generateKey(this)
             encKey = PrefUtility().getAESAPIKey(this)
             getFirebaseIdToken(encKey)
@@ -109,15 +100,14 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
             val oobCode = URIdata.getQueryParameter("oobCode")
             verifyOOB(oobCode)
         } else {
-            val isInternet = UtilityMethods().isInternetConnected(this@SplashActivity)
-            if (isInternet == true) {
+            val isInternet: Boolean = UtilityMethods().isInternetConnected(this@SplashActivity) == true
+            if (isInternet) {
                 launchapp()
             }
+//            launchapp();
+        }}
 
-        }
-    }
-
-    fun verifyOOB(oobCode: String?) {
+    private fun verifyOOB(oobCode: String?) {
         if (oobCode != null) {
             println("username $oobCode")
             mFirebaseAuth!!.verifyPasswordResetCode(oobCode)
@@ -143,7 +133,7 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
         }
     }
 
-    fun launchapp() {
+    private fun launchapp() {
         val isInternet = UtilityMethods().isInternetConnected(this)
         if (isInternet == true) {
             mHandler?.postDelayed(launchingRunnable, 2L * Constants.SPLASH_SCREEN_TIME)
@@ -232,7 +222,7 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
     override fun onConnected() {
         isConnectedCalled = true
         Log.i(TAG, "onConnected: $strEmail $strPassword")
-        mHandler?.postDelayed(Runnable {
+        mHandler?.postDelayed({
             if (!TextUtils.isEmpty(strEmail) && !TextUtils.isEmpty(strPassword)) {
                 Log.e(TAG, "run:onConnected RedirectPageNavigation")
                 RedirectPageNavigation()
@@ -249,7 +239,7 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
         }
         viewModel?.getVersionInfo()?.observe(this) { versionInfoResponse: VersionInfoResponse? ->
             Log.i(TAG, "getversioninfo response " + Gson().toJson(versionInfoResponse))
-            if (versionInfoResponse != null && versionInfoResponse.status != null && versionInfoResponse.status!!) {
+            if (versionInfoResponse?.status != null && versionInfoResponse.status!!) {
                 onSuccessVersionInfoAPI(versionInfoResponse)
             } else {
                 val errMsg = ErrorMessages().getErrorMessage(
@@ -265,9 +255,9 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
         Log.i(TAG, "onSuccessVersionInfoAPI: Response " + Gson().toJson(response.appConfig))
         if (response.appConfig != null) {
 
-            if (response.appConfig!!.logoutServerTimerinMilli != null) {
+            if (response.appConfig?.logoutServerTimerinMilli != null) {
 
-                val serverTimer = response.appConfig!!.logoutServerTimerinMilli
+                val serverTimer = response.appConfig?.logoutServerTimerinMilli
                 Log.i(TAG, "Auto Logout Server Time : $serverTimer")
                 serverTimer?.toLong()?.let {
                     PrefUtility().saveLongInPref(
@@ -280,7 +270,7 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
 
             if (response.appConfig!!.logoutAppTimerinMilli != null) {
 
-                val appTimer = response.appConfig!!.logoutAppTimerinMilli
+                val appTimer = response.appConfig?.logoutAppTimerinMilli
                 Log.i(TAG, "Health monitoring timer : $appTimer")
                 appTimer?.toLong()?.let {
                     PrefUtility().saveLongInPref(
@@ -340,7 +330,7 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
             Log.d(TAG, "Redirect Request: " + Gson().toJson(redirectRequest))
             Log.d(TAG, "Redirect Response: " + Gson().toJson(commonResponse))
             dismissProgressBar()
-            if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
+            if (commonResponse?.status != null && commonResponse.status!!) {
                 launchLoginScreen()
                 Log.d(TAG, "redirectPage 1$commonResponse")
             } else {
@@ -391,26 +381,30 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
     }
 
     private fun redirectPage(provider: User, errorId: Int) {
-        if (errorId == 101) {
-            val intent = Intent(this, OTPActivity::class.java)
-            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.id)
-            intent.putExtra(Constants.IntentKeyConstants.MOBILE_NO, provider.phone)
-            intent.putExtra(Constants.IntentKeyConstants.COUNTRY_CODE, provider.countryCode)
-            intent.putExtra(Constants.IntentKeyConstants.FROM_PAGE, "splash")
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        } else if (errorId == 102) {
-            val intent = Intent(this, EmailOTPActivity::class.java)
-            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_EMAIL, provider.email)
-            intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.id)
-            intent.putExtra(Constants.IntentKeyConstants.FROM_PAGE, "splash")
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        } else if (errorId == 103) {
-            val intent = Intent(this, RegistrationSuccessActivity::class.java)
-            intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+        when (errorId) {
+            101 -> {
+                val intent = Intent(this, OTPActivity::class.java)
+                intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.id)
+                intent.putExtra(Constants.IntentKeyConstants.MOBILE_NO, provider.phone)
+                intent.putExtra(Constants.IntentKeyConstants.COUNTRY_CODE, provider.countryCode)
+                intent.putExtra(Constants.IntentKeyConstants.FROM_PAGE, "splash")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+            102 -> {
+                val intent = Intent(this, EmailOTPActivity::class.java)
+                intent.putExtra(Constants.IntentKeyConstants.PROVIDER_EMAIL, provider.email)
+                intent.putExtra(Constants.IntentKeyConstants.PROVIDER_ID, provider.id)
+                intent.putExtra(Constants.IntentKeyConstants.FROM_PAGE, "splash")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+            103 -> {
+                val intent = Intent(this, RegistrationSuccessActivity::class.java)
+                intent.putExtra(Constants.IntentKeyConstants.PREVIOUS_ACTIVITY, TAG)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
         }
     }
 }

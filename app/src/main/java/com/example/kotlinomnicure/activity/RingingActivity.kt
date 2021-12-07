@@ -1,5 +1,6 @@
 package com.example.kotlinomnicure.activity
 
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
@@ -12,10 +13,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -26,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.customview.CircularImageView
+import com.example.kotlinomnicure.utils.Buildconfic
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
@@ -38,18 +38,15 @@ import com.google.gson.Gson
 import com.mvp.omnicure.kotlinactivity.requestbodys.SendMsgNotifyRequestBody
 import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.providerEndpoints.model.Provider
-
-
 import org.json.JSONArray
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.IOException
-import java.net.SocketTimeoutException
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.net.SocketTimeoutException
 import java.util.*
 
 
@@ -61,7 +58,7 @@ class RingingActivity :BaseActivity() {
     var player: MediaPlayer? = null
     override var mHandler: Handler? = null
     var mRunnable: Runnable? = null
-    var mBroadcastReceiver: BroadcastReceiver? = null
+    private var mBroadcastReceiver: BroadcastReceiver? = null
     var mReceiver: ScreenReceiver? = null
     var mProviderList: ArrayList<Provider> = ArrayList<Provider>()
     private var mAcceptClickTime = System.currentTimeMillis()
@@ -80,13 +77,13 @@ class RingingActivity :BaseActivity() {
             ab.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
             ab.setCustomView(R.layout.ard_agora_actionbar)
         }
-        val sosImageView = findViewById(R.id.sos_icon) as ImageView
-        val patient_title = findViewById(R.id.patient_title) as TextView
+        val sosImageView = findViewById<ImageView>(R.id.sos_icon)
+        val patient_title = findViewById<TextView>(R.id.patient_title)
 
         //appname
-        val header = findViewById(R.id.header) as TextView
-        header.text = java.lang.String.format(getString(R.string.omnicure_now), Buildconfic.value())
-        val patientInfoLayout = findViewById(R.id.patient_info_layout) as LinearLayout
+        val header = findViewById<TextView>(R.id.header)
+        header.text = java.lang.String.format(getString(R.string.omnicure_now), Buildconfic().value())
+        val patientInfoLayout = findViewById<LinearLayout>(R.id.patient_info_layout)
         if (intent.hasExtra("sos")) {
             sosImageView.visibility = View.VISIBLE
             patientInfoLayout.setBackgroundResource(R.color.sos_red)
@@ -96,7 +93,7 @@ class RingingActivity :BaseActivity() {
             patientInfoLayout.setBackgroundResource(R.drawable.blue_gradient)
             patient_title.setText(R.string.patient_information)
         }
-        val imageButton = findViewById(R.id.ringing_call_icon) as ImageButton
+        val imageButton = findViewById<ImageButton>(R.id.ringing_call_icon)
         if (intent.hasExtra("call") && intent.getStringExtra("call")
                 .equals(Constants.FCMMessageType.AUDIO_CALL,ignoreCase = true)
         ) {
@@ -135,9 +132,9 @@ class RingingActivity :BaseActivity() {
 
         caller_name.text = callerTitle
         caller_image_text.visibility = View.VISIBLE
-        caller_image_text.setText(intent.getStringExtra("providerName")?.let {
+        caller_image_text.text = intent.getStringExtra("providerName")?.let {
             UtilityMethods().getNameText(it)
-        })
+        }
         val caller_hospital = findViewById<TextView>(R.id.caller_hospital)
         caller_hospital.text = intent.getStringExtra("hospitalName")
         caller_hospital.visibility = View.GONE
@@ -179,7 +176,7 @@ class RingingActivity :BaseActivity() {
         }
         if (intent.hasExtra("profilePicUrl") && !TextUtils.isEmpty(intent.getStringExtra("profilePicUrl"))) {
             val imageUrl = intent.getStringExtra("profilePicUrl")
-            caller_image_view.setVisibility(View.VISIBLE)
+            caller_image_view.visibility = View.VISIBLE
             caller_image_text.visibility = View.GONE
             if (!TextUtils.isEmpty(imageUrl)) {
                 Glide.with(this)
@@ -265,7 +262,7 @@ class RingingActivity :BaseActivity() {
                     }
                     var groupCall = false
 
-                    if (providerListNotification != null && providerListNotification.size > 2) {
+                    if (providerListNotification.size > 2) {
                         groupCall = true
                     } else if (getIntent().hasExtra("sos")) {
                         groupCall = true
@@ -374,7 +371,7 @@ class RingingActivity :BaseActivity() {
                                         }
                                     }
                                 }
-                                findViewById(R.id.connection_message) as TextView
+                                findViewById<TextView>(R.id.connection_message)
                                 Handler().postDelayed({ finish() }, 2000)
                             }
                         }
@@ -408,7 +405,7 @@ class RingingActivity :BaseActivity() {
             java.lang.String.valueOf(PrefUtility().getProviderId(this))
         auditId?.let {
             CallActivityViewModel().sendAuditId(it, flag, providerID, type)
-                ?.observe(this) { commonResponse ->
+                ?.observe(this) {
 
                     dismissProgressBar()
                 }
@@ -455,7 +452,7 @@ class RingingActivity :BaseActivity() {
         if (intent.hasExtra("patientId")) {
             requestBody.setPatientId(intent.getLongExtra("patientId", 0L))
         }
-        ApiClient().getApiProviderEndpoints(true, true)?.sendMessageNotification(requestBody)
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)?.sendMessageNotification(requestBody)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
@@ -482,7 +479,7 @@ class RingingActivity :BaseActivity() {
         startActivity(i)
     }
 
-    fun forwardToRoom() {
+    private fun forwardToRoom() {
 
         //changed fields to private
 

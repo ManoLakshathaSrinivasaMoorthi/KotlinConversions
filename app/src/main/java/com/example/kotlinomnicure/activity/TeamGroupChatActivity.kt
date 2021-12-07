@@ -47,8 +47,8 @@ class TeamGroupChatActivity : BaseActivity() {
         }
         patientId = intent.getLongExtra("patientID", 0)
         strTeamName = intent.getStringExtra(Constants.IntentKeyConstants.TEAM_NAME)
-        binding?.toolbar?.setTitle(strTeamName)
-        binding?.idToolbarTitle?.setText(strTeamName)
+        binding?.toolbar?.title = strTeamName
+        binding?.idToolbarTitle?.text = strTeamName
         binding?.toolbar?.setNavigationIcon(R.drawable.ic_back)
         val groupCallIcon = binding?.toolbar?.findViewById(R.id.group_call) as ImageView
         groupCallIcon.setOnClickListener {
@@ -59,7 +59,7 @@ class TeamGroupChatActivity : BaseActivity() {
 
     private fun initView() {
         val mLinearLayoutManager = LinearLayoutManager(this)
-        binding?.teamsRecyclerView?.setLayoutManager(mLinearLayoutManager)
+        binding?.teamsRecyclerView?.layoutManager = mLinearLayoutManager
     }
 
     fun videoCall(provider: Members) {
@@ -78,7 +78,7 @@ class TeamGroupChatActivity : BaseActivity() {
                         Constants.FCMMessageType.AUDIO_CALL)
                         ?.observe(this) { commonResponse ->
                             dismissProgressBar()
-                            if (commonResponse != null && commonResponse.status!= null && commonResponse.status!!) {
+                            if (commonResponse?.status != null && commonResponse.status!!) {
                                 val callScreen = Intent(this, CallActivity::class.java)
                                 callScreen.putExtra("providerName", provider.getProviderName())
                                 callScreen.putExtra("providerHospitalName", "Team " + provider.getTeamName())
@@ -119,7 +119,7 @@ class TeamGroupChatActivity : BaseActivity() {
                                 startActivity(callScreen)
                             } else if (commonResponse?.getErrorMessage() != null) {
                                 val errMsg: String? = ErrorMessages().getErrorMessage(this,
-                                    commonResponse?.getErrorMessage(),
+                                    commonResponse.getErrorMessage(),
                                     Constants.API.startCall)
 
                                 CustomSnackBar.make(binding?.idContainerLayout, this, CustomSnackBar.WARNING,

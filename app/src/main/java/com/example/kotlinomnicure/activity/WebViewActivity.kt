@@ -16,7 +16,7 @@ class WebViewActivity : BaseActivity() {
     private val TAG = WebViewActivity::class.java.simpleName
     val EXTERNAL_REQUEST = 138
     var binding: ActivityWebviewBinding? = null
-    var webView: WebView? = null
+    private var webView: WebView? = null
     private var progressDialog: ProgressDialog? = null
     private var url: String? = null
     private var imgBack: ImageView? = null
@@ -24,7 +24,7 @@ class WebViewActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_webview)
-        webView = findViewById(R.id.webview_image) as WebView
+        webView = findViewById(R.id.webview_image)
         val extras = intent.extras
         url = extras!!.getString(Constants.IntentKeyConstants.IMAGE_URL)
         println("WebView image url : $url")
@@ -38,7 +38,7 @@ class WebViewActivity : BaseActivity() {
     }
 
     private fun initToolbar() {
-        imgBack = findViewById(R.id.imgBack) as ImageView
+        imgBack = findViewById(R.id.imgBack)
         imgBack?.setOnClickListener { finish() }
     }
 
@@ -73,7 +73,7 @@ class WebViewActivity : BaseActivity() {
         progressDialog?.dismiss()
     }
 
-    protected override fun addBackButton() {
+    public override fun addBackButton() {
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)

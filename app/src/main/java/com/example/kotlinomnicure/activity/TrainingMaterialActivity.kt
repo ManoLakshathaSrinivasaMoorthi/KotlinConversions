@@ -14,7 +14,7 @@ import com.example.kotlinomnicure.utils.PrefUtility
 class TrainingMaterialActivity : BaseActivity(){
 
     //Declare the variables
-    private val TAG: String = TrainingMaterialActivity::class.java.getSimpleName()
+    private val TAG: String = TrainingMaterialActivity::class.java.simpleName
     private var binding: ActivityTrainingMaterialBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

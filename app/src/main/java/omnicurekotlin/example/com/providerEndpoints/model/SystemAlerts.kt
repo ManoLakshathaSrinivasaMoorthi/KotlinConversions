@@ -8,26 +8,26 @@ class SystemAlerts {
     @SerializedName("systemAlertList")
     private var systemAlertList: List<SystemAlertList?>? = null
 
-    @Expose
-    @SerializedName("status")
+
     var status = false
 
     @Expose
     @SerializedName("errorId")
     private var errorId = 0
 
-    @Expose
-    @SerializedName("errorMessage")
+
     var errorMessage: String? = null
 
     fun isStatus(): Boolean {
         return status
     }
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
 
+    @JvmName("setErrorMessage1")
     fun setErrorMessage(errorMessage: String?) {
         this.errorMessage = errorMessage
     }
@@ -40,10 +40,12 @@ class SystemAlerts {
         this.systemAlertList = systemAlertList
     }
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean {
         return status
     }
 
+    @JvmName("setStatus1")
     fun setStatus(status: Boolean) {
         this.status = status
     }
