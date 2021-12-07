@@ -154,7 +154,7 @@ class RemoteProviderSignUpSecond : BaseActivity() {
 
         viewModel!!.registerProvider(provider)?.observe(this) { commonResponse: CommonResponse? ->
             dismissProgressBar()
-            if (commonResponse != null && commonResponse.status != null && commonResponse.status!!) {
+            if (commonResponse?.status != null && commonResponse.status!!) {
                 PrefUtility().saveStringInPref(
                     applicationContext,
                     Constants.redirectValidation.EMAIL,

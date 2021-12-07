@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
@@ -51,6 +52,7 @@ class NotificationActivity : BaseActivity(){
     private var dialogMessage: String? = ""
     private var messageType: String? = ""
     private var context: Activity? = null
+
     var biometricPrompt: BiometricPrompt? = null
     private var viewModel: LoginViewModel? = null
     private val fingerprintManager: FingerprintManager? = null
@@ -59,15 +61,16 @@ class NotificationActivity : BaseActivity(){
     private val cipher: Cipher? = null
     private val KEY_NAME = "AndroidKey"
     private var ctx:Context= NotificationActivity()
-    override fun onCreate(savedInstanceState: Intent?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_notification)
 
         // Context initialization
         context = this
         // Layout initialization
-        linearBg = findViewById(R.id.llBackground) as LinearLayout
-        container = findViewById(R.id.container) as LinearLayout
+        linearBg = findViewById<LinearLayout>(R.id.llBackground)
+        container = findViewById<LinearLayout>(R.id.container)
         // View model initialization
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         // Handling the intent
@@ -102,7 +105,7 @@ class NotificationActivity : BaseActivity(){
         if (messageType != null && messageType == Constants.FCMMessageType.PASSWORD_LOCK) {
             if (!getTopActivity().contains("CallActivity") && !getTopActivity().contains("RingingActivity")) {
                 val finerprintstate: Boolean =
-                    com.example.dailytasksamplepoc.kotlinomnicure.utils.PrefUtility().getBooleanInPref(this,
+             PrefUtility().getBooleanInPref(this,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG,
                         false)
                 if (finerprintstate) {
@@ -299,7 +302,7 @@ class NotificationActivity : BaseActivity(){
                     PrefUtility().saveStringInPref(ctx,
                         Constants.SharedPrefConstants.EMAIL,
                         email)
-                    PrefUtility().saveBooleanInPref(context,
+                    PrefUtility().saveBooleanInPref(ctx,
                         Constants.SharedPrefConstants.FINGERPRINTFLAG,
                         finerprintstate)
                 } else {
@@ -322,7 +325,7 @@ class NotificationActivity : BaseActivity(){
                 val finerprintstate: Boolean = PrefUtility().getBooleanInPref(context as NotificationActivity,
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     false)
-                PrefUtility().saveBooleanInPref(context,
+                PrefUtility().saveBooleanInPref(ctx,
                     Constants.SharedPrefConstants.FINGERPRINTFLAG,
                     false)
                 clearPrefs()
@@ -355,7 +358,7 @@ class NotificationActivity : BaseActivity(){
                     alertDialog!!.show()
                 }
             } catch (e: BadTokenException) {
-                =
+
             }
         }
 
@@ -470,10 +473,10 @@ class NotificationActivity : BaseActivity(){
                         /**
                          * The device does not have a biometric sensor.
                          */
-                        PrefUtility().saveBooleanInPref(this,
+                        PrefUtility().saveBooleanInPref(ctx,
                             Constants.SharedPrefConstants.FINGERPRINTFLAG,
                             false)
-                        PrefUtility().saveStringInPref(this,
+                        PrefUtility().saveStringInPref(ctx,
                             Constants.SharedPrefConstants.PASSWORD,
                             "")
                         handledisable()
@@ -493,10 +496,10 @@ class NotificationActivity : BaseActivity(){
                          * The user does not have any biometrics enrolled.
                          */
                         //   menufingerprint.setVisibility(View.GONE);
-                        PrefUtility().saveBooleanInPref(this,
+                        PrefUtility().saveBooleanInPref(ctx,
                             Constants.SharedPrefConstants.FINGERPRINTFLAG,
                             false)
-                        PrefUtility().saveStringInPref(this,
+                        PrefUtility().saveStringInPref(ctx,
                             Constants.SharedPrefConstants.PASSWORD,
                             "")
                         handledisable()
@@ -538,7 +541,7 @@ class NotificationActivity : BaseActivity(){
                          * This occurs after 5 failed attempts, and lasts for 30 seconds.
                          */
                         CustomSnackBar.make(dialogView,
-                            this,
+                            context,
                             CustomSnackBar.WARNING,
                             getString(R.string.fpdisable),
                             CustomSnackBar.TOP,
@@ -566,7 +569,7 @@ class NotificationActivity : BaseActivity(){
                          * and sensor-specific, but is generally on the order of 30 seconds.
                          */
                         CustomSnackBar.make(dialogView,
-                            this,
+                            context,
                             CustomSnackBar.WARNING,
                             getString(R.string.fpdisable),
                             CustomSnackBar.TOP,
@@ -586,12 +589,12 @@ class NotificationActivity : BaseActivity(){
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    val password: String? = PrefUtility().getStringInPref(this,
+                    val password: String? = PrefUtility().getStringInPref(ctx,
                         Constants.SharedPrefConstants.PASSWORD,
                         "")
                     EncUtil().generateKey(activity)
                     val decryptpassword: String? =
-                        EncUtil().decrypt(this, password)
+                        EncUtil().decrypt(ctx, password)
                     checkPasswordApifingerprint(decryptpassword)
                     super.onAuthenticationSucceeded(result)
 
@@ -599,12 +602,12 @@ class NotificationActivity : BaseActivity(){
 
                 override fun onAuthenticationFailed() {
                     val finerprintstate: Boolean =
-                        PrefUtility().getBooleanInPref(this,
+                        PrefUtility().getBooleanInPref(ctx,
                             Constants.SharedPrefConstants.FINGERPRINTFLAG,
                             false)
                     if (finerprintstate) {
                         CustomSnackBar.make(dialogView,
-                            this,
+                            context,
                             CustomSnackBar.WARNING,
                             getString(R.string.Authfaild),
                             CustomSnackBar.TOP,
@@ -710,7 +713,7 @@ class NotificationActivity : BaseActivity(){
         val email: String? =
             PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
 
-        showProgressBar(getString(R.string.password_verify))
+        showProgressBars(getString(R.string.password_verify))
         val credential = email?.let {
             EmailAuthProvider
                 .getCredential(it, password)
@@ -750,70 +753,74 @@ class NotificationActivity : BaseActivity(){
             "")
         val strEmail: String?=
             PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
-        viewModel.checkPassword(strEmail, password, token).observe(this) { commonResponse ->
-            dismissProgressBar()
+        if (strEmail != null) {
+            if (token != null) {
+                viewModel?.checkPassword(strEmail, password, token)?.observe(this) { commonResponse ->
+                    dismissProgressBar()
 
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                val auth = "Authentication Permission Granted"
-                CustomSnackBar.make(dialogView,
-                    this,
-                    CustomSnackBar.SUCCESS,
-                    auth,
-                    CustomSnackBar.TOP,
-                    3000,
-                    0)?.show()
+                    if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
+                        val auth = "Authentication Permission Granted"
+                        CustomSnackBar.make(dialogView,
+                            this,
+                            CustomSnackBar.SUCCESS,
+                            auth,
+                            CustomSnackBar.TOP,
+                            3000,
+                            0)?.show()
 
-                handledisable()
-                //Do nothing
-            } else {
+                        handledisable()
+                        //Do nothing
+                    } else {
 
-                val errMsg: String?= ErrorMessages().getErrorMessage(this,
-                    commonResponse.getErrorMessage(),
-                    Constants.API.getDocBoxPatientList)
+                        val errMsg: String?= ErrorMessages().getErrorMessage(this,
+                            commonResponse.getErrorMessage(),
+                            Constants.API.getDocBoxPatientList)
 
-                if (commonResponse.getErrorId() === 0) {
-                    CustomSnackBar.make(dialogView,
-                        this,
-                        CustomSnackBar.WARNING,
-                        errMsg,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0).show()
+                        if (commonResponse.getErrorId() === 0) {
+                            CustomSnackBar.make(dialogView,
+                                this,
+                                CustomSnackBar.WARNING,
+                                errMsg,
+                                CustomSnackBar.TOP,
+                                3000,
+                                0)?.show()
 
-                } else if (commonResponse.getErrorId() === 106) {
-                    //finger print
-                    val errMsg1 = getString(R.string.temporarily_locked)
-                    CustomSnackBar.make(dialogView,
-                        this,
-                        CustomSnackBar.WARNING,
-                        errMsg,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0)?.show()
+                        } else if (commonResponse.getErrorId() === 106) {
+                            //finger print
+                            val errMsg1 = getString(R.string.temporarily_locked)
+                            CustomSnackBar.make(dialogView,
+                                this,
+                                CustomSnackBar.WARNING,
+                                errMsg,
+                                CustomSnackBar.TOP,
+                                3000,
+                                0)?.show()
 
-                    PrefUtility().saveBooleanInPref(this,
-                        Constants.SharedPrefConstants.FINGERPRINTFLAG,
-                        false)
-                    PrefUtility().saveStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
-                    alertDialog!!.dismiss()
+                            PrefUtility().saveBooleanInPref(this,
+                                Constants.SharedPrefConstants.FINGERPRINTFLAG,
+                                false)
+                            PrefUtility().saveStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
+                            alertDialog!!.dismiss()
 
-                    val intent =
-                        Intent(this, NotificationActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            val intent =
+                                Intent(this, NotificationActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-                    intent.putExtra("remoteTitle", getString(R.string.user_locked_title))
-                    intent.putExtra("remoteMessage", commonResponse.getErrorMessage())
-                    intent.putExtra("messageType", Constants.FCMMessageType.TEMP_LOCK)
-                    startActivity(intent)
-                } else {
-                    CustomSnackBar.make(dialogView,
-                        this,
-                        CustomSnackBar.WARNING,
-                        errMsg,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0)?.show()
+                            intent.putExtra("remoteTitle", getString(R.string.user_locked_title))
+                            intent.putExtra("remoteMessage", commonResponse.getErrorMessage())
+                            intent.putExtra("messageType", Constants.FCMMessageType.TEMP_LOCK)
+                            startActivity(intent)
+                        } else {
+                            CustomSnackBar.make(dialogView,
+                                this,
+                                CustomSnackBar.WARNING,
+                                errMsg,
+                                CustomSnackBar.TOP,
+                                3000,
+                                0)?.show()
 
+                        }
+                    }
                 }
             }
         }
@@ -827,87 +834,93 @@ class NotificationActivity : BaseActivity(){
             "")
         val strEmail: String? =
             PrefUtility().getStringInPref(this, Constants.SharedPrefConstants.EMAIL, "")
-        viewModel.checkPassword(strEmail, password, token).observe(this) { commonResponse ->
-            dismissProgressBar()
+        if (strEmail != null) {
+            if (password != null) {
+                if (token != null) {
+                    viewModel?.checkPassword(strEmail, password, token)?.observe(this) { commonResponse ->
+                        dismissProgressBar()
 
-            if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
-                EncUtil().generateKey(this)
-                val encryptpassword: String? =
-                    EncUtil().encrypt(this, password)
-                PrefUtility().saveStringInPref(this,
-                    Constants.SharedPrefConstants.PASSWORD,
-                    encryptpassword)
-                PrefUtility().saveBooleanInPref(this,
-                    Constants.SharedPrefConstants.FINGERPRINTFLAG,
-                    true)
-                val auth = "Authentication Permission Granted"
-                CustomSnackBar.make(dialogView,
-                    this,
-                    CustomSnackBar.SUCCESS,
-                    auth,
-                    CustomSnackBar.TOP,
-                    3000,
-                    0)?.show()
-                handledisable()
-                //Do nothing
+                        if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
+                            EncUtil().generateKey(this)
+                            val encryptpassword: String? =
+                                EncUtil().encrypt(this, password)
+                            PrefUtility().saveStringInPref(this,
+                                Constants.SharedPrefConstants.PASSWORD,
+                                encryptpassword)
+                            PrefUtility().saveBooleanInPref(this,
+                                Constants.SharedPrefConstants.FINGERPRINTFLAG,
+                                true)
+                            val auth = "Authentication Permission Granted"
+                            CustomSnackBar.make(dialogView,
+                                this,
+                                CustomSnackBar.SUCCESS,
+                                auth,
+                                CustomSnackBar.TOP,
+                                3000,
+                                0)?.show()
+                            handledisable()
+                            //Do nothing
 
-            } else {
+                        } else {
 
-                val errMsg: String? = ErrorMessages().getErrorMessage(this,
-                    commonResponse.getErrorMessage(),
-                    Constants.API.getDocBoxPatientList)
+                            val errMsg: String? = ErrorMessages().getErrorMessage(this,
+                                commonResponse.getErrorMessage(),
+                                Constants.API.getDocBoxPatientList)
 
-                if (commonResponse.getErrorId() === 0) {
-                    CustomSnackBar.make(dialogView,
-                        this,
-                        CustomSnackBar.WARNING,
-                        errMsg,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0)?.show()
-                } else if (commonResponse.getErrorId() === 106) {
-                    //finger print
-                    val errMsg1 = getString(R.string.temporarily_locked)
-                    CustomSnackBar.make(dialogView,
-                        this,
-                        CustomSnackBar.WARNING,
-                        errMsg,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0)?.show()
-                    PrefUtility().saveBooleanInPref(this,
-                        Constants.SharedPrefConstants.FINGERPRINTFLAG,
-                        false)
-                    PrefUtility().saveStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
-                    alertDialog!!.dismiss()
+                            if (commonResponse.getErrorId() === 0) {
+                                CustomSnackBar.make(dialogView,
+                                    this,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0)?.show()
+                            } else if (commonResponse.getErrorId() === 106) {
+                                //finger print
+                                val errMsg1 = getString(R.string.temporarily_locked)
+                                CustomSnackBar.make(dialogView,
+                                    this,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0)?.show()
+                                PrefUtility().saveBooleanInPref(this,
+                                    Constants.SharedPrefConstants.FINGERPRINTFLAG,
+                                    false)
+                                PrefUtility().saveStringInPref(this, Constants.SharedPrefConstants.PASSWORD, "")
+                                alertDialog!!.dismiss()
 
-                    val intent =
-                        Intent(this, NotificationActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                val intent =
+                                    Intent(this, NotificationActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-                    intent.putExtra("remoteTitle", getString(R.string.user_locked_title))
-                    intent.putExtra("remoteMessage", commonResponse.getErrorMessage())
-                    intent.putExtra("messageType", Constants.FCMMessageType.TEMP_LOCK)
-                    startActivity(intent)
-                } else {
-                    CustomSnackBar.make(dialogView,
-                        this,
-                        CustomSnackBar.WARNING,
-                        errMsg,
-                        CustomSnackBar.TOP,
-                        3000,
-                        0)?.show()
+                                intent.putExtra("remoteTitle", getString(R.string.user_locked_title))
+                                intent.putExtra("remoteMessage", commonResponse.getErrorMessage())
+                                intent.putExtra("messageType", Constants.FCMMessageType.TEMP_LOCK)
+                                startActivity(intent)
+                            } else {
+                                CustomSnackBar.make(dialogView,
+                                    this,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0)?.show()
 
+                            }
+
+
+                        }
+                    }
                 }
-
-
             }
         }
     }
 
     var progressDialog: CustomProgressDialog? = null
 
-    fun showProgressBar(string: String) {
+    fun showProgressBars(string: String) {
         dismissProgressBar()
         try {
             progressDialog = CustomProgressDialog(this)

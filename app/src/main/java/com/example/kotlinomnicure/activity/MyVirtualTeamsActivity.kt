@@ -21,10 +21,13 @@ import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
 import com.example.kotlinomnicure.utils.UtilityMethods
-import com.example.dailytasksamplepoc.kotlinomnicure.endpoints.providerEndpoints.model.Provider
+
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityMyVirtualWardBinding
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.example.kotlinomnicure.videocall.openvcall.ui.CallActivity
+import com.example.kotlinomnicure.viewmodel.MyVirtualViewModel
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.ArrayList
@@ -231,14 +234,14 @@ class MyVirtualTeamsActivity : BaseActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun callApi() {
         showProgressBar()
-        viewModel?.getTeams(uid)?.observe(this) { commonResponse ->
+        viewModel?.getTeams(uid)?.observe(this,{
             dismissProgressBar()
-            Log.d(TAG, "TeamsDetailsRes-->" + Gson().toJson(commonResponse))
-            if (commonResponse?.getStatus() != null && commonResponse.getStatus()!!) {
+            Log.d(TAG, "TeamsDetailsRes-->" + Gson().toJson(it))
+            if (it?.getStatus()!= null &&it.getStatus()!!) {
                 val gson = Gson()
                 var obj: JSONObject? = null
                 try {
-                    obj = JSONObject(gson.toJson(commonResponse))
+                    obj = JSONObject(gson.toJson(it))
                 } catch (e: JSONException) {
                     Log.d(TAG, e.toString())
                 }
@@ -255,7 +258,7 @@ class MyVirtualTeamsActivity : BaseActivity() {
             } else {
                 val errMsg: String? = ErrorMessages().getErrorMessage(
                     this,
-                    java.lang.String.valueOf(commonResponse?.getErrorMessage()),
+                    java.lang.String.valueOf(it?.getErrorMessage()),
                     Constants.API.getHospital
                 )
 
@@ -271,7 +274,7 @@ class MyVirtualTeamsActivity : BaseActivity() {
                     )?.show()
                 }
             }
-        }
+        })
     }
 
     //video call

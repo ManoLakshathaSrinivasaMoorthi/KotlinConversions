@@ -1124,7 +1124,7 @@ class MyProfileActivity :BaseActivity(){
         perms[Manifest.permission.READ_EXTERNAL_STORAGE] = PackageManager.PERMISSION_GRANTED
         if (grantResults.size > 0) {
             for (i in permissions.indices) {
-                perms[permissions[i]] = grantResults[i]
+                perms[permissions[i]!!] = grantResults[i]
             }
             if (requestCode == Constants.PermissionCondes.CAMERA_STORAGE_PERMISSION_CODE && PackageManager.PERMISSION_GRANTED == perms[Manifest.permission.CAMERA]) {
                 GeeksMediaPicker.with(this)

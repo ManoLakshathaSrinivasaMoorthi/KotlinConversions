@@ -29,7 +29,7 @@ import com.example.kotlinomnicure.media.Utils
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.viewmodel.CensusPatientListViewModel
 import com.example.kotlinomnicure.viewmodel.ChatActivityViewModel
-import com.example.kotlinomnicure.viewmodel.MyVirtualTeamsViewModel
+import com.example.kotlinomnicure.viewmodel.MyVirtualViewModel
 import com.google.gson.Gson
 import omnicurekotlin.example.com.hospitalEndpoints.model.Patient
 import omnicurekotlin.example.com.hospitalEndpoints.model.WardPatientList
@@ -1065,7 +1065,7 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
     private fun getTeamList() {
         val uid: Long = PrefUtility().getLongInPref(this, Constants.SharedPrefConstants.USER_ID, 0)
         showProgressBar()
-        val virtualTeamsViewModel = ViewModelProvider(this).get(MyVirtualTeamsViewModel::class.java)
+        val virtualTeamsViewModel = ViewModelProvider(this).get(MyVirtualViewModel::class.java)
         virtualTeamsViewModel?.getTeams(uid)?.observe(this, {
             val response=it.body()
             dismissProgressBar()

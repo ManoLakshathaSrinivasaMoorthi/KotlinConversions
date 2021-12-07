@@ -1,6 +1,11 @@
 package com.example.kotlinomnicure.apiRetrofit
 
+import com.example.kotlinomnicure.model.CommonResponseRetro
+import com.example.kotlinomnicure.model.HealthMonitoring
 import com.google.gson.JsonObject
+import com.mvp.omnicure.kotlinactivity.requestbodys.CommonProviderIdBody
+import com.mvp.omnicure.kotlinactivity.requestbodys.HealthMonitorEventRequestBody
+import com.mvp.omnicure.kotlinactivity.requestbodys.TeamDetailsByNameRequestBody
 import omnicurekotlin.example.com.providerEndpoints.model.*
 import retrofit2.Call
 import retrofit2.http.*

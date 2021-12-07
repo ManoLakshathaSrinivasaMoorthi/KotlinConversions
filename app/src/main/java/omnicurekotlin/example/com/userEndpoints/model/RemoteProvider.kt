@@ -2,9 +2,9 @@ package omnicurekotlin.example.com.userEndpoints.model
 
 class RemoteProvider {
 
-    private var id: String? = null
+    var id: String? = null
     private var type: String? = null
-    private var name: String? = null
+    var name: String? = null
     private var acceptConsultFlag: Boolean? = null
     private var status: Boolean? = null
     private var orderId: Long? = null

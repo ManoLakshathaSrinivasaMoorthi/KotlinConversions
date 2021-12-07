@@ -126,12 +126,12 @@ class PatientAppointmentActivityInfo : BaseActivity() {
                     ?.observe(this) { commonResponse ->
                         dismissProgressBar()
                         Log.i("Patient response ", Gson().toJson(commonResponse))
-                        if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()) {
+                        if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus()!!) {
                             onAppointmentSuccess(commonResponse)
                         } else {
                             val errMsg: String? = ErrorMessages().getErrorMessage(
                                 this,
-                                commonResponse.getErrorMessage(),
+                                commonResponse?.getErrorMessage(),
                                 Constants.API.patientSignUp
                             )
 

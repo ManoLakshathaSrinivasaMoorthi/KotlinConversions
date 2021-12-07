@@ -160,8 +160,11 @@ class ResetPasswordActivity : BaseActivity() {
 
     fun checkOldPassword(showError: Boolean) {
         if (strLastName?.let {
-                ValidationUtil().checkPasswordValidation(binding?.edtOldPassword?.text.toString(), binding,
-                    strFirstName, it, strEmail)
+                binding?.let { it1 ->
+                    ValidationUtil().checkPasswordValidation(binding?.edtOldPassword?.text.toString(),
+                        it1,
+                        strFirstName, it, strEmail)
+                }
             } != null || binding?.edtOldPassword?.text.toString() == binding?.edtNewPassword?.text.toString()
         ) {
             if (showError) {
@@ -172,10 +175,12 @@ class ResetPasswordActivity : BaseActivity() {
                     return
                 }
                 strLastName?.let { it ->
-                    ValidationUtil().checkPasswordValidation(
-                        binding?.edtOldPassword?.text.toString(), binding,
-                        strFirstName, it, strEmail)?.let {
-                        binding?.edtOldPassword?.setErrorMessage(it)
+                    binding?.let { it1 ->
+                        ValidationUtil().checkPasswordValidation(
+                            binding?.edtOldPassword?.text.toString(), it1,
+                            strFirstName, it, strEmail)?.let {
+                            binding?.edtOldPassword?.setErrorMessage(it)
+                        }
                     }
                 }
                 binding?.llOldPassword?.background = resources.getDrawable(R.drawable.error_edittext_bg)
@@ -198,16 +203,21 @@ class ResetPasswordActivity : BaseActivity() {
     fun checkNewPassword(showError: Boolean) {
         when {
             strLastName?.let {
-                ValidationUtil().checkPasswordValidation(binding?.edtNewPassword?.text.toString(), binding,
-                    strFirstName,
-                    it, strEmail)
+                binding?.let { it1 ->
+                    ValidationUtil().checkPasswordValidation(binding?.edtNewPassword?.text.toString(),
+                        it1,
+                        strFirstName,
+                        it, strEmail)
+                }
             } != null -> {
                 if (showError) {
-                    ValidationUtil().checkPasswordValidation(binding?.edtNewPassword?.text.toString(),
-                        binding, strFirstName, strLastName!!, strEmail)?.let {
-                        binding?.edtNewPassword?.setErrorMessage(
-                            it
-                        )
+                    binding?.let {
+                        ValidationUtil().checkPasswordValidation(binding?.edtNewPassword?.text.toString(),
+                            it, strFirstName, strLastName!!, strEmail)?.let {
+                            binding?.edtNewPassword?.setErrorMessage(
+                                it
+                            )
+                        }
                     }
                     binding?.llNewPassword?.background = resources.getDrawable(R.drawable.error_edittext_bg)
                     binding?.newPasswordInfo?.visibility = View.VISIBLE
@@ -235,19 +245,23 @@ class ResetPasswordActivity : BaseActivity() {
         if (binding?.edtConfirmPassword?.text.toString().isNotEmpty()) {
             when {
                 strLastName?.let {
-                    ValidationUtil().checkPasswordValidation(
-                        binding?.edtConfirmPassword?.text.toString(), binding,
-                        strFirstName, it, strEmail
-                    )
+                    binding?.let { it1 ->
+                        ValidationUtil().checkPasswordValidation(
+                            binding?.edtConfirmPassword?.text.toString(), it1,
+                            strFirstName, it, strEmail
+                        )
+                    }
                 } != null -> {
                     if (showError) {
-                        ValidationUtil().checkPasswordValidation(
-                            binding?.edtConfirmPassword?.text.toString(), binding,
-                            strFirstName, strLastName!!, strEmail
-                        )?.let {
-                            binding?.edtConfirmPassword?.setErrorMessage(
-                                it
-                            )
+                        binding?.let {
+                            ValidationUtil().checkPasswordValidation(
+                                binding?.edtConfirmPassword?.text.toString(), it,
+                                strFirstName, strLastName!!, strEmail
+                            )?.let {
+                                binding?.edtConfirmPassword?.setErrorMessage(
+                                    it
+                                )
+                            }
                         }
                         binding?.llConfirmPassword?.background = resources.getDrawable(R.drawable.error_edittext_bg)
                         binding?.confirmPasswordInfo?.visibility = View.VISIBLE

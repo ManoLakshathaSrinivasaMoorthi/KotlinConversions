@@ -31,6 +31,7 @@ import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 import com.example.kotlinomnicure.videocall.openvcall.model.CurrentUserSettings
+import com.example.kotlinomnicure.videocall.openvcall.ui.CallActivity
 import com.example.kotlinomnicure.videocall.openvcall.ui.SettingsActivity
 import com.example.kotlinomnicure.viewmodel.CallActivityViewModel
 import com.google.gson.Gson

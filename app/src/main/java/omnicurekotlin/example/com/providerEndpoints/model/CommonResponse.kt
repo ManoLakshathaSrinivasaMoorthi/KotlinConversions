@@ -1,5 +1,7 @@
 package omnicurekotlin.example.com.providerEndpoints.model
 
+import com.example.kotlinomnicure.model.ENotesList
+
 class CommonResponse {
 
 
@@ -44,6 +46,7 @@ class CommonResponse {
 
 
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }

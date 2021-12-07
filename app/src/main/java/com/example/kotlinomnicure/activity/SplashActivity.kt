@@ -40,6 +40,7 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
     private var strEmail: String? = null
     private  var strPassword:kotlin.String? = null
     private  var strId:kotlin.String? = null
+    var encKey: String? = null
     var launchingRunnable = Runnable {
         if (!isConnectedCalled) {
 
@@ -98,11 +99,10 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
                 PrefUtility().getStringInPref(
                     this,
                     Constants.SharedPrefConstants.FIREBASE_REFRESH_TOKEN,
-                    ""
-                )
-            )
-        ) {
-            getFirebaseIdToken()
+                    ""))) {
+            EncUtil().generateKey(this)
+            encKey = PrefUtility().getAESAPIKey(this)
+            getFirebaseIdToken(encKey)
         }
         val URIdata = intent.data
         if (URIdata != null && URIdata.scheme == "https") {
@@ -229,7 +229,7 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
         }
     }
 
-    fun onConnected() {
+    override fun onConnected() {
         isConnectedCalled = true
         Log.i(TAG, "onConnected: $strEmail $strPassword")
         mHandler?.postDelayed(Runnable {
@@ -265,26 +265,30 @@ class SplashActivity : BaseActivity(), OnNetConnectedListener {
         Log.i(TAG, "onSuccessVersionInfoAPI: Response " + Gson().toJson(response.appConfig))
         if (response.appConfig != null) {
 
-            if (response.appConfig.logoutServerTimerinMilli != null) {
+            if (response.appConfig!!.logoutServerTimerinMilli != null) {
 
-                val serverTimer = response.appConfig.logoutServerTimerinMilli
+                val serverTimer = response.appConfig!!.logoutServerTimerinMilli
                 Log.i(TAG, "Auto Logout Server Time : $serverTimer")
-                PrefUtility().saveLongInPref(
-                    this,
-                    Constants.SharedPrefConstants.AUTO_LOGOUT_TIME,
-                    serverTimer.toLong()
-                )
+                serverTimer?.toLong()?.let {
+                    PrefUtility().saveLongInPref(
+                        this,
+                        Constants.SharedPrefConstants.AUTO_LOGOUT_TIME,
+                        it
+                    )
+                }
             }
 
-            if (response.appConfig.logoutAppTimerinMilli != null) {
+            if (response.appConfig!!.logoutAppTimerinMilli != null) {
 
-                val appTimer = response.appConfig.logoutAppTimerinMilli
+                val appTimer = response.appConfig!!.logoutAppTimerinMilli
                 Log.i(TAG, "Health monitoring timer : $appTimer")
-                PrefUtility().saveLongInPref(
-                    this,
-                    Constants.SharedPrefConstants.HEALTH_MONITOR_TIMER,
-                    appTimer.toLong()
-                )
+                appTimer?.toLong()?.let {
+                    PrefUtility().saveLongInPref(
+                        this,
+                        Constants.SharedPrefConstants.HEALTH_MONITOR_TIMER,
+                        it
+                    )
+                }
             }
             if (response.aesKey != null) {
                 val aesKey = response.aesKey

@@ -7,6 +7,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
@@ -57,7 +58,7 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
-    protected var mHandler: Handler? = null
+    protected open var mHandler: Handler? = null
     var toast: Toast? = null
     private var progressDialog: CustomProgressDialog? = null
 
@@ -150,7 +151,7 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
     /**
      * Add back button in action bar
      */
-    protected fun addBackButton() {
+    protected open fun addBackButton() {
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -977,7 +978,8 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String?>, grantResults: IntArray, ) {
+        permissions: Array<String?>, grantResults: IntArray,
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
@@ -1011,4 +1013,30 @@ open class BaseActivity : AppCompatActivity(), OnInternetConnChangeListener {
             return Locale(lang)
         }
     }
+
+    @JvmName("getVersion1")
+    fun getVersion(): String? {
+        val v: String
+        v = try {
+            val packageInfo = packageManager.getPackageInfo(packageName, 0)
+            if (UtilityMethods().isTestServer()) {
+                "v " + packageInfo.versionName + " - DEV"
+            } else if (UtilityMethods().isDemoTestServer()) {
+                "v " + packageInfo.versionName + " - Demo"
+            } else if (UtilityMethods().isQaTestServer()) {
+                "v " + packageInfo.versionName + " - INT"
+            } else if (UtilityMethods().isPilotServer()) {
+                "v " + packageInfo.versionName + " - Pilot"
+            } else if (UtilityMethods().isStagingServer()) {
+                "v " + packageInfo.versionName + " - Stage"
+            } else {
+                "v " + packageInfo.versionName
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            //            Log.e(TAG, "Exception:", e.getCause());
+            "v "
+        }
+        return v
+    }
+
 }

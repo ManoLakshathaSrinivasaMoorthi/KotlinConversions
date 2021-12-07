@@ -10,7 +10,7 @@ class SystemAlerts {
 
     @Expose
     @SerializedName("status")
-    private var status = false
+    var status = false
 
     @Expose
     @SerializedName("errorId")
@@ -18,7 +18,7 @@ class SystemAlerts {
 
     @Expose
     @SerializedName("errorMessage")
-    private var errorMessage: String? = null
+    var errorMessage: String? = null
 
     fun isStatus(): Boolean {
         return status

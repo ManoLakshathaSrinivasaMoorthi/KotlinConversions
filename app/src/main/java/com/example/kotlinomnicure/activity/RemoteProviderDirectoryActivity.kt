@@ -40,6 +40,7 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityRemoteProviderDirectoryBinding
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.example.kotlinomnicure.videocall.openvcall.ui.CallActivity
 import java.util.ArrayList
 import java.util.LinkedHashMap
 
@@ -251,7 +252,6 @@ class RemoteProviderDirectoryActivity : BaseActivity(),
     }
 
 
-
     override fun addressFilterReady(addressArr: ArrayList<String>) {
         if (!addressArr.contains("All")) {
             addressArr.add("All")
@@ -329,7 +329,8 @@ class RemoteProviderDirectoryActivity : BaseActivity(),
         val radioGroup = dialog.findViewById<View>(R.id.radioGrp) as RadioGroup
         val close = dialog.findViewById<View>(R.id.imgCancel) as ImageButton
         val title = dialog.findViewById<View>(R.id.txtTitle) as TextView
-        val inflater = applicationContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater =
+            applicationContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         for ((key, value) in remoteMap) {
             val radioButton =
                 inflater.inflate(R.layout.radiobutton, radioGroup, false) as RadioButton
@@ -688,7 +689,8 @@ class RemoteProviderDirectoryActivity : BaseActivity(),
                             } else {
                                 val errMsg: String? = ErrorMessages().getErrorMessage(
                                     this,
-                                    commonResponse?.errorMessage)
+                                    commonResponse?.errorMessage, Constants.API.startCall)
+
 
                                 if (errMsg != null) {
                                     CustomSnackBar.make(
@@ -886,8 +888,6 @@ class RemoteProviderDirectoryActivity : BaseActivity(),
         }
 
 
-
-
         class ViewPagerAdapter(fm: FragmentManager?) :
             FragmentPagerAdapter(fm!!) {
             override fun getItem(position: Int): Fragment {
@@ -918,22 +918,9 @@ class RemoteProviderDirectoryActivity : BaseActivity(),
 
         }
 
-    class TAB {
-        Remote, Bedside
     }
 
-    interface FragmentSearchListener {
-        fun onSearchFilter(search: String?, filter: String?)
-        fun onTabSelected()
+    override fun onVideoCallClicked(provider: Provider?) {
+        TODO("Not yet implemented")
     }
-
-    interface HospitalSearchListener {
-        fun onSearchFilter(search: String?, filter: String?)
-    }
-
-    interface BedsideSearchListener {
-        fun sendHospitalId(hospitalId: String?)
-        fun onSearchFilter(search: String?, filter: String?)
-        fun onTabSelected()
-    }
-
+}

@@ -11,7 +11,7 @@ class User {
     private var designation: String? = null
     private var remoteProviderType: String? = null
     private var dob: Long? = null
-    private var email: String? = null
+    var email: String? = null
     private var emailOtp: String? = null
     private var emailOtpVerified: Boolean? = null
     private var experience: Float? = null
