@@ -16,11 +16,29 @@ class AppConfig : Serializable {
     //  public JsonMap clone() {
     //    return (JsonMap) super.clone();
     //  }
-    @SerializedName("logoutAppTimerinMilli")
-    @Expose
+
     var logoutAppTimerinMilli: String? = null
 
-    @SerializedName("logoutServerTimerinMilli")
-    @Expose
+
     var logoutServerTimerinMilli: String? = null
+
+    @JvmName("getLogoutAppTimerinMilli1")
+    fun getLogoutAppTimerinMilli(): String? {
+        return logoutAppTimerinMilli
+    }
+
+    @JvmName("setLogoutAppTimerinMilli1")
+    fun setLogoutAppTimerinMilli(logoutAppTimerinMilli: String?) {
+        this.logoutAppTimerinMilli = logoutAppTimerinMilli
+    }
+
+    @JvmName("getLogoutServerTimerinMilli1")
+    fun getLogoutServerTimerinMilli(): String? {
+        return logoutServerTimerinMilli
+    }
+
+    @JvmName("setLogoutServerTimerinMilli1")
+    fun setLogoutServerTimerinMilli(logoutServerTimerinMilli: String?) {
+        this.logoutServerTimerinMilli = logoutServerTimerinMilli
+    }
 }

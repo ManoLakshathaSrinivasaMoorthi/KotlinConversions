@@ -42,8 +42,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="0.5"
-                        android:tint="@color/white"
-                        app:srcCompat="@drawable/ic_dashboard" />
+                        app:srcCompat="@drawable/ic_dashboard"
+                        app:tint="@color/white" />
 
                     <TextView
                         android:id="@+id/dashboardTitle"
@@ -66,7 +66,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <com.mvp.omnicure.customview.CircularImageView
+                            <com.example.kotlinomnicure.customview.CircularImageView
                                 android:id="@+id/profilePic"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -96,7 +96,7 @@
                                 android:textSize="@dimen/drawer_img_txt_size"
                                 android:visibility="gone" />
 
-                            <com.mvp.omnicure.customview.CircularImageView
+                            <com.example.kotlinomnicure.customview.CircularImageView
                                 android:id="@+id/iv_camera"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

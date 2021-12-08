@@ -32,6 +32,9 @@
         android:theme="@style/Theme.KotlinOmniCure"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.MyDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".videocall.openvcall.ui.SettingsActivity"
             android:exported="false" />
         <activity

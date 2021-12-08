@@ -42,7 +42,7 @@ class HomeViewModel : ViewModel() {
     private var handOffAcceptObservable: MutableLiveData<CommonResponse>? = null
     private var addOrUpdateObservable: MutableLiveData<CommonResponseProviderNotification>? = null
 
-    private var passwordObservable: MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse>? =
+    private var passwordObservable: MutableLiveData<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse>? =
         null
     private var acceptInviteObservable: MutableLiveData<CommonResponse>? =
         null
@@ -56,7 +56,7 @@ class HomeViewModel : ViewModel() {
         null
     private var versionInfoObservable: MutableLiveData<VersionInfoResponse>? = null
 
-    fun getVersionInfo(toString: String): LiveData<VersionInfoResponse?>? {
+    fun getVersionInfo(): LiveData<VersionInfoResponse?>? {
         versionInfoObservable = MutableLiveData()
        getVersionInfoRetro(Constants.OsType.ANDROID.toString())
 
@@ -67,7 +67,7 @@ class HomeViewModel : ViewModel() {
         email: String?,
         password: String?,
         token: String?,
-    ): MutableLiveData<omnicurekotlin.example.com.userEndpoints.model.CommonResponse>? {
+    ): MutableLiveData<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse>? {
         passwordObservable = MutableLiveData()
         if (email != null) {
             password?.let {
@@ -86,14 +86,14 @@ class HomeViewModel : ViewModel() {
         bodyValues["password"] = password
         bodyValues["token"] = token
         ApiClient().getApi(true, true)?.loginWithPassword(bodyValues)?.
-        enqueue(object : Callback<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?> {
+        enqueue(object : Callback<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse?> {
                 override fun onResponse(
-                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
-                    response: Response<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                    call: Call<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse?>,
+                    response: Response<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse?>,
                 ) {
                     if (response.isSuccessful()) {
                         Log.d("discharge", "onResponse: $response")
-                        val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse? =
+                        val commonResponse: omnicurekotlin.example.com.loginEndpoints.model.CommonResponse? =
                             response.body()
                         if (passwordObservable == null) {
                             passwordObservable = MutableLiveData()
@@ -102,8 +102,8 @@ class HomeViewModel : ViewModel() {
                     } else {
                         Log.d("discharge", "onResponse: $response")
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
-                                omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
+                            val commonResponse: omnicurekotlin.example.com.loginEndpoints.model.CommonResponse =
+                                omnicurekotlin.example.com.loginEndpoints.model.CommonResponse()
                             commonResponse.setErrorMessage(Constants.API_ERROR)
                             if (passwordObservable == null) {
                                 passwordObservable =
@@ -115,13 +115,13 @@ class HomeViewModel : ViewModel() {
                 }
 
                 override fun onFailure(
-                    call: Call<omnicurekotlin.example.com.userEndpoints.model.CommonResponse?>,
+                    call: Call<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse?>,
                     t: Throwable,
                 ) {
                     Log.d("discharge", "onFailure: $t")
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
-                            omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
+                        val commonResponse: omnicurekotlin.example.com.loginEndpoints.model.CommonResponse =
+                            omnicurekotlin.example.com.loginEndpoints.model.CommonResponse()
                         commonResponse.setErrorMessage(Constants.API_ERROR)
                         if (passwordObservable == null) {
                             passwordObservable =
@@ -133,8 +133,8 @@ class HomeViewModel : ViewModel() {
             })
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: omnicurekotlin.example.com.userEndpoints.model.CommonResponse =
-                    omnicurekotlin.example.com.userEndpoints.model.CommonResponse()
+                val commonResponse: omnicurekotlin.example.com.loginEndpoints.model.CommonResponse =
+                    omnicurekotlin.example.com.loginEndpoints.model.CommonResponse()
                 commonResponse.setErrorMessage(errMsg)
                 if (passwordObservable == null) {
                     passwordObservable =
@@ -258,7 +258,9 @@ class HomeViewModel : ViewModel() {
 
     fun getProviderById(id: Long, token: String?, providerId: Long): LiveData<CommonResponse?>? {
         providerObservable = MutableLiveData()
-        getProvider(id, token, providerId)
+        if (token != null) {
+            getProvider(id, token, providerId)
+        }
         return providerObservable
     }
 
