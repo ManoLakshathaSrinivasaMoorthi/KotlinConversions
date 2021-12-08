@@ -36,7 +36,7 @@ class TermsAndConditionsResponse {
     }
     @JvmName("setErrorMessage1")
     fun setErrorMessage(errorMessage: String) {
-        errorMessage = errorMessage
+        //errorMessage = errorMessage
     }
 
    /* operator fun set(fieldName: String?, value: Any?): TermsAndConditionsResponse? {

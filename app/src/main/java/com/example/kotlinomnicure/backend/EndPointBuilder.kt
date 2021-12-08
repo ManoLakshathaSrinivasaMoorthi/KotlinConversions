@@ -27,8 +27,8 @@ class EndPointBuilder {
         AndroidHttp.newCompatibleTransport(),
         AndroidJsonFactory(), BuildConfigConstants.authorize()
       )
-        .setRootUrl(BuildConfigConstants.getBackendRootUrl())
-      builder.setApplicationName(BuildConfigConstants.getBackendAppName())
+        .setRootUrl(BuildConfigConstants.backendRootUrl)
+      builder.setApplicationName(BuildConfigConstants.backendAppName)
       providerEndpoints = builder.build()
     }
     return providerEndpoints
@@ -41,8 +41,8 @@ class EndPointBuilder {
         AndroidHttp.newCompatibleTransport(),
         AndroidJsonFactory(), BuildConfigConstants.authorize()
       )
-        .setRootUrl(BuildConfigConstants.getBackendRootUrl())
-      builder.setApplicationName(BuildConfigConstants.getBackendAppName())
+        .setRootUrl(BuildConfigConstants.backendRootUrl)
+      builder.setApplicationName(BuildConfigConstants.backendAppName)
       healthCareEndpoints = builder.build()
     }
     return healthCareEndpoints
@@ -54,8 +54,8 @@ class EndPointBuilder {
         AndroidHttp().newCompatibleTransport(),
         AndroidJsonFactory(), BuildConfigConstants.authorize()
       )
-        .setRootUrl(BuildConfigConstants.getBackendRootUrl())
-      builder.setApplicationName(BuildConfigConstants.getBackendAppName())
+        .setRootUrl(BuildConfigConstants.backendRootUrl)
+      builder.setApplicationName(BuildConfigConstants.backendAppName)
       userEndpoints = builder.build()
     }
     return userEndpoints
@@ -67,8 +67,8 @@ class EndPointBuilder {
         AndroidHttp.newCompatibleTransport(),
         AndroidJsonFactory(), BuildConfigConstants.authorize()
       )
-        .setRootUrl(BuildConfigConstants.getBackendRootUrl())
-      builder.setApplicationName(BuildConfigConstants.getBackendAppName())
+        .setRootUrl(BuildConfigConstants.backendRootUrl)
+      builder.setApplicationName(BuildConfigConstants.backendAppName)
       loginEndpoints = builder.build()
     }
     return loginEndpoints
@@ -77,19 +77,19 @@ class EndPointBuilder {
   fun getPatientEndpoints(): PatientEndpoints? {
     Log.d(
       "PatientEndpoints",
-      "BuildConfigConstants.getBackendRootUrl() : " + BuildConfigConstants.getBackendRootUrl()
+      "BuildConfigConstants.getBackendRootUrl() : " + BuildConfigConstants.backendRootUrl
     )
     Log.d(
       "PatientEndpoints",
-      "BuildConfigConstants.getBackendRootUrl() : " + BuildConfigConstants.getBackendAppName()
+      "BuildConfigConstants.getBackendRootUrl() : " + BuildConfigConstants.backendAppName
     )
     if (patientEndpoints == null) {
       val builder: PatientEndpoints.Builder = Builder(
         AndroidHttp.newCompatibleTransport(),
         AndroidJsonFactory(), BuildConfigConstants.authorize()
       )
-        .setRootUrl(BuildConfigConstants.getBackendRootUrl())
-      builder.setApplicationName(BuildConfigConstants.getBackendAppName())
+        .setRootUrl(BuildConfigConstants.backendRootUrl)
+      builder.setApplicationName(BuildConfigConstants.backendAppName)
       patientEndpoints = builder.build()
     }
     return patientEndpoints
@@ -101,8 +101,8 @@ class EndPointBuilder {
         AndroidHttp.newCompatibleTransport(),
         AndroidJsonFactory(), BuildConfigConstants.authorize()
       )
-        .setRootUrl(BuildConfigConstants.getBackendRootUrl())
-      builder.setApplicationName(BuildConfigConstants.getBackendAppName())
+        .setRootUrl(BuildConfigConstants.backendRootUrl)
+      builder.setApplicationName(BuildConfigConstants.backendAppName)
       hospitalEndpoints = builder.build()
     }
     return hospitalEndpoints
@@ -114,8 +114,8 @@ class EndPointBuilder {
         AndroidHttp.newCompatibleTransport(),
         AndroidJsonFactory(), BuildConfigConstants.authorize()
       )
-        .setRootUrl(BuildConfigConstants.getBackendRootUrl())
-      builder.setApplicationName(BuildConfigConstants.getBackendAppName())
+        .setRootUrl(BuildConfigConstants.backendRootUrl)
+      builder.setApplicationName(BuildConfigConstants.backendAppName)
       appointmentEndpoints = builder.build()
     }
     return appointmentEndpoints

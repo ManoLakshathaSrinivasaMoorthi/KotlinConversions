@@ -1076,7 +1076,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
             if (consultMessage.getImageUrl().contains("?alt=media&")) {
                 val arr: List<String> = consultMessage.getImageUrl().split("\\?alt=media&")
                 val ur = arr[0]
-                val currentURL = FIREBASE_STORAGE_URL + BuildConfigConstants.getBaseUrl().toString() + "/o/"
+                val currentURL = FIREBASE_STORAGE_URL + BuildConfigConstants.baseUrl.toString() + "/o/"
                 if (ur.startsWith(currentURL)) {
                     val p = ur.replace(currentURL, "")
                     try {
