@@ -21,8 +21,8 @@ import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
 
 
-open class DrawerActivity : AppCompatActivity() {
-    val TAG = DrawerActivity::class.java.simpleName
+open class DrawerActivity : BaseActivity() {
+    open val TAG = DrawerActivity::class.java.simpleName
     var binding: ActivityDrawerBinding? = null
     protected var drawerLayout: DrawerLayout? = null
     var navHeaderView: View? = null

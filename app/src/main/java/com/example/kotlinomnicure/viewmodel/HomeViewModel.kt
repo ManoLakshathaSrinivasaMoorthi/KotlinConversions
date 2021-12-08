@@ -256,7 +256,7 @@ class HomeViewModel : ViewModel() {
         return hospitalObservable
     }
 
-    fun getProviderById(id: Long, token: String, providerId: Long): LiveData<CommonResponse?>? {
+    fun getProviderById(id: Long, token: String?, providerId: Long): LiveData<CommonResponse?>? {
         providerObservable = MutableLiveData()
         getProvider(id, token, providerId)
         return providerObservable

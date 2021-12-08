@@ -2281,7 +2281,7 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
         fetchDirectory()
     }
 
-    private fun fetchDirectory() {
+    fun fetchDirectory() {
 //        Log.d(TAG, "fetchDirectory: called...");
         DirectoryListHelperOld(binding, viewModel, object : CallbackDirectory() {
             fun onClickProvierItem(provider: Provider) {

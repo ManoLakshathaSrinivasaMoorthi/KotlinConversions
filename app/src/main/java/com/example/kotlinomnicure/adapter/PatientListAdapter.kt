@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -110,7 +109,7 @@ class PatientListAdapter: RecyclerView.Adapter<PatientListAdapter.ConsultListVie
      * Provider list update
      * @param providerLists
      */
-    fun updateList(providerLists: List<ConsultProvider>?) {
+    fun updateList(providerLists: List<ConsultProvider?>) {
         if (providerLists != null) {
             providerList = providerLists
             originalProviderList = providerLists

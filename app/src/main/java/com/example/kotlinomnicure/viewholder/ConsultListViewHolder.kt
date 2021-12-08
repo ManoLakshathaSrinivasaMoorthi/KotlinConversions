@@ -33,12 +33,7 @@ class ConsultListViewHolder(itemBinding: ItemConsultListBinding) :
         itemBinding?.inviteBtn?.setOnClickListener { itemBinding?.inviteBtn?.isEnabled = false }
     }
 
-    fun bind(
-        consultProvider: ConsultProvider,
-        selectedTab: Int,
-        filterPatientStatus: Constants.PatientStatus?,
-        searchQueryStr: String?
-    ) {
+    fun bind(consultProvider: ConsultProvider, selectedTab: Int, filterPatientStatus: Constants.PatientStatus?, searchQueryStr: String?) {
         if (consultProvider.getId() == null || TextUtils.isEmpty(consultProvider.getName())) {
             itemBinding?.cardview?.visibility = View.GONE
             return
@@ -116,29 +111,7 @@ class ConsultListViewHolder(itemBinding: ItemConsultListBinding) :
             " M"
         }
         itemBinding?.nameTextView?.text = nameStr
-
-//        if (consultProvider.getTime() > 0) {
-//            itemBinding.timeTextView.setText(ChatUtils.getTimeAgo(consultProvider.getTime()));
-//        } else if (consultProvider.getJoiningTime() != null && consultProvider.getJoiningTime() > 0) {
-//            itemBinding.timeTextView.setText(ChatUtils.getTimeAgo(consultProvider.getJoiningTime()));
-//        } else {
-//            itemBinding.timeTextView.setText("");
-//        }
-
-        /*if (consultProvider.getMemberCount() == 1) {
-            itemBinding.consultTextView.setText(consultProvider.getMemberCount()+ " "+ itemBinding.getRoot().getContext().getString(R.string.consultant));
-        } else if (consultProvider.getMemberCount() > 1) {
-            itemBinding.consultTextView.setText(consultProvider.getMemberCount()+ " " + itemBinding.getRoot().getContext().getString(R.string.consulatants));
-        } else {
-            if (consultProvider.getText() == null) {
-                if(consultProvider.getMsgName() != null) {
-                    itemBinding.messageTextView.setText(consultProvider.getMsgName() + ": "+itemBinding.getRoot().getContext().getString(R.string.patient_added) );
-                } else {
-                    itemBinding.messageTextView.setText(itemBinding.getRoot().getContext().getString(R.string.patient_added));
-                }
-                itemBinding.messageTextView.setVisibility(TextView.VISIBLE);
-            }
-        }*/if (consultProvider.getStatus() === Constants.PatientStatus.Pending) {
+        if (consultProvider.getStatus() === Constants.PatientStatus.Pending) {
             //Todo: handle invited member OR new patient added case
             //itemBinding.consultTextView.setText(itemBinding.getRoot().getContext().getString(R.string.pending));
             //Show watch timer logo
@@ -158,13 +131,7 @@ class ConsultListViewHolder(itemBinding: ItemConsultListBinding) :
             } else {
                 itemBinding?.messageView?.visibility = TextView.GONE
             }
-            /*if (consultProvider.getMemberCount() > 2){
-                itemBinding.consultTextView.setText((consultProvider.getMemberCount()-1)+" " + itemBinding.getRoot().getContext().getString(R.string.consulatants));
-            } else if (consultProvider.getMemberCount() == 2){
-                itemBinding.consultTextView.setText("1 " + itemBinding.getRoot().getContext().getString(R.string.consultant));
-            } else {
-                itemBinding.consultTextView.setText("");
-            }*/itemBinding?.watchTimerView?.visibility = TextView.GONE
+         itemBinding?.watchTimerView?.visibility = TextView.GONE
             itemBinding?.inviteBtn?.visibility = TextView.GONE
         }
         if (consultProvider.getUrgent() != null && consultProvider.getUrgent()!!) {
@@ -174,13 +141,7 @@ class ConsultListViewHolder(itemBinding: ItemConsultListBinding) :
         }
 
 
-        /*if (consultProvider.getStatus() == ChatUtils.PatientStatus.Completed){
-            itemBinding.idDischargeView.setVisibility(View.VISIBLE);
-            itemBinding.idArrowIcon.setVisibility(View.GONE);
-        } else {
-            itemBinding.idDischargeView.setVisibility(View.GONE);
-            itemBinding.idArrowIcon.setVisibility(View.VISIBLE);
-        }*/
+
     }
 
     fun bind(

@@ -15,7 +15,7 @@ class CommonResponse {
     private var providerList: List<Provider>? = null
     private var room: Room? = null
 
-    private var status: Boolean? = null
+    var status: Boolean? = null
     private var unit: Unit? = null
     private var ward: Ward? = null
 

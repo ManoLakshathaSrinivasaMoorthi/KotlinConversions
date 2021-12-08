@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.kotlinomnicure.R
 
-class NotificationHelper: ContextWrapper {
+class NotificationHelper(base: Context?): ContextWrapper(base) {
     private var notificationManager: NotificationManager? = null
     private val PRIMARY_CHANNEL = "com.mvp.omnicure.ANDROID"
     private var smallIcon = 0
@@ -22,7 +22,7 @@ class NotificationHelper: ContextWrapper {
     private var soundUri: Uri? = null
     private var isAutoCancel = false
 
-    constructor(context: Context, nothing: Nothing?) :super(context){
+    constructor(context: Context, nothing: Nothing?) :this(context){
 
         notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         smallIcon = R.drawable.ic_notification
