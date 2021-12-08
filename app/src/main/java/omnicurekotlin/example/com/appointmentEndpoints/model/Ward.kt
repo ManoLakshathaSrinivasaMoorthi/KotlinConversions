@@ -5,58 +5,19 @@ import java.io.Serializable
 
 
 class Ward : Serializable {
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+
     var hospital: String? = null
         private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var hospitalId: Long? = null
         private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
     var id: Long? = null
         private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key @com.google.api.client.json.JsonString
+
     var joiningTime: Long? = null
         private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
     var name: String? = null
         private set
-    /**
-     * @return value or `null` for none
-     */
-    /**
-     * The value may be `null`.
-     */
-    //com.google.api.client.util.Key
+
     private var occupiedBeds: Int? = null
     /**
      * @return value or `null` for none

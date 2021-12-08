@@ -204,7 +204,7 @@
                                 android:layout_height="@dimen/margin_10"
                                 android:layout_marginStart="@dimen/margin_5"
                                 android:src="@drawable/ic_double_tick"
-                                android:tint="@color/chat_time_color" />
+                                app:tint="@color/chat_time_color" />
 
                             <TextView
                                 android:id="@+id/date"
@@ -247,7 +247,7 @@
                         android:layout_marginTop="@dimen/margin_3"
 
                         android:src="@drawable/ic_double_tick"
-                        android:tint="#5E6C84" />
+                        app:tint="#5E6C84" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -295,7 +295,7 @@
                         android:layout_marginStart="@dimen/margin_3"
                         android:layout_marginTop="@dimen/margin_3"
                         android:src="@drawable/ic_double_tick"
-                        android:tint="#5E6C84" />
+                        app:tint="#5E6C84" />
 
 
                     <TextView
@@ -346,7 +346,7 @@
                         android:layout_marginStart="3px"
                         android:layout_marginTop="@dimen/margin_3"
                         android:src="@drawable/ic_double_tick"
-                        android:tint="#9B51E0" />
+                        app:tint="#9B51E0" />
 
                     <TextView
                         android:layout_width="wrap_content"

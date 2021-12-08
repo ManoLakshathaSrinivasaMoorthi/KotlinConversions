@@ -8,11 +8,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.example.kotlinomnicure.R
 
-import com.example.kotlinomnicure.activity.BaseActivity
-
-import com.example.kotlinomnicure.activity.PatientAppointmentActivity
 import com.example.kotlinomnicure.databinding.ActivitySignupBinding
-import com.example.kotlinomnicure.utils.Buildconfic
 
 import com.example.kotlinomnicure.utils.Constants
 

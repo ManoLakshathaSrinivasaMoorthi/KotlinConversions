@@ -9,56 +9,6 @@ import java.util.List;
 public final class ProviderNotificationResponse implements Serializable {
 
 
-//    @com.google.api.client.util.Key
-//    private Boolean status;
-//    @com.google.api.client.util.Key
-//    private Integer errorId;
-//    @com.google.api.client.util.Key
-//    private String errorMessage;
-//    @com.google.api.client.util.Key
-//    private ProviderNotificationInputResponse notificationSettings;
-//    @com.google.api.client.util.Key
-//    private List<NotificationSettingsRequest> notificationRequests = null;
-//
-//    public String getErrorMessage() {
-//        return errorMessage;
-//    }
-//
-//    public void setErrorMessage(String errorMessage) {
-//        this.errorMessage = errorMessage;
-//    }
-//
-//    public Boolean getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(Boolean status) {
-//        this.status = status;
-//    }
-//
-//    public Integer getErrorId() {
-//        return errorId;
-//    }
-//
-//    public void setErrorId(Integer errorId) {
-//        this.errorId = errorId;
-//    }
-//
-//    public ProviderNotificationInputResponse getProviderNotification() {
-//        return notificationSettings;
-//    }
-//
-//    public void setProviderNotification(ProviderNotificationInputResponse providerNotification) {
-//        this.notificationSettings = providerNotification;
-//    }
-//
-//    public List<NotificationSettingsRequest> getNotificationRequests() {
-//        return notificationRequests;
-//    }
-//
-//    public void setNotificationRequests(List<NotificationSettingsRequest> notificationRequests) {
-//        this.notificationRequests = notificationRequests;
-//    }
 
     @SerializedName("status")
     @Expose

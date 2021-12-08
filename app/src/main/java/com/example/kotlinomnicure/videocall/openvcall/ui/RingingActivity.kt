@@ -26,7 +26,6 @@ import androidx.appcompat.app.ActionBar
 import com.bumptech.glide.Glide
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
-import com.example.kotlinomnicure.utils.Buildconfic
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods

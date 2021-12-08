@@ -1,5 +1,4 @@
 <resources>
-
     <!--    Splash Screen-->
     <string name="app_name">Omnicure</string>
     <string name="app_os">Android</string>
@@ -866,6 +865,13 @@
     <string name="create_progress_enote">Create Progress eNote</string>
     <string name="new_progress_enote">New Progress eNote</string>
     <string name="handoff_enotes_desc">Handoff eNotes are used document details when eConsult is being handed off to another medical professional.</string>
+    <string name="timezone">Time</string>
+    <string name="todo">TODO</string>
+    <string name="mrn">MRN</string>
+    <string name="age">Age</string>
+    <string name="friday_december_18">Friday December 18</string>
+    <string name="hello_omnicure">Hello Omnicure</string>
+    <string name="summary_note">"Summary Note "</string>
 
 
 </resources>

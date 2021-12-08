@@ -37,9 +37,7 @@
         <activity
             android:name=".videocall.openvcall.ui.SettingsActivity"
             android:exported="false" />
-        <activity
-            android:name=".activity.HomeActivity"
-            android:exported="false" />
+
         <activity
             android:name=".activity.NotificationActivity"
             android:exported="false" />
@@ -88,7 +86,7 @@
         <activity android:name=".activity.RegistrationActivity" /> <!-- <activity android:name=".activity.ChatActivity" /> -->
         <activity android:name=".activity.ActivityHospitalList" />
         <activity android:name=".activity.TransferPatientActivity" />
-        <activity android:name=".activity.SignupActivity" />
+        <activity android:name=".activity.AddPatientActivity" />
         <activity android:name=".activity.RemoteProviderSignUpSecond" />
         <activity android:name=".activity.ActivityPatientCensusWard" />
         <activity android:name=".activity.ActivityConsultChartRemote" />
@@ -98,7 +96,7 @@
         <activity android:name=".activity.ActivityCensusConsultChart" />
         <activity android:name=".activity.ActivityPatientCensusHospital" />
         <activity android:name=".activity.SplashActivity" />
-        <activity android:name=".activity.MyDashboardActivity" />
+
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.RegistrationSuccessActivity" />
         <activity android:name=".activity.OTPActivity" />
@@ -107,10 +105,10 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.PatientAppointmentActivity" />
         <activity android:name=".activity.ActivityConsultChart" />
-        <activity android:name=".OmnicureApp" />
+
         <activity android:name=".activity.ActivityPatientCensusPatient" />
         <activity
-            android:name=".activity.AddPatientActivity"
+            android:name=".activity.SignupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarDark">
             <intent-filter>
