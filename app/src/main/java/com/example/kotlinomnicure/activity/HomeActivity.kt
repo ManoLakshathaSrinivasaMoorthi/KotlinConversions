@@ -72,7 +72,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 
-class HomeActivity(options: FirebaseRecyclerOptions<T:Any?>) : DrawerActivity(), NavigationView.OnNavigationItemSelectedListener, OnListItemClickListener {
+class HomeActivity(options: FirebaseRecyclerOptions<T:any>) : DrawerActivity(), NavigationView.OnNavigationItemSelectedListener, OnListItemClickListener {
 
     override val TAG = HomeActivity::class.java.simpleName
     var expandedPosition = -1
@@ -2765,7 +2765,7 @@ class HomeActivity(options: FirebaseRecyclerOptions<T:Any?>) : DrawerActivity(),
 
                     dismissProgressBar()
                     if (listResponse != null && listResponse.status != null && listResponse.status!!) {
-
+//                    mHandler.postDelayed(() -> scrollListToTop(), 500);
                         consultProvider.setStatus(Constants.PatientStatus.Active)
                         //Opening the chart page based on the status of the provider
                         openChartPage(consultProvider)
