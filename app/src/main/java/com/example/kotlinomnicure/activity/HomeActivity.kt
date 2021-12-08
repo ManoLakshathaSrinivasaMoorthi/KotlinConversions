@@ -72,7 +72,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 
-class HomeActivity(options: FirebaseRecyclerOptions<T:any>) : DrawerActivity(), NavigationView.OnNavigationItemSelectedListener, OnListItemClickListener {
+class HomeActivity(options: FirebaseRecyclerOptions<T>) : DrawerActivity(), NavigationView.OnNavigationItemSelectedListener, OnListItemClickListener {
 
     override val TAG = HomeActivity::class.java.simpleName
     var expandedPosition = -1
