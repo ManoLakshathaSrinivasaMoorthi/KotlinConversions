@@ -74,7 +74,7 @@ class ChatMessageStatusListAdapter(
                         if (!(context is Activity && (context as Activity).isFinishing())) Glide.with(
                             context)
                             .load(downloadUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                           // .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true)
                             .listener(object : RequestListener<Drawable?> {
 
