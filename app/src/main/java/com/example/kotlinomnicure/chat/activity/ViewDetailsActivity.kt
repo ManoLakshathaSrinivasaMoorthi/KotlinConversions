@@ -381,7 +381,7 @@ class ViewDetailsActivity : BaseActivity() {
                     OnCompleteListener<Uri> { task ->
                         if (task.isSuccessful) {
                             val downloadUrl = task.result.toString()
-                            Glide.with(binding?.messageImageViewRight.getContext())
+                            Glide.with(binding?.messageImageViewRight?.getContext())
                                 .load(downloadUrl)
                                 .into(binding?.messageImageViewRight)
                         } else {
