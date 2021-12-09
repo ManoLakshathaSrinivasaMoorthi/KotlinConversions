@@ -40,8 +40,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="@dimen/margin_4"
-                        android:tint="@color/white"
-                        app:srcCompat="@drawable/ic_back" />
+                        app:srcCompat="@drawable/ic_back"
+                        card_view:tint="@color/white" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -422,7 +422,7 @@
                     android:layout_marginTop="@dimen/margin_3"
                     android:layout_marginStart="@dimen/margin_3"
                     android:src="@drawable/ic_single_tick"
-                    android:tint="#5E6C84" />
+                    card_view:tint="#5E6C84" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -468,7 +468,7 @@
                     android:layout_marginTop="@dimen/margin_3"
                     android:layout_marginStart="@dimen/margin_3"
                     android:src="@drawable/ic_double_tick"
-                    android:tint="#5E6C84" />
+                    card_view:tint="#5E6C84" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -511,7 +511,7 @@
                     android:layout_marginTop="@dimen/margin_3"
                     android:layout_marginStart="3px"
                     android:src="@drawable/ic_double_tick"
-                    android:tint="#9B51E0"/>
+                    card_view:tint="#9B51E0" />
 
                 <TextView
                     android:layout_width="wrap_content"

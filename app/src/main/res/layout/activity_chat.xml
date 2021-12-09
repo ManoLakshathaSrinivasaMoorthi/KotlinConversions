@@ -264,7 +264,7 @@
                     android:padding="6dp"
                     android:visibility="gone">
 
-                    <com.mvp.omnicure.customview.ChatEditText
+                    <com.example.kotlinomnicure.customview.ChatEditText
                         android:id="@+id/messageEditText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

@@ -93,7 +93,7 @@ interface PatientEndpoints {
     fun dischargePatientApi(@Body bodyValues: HashMap<String, String>): Call<CommonResponse?>?
 
     @POST("patientEndpoints/v1/getPatientHistory")
-    fun patienthistoryAPI(@Body bodyValues: HashMap<String?, String?>?): Call<PatientHistoryResponse?>?
+    fun patienthistoryAPI(@Body bodyValues: HashMap<String, String>): Call<PatientHistoryResponse?>?
 
 
 

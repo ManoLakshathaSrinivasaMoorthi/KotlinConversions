@@ -32,12 +32,14 @@
         android:theme="@style/Theme.KotlinOmniCure"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MyDashboardActivity"
             android:exported="false" />
         <activity
             android:name=".videocall.openvcall.ui.SettingsActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.NotificationActivity"
             android:exported="false" />
@@ -96,7 +98,6 @@
         <activity android:name=".activity.ActivityCensusConsultChart" />
         <activity android:name=".activity.ActivityPatientCensusHospital" />
         <activity android:name=".activity.SplashActivity" />
-
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.RegistrationSuccessActivity" />
         <activity android:name=".activity.OTPActivity" />
@@ -105,7 +106,6 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.PatientAppointmentActivity" />
         <activity android:name=".activity.ActivityConsultChart" />
-
         <activity android:name=".activity.ActivityPatientCensusPatient" />
         <activity
             android:name=".activity.SignupActivity"

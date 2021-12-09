@@ -47,6 +47,7 @@
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_add_patient_vitals.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_add_progress.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_change_password.xml" value="0.2421875" />
+        <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_chat.xml" value="0.2265625" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_dashboard.xml" value="0.2265625" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_email_otp.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_enotes.xml" value="0.2421875" />
@@ -66,14 +67,16 @@
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_profile.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_remote_hand_off.xml" value="0.22552083333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_remote_provider_directory.xml" value="0.2265625" />
+        <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_view_detials.xml" value="0.22395833333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/complete_patient.xml" value="0.2265625" />
+        <entry key="..\:/KotlinConversions/app/src/main/res/layout/item_view_chat_message_status.xml" value="0.22395833333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/remote_directory_child.xml" value="0.22552083333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/remote_provider_sign_up_second.xml" value="0.2265625" />
         <entry key="..\:/KotlinConversions/app/src/main/res/menu/consult_chart_menu.xml" value="0.2421875" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

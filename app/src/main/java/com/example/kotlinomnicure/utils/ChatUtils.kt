@@ -82,7 +82,31 @@ class ChatUtils {
     fun getDateFormat(milliSeconds: Long): String? {
         return getDateFormat(milliSeconds, "dd MMM yyyy")
     }
-
+    fun getDateFormatViewDetail(milliSeconds: Long): String? {
+        try {
+            val smsTime = Calendar.getInstance()
+            smsTime.timeInMillis = milliSeconds
+            val now = Calendar.getInstance()
+            val date = Date(milliSeconds)
+            var dateFormat = ""
+            var prefix = ""
+            if (DateUtils.isToday(date.time)) {
+                prefix = "Today "
+            } else if (now[Calendar.DATE] - smsTime[Calendar.DATE] == 1) {
+                prefix = "Yesterday"
+            } else {
+                dateFormat = "MMM dd,yyyy"
+            }
+            val formatter = SimpleDateFormat(dateFormat, Locale.ENGLISH)
+            formatter.timeZone = TimeZone.getDefault()
+            var dateString = formatter.format(Date(milliSeconds))
+            dateString = prefix + dateString
+            return dateString
+        } catch (e: java.lang.Exception) {
+//            Log.e(TAG, "Exception:", e.getCause());
+        }
+        return ""
+    }
 
 
 

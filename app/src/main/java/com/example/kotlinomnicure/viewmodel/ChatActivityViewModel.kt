@@ -1,6 +1,8 @@
 package com.example.kotlinomnicure.viewmodel
 
 import android.content.ContentValues
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -11,6 +13,7 @@ import com.example.kotlinomnicure.apiRetrofit.RequestBodys.CommonPatientIdReques
 import com.example.kotlinomnicure.model.SOSResponse
 
 import com.example.kotlinomnicure.utils.Constants
+import com.mvp.omnicure.kotlinactivity.requestbodys.TeamDetailsByNameRequestBody
 
 import omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.patientsEndpoints.model.PatientDetail
@@ -33,13 +36,14 @@ class ChatActivityViewModel: ViewModel() {
     private var providerInviteBroadcastObservable: MutableLiveData<CommonResponse>? = null
     private val startCallObservable: MutableLiveData<CommonResponse>? =
         null
-    private val startSOSObservable: MutableLiveData<SOSResponse>? = null
-    private val chatHistoryObservale: MutableLiveData<PatientHistoryResponse>? = null
+    private var startSOSObservable: MutableLiveData<SOSResponse>? = null
+    private var chatHistoryObservale: MutableLiveData<PatientHistoryResponse>? = null
     private var sendChatObservale: MutableLiveData<SendChatMessageOutuputResponseModel>? = null
     private val dischargePatientResponseObservable: MutableLiveData<CommonResponse>? = null
     private var providerObservable: MutableLiveData<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse>? =
         null
-    private val memberListObservable: MutableLiveData<TeamsDetailListResponse>? = null
+
+    private var memberListObservable: MutableLiveData<TeamsDetailListResponse>? = null
     private var commonResponseMutableLiveData: MutableLiveData<PatientDetail>? = null
     fun sendChatMessageCall(
         sendChatMessageInputRequestModel: SendChatMessageInputRequestModel?,
@@ -49,12 +53,146 @@ class ChatActivityViewModel: ViewModel() {
         sendChatMessages(sendChatMessageInputRequestModel, chatId)
         return sendChatObservale
     }
+    fun getMemberList(patientId: Long?, team: String?): LiveData<TeamsDetailListResponse?>? {
+        memberListObservable = MutableLiveData()
 
+        if (patientId != null) {
+            if (team != null) {
+                getMembersRetro(patientId, team)
+            }
+        }
+        return memberListObservable
+    }
+    private fun getMembersRetro(patientId: Long, team: String) {
+        val errMsg = arrayOfNulls<String>(1)
+
+        ApiClient().getApiProviderEndpoints(true, true)
+            ?.teamDetailsByName(TeamDetailsByNameRequestBody(patientId, team))
+            ?.enqueue(object : Callback<TeamsDetailListResponse?> {
+
+                override fun onResponse(
+                    call: Call<TeamsDetailListResponse?>,
+                    response: Response<TeamsDetailListResponse?>
+                ) {
+                    Log.d(ContentValues.TAG, "onResponse: " + response.code())
+                    if (response.isSuccessful) {
+                        val providerListResponse = response.body()
+                        if (memberListObservable == null) {
+                            memberListObservable = MutableLiveData()
+                        }
+                        memberListObservable!!.setValue(providerListResponse)
+                    }
+                }
+
+                override fun onFailure(call: Call<TeamsDetailListResponse?>, t: Throwable) {
+//                Log.e(TAG, "onFailure: " + t.toString() );
+                    errMsg[0] = Constants.API_ERROR
+                    val response = TeamsDetailListResponse()
+                    response.setErrorMessage(errMsg[0])
+                    if (memberListObservable == null) {
+                        memberListObservable = MutableLiveData()
+                    }
+                    memberListObservable!!.setValue(response)
+                }
+            })
+        if (!TextUtils.isEmpty(errMsg[0])) {
+            val response = TeamsDetailListResponse()
+            response.setErrorMessage(errMsg[0])
+            if (memberListObservable == null) {
+                memberListObservable = MutableLiveData()
+            }
+            memberListObservable!!.setValue(response)
+        }
+    }
+
+
+    fun startSOS(
+        callerId: Long?,
+        token: String?,
+        patientId: Long?,
+        auditId: String?
+    ): LiveData<SOSResponse?>? {
+        startSOSObservable = MutableLiveData()
+        startSOSAPI(callerId, token, patientId, auditId)
+        return startSOSObservable
+    }
+
+
+    fun getPatientChatHistory(
+        providerId: Long?,
+        token: String?,
+        patientId: Long?
+    ): LiveData<PatientHistoryResponse?>? {
+        chatHistoryObservale = MutableLiveData()
+        if (providerId != null) {
+            if (token != null) {
+                if (patientId != null) {
+                    getPatientHistory(providerId, token, patientId)
+                }
+            }
+        }
+        return chatHistoryObservale
+    }
     fun multipleCall(content: GroupCall?): LiveData<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>? {
         providerObservable = MutableLiveData()
         MultiplecallRetro(content)
         return providerObservable
     }
+    private fun getPatientHistory(providerId: Long, token: String, patientId: Long) {
+        val errMsg = ""
+        // Parsing the values in body
+        val bodyValues = HashMap<String, String>()
+        bodyValues["id"] = providerId.toString()
+        bodyValues["token"] = token
+        bodyValues["patientId"] = patientId.toString()
+        ApiClient().getApiPatientEndpoints(true, true)?.patienthistoryAPI(bodyValues) //        ApiClient.getApiPatientEndpoints(false, false).
+
+            ?.enqueue(object : Callback<PatientHistoryResponse?> {
+                override fun onResponse(call: Call<PatientHistoryResponse?>, response: Response<PatientHistoryResponse?>) {
+                    if (response.isSuccessful) {
+                        Log.d("GetPatientHistory", "onResponse: $response")
+                        val commonResponse = response.body()
+                        if (chatHistoryObservale == null) {
+                            chatHistoryObservale = MutableLiveData()
+                        }
+                        chatHistoryObservale!!.setValue(commonResponse)
+                    } else {
+                        Log.d("GetPatientHistory", "onResponse: $response")
+                        Handler(Looper.getMainLooper()).post {
+                            val commonResponse = PatientHistoryResponse()
+                            commonResponse.setErrorMessage(Constants.API_ERROR)
+                            if (chatHistoryObservale == null) {
+                                chatHistoryObservale = MutableLiveData()
+                            }
+                            chatHistoryObservale!!.setValue(commonResponse)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<PatientHistoryResponse?>, t: Throwable) {
+                    Log.d("discharge", "onFailure: $t")
+                    Handler(Looper.getMainLooper()).post {
+                        val commonResponse = PatientHistoryResponse()
+                        commonResponse.setErrorMessage(Constants.API_ERROR)
+                        if (chatHistoryObservale == null) {
+                            chatHistoryObservale = MutableLiveData()
+                        }
+                        chatHistoryObservale!!.setValue(commonResponse)
+                    }
+                }
+            })
+        if (!TextUtils.isEmpty(errMsg)) {
+            Handler(Looper.getMainLooper()).post {
+                val commonResponse = PatientHistoryResponse()
+                commonResponse.setErrorMessage(errMsg)
+                if (chatHistoryObservale == null) {
+                    chatHistoryObservale = MutableLiveData()
+                }
+                chatHistoryObservale!!.setValue(commonResponse)
+            }
+        }
+    }
+
 
     private fun MultiplecallRetro(content: GroupCall?) {
 
@@ -63,7 +201,8 @@ class ChatActivityViewModel: ViewModel() {
         call?.enqueue(object : Callback<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?> {
             override fun onResponse(
                 call: Call<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>,
-                response: Response<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>, ) {
+                response: Response<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>,
+            ) {
 
 
                 if (response.isSuccessful()) {
