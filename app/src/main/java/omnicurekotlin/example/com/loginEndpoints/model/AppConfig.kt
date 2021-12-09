@@ -7,15 +7,7 @@ import java.io.Serializable
 
 
 class AppConfig : Serializable {
-    //  @Override
-    //  public JsonMap set(String fieldName, Object value) {
-    //    return (JsonMap) super.set(fieldName, value);
-    //  }
-    //
-    //  @Override
-    //  public JsonMap clone() {
-    //    return (JsonMap) super.clone();
-    //  }
+
 
     var logoutAppTimerinMilli: String? = null
 
