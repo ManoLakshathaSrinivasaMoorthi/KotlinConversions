@@ -2,30 +2,28 @@ package omnicurekotlin.example.com.patientsEndpoints.model
 
 class Role {
 
-    private var accessType: String? = null
-    private var id: Long? = null
-    private var providerId: Long? = null
-    private var roleType: String? = null
-    private var time: Long? = null
-    private var typeId: String? = null
-    private var typeName: String? = null
+     var accessType: String? = null
+     var id: Long? = null
+     var providerId: Long? = null
+     var roleType: String? = null
+     var time: Long? = null
+     var typeId: String? = null
+     var typeName: String? = null
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getAccessType1")
     fun getAccessType(): String? {
         return accessType
     }
 
-    /**
-     * @param accessType accessType or `null` for none
-     */
+
     fun setAccessType(accessType: String?):Role {
         this.accessType = accessType
         return this
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -36,9 +34,8 @@ class Role {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getProviderId1")
     fun getProviderId(): Long? {
         return providerId
     }
@@ -49,6 +46,7 @@ class Role {
         return this
     }
 
+    @JvmName("getRoleType1")
     fun getRoleType(): String? {
         return roleType
     }
@@ -60,6 +58,7 @@ class Role {
     }
 
 
+    @JvmName("getTime1")
     fun getTime(): Long? {
         return time
     }
@@ -71,6 +70,7 @@ class Role {
     }
 
 
+    @JvmName("getTypeId1")
     fun getTypeId(): String? {
         return typeId
     }
@@ -81,6 +81,7 @@ class Role {
     }
 
 
+    @JvmName("getTypeName1")
     fun getTypeName(): String? {
         return typeName
     }

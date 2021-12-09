@@ -2,13 +2,14 @@ package omnicurekotlin.example.com.patientsEndpoints.model
 
 class PatientResponse {
 
-    private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var id: Long? = null
-    private var patient: Patient? = null
-    private var status: Boolean? = null
+     var errorId: Int? = null
+     var errorMessage: String? = null
+     var id: Long? = null
+     var patient: Patient? = null
+     var status: Boolean? = null
 
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -20,6 +21,7 @@ class PatientResponse {
     }
 
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -31,6 +33,7 @@ class PatientResponse {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -42,6 +45,7 @@ class PatientResponse {
     }
 
 
+    @JvmName("getPatient1")
     fun getPatient(): Patient? {
         return patient
     }
@@ -53,6 +57,7 @@ class PatientResponse {
     }
 
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }

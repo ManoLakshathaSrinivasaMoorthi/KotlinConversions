@@ -2,422 +2,333 @@ package omnicurekotlin.example.com.patientsEndpoints.model
 
 class DocBoxPatient {
 
-    private var address: String? = null
-    private var bdProviderId: Long? = null
-    private var bdProviderName: String? = null
-    private var bed: String? = null
-    private var countryCode: String? = null
-    private var dischargeTime: Long? = null
-    private var dob: Long? = null
-    private var docBoxManagerId: String? = null
-    private var docBoxPatientId: String? = null
-    private var email: String? = null
-    private var fname: String? = null
-    private var gender: String? = null
-    private var hospital: String? = null
-    private var hospitalDesciption: String? = null
-    private var hospitalId: Long? = null
-    private var id: Long? = null
-    private var joiningTime: Long? = null
-    private var lname: String? = null
-    private var name: String? = null
-    private var note: String? = null
-    private var phone: String? = null
-    private var picUrl: String? = null
-    private var rdProviderId: Long? = null
-    private var rdProviderName: String? = null
-    private var status: String? = null
-    private var ward: String? = null
+    var address: String? = null
+    var bdProviderId: Long? = null
+    var bdProviderName: String? = null
+    var bed: String? = null
+    var countryCode: String? = null
+    var dischargeTime: Long? = null
+    var dob: Long? = null
+    var docBoxManagerId: String? = null
+    var docBoxPatientId: String? = null
+    var email: String? = null
+    var fname: String? = null
+    var gender: String? = null
+    var hospital: String? = null
+    var hospitalDesciption: String? = null
+    var hospitalId: Long? = null
+    var id: Long? = null
+    var joiningTime: Long? = null
+    var lname: String? = null
+    var name: String? = null
+    var note: String? = null
+    var phone: String? = null
+    var picUrl: String? = null
+    var rdProviderId: Long? = null
+    var rdProviderName: String? = null
+    var status: String? = null
+    var ward: String? = null
 
+    @JvmName("getAddress1")
     fun getAddress(): String? {
         return address
     }
 
-    /**
-     * @param address address or `null` for none
-     */
+
     fun setAddress(address: String?): DocBoxPatient {
         this.address = address
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getBdProviderId1")
     fun getBdProviderId(): Long? {
         return bdProviderId
     }
 
-    /**
-     * @param bdProviderId bdProviderId or `null` for none
-     */
+
     fun setBdProviderId(bdProviderId: Long?): DocBoxPatient {
         this.bdProviderId = bdProviderId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getBdProviderName1")
     fun getBdProviderName(): String? {
         return bdProviderName
     }
 
-    /**
-     * @param bdProviderName bdProviderName or `null` for none
-     */
+
     fun setBdProviderName(bdProviderName: String?): DocBoxPatient {
         this.bdProviderName = bdProviderName
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getBed1")
     fun getBed(): String? {
         return bed
     }
 
-    /**
-     * @param bed bed or `null` for none
-     */
     fun setBed(bed: String?): DocBoxPatient {
         this.bed = bed
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+    @JvmName("getCountryCode1")
     fun getCountryCode(): String? {
         return countryCode
     }
 
-    /**
-     * @param countryCode countryCode or `null` for none
-     */
+
     fun setCountryCode(countryCode: String?): DocBoxPatient {
         this.countryCode = countryCode
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+    @JvmName("getDischargeTime1")
     fun getDischargeTime(): Long? {
         return dischargeTime
     }
 
-    /**
-     * @param dischargeTime dischargeTime or `null` for none
-     */
+
     fun setDischargeTime(dischargeTime: Long?): DocBoxPatient {
         this.dischargeTime = dischargeTime
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDob1")
     fun getDob(): Long? {
         return dob
     }
 
-    /**
-     * @param dob dob or `null` for none
-     */
+
     fun setDob(dob: Long?): DocBoxPatient {
         this.dob = dob
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDocBoxManagerId1")
     fun getDocBoxManagerId(): String? {
         return docBoxManagerId
     }
 
-    /**
-     * @param docBoxManagerId docBoxManagerId or `null` for none
-     */
+
     fun setDocBoxManagerId(docBoxManagerId: String?): DocBoxPatient {
         this.docBoxManagerId = docBoxManagerId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDocBoxPatientId1")
     fun getDocBoxPatientId(): String? {
         return docBoxPatientId
     }
 
-    /**
-     * @param docBoxPatientId docBoxPatientId or `null` for none
-     */
+
     fun setDocBoxPatientId(docBoxPatientId: String?): DocBoxPatient {
         this.docBoxPatientId = docBoxPatientId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
 
-    /**
-     * @param email email or `null` for none
-     */
     fun setEmail(email: String?): DocBoxPatient {
         this.email = email
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getFname1")
     fun getFname(): String? {
         return fname
     }
 
-    /**
-     * @param fname fname or `null` for none
-     */
+
     fun setFname(fname: String?): DocBoxPatient {
         this.fname = fname
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+    @JvmName("getGender1")
     fun getGender(): String? {
         return gender
     }
 
-    /**
-     * @param gender gender or `null` for none
-     */
+
     fun setGender(gender: String?): DocBoxPatient {
         this.gender = gender
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
 
-    /**
-     * @param hospital hospital or `null` for none
-     */
+
     fun setHospital(hospital: String?): DocBoxPatient {
         this.hospital = hospital
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getHospitalDesciption1")
     fun getHospitalDesciption(): String? {
         return hospitalDesciption
     }
 
-    /**
-     * @param hospitalDesciption hospitalDesciption or `null` for none
-     */
+
     fun setHospitalDesciption(hospitalDesciption: String?): DocBoxPatient {
         this.hospitalDesciption = hospitalDesciption
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
 
-    /**
-     * @param hospitalId hospitalId or `null` for none
-     */
+
     fun setHospitalId(hospitalId: Long?): DocBoxPatient {
         this.hospitalId = hospitalId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
 
-    /**
-     * @param id id or `null` for none
-     */
+
     fun setId(id: Long?): DocBoxPatient {
         this.id = id
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
 
-    /**
-     * @param joiningTime joiningTime or `null` for none
-     */
+
     fun setJoiningTime(joiningTime: Long?): DocBoxPatient {
         this.joiningTime = joiningTime
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getLname1")
     fun getLname(): String? {
         return lname
     }
 
-    /**
-     * @param lname lname or `null` for none
-     */
+
     fun setLname(lname: String?): DocBoxPatient {
         this.lname = lname
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
 
-    /**
-     * @param name name or `null` for none
-     */
+
     fun setName(name: String?): DocBoxPatient {
         this.name = name
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getNote1")
     fun getNote(): String? {
         return note
     }
 
-    /**
-     * @param note note or `null` for none
-     */
     fun setNote(note: String?): DocBoxPatient {
         this.note = note
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }
 
-    /**
-     * @param phone phone or `null` for none
-     */
+
     fun setPhone(phone: String?): DocBoxPatient {
         this.phone = phone
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getPicUrl1")
     fun getPicUrl(): String? {
         return picUrl
     }
 
-    /**
-     * @param picUrl picUrl or `null` for none
-     */
     fun setPicUrl(picUrl: String?): DocBoxPatient {
         this.picUrl = picUrl
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getRdProviderId1")
     fun getRdProviderId(): Long? {
         return rdProviderId
     }
 
-    /**
-     * @param rdProviderId rdProviderId or `null` for none
-     */
+
     fun setRdProviderId(rdProviderId: Long?): DocBoxPatient {
         this.rdProviderId = rdProviderId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+    @JvmName("getRdProviderName1")
     fun getRdProviderName(): String? {
         return rdProviderName
     }
 
-    /**
-     * @param rdProviderName rdProviderName or `null` for none
-     */
+
     fun setRdProviderName(rdProviderName: String?): DocBoxPatient {
         this.rdProviderName = rdProviderName
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getStatus1")
     fun getStatus(): String? {
         return status
     }
 
-    /**
-     * @param status status or `null` for none
-     */
+
     fun setStatus(status: String?): DocBoxPatient {
         this.status = status
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getWard1")
     fun getWard(): String? {
         return ward
     }
 
-    /**
-     * @param ward ward or `null` for none
-     */
+
     fun setWard(ward: String?): DocBoxPatient {
         this.ward = ward
         return this
     }
-
-
-
-
 
 }

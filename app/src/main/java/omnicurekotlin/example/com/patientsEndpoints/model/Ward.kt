@@ -2,19 +2,20 @@ package omnicurekotlin.example.com.patientsEndpoints.model
 
 class Ward {
 
-    private var hospital: String? = null
-    private var hospitalId: Long? = null
-    private var id: Long? = null
-    private var joiningTime: Long? = null
-    private var name: String? = null
-    private var occupiedBeds: Int? = null
-    private var totalNumberOfBeds: Int? = null
-    private var totalNumberOfRooms: Int? = null
-    private var unitId: Long? = null
-    private var unitName: String? = null
-    private var virtual: Boolean? = null
+     var hospital: String? = null
+     var hospitalId: Long? = null
+     var id: Long? = null
+     var joiningTime: Long? = null
+     var name: String? = null
+     var occupiedBeds: Int? = null
+     var totalNumberOfBeds: Int? = null
+     var totalNumberOfRooms: Int? = null
+     var unitId: Long? = null
+     var unitName: String? = null
+     var virtual: Boolean? = null
 
 
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
@@ -26,6 +27,7 @@ class Ward {
     }
 
 
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
@@ -37,6 +39,7 @@ class Ward {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -48,6 +51,7 @@ class Ward {
     }
 
 
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
@@ -59,6 +63,7 @@ class Ward {
     }
 
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -70,6 +75,7 @@ class Ward {
     }
 
 
+    @JvmName("getOccupiedBeds1")
     fun getOccupiedBeds(): Int? {
         return occupiedBeds
     }
@@ -81,6 +87,7 @@ class Ward {
     }
 
 
+    @JvmName("getTotalNumberOfBeds1")
     fun getTotalNumberOfBeds(): Int? {
         return totalNumberOfBeds
     }
@@ -92,6 +99,7 @@ class Ward {
     }
 
 
+    @JvmName("getTotalNumberOfRooms1")
     fun getTotalNumberOfRooms(): Int? {
         return totalNumberOfRooms
     }
@@ -103,6 +111,7 @@ class Ward {
     }
 
 
+    @JvmName("getUnitId1")
     fun getUnitId(): Long? {
         return unitId
     }
@@ -114,6 +123,7 @@ class Ward {
     }
 
 
+    @JvmName("getUnitName1")
     fun getUnitName(): String? {
         return unitName
     }
@@ -125,6 +135,7 @@ class Ward {
     }
 
 
+    @JvmName("getVirtual1")
     fun getVirtual(): Boolean? {
         return virtual
     }

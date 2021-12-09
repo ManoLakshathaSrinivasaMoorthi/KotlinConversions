@@ -2,109 +2,113 @@ package omnicurekotlin.example.com.patientsEndpoints.model
 
 class Patient {
 
-
-    private var acceptTime: Long? = null
-    private var address: String? = null
-    private var appointmentId: Long? = null
-    private var arterialBloodPressureSystolic: Double? = null
-    private var arterialBloodPressureDiastolic: Double? = null
-    private var athenaDeviceId: String? = null
-    private var bdProviderId: Long? = null
-    private var bdProviderName: String? = null
-    private var bed: String? = null
-    private var countryCode: String? = null
-    private var dischargeMessage: String? = null
-    private var dischargeTime: Long? = null
-    private var dob: Long? = null
-    private var dobDay: Int? = null
-    private var dobMonth: String? = null
-
-    private var dobYear: Int? = null
-    private var docBoxManagerId: String? = null
-    private var docBoxId: Long? = null
-    private var docBoxPatientId: String? = null
-    private var email: String? = null
-    private var fname: String? = null
-    private var gender: String? = null
-    private var location: String? = null
-    private var wardName: String? = null
-    private var heartRate: Double? = null
-    private var temperature: Double? = null
-    private var hospital: String? = null
-    private var hospitalId: Long? = null
-    private var id: Long? = null
-    private var inviteTime: Long? = null
-    private var joiningTime: Long? = null
-    private var lastMessageTime: Long? = null
-    private var syncTime: Long? = null
-    private var lname: String? = null
-    private var name: String? = null
-    private var note: String? = null
-    private var oxygenSupplement: Boolean? = null
-    private var patientCondition: String? = null
-    private var phone: String? = null
-    private var picUrl: String? = null
-    private var rdProviderId: Long? = null
-    private var rdProviderName: String? = null
-    private var respiratoryRate: Double? = null
-    private var score: String? = null
-    private var spO2: Double? = null
-    private var fio2: Double? = null
-    private var status: String? = null
-    private var urgent: Boolean? = null
-    private var covidPositive: String? = null
+    var acceptTime: Long? = null
+    var address: String? = null
+    var appointmentId: Long? = null
+    var arterialBloodPressureSystolic: Double? = null
+    var arterialBloodPressureDiastolic: Double? = null
+    var athenaDeviceId: String? = null
+    var bdProviderId: Long? = null
+    var bdProviderName: String? = null
+    var bed: String? = null
+    var countryCode: String? = null
+    var dischargeMessage: String? = null
+    var dischargeTime: Long? = null
+    var dob: Long? = null
+    var dobDay: Int? = null
+    var dobMonth: String? = null
+    var dobYear: Int? = null
+    var docBoxManagerId: String? = null
+    var docBoxId: Long? = null
+    var docBoxPatientId: String? = null
+    var email: String? = null
+    var fname: String? = null
+    var gender: String? = null
+    var location: String? = null
+    var wardName: String? = null
+    var heartRate: Double? = null
+    var temperature: Double? = null
+    var hospital: String? = null
+    var hospitalId: Long? = null
+    var id: Long? = null
+    var inviteTime: Long? = null
+    var joiningTime: Long? = null
+    var lastMessageTime: Long? = null
+    var syncTime: Long? = null
+    var lname: String? = null
+    var name: String? = null
+    var note: String? = null
+    var oxygenSupplement: Boolean? = null
+    var patientCondition: String? = null
+    var phone: String? = null
+    var picUrl: String? = null
+    var rdProviderId: Long? = null
+    var rdProviderName: String? = null
+    var respiratoryRate: Double? = null
+    var score: String? = null
+    var spO2: Double? = null
+    var fio2: Double? = null
+    var status: String? = null
+    var urgent: Boolean? = null
+    var covidPositive: String? = null
 
     fun Patient() {}
 
+    @JvmName("getCovidPositive1")
     fun getCovidPositive(): String? {
         return covidPositive
     }
 
+    @JvmName("setCovidPositive1")
     fun setCovidPositive(covidPositive: String?) {
         this.covidPositive = covidPositive
     }
 
+    @JvmName("getSyncTime1")
     fun getSyncTime(): Long? {
         return syncTime
     }
 
+    @JvmName("setSyncTime1")
     fun setSyncTime(syncTime: Long?) {
         this.syncTime = syncTime
     }
 
 
+    @JvmName("getLocation1")
     fun getLocation(): String? {
         return location
     }
 
+    @JvmName("setLocation1")
     fun setLocation(location: String?) {
         this.location = location
     }
 
+    @JvmName("getWardName1")
     fun getWardName(): String? {
         return wardName
     }
 
+    @JvmName("setWardName1")
     fun setWardName(wardName: String?) {
         this.wardName = wardName
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getAcceptTime1")
     fun getAcceptTime(): Long? {
         return acceptTime
     }
 
-    /**
-     * @param acceptTime acceptTime or `null` for none
-     */
+
     fun setAcceptTime(acceptTime: Long?): Patient {
         this.acceptTime = acceptTime
         return this
     }
 
 
+    @JvmName("getAddress1")
     fun getAddress(): String? {
         return address
     }
@@ -116,6 +120,7 @@ class Patient {
     }
 
 
+    @JvmName("getAppointmentId1")
     fun getAppointmentId(): Long? {
         return appointmentId
     }
@@ -127,6 +132,7 @@ class Patient {
     }
 
 
+    @JvmName("getArterialBloodPressureSystolic1")
     fun getArterialBloodPressureSystolic(): Double? {
         return arterialBloodPressureSystolic
     }
@@ -138,6 +144,7 @@ class Patient {
     }
 
 
+    @JvmName("getAthenaDeviceId1")
     fun getAthenaDeviceId(): String? {
         return athenaDeviceId
     }
@@ -147,6 +154,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getBdProviderId1")
     fun getBdProviderId(): Long? {
         return bdProviderId
     }
@@ -157,6 +165,7 @@ class Patient {
     }
 
 
+    @JvmName("getBdProviderName1")
     fun getBdProviderName(): String? {
         return bdProviderName
     }
@@ -167,15 +176,18 @@ class Patient {
         return this
     }
 
+    @JvmName("getTemperature1")
     fun getTemperature(): Double? {
         return temperature
     }
 
+    @JvmName("setTemperature1")
     fun setTemperature(temperature: Double?) {
         this.temperature = temperature
     }
 
 
+    @JvmName("getBed1")
     fun getBed(): String? {
         return bed
     }
@@ -187,6 +199,7 @@ class Patient {
     }
 
 
+    @JvmName("getCountryCode1")
     fun getCountryCode(): String? {
         return countryCode
     }
@@ -196,14 +209,17 @@ class Patient {
         return this
     }
 
+    @JvmName("getDocBoxId1")
     fun getDocBoxId(): Long? {
         return docBoxId
     }
 
+    @JvmName("setDocBoxId1")
     fun setDocBoxId(docBoxId: Long?) {
         this.docBoxId = docBoxId
     }
 
+    @JvmName("getDischargeMessage1")
     fun getDischargeMessage(): String? {
         return dischargeMessage
     }
@@ -215,6 +231,7 @@ class Patient {
     }
 
 
+    @JvmName("getDischargeTime1")
     fun getDischargeTime(): Long? {
         return dischargeTime
     }
@@ -225,6 +242,7 @@ class Patient {
     }
 
 
+    @JvmName("getDob1")
     fun getDob(): Long? {
         return dob
     }
@@ -236,6 +254,7 @@ class Patient {
     }
 
 
+    @JvmName("getDobDay1")
     fun getDobDay(): Int? {
         return dobDay
     }
@@ -247,6 +266,7 @@ class Patient {
     }
 
 
+    @JvmName("getDobMonth1")
     fun getDobMonth(): String? {
         return dobMonth
     }
@@ -257,79 +277,66 @@ class Patient {
         return this
     }
 
+    @JvmName("getDobYear1")
     fun getDobYear(): Int? {
         return dobYear
     }
 
-    /**
-     * @param dobYear dobYear or `null` for none
-     */
+
     fun setDobYear(dobYear: Int?):Patient {
         this.dobYear = dobYear
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDocBoxManagerId1")
     fun getDocBoxManagerId(): String? {
         return docBoxManagerId
     }
 
-    /**
-     * @param docBoxManagerId docBoxManagerId or `null` for none
-     */
+
     fun setDocBoxManagerId(docBoxManagerId: String?): Patient {
         this.docBoxManagerId = docBoxManagerId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDocBoxPatientId1")
     fun getDocBoxPatientId(): String? {
         return docBoxPatientId
     }
 
-    /**
-     * @param docBoxPatientId docBoxPatientId or `null` for none
-     */
+
     fun setDocBoxPatientId(docBoxPatientId: String?):Patient {
         this.docBoxPatientId = docBoxPatientId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
 
-    /**
-     * @param email email or `null` for none
-     */
     fun setEmail(email: String?): Patient {
         this.email = email
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getFname1")
     fun getFname(): String? {
         return fname
     }
 
-    /**
-     * @param fname fname or `null` for none
-     */
+
     fun setFname(fname: String?): Patient {
         this.fname = fname
         return this
     }
 
 
+    @JvmName("getGender1")
     fun getGender(): String? {
         return gender
     }
@@ -340,6 +347,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getHeartRate1")
     fun getHeartRate(): Double? {
         return heartRate
     }
@@ -349,112 +357,92 @@ class Patient {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
 
-    /**
-     * @param hospital hospital or `null` for none
-     */
+
     fun setHospital(hospital: String?): Patient {
         this.hospital = hospital
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
 
-    /**
-     * @param hospitalId hospitalId or `null` for none
-     */
+
     fun setHospitalId(hospitalId: Long?): Patient {
         this.hospitalId = hospitalId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
 
-    /**
-     * @param id id or `null` for none
-     */
+
     fun setId(id: Long?): Patient {
         this.id = id
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getInviteTime1")
     fun getInviteTime(): Long? {
         return inviteTime
     }
 
-    /**
-     * @param inviteTime inviteTime or `null` for none
-     */
+
     fun setInviteTime(inviteTime: Long?):Patient {
         this.inviteTime = inviteTime
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
 
-    /**
-     * @param joiningTime joiningTime or `null` for none
-     */
+
     fun setJoiningTime(joiningTime: Long?):Patient {
         this.joiningTime = joiningTime
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getLastMessageTime1")
     fun getLastMessageTime(): Long? {
         return lastMessageTime
     }
 
-    /**
-     * @param lastMessageTime lastMessageTime or `null` for none
-     */
+
     fun setLastMessageTime(lastMessageTime: Long?): Patient {
         this.lastMessageTime = lastMessageTime
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getLname1")
     fun getLname(): String? {
         return lname
     }
 
-    /**
-     * @param lname lname or `null` for none
-     */
+
     fun setLname(lname: String?): Patient {
         this.lname = lname
         return this
     }
 
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -466,153 +454,126 @@ class Patient {
     }
 
 
+    @JvmName("getNote1")
     fun getNote(): String? {
         return note
     }
 
-    /**
-     * @param note note or `null` for none
-     */
+
     fun setNote(note: String?): Patient {
         this.note = note
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getOxygenSupplement1")
     fun getOxygenSupplement(): Boolean? {
         return oxygenSupplement
     }
 
-    /**
-     * @param oxygenSupplement oxygenSupplement or `null` for none
-     */
+
     fun setOxygenSupplement(oxygenSupplement: Boolean?): Patient {
         this.oxygenSupplement = oxygenSupplement
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getPatientCondition1")
     fun getPatientCondition(): String? {
         return patientCondition
     }
 
-    /**
-     * @param patientCondition patientCondition or `null` for none
-     */
+
     fun setPatientCondition(patientCondition: String?): Patient {
         this.patientCondition = patientCondition
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }
 
-    /**
-     * @param phone phone or `null` for none
-     */
+
     fun setPhone(phone: String?):Patient {
         this.phone = phone
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getPicUrl1")
     fun getPicUrl(): String? {
         return picUrl
     }
 
-    /**
-     * @param picUrl picUrl or `null` for none
-     */
+
     fun setPicUrl(picUrl: String?): Patient {
         this.picUrl = picUrl
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getRdProviderId1")
     fun getRdProviderId(): Long? {
         return rdProviderId
     }
 
-    /**
-     * @param rdProviderId rdProviderId or `null` for none
-     */
+
     fun setRdProviderId(rdProviderId: Long?): Patient {
         this.rdProviderId = rdProviderId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getRdProviderName1")
     fun getRdProviderName(): String? {
         return rdProviderName
     }
 
-    /**
-     * @param rdProviderName rdProviderName or `null` for none
-     */
+
     fun setRdProviderName(rdProviderName: String?):Patient {
         this.rdProviderName = rdProviderName
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getRespiratoryRate1")
     fun getRespiratoryRate(): Double? {
         return respiratoryRate
     }
 
-    /**
-     * @param respiratoryRate respiratoryRate or `null` for none
-     */
+
     fun setRespiratoryRate(respiratoryRate: Double?): Patient {
         this.respiratoryRate = respiratoryRate
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getScore1")
     fun getScore(): String? {
         return score
     }
 
-    /**
-     * @param score score or `null` for none
-     */
+
     fun setScore(score: String?): Patient {
         this.score = score
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getSpO21")
     fun getSpO2(): Double? {
         return spO2
     }
 
-    /**
-     * @param spO2 spO2 or `null` for none
-     */
+
     fun setSpO2(spO2: Double?): Patient {
         this.spO2 = spO2
         return this
     }
 
+    @JvmName("getArterialBloodPressureDiastolic1")
     fun getArterialBloodPressureDiastolic(): Double? {
         return arterialBloodPressureDiastolic
     }
@@ -622,32 +583,30 @@ class Patient {
         return this
     }
 
+    @JvmName("getFio21")
     fun getFio2(): Double? {
         return fio2
     }
 
+    @JvmName("setFio21")
     fun setFio2(fio2: Double?) {
         this.fio2 = fio2
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getStatus1")
     fun getStatus(): String? {
         return status
     }
 
-    /**
-     * @param status status or `null` for none
-     */
+
     fun setStatus(status: String?): Patient {
         this.status = status
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getUrgent1")
     fun getUrgent(): Boolean? {
         return urgent
     }
