@@ -4,64 +4,65 @@ import kotlin.Unit
 
 class CommonResponse {
 
-    private var activeList: List<Patient?>? = null
-    private var dischargedCount: Int? = null
-    private var dischargedList: List<Patient?>? = null
+    var activeList: List<Patient?>? = null
+    var dischargedCount: Int? = null
+    var dischargedList: List<Patient?>? = null
     var errorId: Int? = null
     var errorMessage: String? = null
-    private var feedbackForm: String? = null
-    private var tutorial_url: String? = null
-    private var title: String? = null
-    private var id: Long? = null
-    private var pendingList: List<Patient?>? = null
-    private val encryptedValue: String? = null
-
+    var feedbackForm: String? = null
+    var tutorial_url: String? = null
+    var title: String? = null
+    var id: Long? = null
+    var pendingList: List<Patient?>? = null
+    val encryptedValue: String? = null
     var user: User? = null
-
-    private var providerList: List<Provider?>? = null
-
-    private var room: Room? = null
-
+    var providerList: List<Provider?>? = null
+    var room: Room? = null
     var status: Boolean? = null
-    private var idToken: String? = null
-    private var refreshToken: String? = null
-
+    var idToken: String? = null
+    var refreshToken: String? = null
     var email: String? = null
+    var unit: Unit? = null
+    var ward: Ward? = null
+    var provider: Provider? = null
 
-    private var unit: Unit? = null
-    private var ward: Ward? = null
-
-    private var provider: Provider? = null
-
+    @JvmName("getIdToken1")
     fun getIdToken(): String? {
         return idToken
     }
 
+    @JvmName("setIdToken1")
     fun setIdToken(idToken: String?) {
         this.idToken = idToken
     }
 
+    @JvmName("getRefreshToken1")
     fun getRefreshToken(): String? {
         return refreshToken
     }
 
+    @JvmName("setRefreshToken1")
     fun setRefreshToken(refreshToken: String?) {
         this.refreshToken = refreshToken
     }
 
 
+    @JvmName("getFeedbackForm1")
     fun getFeedbackForm(): String? {
         return feedbackForm
     }
 
+    @JvmName("setFeedbackForm1")
     fun setFeedbackForm(feedbackForm: String?) {
         this.feedbackForm = feedbackForm
     }
 
+    @JvmName("getTutorial_url1")
     fun getTutorial_url(): String? {
         return tutorial_url
     }
 
+    @JvmName("setTutorial_url1")
     fun setTutorial_url(tutorial_url: String?) {
         this.tutorial_url = tutorial_url
     }
@@ -76,223 +77,185 @@ class CommonResponse {
         this.email = email
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getActiveList1")
     fun getActiveList(): List<Patient?>? {
         return activeList
     }
 
-    /**
-     * @param activeList activeList or `null` for none
-     */
-    fun setActiveList(activeList: List<Patient?>?): CommonResponse? {
+
+    fun setActiveList(activeList: List<Patient?>?): CommonResponse {
         this.activeList = activeList
         return this
     }
 
+    @JvmName("getProvider1")
     fun getProvider(): Provider? {
         return provider
     }
 
+    @JvmName("setProvider1")
     fun setProvider(provider: Provider?) {
         this.provider = provider
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDischargedCount1")
     fun getDischargedCount(): Int? {
         return dischargedCount
     }
 
-    /**
-     * @param dischargedCount dischargedCount or `null` for none
-     */
-    fun setDischargedCount(dischargedCount: Int?): CommonResponse? {
+
+    fun setDischargedCount(dischargedCount: Int?): CommonResponse {
         this.dischargedCount = dischargedCount
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDischargedList1")
     fun getDischargedList(): List<Patient?>? {
         return dischargedList
     }
 
-    /**
-     * @param dischargedList dischargedList or `null` for none
-     */
-    fun setDischargedList(dischargedList: List<Patient?>?): CommonResponse? {
+
+    fun setDischargedList(dischargedList: List<Patient?>?): CommonResponse {
         this.dischargedList = dischargedList
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
     @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
 
-    /**
-     * @param errorId errorId or `null` for none
-     */
-    fun setErrorId(errorId: Int?): CommonResponse? {
+
+    fun setErrorId(errorId: Int?): CommonResponse {
         this.errorId = errorId
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
     @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
 
-    /**
-     * @param errorMessage errorMessage or `null` for none
-     */
-    fun setErrorMessage(errorMessage: String?): CommonResponse? {
+
+    fun setErrorMessage(errorMessage: String?): CommonResponse {
         this.errorMessage = errorMessage
         return this
     }
 
+    @JvmName("getTitle1")
     fun getTitle(): String? {
         return title
     }
 
+    @JvmName("setTitle1")
     fun setTitle(title: String?) {
         this.title = title
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
 
-    /**
-     * @param id id or `null` for none
-     */
-    fun setId(id: Long?): CommonResponse? {
+
+    fun setId(id: Long?): CommonResponse {
         this.id = id
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getPendingList1")
     fun getPendingList(): List<Patient?>? {
         return pendingList
     }
 
-    /**
-     * @param pendingList pendingList or `null` for none
-     */
-    fun setPendingList(pendingList: List<Patient?>?): CommonResponse? {
+
+    fun setPendingList(pendingList: List<Patient?>?): CommonResponse {
         this.pendingList = pendingList
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
     @JvmName("getUser1")
     fun getUser(): User? {
         return user
     }
 
-    /**
-     * @param provider provider or `null` for none
-     */
-    fun setUser(provider: User?): CommonResponse? {
+
+    fun setUser(provider: User?): CommonResponse {
         user = provider
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getProviderList1")
     fun getProviderList(): List<Provider?>? {
         return providerList
     }
 
-    /**
-     * @param providerList providerList or `null` for none
-     */
-    fun setProviderList(providerList: List<Provider?>?): CommonResponse? {
+
+    fun setProviderList(providerList: List<Provider?>?): CommonResponse {
         this.providerList = providerList
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getRoom1")
     fun getRoom(): Room? {
         return room
     }
 
-    /**
-     * @param room room or `null` for none
-     */
-    fun setRoom(room: Room?): CommonResponse? {
+
+    fun setRoom(room: Room?): CommonResponse {
         this.room = room
         return this
     }
 
 
-    /**
-     * @return value or `null` for none
-     */
+
     @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
 
-    /**
-     * @param status status or `null` for none
-     */
-    fun setStatus(status: Boolean?): CommonResponse? {
+
+    fun setStatus(status: Boolean?): CommonResponse {
         this.status = status
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getUnit1")
     fun getUnit(): Unit? {
         return unit
     }
 
-    /**
-     * @param unit unit or `null` for none
-     */
-    fun setUnit(unit: Unit?): CommonResponse? {
+
+    fun setUnit(unit: Unit?): CommonResponse {
         this.unit = unit
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getWard1")
     fun getWard(): Ward? {
         return ward
     }
 
-    /**
-     * @param ward ward or `null` for none
-     */
-    fun setWard(ward: Ward?): CommonResponse? {
+
+    fun setWard(ward: Ward?): CommonResponse {
         this.ward = ward
         return this
     }
 
 
+    @JvmName("getEncryptedValue1")
     fun getEncryptedValue(): String? {
         return encryptedValue
     }

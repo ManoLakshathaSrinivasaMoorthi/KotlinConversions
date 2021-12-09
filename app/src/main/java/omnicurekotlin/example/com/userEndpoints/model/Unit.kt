@@ -2,16 +2,17 @@ package omnicurekotlin.example.com.userEndpoints.model
 
 class Unit {
 
-    private var hospital: String? = null
-    private var hospitalId: Long? = null
-    private var id: Long? = null
-    private var joiningTime: Long? = null
-    private var name: String? = null
-    private var totalNumberOfBeds: Int? = null
-    private var totalNumberOfRooms: Int? = null
-    private var totalNumberOfWards: Int? = null
+     var hospital: String? = null
+     var hospitalId: Long? = null
+     var id: Long? = null
+     var joiningTime: Long? = null
+     var name: String? = null
+     var totalNumberOfBeds: Int? = null
+     var totalNumberOfRooms: Int? = null
+     var totalNumberOfWards: Int? = null
 
 
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
@@ -21,6 +22,7 @@ class Unit {
         return this
     }
 
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
@@ -31,6 +33,7 @@ class Unit {
         return this
     }
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -41,6 +44,7 @@ class Unit {
         return this
     }
 
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
@@ -50,6 +54,7 @@ class Unit {
         return this
     }
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -59,6 +64,7 @@ class Unit {
         return this
     }
 
+    @JvmName("getTotalNumberOfBeds1")
     fun getTotalNumberOfBeds(): Int? {
         return totalNumberOfBeds
     }
@@ -68,6 +74,7 @@ class Unit {
         return this
     }
 
+    @JvmName("getTotalNumberOfRooms1")
     fun getTotalNumberOfRooms(): Int? {
         return totalNumberOfRooms
     }
@@ -77,6 +84,7 @@ class Unit {
         return this
     }
 
+    @JvmName("getTotalNumberOfWards1")
     fun getTotalNumberOfWards(): Int? {
         return totalNumberOfWards
     }
@@ -87,12 +95,6 @@ class Unit {
         return this
     }
 
-/*    operator fun set(fieldName: String?, value: Any?):Unit? {
-        return super.set(fieldName, value) as omnicure.mvp.com.userEndpoints.model.Unit?
-    }
 
-    fun clone(): omnicure.mvp.com.userEndpoints.model.Unit? {
-        return super.clone() as omnicure.mvp.com.userEndpoints.model.Unit?
-    }*/
 
 }

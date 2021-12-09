@@ -6,15 +6,11 @@ import omnicurekotlin.example.com.loginEndpoints.model.AppConfig
 class VersionInfoResponse {
 
    var appConfig: AppConfig? = null
-  var errorId: Int? = null
+   var errorId: Int? = null
    var errorMessage: String? = null
-
-  var aesKey: String? = null
-
-
+   var aesKey: String? = null
    var id: Long? = null
-
-  var status: Boolean? = null
+   var status: Boolean? = null
 
 
   @JvmName("getAppConfig1")
