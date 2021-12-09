@@ -466,8 +466,8 @@ class ChatActivity() : DrawerActivity(), ChatEditTextListener,
                 expand = true
             } else {
                 // Collapse if the view is clicked again
-                chatActBinding?.imgViewDetailsArrow?setImageResource(R.drawable.ic_dropdown_viewdetails)
-                chatActBinding?.llExpandViewDetails?setVisibility(View.GONE)
+                chatActBinding?.imgViewDetailsArrow?.setImageResource(R.drawable.ic_dropdown_viewdetails)
+                chatActBinding?.llExpandViewDetails?.setVisibility(View.GONE)
                 expand = false
             }
         }

@@ -1,7 +1,5 @@
 package com.example.kotlinomnicure.utils
 
-import com.example.kotlinomnicure.utils.Buildconfic
-
 object Buildconfic {
     var appname = ""
     fun value(): String {

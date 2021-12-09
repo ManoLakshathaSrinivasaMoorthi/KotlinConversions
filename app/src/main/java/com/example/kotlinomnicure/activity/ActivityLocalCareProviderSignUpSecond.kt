@@ -60,7 +60,7 @@ class ActivityLocalCareProviderSignUpSecond : BaseActivity() {
             )
         )
         binding!!.txtTermsAndCondition.text =
-            Html.fromHtml("By signing up you agree to " + Buildconfic().value() + " <u>Terms & Conditions</u>")
+            Html.fromHtml("By signing up you agree to " + Buildconfic.value() + " <u>Terms & Conditions</u>")
 
         binding!!.idBackButton.setOnClickListener { view -> finish() }
 
