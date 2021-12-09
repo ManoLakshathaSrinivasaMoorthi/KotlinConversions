@@ -2,14 +2,15 @@ package omnicurekotlin.example.com.appointmentEndpoints.model
 
 class AppointmentListResponse {
 
-    private var appointmentList: List<Appointment?>? = null
-    private var count: Int? = null
-    private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var id: Long? = null
-    private var status: Boolean? = null
+     var appointmentList: List<Appointment?>? = null
+     var count: Int? = null
+     var errorId: Int? = null
+     var errorMessage: String? = null
+     var id: Long? = null
+     var status: Boolean? = null
 
 
+    @JvmName("getAppointmentList1")
     fun getAppointmentList(): List<Appointment?>? {
         return appointmentList
     }
@@ -20,6 +21,7 @@ class AppointmentListResponse {
     }
 
 
+    @JvmName("getCount1")
     fun getCount(): Int? {
         return count
     }
@@ -30,6 +32,7 @@ class AppointmentListResponse {
         return this
     }
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -39,6 +42,7 @@ class AppointmentListResponse {
         this.errorId = errorId
         return this
     }
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -50,6 +54,7 @@ class AppointmentListResponse {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -61,6 +66,7 @@ class AppointmentListResponse {
     }
 
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }

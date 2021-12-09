@@ -17,13 +17,12 @@ import java.lang.String
 import java.util.ArrayList
 import java.util.HashMap
 
-abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private val log = LoggerFactory.getLogger(VideoViewAdapter::class.java)
 
     val DEBUG = false
 
-    private var mInflater: LayoutInflater? = null
+    protected var mInflater: LayoutInflater? = null
     protected var mContext: Context? = null
 
     protected var mUsers: ArrayList<UserStatusData>? = null
@@ -34,7 +33,7 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
     protected var mLocalStatus = 0
     protected var mLocalAudioStatus = 0
 
-    fun VideoViewAdapter(
+    open fun VideoViewAdapter(
         activity: Activity,
         localUid: Int,
         localStatus: Int,
@@ -47,8 +46,8 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         mLocalUid = localUid
         mLocalStatus = localStatus
         mLocalAudioStatus = localAudioStatus
-        mUsers = ArrayList<UserStatusData>()
-        mProviderList = ArrayList<Provider>()
+        mUsers = ArrayList()
+        mProviderList = ArrayList()
         if (providerList != null) {
             mProviderList!!.addAll(providerList)
         }
@@ -65,7 +64,7 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         customizedInit(uids, true)
     }
 
-    abstract fun customizedInit(uids: HashMap<Int, SurfaceView>?, force: Boolean)
+    protected abstract fun customizedInit(uids: HashMap<Int, SurfaceView>?, force: Boolean)
 
     abstract fun notifyUiChanged(
         uids: HashMap<Int?, SurfaceView?>?,
@@ -76,25 +75,25 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
     )
 
     protected var mVideoInfo // left user should removed from this HashMap
-            : HashMap<Int, VideoInfoData>? = null
+            : HashMap<Int?, VideoInfoData?>? = null
 
-    fun addVideoInfo(uid: Int, video: VideoInfoData) {
+    open fun addVideoInfo(uid: Int, video: VideoInfoData) {
         if (mVideoInfo == null) {
-            mVideoInfo = HashMap<Int, VideoInfoData>()
+            mVideoInfo = HashMap()
         }
         mVideoInfo!![uid] = video
     }
 
-    fun cleanVideoInfo() {
+    open fun cleanVideoInfo() {
         mVideoInfo = null
     }
 
-    fun setLocalUid(uid: Int) {
+    open fun setLocalUid(uid: Int) {
         mLocalUid = uid
     }
 
-   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val v = mInflater?.inflate(R.layout.video_view_container, parent, false) as ViewGroup
+    open fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
+        val v = mInflater!!.inflate(R.layout.video_view_container, parent, false) as ViewGroup
         v.layoutParams.width = mItemWidth
         v.layoutParams.height = mItemHeight
         mDefaultChildItem = v.childCount
@@ -103,14 +102,14 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val myHolder = holder as VideoUserStatusHolder
-        val user: UserStatusData = mUsers!![position]
+        val user = mUsers!![position]
         if (DEBUG) {
 //            log.debug("onBindViewHolder " + position + " " + user + " " + myHolder + " " + myHolder.itemView + " " + mDefaultChildItem);
         }
         val holderView = myHolder.itemView as FrameLayout
         if (holderView.childCount == mDefaultChildItem) {
-            val target: SurfaceView? = user.getmView()
-            target?.let { VideoViewAdapterUtil().stripView(it) }
+            val target = user.getmView()
+            VideoViewAdapterUtil.stripView(target)
             holderView.addView(
                 target,
                 0,
@@ -120,7 +119,7 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
                 )
             )
         }
-        VideoViewAdapterUtil().renderExtraData(mContext, user, myHolder)
+        VideoViewAdapterUtil.renderExtraData(mContext, user, myHolder)
     }
 
     override fun getItemCount(): Int {
@@ -131,17 +130,18 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
     }
 
     override fun getItemId(position: Int): Long {
-        val user: UserStatusData = mUsers!![position]
-        val view: SurfaceView = user.getmView()
+        val user = mUsers!![position]
+        val view = user.getmView()
             ?: throw NullPointerException(
                 "SurfaceView destroyed for user " + user.getmUid()
                     .toString() + " " + user.getmStatus().toString() + " " + user.getmVolume()
             )
-        return (String.valueOf(user.getmUid()) + System.identityHashCode(view)).hashCode().toLong()
+        return (String.valueOf(user.getmUid()) + System.identityHashCode(view)).hashCode()
+            .toLong()
     }
 
-    fun getItemUid(position: Int): Int {
-        val user: UserStatusData = mUsers!![position]
+    open fun getItemUid(position: Int): Int {
+        val user = mUsers!![position]
         return user.getmUid()
     }
 
@@ -149,14 +149,14 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         return mUsers!![position]
     }
 
-    fun getUserList(): List<UserStatusData>? {
+    open fun getUserList(): List<UserStatusData>? {
         return mUsers
     }
 
 
-    protected fun setProfileInUsers() {
+    protected open fun setProfileInUsers() {
         for (i in mUsers!!.indices) {
-            val provider: Provider? = getProviderFromList(mUsers!![i].getmUid().toLong())
+            val provider = getProviderFromList(mUsers!![i].getmUid())
             if (provider != null) {
                 mUsers!![i].setmName(provider.getName())
                 mUsers!![i].setmProfilePic(provider.getProfilePicUrl())
@@ -164,20 +164,20 @@ abstract class VideoViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         }
     }
 
-    open fun getProviderFromList(uid: Long): Provider? {
+    private open fun getProviderFromList(uid: Int): Provider? {
         for (provider in mProviderList!!) {
-            if (provider.getId() === uid) {
+            if (provider.getId().intValue() === uid) {
                 return provider
             }
         }
         return null
     }
 
-    fun getmProviderList(): ArrayList<Provider>? {
+    open fun getmProviderList(): ArrayList<Provider>? {
         return mProviderList
     }
 
-    fun setmProviderList(mProviderList: ArrayList<Provider>?) {
+    open fun setmProviderList(mProviderList: ArrayList<Provider>?) {
         this.mProviderList = mProviderList
     }
 }

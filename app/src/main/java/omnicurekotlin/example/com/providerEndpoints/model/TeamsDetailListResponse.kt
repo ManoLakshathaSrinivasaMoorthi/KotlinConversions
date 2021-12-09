@@ -2,15 +2,17 @@ package omnicurekotlin.example.com.providerEndpoints.model
 
 class TeamsDetailListResponse {
 
-    private var status: Boolean? = null
+    var status: Boolean? = null
     private var errorId: Double? = null
     private var errorMessage: String? = null
  var teamDetails: TeamMemberResponse? = null
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
 
+    @JvmName("setStatus1")
     fun setStatus(status: Boolean?) {
         this.status = status
     }

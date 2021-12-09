@@ -28,7 +28,7 @@ abstract class NetworkTestActivity: BaseActivity(), BeforeCallEventHandler {
 
     override fun initUIandEvent() {
         addEventHandler(this)
-        (findViewById(R.id.ovc_page_title) as TextView).setText(R.string.label_network_testing)
+        (findViewById<TextView>(R.id.ovc_page_title)).setText(R.string.label_network_testing)
         val lastmileProbeConfig = LastmileProbeConfig()
         lastmileProbeConfig.probeUplink = true
         lastmileProbeConfig.probeDownlink = true
@@ -44,10 +44,6 @@ abstract class NetworkTestActivity: BaseActivity(), BeforeCallEventHandler {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return false
-    }
-
-   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item!!)
     }
 
     fun onBackPressed(view: View?) {
@@ -71,8 +67,8 @@ abstract class NetworkTestActivity: BaseActivity(), BeforeCallEventHandler {
      downlinkReport { packetLossRate: ${result?.downlinkReport?.packetLossRate} jitter: ${result?.downlinkReport?.jitter} availableBandwidth: ${result?.downlinkReport?.availableBandwidth}}"""
             //                log.debug(networkResult);
             result?.rtt?.let {
-                result?.uplinkReport?.packetLossRate?.let { it1 ->
-                    result?.downlinkReport?.packetLossRate?.let { it2 ->
+                result.uplinkReport?.packetLossRate?.let { it1 ->
+                    result.downlinkReport?.packetLossRate?.let { it2 ->
                         updateNetworkTestResult(
                             it,
                             it1,
@@ -84,16 +80,16 @@ abstract class NetworkTestActivity: BaseActivity(), BeforeCallEventHandler {
         }
     }
 
-    fun updateNetworkTestResult(qualityInString: String?) {
-        (findViewById(R.id.ovc_page_title) as TextView).setText(R.string.label_network_test_result)
-        (findViewById(R.id.network_test_quality) as TextView).text = qualityInString
+    private fun updateNetworkTestResult(qualityInString: String?) {
+        (findViewById<TextView>(R.id.ovc_page_title)).setText(R.string.label_network_test_result)
+        (findViewById<TextView>(R.id.network_test_quality)).text = qualityInString
     }
 
-    fun updateNetworkTestResult(rtt: Int, uplinkPacketLoss: Int, downlinkPacketLoss: Int) {
-        (findViewById(R.id.ovc_page_title) as TextView).setText(R.string.label_network_test_result)
-        (findViewById(R.id.network_test_rtt) as TextView).text = rtt.toString() + "ms"
-        (findViewById(R.id.network_test_uplink_packet_loss) as TextView).text = "$uplinkPacketLoss%"
-        (findViewById(R.id.network_test_downlink_packet_loss) as TextView).text =
+    private fun updateNetworkTestResult(rtt: Int, uplinkPacketLoss: Int, downlinkPacketLoss: Int) {
+        (findViewById<TextView>(R.id.ovc_page_title)).setText(R.string.label_network_test_result)
+        (findViewById<TextView>(R.id.network_test_rtt)).text = rtt.toString() + "ms"
+        (findViewById<TextView>(R.id.network_test_uplink_packet_loss)).text = "$uplinkPacketLoss%"
+        (findViewById<TextView>(R.id.network_test_downlink_packet_loss)).text =
             "$downlinkPacketLoss%"
     }
 }

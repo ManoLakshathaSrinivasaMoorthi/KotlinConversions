@@ -74,7 +74,7 @@ class EncUtil : AppCompatActivity() {
                     end.add(Calendar.YEAR, 30)
                     var spec: KeyPairGeneratorSpec? = null
                     spec = KEY_ALIAS?.let {
-                        KeyPairGeneratorSpec.Builder(context!!)
+                        KeyPairGeneratorSpec.Builder(context)
                             .setAlias(it)
                             .setSubject(X500Principal("CN=$KEY_ALIAS"))
                             .setSerialNumber(BigInteger.TEN)

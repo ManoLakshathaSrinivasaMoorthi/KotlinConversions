@@ -2,9 +2,11 @@ package com.example.kotlinomnicure.videocall.openvcall.ui.layout
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.view.SurfaceView
 import android.view.View
+import android.view.ViewParent
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -21,18 +23,19 @@ import java.util.HashMap
 
 class VideoViewAdapterUtil {
 
-
     private val log = LoggerFactory.getLogger(VideoViewAdapterUtil::class.java)
 
     private val DEBUG = false
 
-    fun composeDataItem1(users: ArrayList<UserStatusData>,
-                         uids: HashMap<Int, SurfaceView?>, localUid: Int,
+    fun composeDataItem1(
+        users: ArrayList<UserStatusData>,
+        uids: HashMap<Int, SurfaceView?>,
+        localUid: Int,
         localStatus: Int,
         localAudioStatus: Int
     ) {
 //        Log.d("TAG", "composeDataItem1: "+localUid+" status: "+localStatus);
-        for (entry in uids.entries) {
+        for (entry in uids!!.entries) {
             if (DEBUG) {
 //                log.debug("composeDataItem1 " + (entry.getKey() & 0xFFFFFFFFL) + " " + (localUid & 0xFFFFFFFFL) + " " + users.size() + " " + entry.getValue());
             }
@@ -135,8 +138,8 @@ class VideoViewAdapterUtil {
 //        Log.d("TAG", "composeDataItem: "+localUid+" status: "+status.get(localUid));
     }
 
-    fun composeDataItems(
-        users: ArrayList<UserStatusData>, uids: HashMap<Int?, SurfaceView?>?,
+    fun composeDataItem(
+        users: ArrayList<UserStatusData>, uids: HashMap<Int, SurfaceView?>,
         localUid: Int,
         status: HashMap<Int?, Int?>?,
         audioStatusMap: HashMap<Int?, Int?>?,

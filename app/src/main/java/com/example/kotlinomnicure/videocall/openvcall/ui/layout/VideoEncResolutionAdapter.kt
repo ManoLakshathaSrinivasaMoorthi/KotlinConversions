@@ -11,12 +11,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
 
-class VideoEncResolutionAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class VideoEncResolutionAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private var mContext: Context? = null
 
     private var mSelectedIdx = 0
 
-    fun VideoEncResolutionAdapter(context: Context?, selected: Int) {
+   constructor(context: Context?, selected: Int) {
         mContext = context
         mSelectedIdx = selected
     }
@@ -52,7 +52,11 @@ class VideoEncResolutionAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         }
     }
 
-    override fun onBindViewHolder(holder: Nothing, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
 
     }
 

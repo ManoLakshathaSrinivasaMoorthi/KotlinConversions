@@ -11,23 +11,21 @@ class SmallVideoViewDecoration: ItemDecoration {
     private val header = 10
     private val footer = 10
 
-    constructor(
-        outRect: Rect,
-        view: View?,
-        parent: RecyclerView,
-        state: RecyclerView.State?
-    ) {
+    constructor(outRect: Rect, view: View?, parent: RecyclerView, state: RecyclerView.State?) {
         val itemCount = parent.adapter!!.itemCount
-        val viewPosition = parent.getChildAdapterPosition(view!!)
-        if (viewPosition == 0) {
-            outRect.left = header
-            outRect.right = divider / 2
-        } else if (viewPosition == itemCount - 1) {
-            outRect.left = divider / 2
-            outRect.right = footer
-        } else {
-            outRect.left = divider / 2
-            outRect.right = divider / 2
+        when (parent.getChildAdapterPosition(view!!)) {
+            0 -> {
+                outRect.left = header
+                outRect.right = divider / 2
+            }
+            itemCount - 1 -> {
+                outRect.left = divider / 2
+                outRect.right = footer
+            }
+            else -> {
+                outRect.left = divider / 2
+                outRect.right = divider / 2
+            }
         }
     }
 }

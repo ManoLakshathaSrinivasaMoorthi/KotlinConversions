@@ -32,6 +32,7 @@ import com.example.kotlinomnicure.videocall.openvcall.ui.layout.SmallVideoViewAd
 import com.example.kotlinomnicure.videocall.openvcall.ui.layout.SmallVideoViewDecoration
 import com.example.kotlinomnicure.videocall.propeller.UserStatusData
 import com.example.kotlinomnicure.videocall.propeller.ui.RtlLinearLayoutManager
+import com.example.kotlinomnicure.viewmodel.CallActivityViewModel
 import com.google.gson.Gson
 import io.agora.rtc.Constants
 import io.agora.rtc.IRtcEngineEventHandler
@@ -54,14 +55,13 @@ import java.lang.Exception
 import java.net.SocketTimeoutException
 import java.util.*
 
-class CallActivity: BaseActivity, DuringCallEventHandler {
+class CallActivity: BaseActivity(), DuringCallEventHandler {
+
     val LAYOUT_TYPE_DEFAULT = 0
 
     //    public static final int LAYOUT_TYPE_DEFAULT = 1;
     val LAYOUT_TYPE_SMALL = 1
-    private val TAG = "CallActivity"
-    private val log: Logger =
-        LoggerFactory.getLogger(CallActivity::class.java)
+    private val log = LoggerFactory.getLogger(CallActivity::class.java)
     private val CALL_OPTIONS_REQUEST = 3222
 
     // should only be modified under UI thread
@@ -76,7 +76,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
     var connecting_image_text: TextView? = null
     var mHandlerCall: Handler? = null
     var mNoAnswerRunnable: Runnable? = null
-    var mProviderList: ArrayList<Provider>? = ArrayList<Provider>()
+    var mProviderList: ArrayList<Provider?>? = ArrayList()
     var sosCall = false
     private var mGridVideoViewContainer: GridVideoViewContainer? = null
     private var mSmallVideoViewDock: RelativeLayout? = null
@@ -105,8 +105,8 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
     private var isCallDurationStarted = false
     private val timer: Timer? = null
     private val seconds = 0
-    private  var minutes:Int = 0
-    private  var hour:Int = 0
+    private  var minutes = 0
+    private  var hour= 0
 
 //    @Override
 //    public boolean onCreateOptionsMenu(final Menu menu) {
@@ -142,7 +142,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         val win = window
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
         win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
-        callViewModel = ViewModelProvider(this).get(CallActivityViewModel::class.java)
+        callViewModel = ViewModelProviders.of(this)[CallActivityViewModel::class.java]
         registerCallerBusyBroadCast()
         showOrHideStatusBar(true)
         val ab = supportActionBar
@@ -151,7 +151,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             ab.setCustomView(R.layout.ard_agora_actionbar_with_title)
         }
         val textView = findViewById(R.id.connection_message) as TextView
-        connecting_profile_pic = findViewById(R.id.connecting_profile_pic) as CircularImageView?
+        connecting_profile_pic = findViewById(R.id.connecting_profile_pic) as CircularImageView
         connecting_image_text = findViewById(R.id.connecting_image_text) as TextView
         chronometer = findViewById(R.id.txt_call_duration) as Chronometer
         if (intent.hasExtra("sos")) {
@@ -198,7 +198,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                     if (TextUtils.isEmpty(receiverName)) {
                         val selfId: Long = PrefUtility().getProviderId(this)
                         for (provider in mProviderList!!) {
-                            if (selfId != provider.getId().longValue()) {
+                            if (selfId != provider!!.getId().longValue()) {
                                 receiverName = provider.getName()
                                 providerHospitalName = provider.getHospital()
                                 profilePicUrl = provider.getProfilePicUrl()
@@ -212,9 +212,9 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                     val connectingProfileHospital =
                         findViewById(R.id.connecting_hospital_name) as TextView
                     connectingProfileHospital.text = providerHospitalName
-                    connecting_profile_pic.setVisibility(View.GONE)
+                    connecting_profile_pic!!.setVisibility(View.GONE)
                     connecting_image_text!!.visibility = View.VISIBLE
-                    connecting_image_text.setText(UtilityMethods.getNameText(receiverName))
+                    connecting_image_text?.setText(UtilityMethods().getNameText(receiverName))
                     if (!TextUtils.isEmpty(profilePicUrl)) {
                         connecting_profile_pic.setVisibility(View.VISIBLE)
                         connecting_image_text!!.visibility = View.GONE
@@ -382,8 +382,8 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         val encryptionMode = intent.getStringExtra(ConstantApp.ACTION_KEY_ENCRYPTION_MODE)
         doConfigEngine(encryptionKey, encryptionMode)
         mGridVideoViewContainer =
-            findViewById(R.id.grid_video_view_container) as GridVideoViewContainer?
-        mGridVideoViewContainer.setItemEventHandler(object : OnItemClickListener() {
+            findViewById(R.id.grid_video_view_container) as GridVideoViewContainer
+        mGridVideoViewContainer!!.setItemEventHandler(object : OnItemClickListener() {
             fun onItemClick(view: View, position: Int) {
                 onBigVideoViewClicked(view, position)
             }
@@ -436,7 +436,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
 //        if(getIntent().hasExtra("call") && getIntent().getStringExtra("call").equalsIgnoreCase(com.mvp.omnicure.utils.Constants.FCMMessageType.AUDIO_CALL)) {
 //
 //        }else{
-        mGridVideoViewContainer.initViewContainer(
+        mGridVideoViewContainer!!.initViewContainer(
             this,
             selfId.toInt(),
             if (mVideoMuted) 1 else 0,
@@ -487,8 +487,8 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         if (mUidsList.size < 2) {
             return
         }
-        val user: UserStatusData = mGridVideoViewContainer.getItem(position)
-        val uid = if (user.getmUid() === 0) config().getmUid() else user.getmUid()
+        val user = mGridVideoViewContainer!!.getItem(position)
+        val uid = if (user!!.getmUid() === 0) config().getmUid() else user!!.getmUid()
         //        Log.d("TAG", "user.getmUid()= " + user.getmUid() + "; config().getmUid()=" + config().getmUid());
         if (mLayoutType == LAYOUT_TYPE_DEFAULT && mUidsList.size != 1) {
             switchToSmallVideoView(uid, -1)
@@ -607,11 +607,11 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
     }
 
     private fun initMessageList() {
-        mMsgList = ArrayList<Message>()
+        mMsgList = ArrayList()
         val msgListView = findViewById(R.id.msg_list) as RecyclerView
         //msgListView.setVisibility(View.GONE);
         mMsgAdapter = InChannelMessageListAdapter(this, mMsgList)
-        mMsgAdapter.setHasStableIds(true)
+        mMsgAdapter!!.setHasStableIds(true)
         //msgListView.setAdapter(mMsgAdapter);
         //msgListView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
         //msgListView.addItemDecoration(new MessageListDecoration());
@@ -628,7 +628,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                 mMsgList!!.removeAt(i)
             }
         }
-        mMsgAdapter.notifyDataSetChanged()
+        mMsgAdapter!!.notifyDataSetChanged()
     }
 
     private fun optional() {
@@ -638,9 +638,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
     private fun optionalDestroy() {}
 
     private fun getVideoEncResolutionIndex(): Int {
-        val pref = PreferenceManager.getDefaultSharedPreferences(
-            applicationContext
-        )
+        val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         var videoEncResolutionIndex = pref.getInt(
             ConstantApp.PrefManager.PREF_PROPERTY_VIDEO_ENC_RESOLUTION,
             ConstantApp.DEFAULT_VIDEO_ENC_RESOLUTION_IDX
@@ -661,9 +659,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
     }
 
     private fun getVideoEncFpsIndex(): Int {
-        val pref = PreferenceManager.getDefaultSharedPreferences(
-            applicationContext
-        )
+        val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         var videoEncFpsIndex = pref.getInt(
             ConstantApp.PrefManager.PREF_PROPERTY_VIDEO_ENC_FPS,
             ConstantApp.DEFAULT_VIDEO_ENC_FPS_IDX
@@ -785,6 +781,9 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         requestBody.setType(messageType)
         if (intent.hasExtra("patientId")) {
             requestBody.setPatientId(intent.getLongExtra("patientId", 0L))
+        }
+        if (auditId != null) {
+            requestBody.setAuditId(auditId)
         }
         ApiClient.getApiProviderEndpoints(true, true).sendMessageNotification(requestBody)
             .enqueue(object : Callback<CommonResponse?> {
@@ -968,9 +967,9 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         if (mSmallVideoViewAdapter == null) {
             return
         }
-        val userList: List<UserStatusData> = mSmallVideoViewAdapter.getUserList()
-        val status = HashMap<Int, Int>()
-        val audioStatus = HashMap<Int, Int>()
+        val userList = mSmallVideoViewAdapter!!.getUserList()
+        val status = HashMap<Int?, Int?>()
+        val audioStatus = HashMap<Int?, Int?>()
         if (userList != null) {
             for (userStatusData in userList) {
                 if (userStatusData.getmUid() === targetUid) {
@@ -982,9 +981,9 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                 status[userStatusData.getmUid()] = userStatusData.getmStatus()
             }
         }
-        val bigBgUser: UserStatusData = mGridVideoViewContainer.getItem(0)
-        val slice = HashMap<Int, SurfaceView?>(1)
-        slice[bigBgUser.getmUid()] = mUidsList[bigBgUser.getmUid()]
+        val bigBgUser = mGridVideoViewContainer!!.getItem(0)
+        val slice = HashMap<Int?, SurfaceView?>(1)
+        slice[bigBgUser!!.getmUid()] = mUidsList[bigBgUser.getmUid()]
         val iterator: Iterator<SurfaceView?> = mUidsList.values.iterator()
         while (iterator.hasNext()) {
             val s = iterator.next()
@@ -997,7 +996,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             slice[bigBgUser.getmUid()]!!.setZOrderOnTop(false)
             slice[bigBgUser.getmUid()]!!.setZOrderMediaOverlay(false)
         }
-        mGridVideoViewContainer.notifyUiChanged(
+        mGridVideoViewContainer!!.notifyUiChanged(
             slice,
             bigBgUser.getmUid(),
             status,
@@ -1007,7 +1006,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         mSmallVideoViewAdapter!!.setLocalUid(config().getmUid())
         run { // find target view in small video view list
 //            log.warn("SmallVideoViewAdapter call notifyUiChanged " + mUidsList + " " + (bigBgUser.getmUid() & 0xFFFFFFFFL) + " target: " + (targetUid & 0xFFFFFFFFL) + "==" + targetUid + " " + status + " " + mUidsList.size());
-            mSmallVideoViewAdapter!!?.notifyUiChanged(
+            if (mSmallVideoViewAdapter != null) mSmallVideoViewAdapter!!.notifyUiChanged(
                 mUidsList,
                 bigBgUser.getmUid(),
                 status,
@@ -1026,13 +1025,13 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             if (mSmallVideoViewAdapter != null) {
                 userList = mSmallVideoViewAdapter!!.getUserList()
             }
-            val status = HashMap<Int, Int>()
-            val audioStatus = HashMap<Int, Int>()
+            val status = HashMap<Int?, Int?>()
+            val audioStatus = HashMap<Int?, Int?>()
             if (userList != null) {
                 for (userStatusData in userList) {
                     if (userStatusData.getmUid() === targetUid) {
                         status[targetUid] =
-                            if (hide) UserStatusData().VIDEO_MUTED else UserStatusData.DEFAULT_STATUS
+                            if (hide) UserStatusData.VIDEO_MUTED else UserStatusData.DEFAULT_STATUS
                     } else {
                         status[userStatusData.getmUid()] = userStatusData.getmStatus()
                     }
@@ -1042,16 +1041,22 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             //        if (mLayoutType == LAYOUT_TYPE_DEFAULT) {
 //            mGridVideoViewContainer.notifyUiChanged(mUidsList, targetUid, status, null);
 //        } else if (mLayoutType == LAYOUT_TYPE_SMALL) {
-            val bigBgUser: UserStatusData = mGridVideoViewContainer.getItem(0)
-            if (bigBgUser.getmUid() === targetUid) { // big background is target view
-                val slice = HashMap<Int, SurfaceView?>(1)
+            val bigBgUser = mGridVideoViewContainer!!.getItem(0)
+            if (bigBgUser!!.getmUid() === targetUid) { // big background is target view
+                val slice = HashMap<Int?, SurfaceView?>(1)
                 slice[targetUid] = mUidsList[targetUid]
-                mGridVideoViewContainer.notifyUiChanged(slice, targetUid, status, audioStatus, null)
+                mGridVideoViewContainer!!.notifyUiChanged(
+                    slice,
+                    targetUid,
+                    status,
+                    audioStatus,
+                    null
+                )
                 //                mGridVideoViewContainer.notifyUiChanged(mUidsList, targetUid, status, null);
             } else {
-                val slice = HashMap<Int, SurfaceView?>(1)
-                slice[bigBgUser.getmUid()] = mUidsList[bigBgUser.getmUid()]
-                mGridVideoViewContainer.notifyUiChanged(
+                val slice = HashMap<Int?, SurfaceView?>(1)
+                slice[bigBgUser!!.getmUid()] = mUidsList[bigBgUser.getmUid()]
+                mGridVideoViewContainer!!.notifyUiChanged(
                     slice,
                     bigBgUser.getmUid(),
                     status,
@@ -1061,9 +1066,9 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             }
             run { // find target view in small video view list
 //                log.warn("SmallVideoViewAdapter call notifyUiChanged " + mUidsList + " " + (bigBgUser.getmUid() & 0xFFFFFFFFL) + " target: " + (targetUid & 0xFFFFFFFFL) + "==" + targetUid + " " + status);
-                if (mSmallVideoViewAdapter != null) mSmallVideoViewAdapter.notifyUiChanged(
+                if (mSmallVideoViewAdapter != null) mSmallVideoViewAdapter!!.notifyUiChanged(
                     mUidsList,
-                    bigBgUser.getmUid(),
+                    bigBgUser!!.getmUid(),
                     status,
                     audioStatus,
                     null
@@ -1191,14 +1196,11 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             }
         }
         //        System.out.println("receiverids "+receiverIds);
-        callViewModel.sendSOSDismiss(
-            providerID,
-            token,
-            config().getmChannel(),
-            com.mvp.omnicure.utils.Constants.FCMMessageType.SOS_DISMISS,
-            receiverIds,
-            auditId
-        ).observe(this@CallActivity) { commonResponse ->
+        callViewModel!!.sendSOSDismiss(
+            providerID, token,
+            config().getmChannel()!!, com.mvp.omnicure.utils.Constants.FCMMessageType.SOS_DISMISS,
+            receiverIds!!, auditId!!
+        )!!.observe(this@CallActivity, { commonResponse ->
             dismissProgressBar()
             //            Log.i(TAG, "sosDismiss: response "+commonResponse);
             if (commonResponse != null && commonResponse.getStatus()) {
@@ -1214,7 +1216,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                 finish()
                 //                log.info("sos dismiss message: " + commonResponse.getErrorMessage());
             }
-        }
+        })
     }
 
     private fun sendAuditId(callAttend: Boolean, type: String) {
@@ -1224,8 +1226,8 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         val providerID: String =
             java.lang.String.valueOf(PrefUtility.getProviderId(this@CallActivity))
         //        System.out.println("coming here "+callAttend);
-        callViewModel.sendAuditId(auditId, callAttend, providerID, type)
-            .observe(this@CallActivity) { commonResponse ->
+        callViewModel!!.sendAuditId(auditId!!, callAttend, providerID, type)!!
+            .observe(this@CallActivity, { commonResponse ->
 //            System.out.println("callauditResponse "+auditId+" "+commonResponse);
                 dismissProgressBar()
                 //            if (commonResponse != null && commonResponse.getStatus()) {
@@ -1234,7 +1236,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
 ////                log.info("sos dismiss message: " + commonResponse.getErrorMessage());
 //            }
                 finish()
-            }
+            })
     }
 
     override fun onFirstRemoteVideoDecoded(uid: Int, width: Int, height: Int, elapsed: Int) {
@@ -1280,17 +1282,17 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                 )
                 val id: Long = PrefUtility.getProviderId(this@CallActivity)
                 val token: String = PrefUtility.getToken(this@CallActivity)
-                callViewModel.getProviderById(id, token, uid.toLong())
-                    .observe(this@CallActivity) { commonResponse ->
+                callViewModel!!.getProviderById(id, token, uid.toLong())!!
+                    .observe(this@CallActivity, { commonResponse ->
                         val gson = Gson()
                         Log.d("TAG", "provider_response " + gson.toJson(commonResponse))
                         if (commonResponse != null && commonResponse.getStatus() != null && commonResponse.getStatus() && commonResponse.getProvider() != null) {
                             mProviderList!!.add(commonResponse.getProvider())
-                            doRenderRemoteUi(commonResponse.getProvider().getId().intValue())
+                            doRenderRemoteUi(commonResponse.getProvider()!!.getId().intValue())
                         } else {
                             val errMsg: String = ErrorMessages.getErrorMessage(
                                 this@CallActivity,
-                                commonResponse.getErrorMessage(),
+                                commonResponse!!.getErrorMessage(),
                                 com.mvp.omnicure.utils.Constants.API.getProviderById
                             )
                             //                            UtilityMethods.showErrorSnackBar(mGridVideoViewContainer, errMsg, Snackbar.LENGTH_LONG);
@@ -1304,7 +1306,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                                 0
                             ).show()
                         }
-                    }
+                    })
             } else {
                 if (mUidsList.containsKey(uid)) {
                     return@Runnable
@@ -1337,7 +1339,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
 //                    switchToDefaultVideoView();
 //                } else {
                 val bigBgUid =
-                    if (mSmallVideoViewAdapter == null) uid else mSmallVideoViewAdapter.getExceptedUid()
+                    if (mSmallVideoViewAdapter == null) uid else mSmallVideoViewAdapter!!.getExceptedUid()
                 //                    log.debug("doRenderRemoteUi LAYOUT_TYPE_SMALL " + (uid & 0xFFFFFFFFL) + " " + (bigBgUid & 0xFFFFFFFFL));
                 switchToSmallVideoView(bigBgUid, uid)
                 //                }
@@ -1387,7 +1389,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                 val stats = data[0] as RemoteVideoStats
                 if (Constant.SHOW_VIDEO_INFO) {
                     if (mLayoutType == LAYOUT_TYPE_DEFAULT) {
-                        mGridVideoViewContainer.addVideoInfo(
+                        mGridVideoViewContainer!!.addVideoInfo(
                             stats.uid,
                             VideoInfoData(
                                 stats.width,
@@ -1406,7 +1408,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                         val rwh = resolution.split("x").toTypedArray()
                         val width = Integer.valueOf(rwh[0])
                         val height = Integer.valueOf(rwh[1])
-                        mGridVideoViewContainer.addVideoInfo(
+                        mGridVideoViewContainer!!.addVideoInfo(
                             uid, VideoInfoData(
                                 if (width > height) width else height,
                                 if (width > height) height else width,
@@ -1415,7 +1417,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                         )
                     }
                 } else {
-                    mGridVideoViewContainer.cleanVideoInfo()
+                    mGridVideoViewContainer!!.cleanVideoInfo()
                 }
             }
             AGEventHandler.EVENT_TYPE_ON_SPEAKER_STATS -> {
@@ -1424,7 +1426,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                     break
                 }
                 if (mLayoutType == LAYOUT_TYPE_DEFAULT) {
-                    val volume = HashMap<Int, Int>()
+                    val volume = HashMap<Int?, Int?>()
                     for (each in infos) {
                         peerUid = each.uid
                         val peerVolume = each.volume
@@ -1433,16 +1435,16 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                         }
                         volume[peerUid] = peerVolume
                     }
-                    val userList: List<UserStatusData> = mSmallVideoViewAdapter.getUserList()
-                    val status = HashMap<Int, Int>()
-                    val audioStatus = HashMap<Int, Int>()
+                    val userList = mSmallVideoViewAdapter!!.getUserList()
+                    val status = HashMap<Int?, Int?>()
+                    val audioStatus = HashMap<Int?, Int?>()
                     if (userList != null) {
                         for (userStatusData in userList) {
                             status[userStatusData.getmUid()] = userStatusData.getmStatus()
                             audioStatus[userStatusData.getmUid()] = userStatusData.getmAudioStatus()
                         }
                     }
-                    mGridVideoViewContainer.notifyUiChanged(
+                    mGridVideoViewContainer!!.notifyUiChanged(
                         mUidsList,
                         config().getmUid(),
                         status,
@@ -1492,7 +1494,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             }
             var bigBgUid = -1
             if (mSmallVideoViewAdapter != null) {
-                bigBgUid = mSmallVideoViewAdapter.getExceptedUid()
+                bigBgUid = mSmallVideoViewAdapter!!.getExceptedUid()
             }
             if (mUidsList[bigBgUid] == null) {
                 var count = 0
@@ -1519,7 +1521,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         if (mSmallVideoViewDock != null) {
             mSmallVideoViewDock!!.visibility = View.GONE
         }
-        mGridVideoViewContainer.initViewContainer(
+        mGridVideoViewContainer!!.initViewContainer(
             this,
             config().getmUid(),
             if (mVideoMuted) 1 else 0,
@@ -1535,7 +1537,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             sizeLimit = ConstantApp.MAX_PEER_COUNT + 1
         }
         for (i in 0 until sizeLimit) {
-            val uid: Int = mGridVideoViewContainer.getItem(i).getmUid()
+            val uid = mGridVideoViewContainer!!.getItem(i)!!.getmUid()
             if (config().getmUid() !== uid) {
                 if (!setRemoteUserPriorityFlag) {
                     setRemoteUserPriorityFlag = true
@@ -1561,7 +1563,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         }
         mUidsList[bigBgUid]!!.setZOrderOnTop(false)
         mUidsList[bigBgUid]!!.setZOrderMediaOverlay(false)
-        mGridVideoViewContainer.initViewContainer(
+        mGridVideoViewContainer!!.initViewContainer(
             this,
             bigBgUid,
             if (mVideoMuted) 1 else 0,
@@ -1596,7 +1598,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                 mUidsList,
                 mProviderList
             )
-            mSmallVideoViewAdapter.setHasStableIds(true)
+            mSmallVideoViewAdapter!!.setHasStableIds(true)
             recycler.setHasFixedSize(true)
 
 //            log.debug("bindToSmallVideoView " + twoWayVideoCall + " " + (exceptUid & 0xFFFFFFFFL));
@@ -1616,7 +1618,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
             recycler.addOnItemTouchListener(
                 RecyclerItemClickListener(
                     baseContext,
-                    object : AdapterView.OnItemClickListener() {
+                    object : OnItemClickListener() {
                         fun onItemClick(view: View, position: Int) {
                             onSmallVideoViewClicked(view, position)
                         }
@@ -1638,18 +1640,24 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
         }
         if (needToNotify) {
             Log.d("TAG", "smallview adapter not created")
-            mSmallVideoViewAdapter.setLocalUid(config().getmUid())
-            val status = HashMap<Int, Int>()
+            mSmallVideoViewAdapter!!.setLocalUid(config().getmUid())
+            val status = HashMap<Int?, Int?>()
             status[exceptUid] = if (mVideoMuted) 1 else 0
             status[uid] = if (mVideoMuted) 1 else 0
             status[config().getmUid()] = if (mVideoMuted) 1 else 0
-            val audioStatus = HashMap<Int, Int>()
+            val audioStatus = HashMap<Int?, Int?>()
             audioStatus[exceptUid] = if (mAudioMuted) 1 else 0
             audioStatus[uid] = if (mAudioMuted) 1 else 0
             audioStatus[config().getmUid()] = if (mAudioMuted) 1 else 0
             //            System.out.println("providerlist_call "+mProviderList);
-            mSmallVideoViewAdapter.setmProviderList(mProviderList)
-            mSmallVideoViewAdapter.notifyUiChanged(mUidsList, exceptUid, status, audioStatus, null)
+            mSmallVideoViewAdapter!!.setmProviderList(mProviderList)
+            mSmallVideoViewAdapter!!.notifyUiChanged(
+                mUidsList,
+                exceptUid,
+                status,
+                audioStatus,
+                null
+            )
         }
         for (tempUid in mUidsList.keys) {
             if (config().getmUid() !== tempUid) {
@@ -1668,9 +1676,9 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
 
     private fun onSmallVideoViewClicked(view: View, position: Int) {
         //TODO: handle onSmallVideoViewClicked
-        val bigBgUid: Int? = mSmallVideoViewAdapter?.getItemUid(position)
+        val bigBgUid = mSmallVideoViewAdapter!!.getItemUid(position)
         if (mSmallVideoViewAdapter != null && mSmallVideoViewAdapter!!.getExceptedUid() !== bigBgUid) {
-            val slice = HashMap<Int, SurfaceView?>(1)
+            val slice = HashMap<Int?, SurfaceView?>(1)
             slice[bigBgUid] = mUidsList[bigBgUid]
             val iterator: Iterator<SurfaceView?> = mUidsList.values.iterator()
             while (iterator.hasNext()) {
@@ -1678,22 +1686,22 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                 s!!.setZOrderOnTop(true)
                 s.setZOrderMediaOverlay(true)
             }
-            val userList: List<UserStatusData>? = mSmallVideoViewAdapter?.getUserList()
-            val status = HashMap<Int, Int>()
-            val audioStatus = HashMap<Int, Int>()
+            val userList = mSmallVideoViewAdapter!!.getUserList()
+            val status = HashMap<Int?, Int?>()
+            val audioStatus = HashMap<Int?, Int?>()
             if (userList != null) {
                 for (userStatusData in userList) {
-                    status[userStatusData.getmUid()] = userStatusData?.getmStatus()
-                    audioStatus[userStatusData.getmUid()] = userStatusData?.getmAudioStatus()
+                    status[userStatusData.getmUid()] = userStatusData.getmStatus()
+                    audioStatus[userStatusData.getmUid()] = userStatusData.getmAudioStatus()
                 }
             }
             slice[bigBgUid]!!.setZOrderOnTop(false)
             slice[bigBgUid]!!.setZOrderMediaOverlay(false)
-            mGridVideoViewContainer.notifyUiChanged(slice, bigBgUid, status, audioStatus, null)
+            mGridVideoViewContainer!!.notifyUiChanged(slice, bigBgUid, status, audioStatus, null)
             //            mGridVideoViewContainer.initViewContainer(this, bigBgUid,status.get(bigBgUid), slice, mIsLandscape,mProviderList);
             if (mSmallVideoViewAdapter != null) {
-                mSmallVideoViewAdapter.setLocalUid(config().getmUid())
-                mSmallVideoViewAdapter.notifyUiChanged(
+                mSmallVideoViewAdapter!!.setLocalUid(config().getmUid())
+                mSmallVideoViewAdapter!!.notifyUiChanged(
                     mUidsList,
                     bigBgUid,
                     status,
@@ -1724,7 +1732,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
 //        if (mLayoutType == LAYOUT_TYPE_DEFAULT) {
 //            switchToDefaultVideoView();
 //        } else if (mSmallVideoViewAdapter != null) {
-        switchToSmallVideoView(mSmallVideoViewAdapter.getExceptedUid(), -1)
+        switchToSmallVideoView(mSmallVideoViewAdapter!!.getExceptedUid(), -1)
 //        }
     }
 
@@ -1737,7 +1745,7 @@ class CallActivity: BaseActivity, DuringCallEventHandler {
                     val connectingError = findViewById(R.id.connection_error) as TextView
                     val providerName = intent.getStringExtra("providerName")
                     val providerObjString = intent.getStringExtra("providerList")
-                    val providerListNotification: ArrayList<Provider> = ArrayList<Provider>()
+                    val providerListNotification = ArrayList<Provider>()
                     try {
                         val providerArray = JSONArray(providerObjString)
                         for (i in 0 until providerArray.length()) {

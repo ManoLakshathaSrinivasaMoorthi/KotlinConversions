@@ -77,7 +77,8 @@ class RingingActivity:BaseActivity() {
 
         //appname
         val header = findViewById<TextView>(R.id.header)
-        header.text = java.lang.String.format(getString(R.string.omnicure_now), Buildconfic().value())
+        header.text = java.lang.String.format(getString(R.string.omnicure_now), com.example.kotlinomnicure.utils.Buildconfic
+            .value())
         val patientInfoLayout = findViewById<LinearLayout>(R.id.patient_info_layout)
         if (intent.hasExtra("sos")) {
             sosImageView.visibility = View.VISIBLE
@@ -159,10 +160,10 @@ $providerName$pt"""
         try {
             afd = assets.openFd("ringtone.mp3")
             player = MediaPlayer()
-            player!!.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-            player!!.prepare()
-            player!!.isLooping = true
-            player!!.start()
+            player?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+            player?.prepare()
+            player?.isLooping = true
+            player?.start()
         } catch (e: Exception) {
 //            Log.e("error", e.getMessage());
         } finally {
@@ -179,9 +180,7 @@ $providerName$pt"""
             caller_image_view.visibility = View.VISIBLE
             caller_image_text.visibility = View.GONE
             if (!TextUtils.isEmpty(imageUrl)) {
-                Glide.with(this)
-                    .load(imageUrl)
-                    .into(caller_image_view)
+                Glide.with(this).load(imageUrl).into(caller_image_view)
                 //                new RingingActivity.ImageLoader(RingingActivity.this, imageUrl).execute();
             }
         }
@@ -190,7 +189,7 @@ $providerName$pt"""
             sendCallResponseMessage(Constants.FCMMessageType.CALLER_NOT_ANSWER)
             sendAuditId(Constants.FCMMessageType.CALLER_NOT_ANSWER, false)
         }
-        mHandlerRinging!!.postDelayed(mRunnable!!, 60 * 1000L)
+        mHandlerRinging?.postDelayed(mRunnable!!, 60 * 1000L)
         // INITIALIZE RECEIVER
         registerScreenBroadCast()
         registerBroadCast()
@@ -281,22 +280,19 @@ $providerName$pt"""
                                 var afd: AssetFileDescriptor? = null
                                 try {
                                     if (player != null) {
-                                        player!!.stop()
-                                        player!!.reset()
+                                        player?.stop()
+                                        player?.reset()
                                         player = null
                                     }
                                     afd = assets.openFd("busytone.mp3")
                                     if (player == null) {
                                         player = MediaPlayer()
                                     }
-                                    player!!.setDataSource(
-                                        afd.fileDescriptor,
-                                        afd.startOffset,
-                                        afd.length
-                                    )
-                                    player!!.prepare()
-                                    player!!.isLooping = false
-                                    player!!.start()
+                                    player?.setDataSource(afd.fileDescriptor, afd.startOffset,
+                                        afd.length)
+                                    player?.prepare()
+                                    player?.isLooping = false
+                                    player?.start()
                                 } catch (e: Exception) {
 //                                    Log.e(TAG, "Exception:", e.getCause());
                                 } finally {
@@ -317,20 +313,17 @@ $providerName$pt"""
                                 var afd: AssetFileDescriptor? = null
                                 try {
                                     if (player != null) {
-                                        player!!.stop()
-                                        player!!.stop()
-                                        player!!.reset()
+                                        player?.stop()
+                                        player?.stop()
+                                        player?.reset()
                                         player = null
                                     }
                                     afd = assets.openFd("busytone.mp3")
                                     if (player == null) {
                                         player = MediaPlayer()
                                     }
-                                    player!!.setDataSource(
-                                        afd.fileDescriptor,
-                                        afd.startOffset,
-                                        afd.length
-                                    )
+                                    player?.setDataSource(afd.fileDescriptor,
+                                        afd.startOffset, afd.length)
                                     player!!.prepare()
                                     player!!.isLooping = false
                                     player!!.start()
@@ -385,7 +378,7 @@ $providerName$pt"""
                                     }
                                 }
                                 val connection_message =
-                                    findViewById(R.id.connection_message) as TextView
+                                    findViewById<TextView>(R.id.connection_message)
                                 Handler().postDelayed({ finish() }, 2000)
                             }
                         }

@@ -132,11 +132,131 @@ android {
         }
     }
     buildTypes {
+        ext_test {
+            buildConfigField "String", "SERVER", '"ext_test"'
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.ext_test
+        }
+        exttesting {
+            buildConfigField "String", "SERVER", '"exttesting"'
+            minifyEnabled true
+            shrinkResources true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.exttesting
+        }
+        debug {
+            buildConfigField "String", "SERVER", '"test"'
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        netccn {
+            buildConfigField "String", "SERVER", '"netccn"'
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+        netccndev {
+            buildConfigField "String", "SERVER", '"netccndev"'
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+        OmnicurenetccnDEV2 {
+            buildConfigField "String", "SERVER", '"Omnicure-netccnDEV2"'
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+        OmnicurenetccnDEV3 {
+            buildConfigField "String", "SERVER", '"Omnicure-netccnDEV3"'
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+
+        netccnautotest {
+            buildConfigField "String", "SERVER", '"netccnautotest"'
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+        staging_iam {
+            buildConfigField "String", "SERVER", '"staging_iam"'
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            signingConfig signingConfigs.staging_iam
+        }
+        staging {
+            buildConfigField "String", "SERVER", '"test"'
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            signingConfig signingConfigs.staging
+        }
+        release {
+            buildConfigField "String", "SERVER", '"production"'
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        demo {
+            buildConfigField "String", "SERVER", '"demo"'
+            signingConfig signingConfigs.demo
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        qa {
+            buildConfigField "String", "SERVER", '"qa"'
+            signingConfig signingConfigs.qa
+            minifyEnabled false
+            debuggable true;
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        qa_omnicure {
+            buildConfigField "String", "SERVER", '"qa_omnicure"'
+            signingConfig signingConfigs.qa_omnicure
+            minifyEnabled false
+            debuggable true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        omnicurepilot {
+            buildConfigField "String", "SERVER", '"omnicurepilot"'
+            signingConfig signingConfigs.omnicurepilot
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        omnicure_test {
+            buildConfigField "String", "SERVER", '"omnicure_test"'
+            minifyEnabled false
+            shrinkResources false
+            debuggable false
+            signingConfig signingConfigs.debug
+        }
+        netccnSecTest{
+            buildConfigField "String", "SERVER", '"netccnsectest"'
+            signingConfig signingConfigs.netccnsectest
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+   /* buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
+    }*/
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -146,7 +266,8 @@ android {
     }
 }
 
-dependencies { def retrofit_version = "2.8.1"
+dependencies {
+    def retrofit_version = "2.8.1"
     def coroutines_version = "1.3.5"
     def lifecycle_version = "2.2.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -200,4 +321,22 @@ dependencies { def retrofit_version = "2.8.1"
 
     implementation 'com.github.mmin18:realtimeblurview:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'commons-net:commons-net:3.6'
+
+    // Dependency for exoplayer
+    implementation "com.google.android.exoplayer:exoplayer:2.13.3"
+// Core support in exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-core:2.13.3"
+// Dash support in exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-dash:2.13.3"
+// HLS support in exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-hls:2.13.3"
+// Smooth streaming of video in exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:2.13.3"
+// Default ui of exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-ui:2.13.3"
+    //fp
+    implementation 'androidx.biometric:biometric:1.0.0-beta01'
+
 }

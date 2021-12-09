@@ -2,29 +2,30 @@ package omnicurekotlin.example.com.appointmentEndpoints.model
 
 class Appointment {
 
-    private var address: String? = null
-    private var countryCode: String? = null
-    private var dob: Long? = null
-    private var dobDay: Int? = null
-    private var dobMonth: String? = null
-    private var dobYear: Int? = null
-    private var email: String? = null
-    private var isFamilyMember: Boolean? = null
-    private var memFirstName: String? = null
-    private var memLastName: String? = null
-    private var relationship: String? = null
-    private var password: String? = null
-    private var fname: String? = null
-    private var gender: String? = null
-    private var id: Long? = null
-    private var joiningTime: Long? = null
-    private var lname: String? = null
-    private var name: String? = null
-    private var note: String? = null
-    private var phone: String? = null
-    private var status: String? = null
+    var address: String? = null
+    var countryCode: String? = null
+    var dob: Long? = null
+    var dobDay: Int? = null
+    var dobMonth: String? = null
+    var dobYear: Int? = null
+    var email: String? = null
+    var isFamilyMember: Boolean? = null
+    var memFirstName: String? = null
+    var memLastName: String? = null
+    var relationship: String? = null
+    var password: String? = null
+    var fname: String? = null
+    var gender: String? = null
+    var id: Long? = null
+    var joiningTime: Long? = null
+    var lname: String? = null
+    var name: String? = null
+    var note: String? = null
+    var phone: String? = null
+    var status: String? = null
 
 
+    @JvmName("getAddress1")
     fun getAddress(): String? {
         return address
     }
@@ -36,6 +37,7 @@ class Appointment {
     }
 
 
+    @JvmName("getCountryCode1")
     fun getCountryCode(): String? {
         return countryCode
     }
@@ -46,6 +48,7 @@ class Appointment {
     }
 
 
+    @JvmName("getDob1")
     fun getDob(): Long? {
         return dob
     }
@@ -55,9 +58,8 @@ class Appointment {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDobDay1")
     fun getDobDay(): Int? {
         return dobDay
     }
@@ -67,6 +69,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getDobMonth1")
     fun getDobMonth(): String? {
         return dobMonth
     }
@@ -76,6 +79,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getDobYear1")
     fun getDobYear(): Int? {
         return dobYear
     }
@@ -85,6 +89,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
@@ -94,10 +99,12 @@ class Appointment {
         return this
     }
 
+    @JvmName("getPassword1")
     fun getPassword(): String? {
         return password
     }
 
+    @JvmName("setPassword1")
     fun setPassword(password: String?) {
         this.password = password
     }
@@ -106,34 +113,42 @@ class Appointment {
         return isFamilyMember
     }
 
+    @JvmName("setFamilyMember1")
     fun setFamilyMember(familyMember: Boolean?) {
         isFamilyMember = familyMember
     }
 
+    @JvmName("getMemFirstName1")
     fun getMemFirstName(): String? {
         return memFirstName
     }
 
+    @JvmName("setMemFirstName1")
     fun setMemFirstName(memFirstName: String?) {
         this.memFirstName = memFirstName
     }
 
+    @JvmName("getMemLastName1")
     fun getMemLastName(): String? {
         return memLastName
     }
 
+    @JvmName("setMemLastName1")
     fun setMemLastName(memLastName: String?) {
         this.memLastName = memLastName
     }
 
+    @JvmName("getRelationship1")
     fun getRelationship(): String? {
         return relationship
     }
 
+    @JvmName("setRelationship1")
     fun setRelationship(relationship: String?) {
         this.relationship = relationship
     }
 
+    @JvmName("getFname1")
     fun getFname(): String? {
         return fname
     }
@@ -144,6 +159,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getGender1")
     fun getGender(): String? {
         return gender
     }
@@ -154,6 +170,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -163,6 +180,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
@@ -172,6 +190,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getLname1")
     fun getLname(): String? {
         return lname
     }
@@ -181,6 +200,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -190,6 +210,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getNote1")
     fun getNote(): String? {
         return note
     }
@@ -199,6 +220,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }
@@ -208,6 +230,7 @@ class Appointment {
         return this
     }
 
+    @JvmName("getStatus1")
     fun getStatus(): String? {
         return status
     }
