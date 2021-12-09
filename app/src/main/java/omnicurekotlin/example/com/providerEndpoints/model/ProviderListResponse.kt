@@ -3,14 +3,15 @@ package omnicurekotlin.example.com.providerEndpoints.model
 
 class ProviderListResponse {
 
-    private var count: Int? = null
-    private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var id: Long? = null
-    private var providerList: List<Provider?>? = null
-    private var status: Boolean? = null
+     var count: Int? = null
+     var errorId: Int? = null
+     var errorMessage: String? = null
+     var id: Long? = null
+     var providerList: List<Provider?>? = null
+     var status: Boolean? = null
 
 
+    @JvmName("getCount1")
     fun getCount(): Int? {
         return count
     }
@@ -20,9 +21,8 @@ class ProviderListResponse {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -33,6 +33,7 @@ class ProviderListResponse {
     }
 
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -43,9 +44,8 @@ class ProviderListResponse {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -57,6 +57,7 @@ class ProviderListResponse {
     }
 
 
+    @JvmName("getProviderList1")
     fun getProviderList(): List<Provider?>? {
         return providerList
     }
@@ -68,6 +69,7 @@ class ProviderListResponse {
     }
 
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }

@@ -7,15 +7,11 @@ class SystemAlerts {
     @Expose
     @SerializedName("systemAlertList")
     var systemAlertList: List<SystemAlertList?>? = null
-
-
     var status = false
 
     @Expose
     @SerializedName("errorId")
     private var errorId = 0
-
-
     var errorMessage: String? = null
 
     fun isStatus(): Boolean {
@@ -32,10 +28,12 @@ class SystemAlerts {
         this.errorMessage = errorMessage
     }
 
+    @JvmName("getSystemAlertList1")
     fun getSystemAlertList(): List<SystemAlertList?>? {
         return systemAlertList
     }
 
+    @JvmName("setSystemAlertList1")
     fun setSystemAlertList(systemAlertList: List<SystemAlertList?>?) {
         this.systemAlertList = systemAlertList
     }

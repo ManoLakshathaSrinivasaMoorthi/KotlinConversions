@@ -5,40 +5,16 @@ import java.io.Serializable
 class ChatMessages : Serializable {
 
     var id: String? = null
-
-    //@com.google.api.client.util.Key
     var senderId: String? = null
-
-    //@com.google.api.client.util.Key
     var message: String? = null
-
-    //@com.google.api.client.util.Key
     var type: String? = null
-
-    //@com.google.api.client.util.Key
     var subType: String? = null
-
-    //@com.google.api.client.util.Key
     var patientId: String? = null
-
-    //@com.google.api.client.util.Key
     var consultId: String? = null
-
-    //@com.google.api.client.util.Key
     var senderName: String? = null
-
-    //@com.google.api.client.util.Key
     var time: String? = null
-
-    //@com.google.api.client.util.Key
     var urgent: Boolean? = null
-
-    //@com.google.api.client.util.Key
     var important: Boolean? = null
-
-    //@com.google.api.client.util.Key
     var receiver: String? = null
-
-    //@com.google.api.client.util.Key
     var senderProfilePic: String? = null
 }

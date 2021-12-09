@@ -11,37 +11,17 @@ class SendChatMessageInputRequestModel : Serializable {
             field = id
         }
 
-    //com.google.api.client.util.Key
+
     var senderId: Int? = null
-
-    //com.google.api.client.util.Key
     var message: String? = null
-
-    //com.google.api.client.util.Key
     var type: String? = null
-
-    //com.google.api.client.util.Key
     var subType: String? = null
-
-    //com.google.api.client.util.Key
     var patientId: Long? = null
-
-    //com.google.api.client.util.Key
     var senderName: String? = null
-
-    //com.google.api.client.util.Key
     var urgent: Boolean? = null
-
-    //com.google.api.client.util.Key
     var important: Boolean? = null
-
-    //com.google.api.client.util.Key
     var token: String? = null
-
-    //com.google.api.client.util.Key
     var title: String? = null
-
-    //com.google.api.client.util.Key
     var time: Long? = null
 
     var providerId:String?=null
@@ -77,23 +57,8 @@ class SendChatMessageInputRequestModel : Serializable {
         this.token = token
     }
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
 
-    //    public Long getId() {
-    //        return id;
-    //    }
-    //
-    //    public void setId(Long id) {
-    //        this.id = id;
-    //    }
-    //
+    @JvmName("getProviderId1")
     fun getProviderId(): String? {
         return providerId
     }
