@@ -23,33 +23,20 @@ class PrefUtility {
         editor.apply()
     }
 
-    /**
-     * This method save  a String in Application prefs
-     *
-     * @param context
-     * @param key
-     * @param value
-     */
+
     fun saveStringInPref(context: Context, key: String?, value: String?) {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             val editor = prefs.edit()
             editor.putString(key, value)
-            editor.commit()
+            editor.apply()
             //saveEncryptedStringInPref(context,key,value);
         } catch (e: Exception) {
             Log.e(TAG, "Exception:", e.cause)
         }
     }
 
-    /**
-     * This method returns the string value stored in Application prefs against a key
-     *
-     * @param context
-     * @param key
-     * @param defaultValue
-     * @return
-     */
+
     fun getStringInPref(context: Context, key: String?, defaultValue: String?): String {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
@@ -61,32 +48,19 @@ class PrefUtility {
         return ""
     }
 
-    /**
-     * This method save  a String in Application prefs
-     *
-     * @param context
-     * @param key
-     * @param stringSet
-     */
+
     fun saveStringSetInPref(context: Context, key: String?, stringSet: Set<String?>?) {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             val editor = prefs.edit()
             editor.putStringSet(key, stringSet)
-            editor.commit()
+            editor.apply()
         } catch (e: Exception) {
             Log.e(TAG, "Exception:", e.cause)
         }
     }
 
-    /**
-     * This method returns the string value stored in Application prefs against a key
-     *
-     * @param context
-     * @param key
-     * @param defaultSetValue
-     * @return
-     */
+
     fun getStringSetInPref(
         context: Context,
         key: String?,
@@ -103,62 +77,36 @@ class PrefUtility {
         return defaultSetValue
     }
 
-    /**
-     * This method save  a Int in Application prefs
-     *
-     * @param context
-     * @param key
-     * @param value
-     */
     fun saveIntInPref(context: Context, key: String?, value: Int) {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             val editor = prefs.edit()
             editor.putInt(key, value)
-            editor.commit()
+            editor.apply()
         } catch (e: Exception) {
             Log.e(TAG, "Exception:", e.cause)
         }
     }
 
-    /**
-     * This method returns the int value stored in Application prefs against a key
-     *
-     * @param context
-     * @param key
-     * @param defaultValue
-     * @return
-     */
+
     fun getIntInPref(context: Context, key: String?, defaultValue: Int): Int {
         val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
         return prefs.getInt(key, defaultValue)
     }
 
-    /**
-     * This method save  a Long in Application prefs
-     *
-     * @param context
-     * @param key
-     * @param value
-     */
+
     fun saveLongInPref(context: Context, key: String?, value: Long) {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             val editor = prefs.edit()
             editor.putLong(key, value)
-            editor.commit()
+            editor.apply()
         } catch (e: Exception) {
             Log.e(TAG, "Exception:", e.cause)
         }
     }
 
-    /**
-     * This method returns the Long value stored in Application prefs against a key
-     *
-     * @param context
-     * @param key
-     * @param defaultValue
-     */
+
     fun getLongInPref(context: Context, key: String?, defaultValue: Long): Long {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
@@ -175,19 +123,13 @@ class PrefUtility {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             val editor = prefs.edit()
             editor.putFloat(key, value)
-            editor.commit()
+            editor.apply()
         } catch (e: Exception) {
             Log.e(TAG, "Exception:", e.cause)
         }
     }
 
-    /**
-     * This method returns the Long value stored in Application prefs against a key
-     *
-     * @param context
-     * @param key
-     * @param defaultValue
-     */
+
     fun getFloatInPref(context: Context, key: String?, defaultValue: Float): Float {
         val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
         return prefs.getFloat(key, defaultValue)
@@ -198,19 +140,13 @@ class PrefUtility {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             val editor = prefs.edit()
             editor.putLong(key, java.lang.Double.doubleToRawLongBits(value))
-            editor.commit()
+            editor.apply()
         } catch (e: Exception) {
             Log.e(TAG, "Exception:", e.cause)
         }
     }
 
-    /**
-     * This method returns the Long value stored in Application prefs against a key
-     *
-     * @param context
-     * @param key
-     * @param defaultValue
-     */
+
     fun getDoubleInPref(context: Context, key: String?, defaultValue: Long): Double {
         val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
         return java.lang.Double.longBitsToDouble(prefs.getLong(key, defaultValue))
@@ -227,7 +163,7 @@ class PrefUtility {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             val editor = prefs.edit()
             editor.putBoolean(key, value)
-            editor.commit()
+            editor.apply()
         } catch (e: Exception) {
             Log.e(TAG, "Exception:", e.cause)
         }
@@ -529,12 +465,7 @@ class PrefUtility {
         }
     }
 
-    /**
-     * Method to save provider object in preference
-     *
-     * @param context
-     * @param object
-     */
+
     private fun saveProviderObject(context: Context, `object`: Any) {
         try {
             //{"countryCode":"+1","email":"alok@clicbrics.com","fcmKey":"dX1ou2IlSoKz3SsqVuJ7pG:APA91bGrZjb3m7KHJsgKpjMFRls02ee8biSaLNdi-w2ytIk8-ubAbKQ2BugK2aWKr-p2oUGhIcy-mVPvhwxAaFQmToSI5tl20S1JpAoXhVdKnwrrU4cRO_vJGsz-hmJl_0fm5fMP2ZL1","healthMonitoringTime":"1589180350211","hospital":"VA New York Harbor Healthcare System","id":"1","joiningTime":"1588162910953","name":"Alok Soni","osType":"ANDROID","otp":"3248","password":"Y+Mh4DqMlwUC5rbx3MgOyMfht6+a8K8a","phone":"8377944971","profilePicUrl":"https://firebasestorage.googleapis.com/v0/b/omnicure-backend.appspot.com/o/xUOUCcGncSf9MZDuCCf33HO6hHj2%2F1%2FProfile%2Fimage_1588856832221?alt=media&token=59092c1d-282a-487a-9ad0-7066080c3f6b","role":"BD","screenName":"LoginActivity","status":"Active","token":"441898667215891803502110318992105"}
@@ -637,52 +568,52 @@ class PrefUtility {
         context?.let { PrefUtility().saveLongInPref(it, Constants.SharedPrefConstants.LOGIN_TIME, time) }
     }
 
-    fun getProviderId(context: Context): Long? {
+    fun getProviderId(context: Context): Long {
         return getLongInPref(context, Constants.SharedPrefConstants.USER_ID, -1)
     }
 
-    fun getUserId(context: Context): Long? {
+    fun getUserId(context: Context): Long {
         return getLongInPref(context, Constants.SharedPrefConstants.USER_ID_PRIMARY, -1)
     }
 
-    fun getFireBaseUid(context: Context): String? {
+    fun getFireBaseUid(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.FIREBASE_UID, "")
     }
 
-    fun getAgoraAppId(context: Context): String? {
+    fun getAgoraAppId(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.AGORA_APP_ID, "")
     }
 
-    fun getAgoraCertificateId(context: Context): String? {
+    fun getAgoraCertificateId(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.AGORA_CERTIFICATE, "")
     }
 
-    fun getAESKey(context: Context): String? {
+    fun getAESKey(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.AES_KEY, "")
     }
 
-    fun getAESAPIKey(context: Context): String? {
+    fun getAESAPIKey(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.AES_API_KEY, "")
     }
 
 
-    fun getHeaderIdToken(context: Context): String? {
+    fun getHeaderIdToken(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.FIREBASE_IDTOKEN, "")
     }
 
-    fun getProviderStatus(context: Context): String? {
+    fun getProviderStatus(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.PROVIDER_STATUS, "")
     }
 
-    fun getProvderPhone(context: Context): String? {
+    fun getProvderPhone(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.USER_MOBILE_NO, "")
     }
 
-    fun getRole(context: Context): String? {
+    fun getRole(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.ROLE, "")
     }
 
-    fun getToken(context: Context): String? {
+    fun getToken(context: Context): String {
         return getStringInPref(context, Constants.SharedPrefConstants.TOKEN, "")
     }
 
@@ -708,53 +639,4 @@ class PrefUtility {
         return null
     }
 
-    /*public static SharedPreferences getSharedPref(Context context) {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(context)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences
-                    .create(
-                            context,
-                            "secret_shared_prefs_file",
-                            masterKey,
-                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-                    );
-            return sharedPreferences;
-        } catch (Exception e) {
-            Log.e(TAG, "Exception:", e.getCause());
-        }
-        return null;
-    }
-
-    public static void saveEncryptedStringInPref(Context context, String key, String value) {
-        try {
-            SharedPreferences prefs = getSharedPref(context);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString(key, value);
-            editor.commit();
-        } catch (Exception e) {
-            Log.e(TAG, "Exception:", e.getCause());
-        }
-    }
-
-    */
-    /**
-     * This method returns the string value stored in Application prefs against a key
-     *
-     * @param context
-     * @param key
-     * @param defaultValue
-     * @return
-     *//*
-    public static String getEncryptedStringInPref(Context context, String key, String defaultValue) {
-        try {
-            SharedPreferences prefs = getSharedPref(context);
-            return prefs.getString(key, defaultValue);
-        } catch (Exception e) {
-            Log.e(TAG, "Exception:", e.getCause());
-        }
-        return "";
-    }*/
-}
+ }

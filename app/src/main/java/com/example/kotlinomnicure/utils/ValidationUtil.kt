@@ -23,7 +23,7 @@ import java.util.regex.Pattern
 class ValidationUtil {
     fun isValidate(viewDataBinding: ViewDataBinding): String? {
       if (viewDataBinding is ActivityAddPatientVitalsBinding) {
-            val binding: ActivityAddPatientVitalsBinding = viewDataBinding as ActivityAddPatientVitalsBinding
+            val binding: ActivityAddPatientVitalsBinding = viewDataBinding
             return isPatientVitalsValid(binding)
         }
       else if (viewDataBinding is ActivityLocalCareProviderSignUpFirstBinding) {
@@ -308,9 +308,9 @@ class ValidationUtil {
             return context?.getString(R.string.invalid_password_try_again)
         }
         if (!TextUtils.isEmpty(strFirstName) || !TextUtils.isEmpty(strLastName)) {
-            strFirstName = strFirstName.toLowerCase()
-            strLastName = strLastName.toLowerCase()
-            str = str.toLowerCase()
+            strFirstName = strFirstName.lowercase(Locale.getDefault())
+            strLastName = strLastName.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             val fnameBool = strFirstName.trim { it <= ' ' }.length >= 3 && (str.startsWith(strFirstName) || str.matches(strFirstName) || str.contains(strFirstName))
             val lnameBool = strLastName.trim { it <= ' ' }.length >= 3 && (str.startsWith(strLastName) || str.matches(strLastName) || str.contains(strLastName))
             if (fnameBool || lnameBool) {
@@ -318,8 +318,8 @@ class ValidationUtil {
             }
         }
         if (!TextUtils.isEmpty(strEmail)) {
-            strEmail = strEmail.toLowerCase()
-            str = str.toLowerCase()
+            strEmail = strEmail.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             val split = strEmail.split("@".toRegex()).toTypedArray()
             if (split.size > 0) {
                 strEmail = split[0]
@@ -381,7 +381,7 @@ class ValidationUtil {
         return null
     }
 
-    fun checkPhoneNo(str: String?): Boolean? {
+    fun checkPhoneNo(str: String?): Boolean {
         if (str == null || TextUtils.isEmpty(str.trim { it <= ' ' })) {
             return false
         } else if (str.startsWith("0")) {
@@ -433,17 +433,17 @@ class ValidationUtil {
             return false
         }
         if (!TextUtils.isEmpty(strFirstName) || !TextUtils.isEmpty(strLastName)) {
-            strFirstName = strFirstName.toLowerCase()
-            strLastName = strLastName.toLowerCase()
-            str = str.toLowerCase()
+            strFirstName = strFirstName.lowercase(Locale.getDefault())
+            strLastName = strLastName.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             if (str.startsWith(strFirstName) || str.matches(strFirstName) || str.contains(strFirstName) ||
                     str.startsWith(strLastName) || str.matches(strLastName) || str.contains(strLastName)) {
                 return false
             }
         }
         if (!TextUtils.isEmpty(strEmail)) {
-            strEmail = strEmail.toLowerCase()
-            str = str.toLowerCase()
+            strEmail = strEmail.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             val split = strEmail.split("@".toRegex()).toTypedArray()
             if (split.size > 0) {
                 strEmail = split[0]
@@ -679,9 +679,9 @@ class ValidationUtil {
             symbolIcon.visibility = View.GONE
         }
         if (!TextUtils.isEmpty(strFirstName) || !TextUtils.isEmpty(strLastName)) {
-            strFirstName = strFirstName.toLowerCase()
-            strLastName = strLastName.toLowerCase()
-            str = str.toLowerCase()
+            strFirstName = strFirstName.lowercase(Locale.getDefault())
+            strLastName = strLastName.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             if (str.startsWith(strFirstName) || str.matches(strFirstName) || str.contains(strFirstName) ||
                     str.startsWith(strLastName) || str.matches(strLastName) || str.contains(strLastName)) {
                 first_last_icon.visibility = View.GONE
@@ -690,8 +690,8 @@ class ValidationUtil {
             }
         }
         if (!TextUtils.isEmpty(strEmail)) {
-            strEmail = strEmail.toLowerCase()
-            str = str.toLowerCase()
+            strEmail = strEmail.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             val split = strEmail.split("@".toRegex()).toTypedArray()
             if (split.size > 0) {
                 strEmail = split[0]

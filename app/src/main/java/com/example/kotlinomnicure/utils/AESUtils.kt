@@ -11,8 +11,7 @@ import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 class AESUtils {
-    var plainText =
-        "This is a plain text which need to be encrypted by Java AES 256 GCM Encryption Algorithm"
+    var plainText = "This is a plain text which need to be encrypted by Java AES 256 GCM Encryption Algorithm"
     val AES_KEY_SIZE = 256
     val GCM_IV_LENGTH = 12
     val GCM_TAG_LENGTH = 16

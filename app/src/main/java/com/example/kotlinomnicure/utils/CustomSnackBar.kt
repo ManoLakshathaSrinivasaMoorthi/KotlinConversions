@@ -20,18 +20,11 @@ class CustomSnackBar {
     private lateinit var patientName: String
     private var patientId: Long = 0
 
-    /**
-     * This method auto dismiss snackbar
-     */
+
     var handler: Handler? = null
     private val TAG = javaClass.name
     private val mContext: Context? = null
     private var activity: Activity? = null
-
-    /**
-     * This method returns the snackbar view set by setLayout
-     * This method must be invoke after setLayout in order to avoid null pointer
-     */
     private var snackBarView: View? = null
     private var rootView: View? = null
     private var isFocusable = false
@@ -41,18 +34,10 @@ class CustomSnackBar {
     private var showSnackBar = false
     var gravity = TOP
 
-    /**
-     * Set this delay for showing notification snackbar
-     * By defauly delay is 1500
-     *
-     * @param delay
-     */
+
     var delay = 1500
 
-    /**
-     * Set this to auto dismiss  notification snackbar
-     * By defauly duration is 0
-     */
+
     var duration = 0
     var intentClick = 0
     private var customSnackBarType = 0
@@ -131,11 +116,7 @@ class CustomSnackBar {
         }
     }
 
-    /**
-     * Initialize the snackbar view
-     *
-     * @param layout
-     */
+
     fun setLayout(layout: Int) {
         if (activity != null) {
             val inflater =
@@ -180,11 +161,7 @@ class CustomSnackBar {
         }
     }
 
-    /**
-     * This method create a new popup window
-     * This method must be called after setLayout
-     * focusable default value is false
-     */
+
     fun show() {
         if (activity != null) {
 
@@ -219,9 +196,7 @@ class CustomSnackBar {
     }
 
     private fun setAnimationstyle() {
-        /* if (gravity == TOP) animationStyle = R.style.topAnimation
-         //        else if (gravity == BOTTOM)
- //            animationStyle = R.style.bottomAnimation;*/
+
     }
 
     fun setCustomAnimationStyle(customAnimationStyle: Int) {
@@ -283,9 +258,7 @@ class CustomSnackBar {
             return instance
         }
 
-        /**
-         * This constructor is used for auto dismiss
-         */
+
         fun make(
             view: View?,
             activity: Activity?,

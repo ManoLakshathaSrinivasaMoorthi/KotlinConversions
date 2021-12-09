@@ -5,7 +5,7 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
 
 class ErrorMessages {
-    fun getErrorMessage(`object`: Any, errMsg: String?, api: Constants.API?): String? {
+    fun getErrorMessage(`object`: Any, errMsg: String?, api: Constants.API?): String {
         return if (errMsg == null) {
             ""
         }/* else if (`object` is RegistrationActivity) {

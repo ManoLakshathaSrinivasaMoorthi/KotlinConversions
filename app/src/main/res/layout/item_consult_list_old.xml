@@ -109,7 +109,7 @@
                             android:gravity="right"
                             app:srcCompat="@drawable/timer" />
 
-                        <com.mvp.omnicure.model.CircularTextView
+                        <com.example.kotlinomnicure.model.CircularTextView
                             android:id="@+id/unreadTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
