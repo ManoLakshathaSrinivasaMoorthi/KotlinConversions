@@ -2,11 +2,12 @@ package omnicurekotlin.example.com.hospitalEndpoints.model
 
 class WardPatientList {
 
-    private var wardName: String? = null
-    private var count: Int? = null
-    private var patientList: List<Patient?>? = null
+     var wardName: String? = null
+     var count: Int? = null
+     var patientList: List<Patient?>? = null
 
 
+    @JvmName("getWardName1")
     fun getWardName(): String? {
         return wardName
     }
@@ -16,6 +17,7 @@ class WardPatientList {
         return this
     }
 
+    @JvmName("getCount1")
     fun getCount(): Int? {
         return count
     }
@@ -25,6 +27,7 @@ class WardPatientList {
         return this
     }
 
+    @JvmName("getPatientList1")
     fun getPatientList(): List<Patient?>? {
         return patientList
     }

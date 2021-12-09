@@ -4,13 +4,14 @@ import java.io.Serializable
 
 class WardListResponse : Serializable {
 
-    private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var id: Long? = null
-    private var status: Boolean? = null
-    private var wardList: List<Ward?>? = null
+    var errorId: Int? = null
+    var errorMessage: String? = null
+    var id: Long? = null
+    var status: Boolean? = null
+    var wardList: List<Ward?>? = null
 
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -21,6 +22,7 @@ class WardListResponse : Serializable {
     }
 
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -31,6 +33,7 @@ class WardListResponse : Serializable {
         return this
     }
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -40,6 +43,7 @@ class WardListResponse : Serializable {
         return this
     }
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
@@ -49,6 +53,7 @@ class WardListResponse : Serializable {
         return this
     }
 
+    @JvmName("getWardList1")
     fun getWardList(): List<Ward?>? {
         return wardList
     }
@@ -58,14 +63,5 @@ class WardListResponse : Serializable {
         return this
     }
 
-//  @Override
-//  public WardListResponse set(String fieldName, Object value) {
-//    return (WardListResponse) super.set(fieldName, value);
-//  }
-//
-//  @Override
-//  public WardListResponse clone() {
-//    return (WardListResponse) super.clone();
-//  }
 
 }

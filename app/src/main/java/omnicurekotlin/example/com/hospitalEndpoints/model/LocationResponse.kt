@@ -4,13 +4,14 @@ import java.io.Serializable
 
 class LocationResponse :Serializable {
 
-    private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var id: Long? = null
-    private var itemList: List<Hospital?>? = null
-    private var provider: Provider? = null
-    private var status: Boolean? = null
+    var errorId: Int? = null
+    var errorMessage: String? = null
+    var id: Long? = null
+    var itemList: List<Hospital?>? = null
+    var provider: Provider? = null
+    var status: Boolean? = null
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -21,6 +22,7 @@ class LocationResponse :Serializable {
         return this
     }
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -31,6 +33,7 @@ class LocationResponse :Serializable {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -40,6 +43,7 @@ class LocationResponse :Serializable {
         return this
     }
 
+    @JvmName("getItemList1")
     fun getItemList(): List<Hospital?>? {
         return itemList
     }
@@ -49,6 +53,7 @@ class LocationResponse :Serializable {
         return this
     }
 
+    @JvmName("getProvider1")
     fun getProvider(): Provider? {
         return provider
     }
@@ -59,6 +64,7 @@ class LocationResponse :Serializable {
     }
 
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
@@ -69,14 +75,5 @@ class LocationResponse :Serializable {
         return this
     }
 
-//  @Override
-//  public LocationResponse set(String fieldName, Object value) {
-//    return (LocationResponse) super.set(fieldName, value);
-//  }
-//
-//  @Override
-//  public LocationResponse clone() {
-//    return (LocationResponse) super.clone();
-//  }
 
 }

@@ -3,38 +3,39 @@ package omnicurekotlin.example.com.hospitalEndpoints.model
 class Hospital {
 
 
-    private var address: String? = null
-    private var subRegionName: String? = null
-    private var bdDoctorCount: Long? = null
-    private var bothDoctorCount: Long? = null
-    private var city: String? = null
-    private var contactDesignation: String? = null
-    private var contactName: String? = null
-    private var contactPhone: String? = null
-    private var country: String? = null
-    private var doctorCount: Long? = null
-    private var email: String? = null
-    private var experience: String? = null
+    var address: String? = null
+    var subRegionName: String? = null
+    var bdDoctorCount: Long? = null
+    var bothDoctorCount: Long? = null
+    var city: String? = null
+    var contactDesignation: String? = null
+    var contactName: String? = null
+    var contactPhone: String? = null
+    var country: String? = null
+    var doctorCount: Long? = null
+    var email: String? = null
+    var experience: String? = null
     var id: Long? = null
-    private var joiningTime: Long? = null
-    private var lat: Double? = null
-    private var lng: Double? = null
+    var joiningTime: Long? = null
+    var lat: Double? = null
+    var lng: Double? = null
     var name: String? = null
-    private var occupiedBeds: Int? = null
-    private var phone: String? = null
-    private var picUrl: String? = null
-    private var pinCode: Long? = null
-    private var rdDoctorCount: Long? = null
-    private var searchNameInUp: String? = null
-    private var state: String? = null
-    private var status: String? = null
-    private var street: String? = null
-    private var totalNumberOfBeds: Int? = null
-    private var totalNumberOfWards: Int? = null
-    private var virtualHospital: Boolean? = null
-    private var zipCode: String? = null
-    private var zone: String? = null
+    var occupiedBeds: Int? = null
+    var phone: String? = null
+    var picUrl: String? = null
+    var pinCode: Long? = null
+    var rdDoctorCount: Long? = null
+    var searchNameInUp: String? = null
+    var state: String? = null
+    var status: String? = null
+    var street: String? = null
+    var totalNumberOfBeds: Int? = null
+    var totalNumberOfWards: Int? = null
+    var virtualHospital: Boolean? = null
+    var zipCode: String? = null
+    var zone: String? = null
 
+    @JvmName("getAddress1")
     fun getAddress(): String? {
         return address
     }
@@ -45,6 +46,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getBdDoctorCount1")
     fun getBdDoctorCount(): Long? {
         return bdDoctorCount
     }
@@ -54,6 +56,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getBothDoctorCount1")
     fun getBothDoctorCount(): Long? {
         return bothDoctorCount
     }
@@ -63,6 +66,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getCity1")
     fun getCity(): String? {
         return city
     }
@@ -72,14 +76,17 @@ class Hospital {
         return this
     }
 
+    @JvmName("getSubRegionName1")
     fun getSubRegionName(): String? {
         return subRegionName
     }
 
+    @JvmName("setSubRegionName1")
     fun setSubRegionName(subRegionName: String?) {
         this.subRegionName = subRegionName
     }
 
+    @JvmName("getContactDesignation1")
     fun getContactDesignation(): String? {
         return contactDesignation
     }
@@ -89,6 +96,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getContactName1")
     fun getContactName(): String? {
         return contactName
     }
@@ -99,6 +107,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getContactPhone1")
     fun getContactPhone(): String? {
         return contactPhone
     }
@@ -110,6 +119,7 @@ class Hospital {
     }
 
 
+    @JvmName("getCountry1")
     fun getCountry(): String? {
         return country
     }
@@ -119,6 +129,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getDoctorCount1")
     fun getDoctorCount(): Long? {
         return doctorCount
     }
@@ -128,6 +139,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
@@ -137,6 +149,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getExperience1")
     fun getExperience(): String? {
         return experience
     }
@@ -156,6 +169,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
@@ -165,6 +179,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getLat1")
     fun getLat(): Double? {
         return lat
     }
@@ -174,6 +189,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getLng1")
     fun getLng(): Double? {
         return lng
     }
@@ -193,6 +209,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getOccupiedBeds1")
     fun getOccupiedBeds(): Int? {
         return occupiedBeds
     }
@@ -203,6 +220,7 @@ class Hospital {
     }
 
 
+    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }
@@ -214,6 +232,7 @@ class Hospital {
     }
 
 
+    @JvmName("getPicUrl1")
     fun getPicUrl(): String? {
         return picUrl
     }
@@ -224,6 +243,7 @@ class Hospital {
     }
 
 
+    @JvmName("getPinCode1")
     fun getPinCode(): Long? {
         return pinCode
     }
@@ -233,6 +253,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getRdDoctorCount1")
     fun getRdDoctorCount(): Long? {
         return rdDoctorCount
     }
@@ -243,6 +264,7 @@ class Hospital {
     }
 
 
+    @JvmName("getSearchNameInUp1")
     fun getSearchNameInUp(): String? {
         return searchNameInUp
     }
@@ -253,6 +275,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getState1")
     fun getState(): String? {
         return state
     }
@@ -262,6 +285,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getStatus1")
     fun getStatus(): String? {
         return status
     }
@@ -271,6 +295,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getStreet1")
     fun getStreet(): String? {
         return street
     }
@@ -280,9 +305,7 @@ class Hospital {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+    @JvmName("getTotalNumberOfBeds1")
     fun getTotalNumberOfBeds(): Int? {
         return totalNumberOfBeds
     }
@@ -292,6 +315,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getTotalNumberOfWards1")
     fun getTotalNumberOfWards(): Int? {
         return totalNumberOfWards
     }
@@ -301,6 +325,7 @@ class Hospital {
         return this
     }
 
+    @JvmName("getVirtualHospital1")
     fun getVirtualHospital(): Boolean? {
         return virtualHospital
     }
@@ -311,6 +336,7 @@ class Hospital {
     }
 
 
+    @JvmName("getZipCode1")
     fun getZipCode(): String? {
         return zipCode
     }
@@ -321,6 +347,7 @@ class Hospital {
     }
 
 
+    @JvmName("getZone1")
     fun getZone(): String? {
         return zone
     }
@@ -331,13 +358,7 @@ class Hospital {
         return this
     }
 
-   /* operator fun set(fieldName: String?, value: Any?): Hospital? {
-        return super.set(fieldName, value) as Hospital?
-    }
 
-    fun clone(): Hospital? {
-        return super.clone() as Hospital?
-    }*/
 
 
 }

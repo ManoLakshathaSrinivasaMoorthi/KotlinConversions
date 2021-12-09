@@ -4,22 +4,23 @@ import java.io.Serializable
 
 class Bed:Serializable {
 
-    private var bd: String? = null
-    private var bdId: Long? = null
-    private var contactDesignation: String? = null
-    private var contactName: String? = null
-    private var contactPhone: String? = null
-    private var hospital: String? = null
-    private var hospitalId: Long? = null
-    private var id: Long? = null
-    private var joiningTime: Long? = null
-    private var name: String? = null
-    private var patient: String? = null
-    private var patientId: Long? = null
-    private var ward: String? = null
-    private var wardId: Long? = null
+    var bd: String? = null
+    var bdId: Long? = null
+    var contactDesignation: String? = null
+    var contactName: String? = null
+    var contactPhone: String? = null
+    var hospital: String? = null
+    var hospitalId: Long? = null
+    var id: Long? = null
+    var joiningTime: Long? = null
+    var name: String? = null
+    var patient: String? = null
+    var patientId: Long? = null
+    var ward: String? = null
+    var wardId: Long? = null
 
 
+    @JvmName("getBd1")
     fun getBd(): String? {
         return bd
     }
@@ -31,6 +32,7 @@ class Bed:Serializable {
     }
 
 
+    @JvmName("getBdId1")
     fun getBdId(): Long? {
         return bdId
     }
@@ -40,6 +42,7 @@ class Bed:Serializable {
         return this
     }
 
+    @JvmName("getContactDesignation1")
     fun getContactDesignation(): String? {
         return contactDesignation
     }
@@ -50,6 +53,7 @@ class Bed:Serializable {
     }
 
 
+    @JvmName("getContactName1")
     fun getContactName(): String? {
         return contactName
     }
@@ -59,6 +63,7 @@ class Bed:Serializable {
         return this
     }
 
+    @JvmName("getContactPhone1")
     fun getContactPhone(): String? {
         return contactPhone
     }
@@ -69,6 +74,7 @@ class Bed:Serializable {
     }
 
 
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
@@ -80,6 +86,7 @@ class Bed:Serializable {
     }
 
 
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
@@ -90,6 +97,7 @@ class Bed:Serializable {
         return this
     }
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -100,9 +108,8 @@ class Bed:Serializable {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
@@ -114,6 +121,7 @@ class Bed:Serializable {
     }
 
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -124,6 +132,7 @@ class Bed:Serializable {
         return this
     }
 
+    @JvmName("getPatient1")
     fun getPatient(): String? {
         return patient
     }
@@ -135,6 +144,7 @@ class Bed:Serializable {
     }
 
 
+    @JvmName("getPatientId1")
     fun getPatientId(): Long? {
         return patientId
     }
@@ -146,35 +156,28 @@ class Bed:Serializable {
     }
 
 
+    @JvmName("getWard1")
     fun getWard(): String? {
         return ward
     }
 
 
-    fun setWard(ward: String?): Bed? {
+    fun setWard(ward: String?): Bed {
         this.ward = ward
         return this
     }
 
 
+    @JvmName("getWardId1")
     fun getWardId(): Long? {
         return wardId
     }
 
-    fun setWardId(wardId: Long?): Bed? {
+    fun setWardId(wardId: Long?): Bed {
         this.wardId = wardId
         return this
     }
 
-//  @Override
-//  public Bed set(String fieldName, Object value) {
-//    return (Bed) super.set(fieldName, value);
-//  }
-//
-//  @Override
-//  public Bed clone() {
-//    return (Bed) super.clone();
-//  }
 
 
 }

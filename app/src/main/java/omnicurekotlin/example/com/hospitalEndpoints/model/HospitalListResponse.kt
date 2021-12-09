@@ -3,13 +3,14 @@ package omnicurekotlin.example.com.hospitalEndpoints.model
 class HospitalListResponse {
 
 
-    private var count: Int? = null
-    private var errorId: Int? = null
+    var count: Int? = null
+    var errorId: Int? = null
     var errorMessage: String? = null
     var hospitalList: List<Hospital>?= null
     var id: Long? = null
-    private var status: Boolean? = null
+    var status: Boolean? = null
 
+    @JvmName("getCount1")
     fun getCount(): Int? {
         return count
     }
@@ -21,6 +22,7 @@ class HospitalListResponse {
     }
 
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -50,11 +52,12 @@ class HospitalListResponse {
 
 
 
-    fun setId(id: Long?): HospitalListResponse? {
+    fun setId(id: Long?): HospitalListResponse {
         this.id = id
         return this
     }
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }

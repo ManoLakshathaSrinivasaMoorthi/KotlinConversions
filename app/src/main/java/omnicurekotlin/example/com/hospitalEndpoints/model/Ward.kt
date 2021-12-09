@@ -4,18 +4,19 @@ import java.io.Serializable
 
 class Ward :Serializable{
 
-    private var contactDesignation: String? = null
-    private var contactName: String? = null
-    private var contactPhone: String? = null
-    private var hospital: String? = null
-    private var hospitalId: Long? = null
-    private var id: Long? = null
-    private var joiningTime: Long? = null
-    private var name: String? = null
-    private var occupiedBeds: Int? = null
-    private var totalNumberOfBeds: Int? = null
+    var contactDesignation: String? = null
+    var contactName: String? = null
+    var contactPhone: String? = null
+    var hospital: String? = null
+    var hospitalId: Long? = null
+    var id: Long? = null
+    var joiningTime: Long? = null
+    var name: String? = null
+    var occupiedBeds: Int? = null
+    var totalNumberOfBeds: Int? = null
 
 
+    @JvmName("getContactDesignation1")
     fun getContactDesignation(): String? {
         return contactDesignation
     }
@@ -27,6 +28,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getContactName1")
     fun getContactName(): String? {
         return contactName
     }
@@ -38,6 +40,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getContactPhone1")
     fun getContactPhone(): String? {
         return contactPhone
     }
@@ -49,6 +52,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
@@ -59,6 +63,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
@@ -69,6 +74,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -80,6 +86,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
@@ -90,6 +97,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -101,6 +109,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getOccupiedBeds1")
     fun getOccupiedBeds(): Int? {
         return occupiedBeds
     }
@@ -112,6 +121,7 @@ class Ward :Serializable{
     }
 
 
+    @JvmName("getTotalNumberOfBeds1")
     fun getTotalNumberOfBeds(): Int? {
         return totalNumberOfBeds
     }
@@ -122,14 +132,6 @@ class Ward :Serializable{
         return this
     }
 
-//  @Override
-//  public Ward set(String fieldName, Object value) {
-//    return (Ward) super.set(fieldName, value);
-//  }
-//
-//  @Override
-//  public Ward clone() {
-//    return (Ward) super.clone();
-//  }
+
 
 }

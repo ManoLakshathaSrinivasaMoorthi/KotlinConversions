@@ -4,15 +4,16 @@ import java.io.Serializable
 
 class Role:Serializable {
 
-    private var accessType: String? = null
-    private var id: Long? = null
-    private var providerId: Long? = null
-    private var roleType: String? = null
-    private var time: Long? = null
-    private var typeId: String? = null
-    private var typeName: String? = null
+     var accessType: String? = null
+     var id: Long? = null
+     var providerId: Long? = null
+     var roleType: String? = null
+     var time: Long? = null
+     var typeId: String? = null
+     var typeName: String? = null
 
 
+    @JvmName("getAccessType1")
     fun getAccessType(): String? {
         return accessType
     }
@@ -24,6 +25,7 @@ class Role:Serializable {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -34,6 +36,7 @@ class Role:Serializable {
         return this
     }
 
+    @JvmName("getProviderId1")
     fun getProviderId(): Long? {
         return providerId
     }
@@ -44,6 +47,7 @@ class Role:Serializable {
     }
 
 
+    @JvmName("getRoleType1")
     fun getRoleType(): String? {
         return roleType
     }
@@ -53,6 +57,7 @@ class Role:Serializable {
         return this
     }
 
+    @JvmName("getTime1")
     fun getTime(): Long? {
         return time
     }
@@ -62,6 +67,7 @@ class Role:Serializable {
         return this
     }
 
+    @JvmName("getTypeId1")
     fun getTypeId(): String? {
         return typeId
     }
@@ -72,6 +78,7 @@ class Role:Serializable {
         return this
     }
 
+    @JvmName("getTypeName1")
     fun getTypeName(): String? {
         return typeName
     }
@@ -81,14 +88,5 @@ class Role:Serializable {
         return this
     }
 
-//  @Override
-//  public Role set(String fieldName, Object value) {
-//    return (Role) super.set(fieldName, value);
-//  }
-//
-//  @Override
-//  public Role clone() {
-//    return (Role) super.clone();
-//  }
 
 }

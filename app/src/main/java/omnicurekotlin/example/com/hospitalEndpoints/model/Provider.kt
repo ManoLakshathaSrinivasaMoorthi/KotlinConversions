@@ -4,42 +4,43 @@ import java.io.Serializable
 
 class Provider:Serializable {
 
-    private var access: List<String?>? = null
-    private var activeHour: Float? = null
-    private var address: String? = null
-    private var consultationFee: Float? = null
-    private var countryCode: String? = null
-    private var designation: String? = null
-    private var dob: Long? = null
-    private var email: String? = null
-    private var experience: Float? = null
-    private var fcmKey: String? = null
-    private var firebaseUid: String? = null
-    private var fname: String? = null
-    private var gender: String? = null
-    private var healthMonitoringTime: Long? = null
-    private var hospital: String? = null
-    private var hospitalId: Long? = null
-    private var id: Long? = null
-    private var joiningTime: Long? = null
-    private var lname: String? = null
-    private var name: String? = null
-    private var npiNumber: String? = null
-    private var numberOfPatient: Int? = null
-    private var osType: String? = null
-    private var otp: String? = null
-    private var password: String? = null
-    private var phone: String? = null
-    private var profilePicUrl: String? = null
-    private var qualification: String? = null
-    private var role: String? = null
-    private var roles: List<Role?>? = null
-    private var screenName: String? = null
-    private var specialization: String? = null
-    private var status: String? = null
-    private var token: String? = null
+     var access: List<String?>? = null
+     var activeHour: Float? = null
+     var address: String? = null
+     var consultationFee: Float? = null
+     var countryCode: String? = null
+     var designation: String? = null
+     var dob: Long? = null
+     var email: String? = null
+     var experience: Float? = null
+     var fcmKey: String? = null
+     var firebaseUid: String? = null
+     var fname: String? = null
+     var gender: String? = null
+     var healthMonitoringTime: Long? = null
+     var hospital: String? = null
+     var hospitalId: Long? = null
+     var id: Long? = null
+     var joiningTime: Long? = null
+     var lname: String? = null
+     var name: String? = null
+     var npiNumber: String? = null
+     var numberOfPatient: Int? = null
+     var osType: String? = null
+     var otp: String? = null
+     var password: String? = null
+     var phone: String? = null
+     var profilePicUrl: String? = null
+     var qualification: String? = null
+     var role: String? = null
+     var roles: List<Role?>? = null
+     var screenName: String? = null
+     var specialization: String? = null
+     var status: String? = null
+     var token: String? = null
 
 
+    @JvmName("getAccess1")
     fun getAccess(): List<String?>? {
         return access
     }
@@ -50,6 +51,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getActiveHour1")
     fun getActiveHour(): Float? {
         return activeHour
     }
@@ -61,6 +63,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getAddress1")
     fun getAddress(): String? {
         return address
     }
@@ -71,6 +74,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getConsultationFee1")
     fun getConsultationFee(): Float? {
         return consultationFee
     }
@@ -81,6 +85,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getCountryCode1")
     fun getCountryCode(): String? {
         return countryCode
     }
@@ -91,6 +96,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getDesignation1")
     fun getDesignation(): String? {
         return designation
     }
@@ -102,6 +108,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getDob1")
     fun getDob(): Long? {
         return dob
     }
@@ -113,6 +120,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
@@ -124,6 +132,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getExperience1")
     fun getExperience(): Float? {
         return experience
     }
@@ -134,6 +143,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getFcmKey1")
     fun getFcmKey(): String? {
         return fcmKey
     }
@@ -145,6 +155,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getFirebaseUid1")
     fun getFirebaseUid(): String? {
         return firebaseUid
     }
@@ -156,6 +167,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getFname1")
     fun getFname(): String? {
         return fname
     }
@@ -167,6 +179,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getGender1")
     fun getGender(): String? {
         return gender
     }
@@ -178,6 +191,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getHealthMonitoringTime1")
     fun getHealthMonitoringTime(): Long? {
         return healthMonitoringTime
     }
@@ -189,6 +203,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
@@ -200,6 +215,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
@@ -211,6 +227,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -221,6 +238,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
@@ -230,6 +248,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getLname1")
     fun getLname(): String? {
         return lname
     }
@@ -240,6 +259,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -251,6 +271,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getNpiNumber1")
     fun getNpiNumber(): String? {
         return npiNumber
     }
@@ -262,6 +283,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getNumberOfPatient1")
     fun getNumberOfPatient(): Int? {
         return numberOfPatient
     }
@@ -273,6 +295,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getOsType1")
     fun getOsType(): String? {
         return osType
     }
@@ -283,6 +306,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getOtp1")
     fun getOtp(): String? {
         return otp
     }
@@ -293,6 +317,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getPassword1")
     fun getPassword(): String? {
         return password
     }
@@ -304,6 +329,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }
@@ -314,6 +340,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getProfilePicUrl1")
     fun getProfilePicUrl(): String? {
         return profilePicUrl
     }
@@ -324,6 +351,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getQualification1")
     fun getQualification(): String? {
         return qualification
     }
@@ -333,6 +361,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getRole1")
     fun getRole(): String? {
         return role
     }
@@ -342,6 +371,7 @@ class Provider:Serializable {
         return this
     }
 
+    @JvmName("getRoles1")
     fun getRoles(): List<Role?>? {
         return roles
     }
@@ -353,6 +383,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getScreenName1")
     fun getScreenName(): String? {
         return screenName
     }
@@ -364,6 +395,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getSpecialization1")
     fun getSpecialization(): String? {
         return specialization
     }
@@ -374,6 +406,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getStatus1")
     fun getStatus(): String? {
         return status
     }
@@ -385,6 +418,7 @@ class Provider:Serializable {
     }
 
 
+    @JvmName("getToken1")
     fun getToken(): String? {
         return token
     }
@@ -394,16 +428,7 @@ class Provider:Serializable {
         this.token = token
         return this
     }
-//
-//  @Override
-//  public Provider set(String fieldName, Object value) {
-//    return (Provider) super.set(fieldName, value);
-//  }
-//
-//  @Override
-//  public Provider clone() {
-//    return (Provider) super.clone();
-//  }
+
 
 }
 

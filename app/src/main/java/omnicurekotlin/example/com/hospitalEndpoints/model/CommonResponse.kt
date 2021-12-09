@@ -3,49 +3,43 @@ package omnicurekotlin.example.com.hospitalEndpoints.model
 import java.io.Serializable
 
 class CommonResponse:Serializable {
-    private var activeList: List<Patient?>? = null
-    private var dischargedCount: Int? = null
-    private var dischargedList: List<Patient?>? = null
-    private var errorId: Int? = null
-    private var errorMessage: String? = null
-    private var id: Long? = null
-
-    private var pendingList: List<Patient?>? = null
-    private var provider: Provider? = null
-
-    private var providerList: List<Provider?>? = null
-
-    private var status: Boolean? = null
+    var activeList: List<Patient?>? = null
+    var dischargedCount: Int? = null
+    var dischargedList: List<Patient?>? = null
+    var errorId: Int? = null
+    var errorMessage: String? = null
+    var id: Long? = null
+    var pendingList: List<Patient?>? = null
+    var provider: Provider? = null
+    var providerList: List<Provider?>? = null
+    var status: Boolean? = null
 
 
+    @JvmName("getActiveList1")
     fun getActiveList(): List<Patient?>? {
         return activeList
     }
 
-    /**
-     * @param activeList activeList or `null` for none
-     */
+
     fun setActiveList(activeList: List<Patient?>?): CommonResponse {
         this.activeList = activeList
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDischargedCount1")
     fun getDischargedCount(): Int? {
         return dischargedCount
     }
 
-    /**
-     * @param dischargedCount dischargedCount or `null` for none
-     */
+
     fun setDischargedCount(dischargedCount: Int?): CommonResponse {
         this.dischargedCount = dischargedCount
         return this
     }
 
 
+    @JvmName("getDischargedList1")
     fun getDischargedList(): List<Patient?>? {
         return dischargedList
     }
@@ -57,6 +51,7 @@ class CommonResponse:Serializable {
     }
 
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -68,6 +63,7 @@ class CommonResponse:Serializable {
     }
 
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -78,6 +74,7 @@ class CommonResponse:Serializable {
         return this
     }
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -89,6 +86,7 @@ class CommonResponse:Serializable {
     }
 
 
+    @JvmName("getPendingList1")
     fun getPendingList(): List<Patient?>? {
         return pendingList
     }
@@ -99,6 +97,7 @@ class CommonResponse:Serializable {
     }
 
 
+    @JvmName("getProvider1")
     fun getProvider(): Provider? {
         return provider
     }
@@ -110,6 +109,7 @@ class CommonResponse:Serializable {
     }
 
 
+    @JvmName("getProviderList1")
     fun getProviderList(): List<Provider?>? {
         return providerList
     }
@@ -120,30 +120,19 @@ class CommonResponse:Serializable {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
 
-    /**
-     * @param status status or `null` for none
-     */
+
     fun setStatus(status: Boolean?): CommonResponse {
         this.status = status
         return this
     }
 
-//  @Override
-//  public CommonResponse set(String fieldName, Object value) {
-//    return (CommonResponse) super.set(fieldName, value);
-//  }
-//
-//  @Override
-//  public CommonResponse clone() {
-//    return (CommonResponse) super.clone();
-//  }
+
 
 }
 
