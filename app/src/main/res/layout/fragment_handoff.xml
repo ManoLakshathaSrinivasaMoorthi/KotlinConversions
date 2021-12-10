@@ -121,8 +121,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="6dp"
                     android:layout_toRightOf="@+id/filterText"
-                    android:tint="@color/title_color"
-                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+                    app:srcCompat="@drawable/ic_arrow_drop_down"
+                    app:tint="@color/title_color" />
 
             </RelativeLayout>
 

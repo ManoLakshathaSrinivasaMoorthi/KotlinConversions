@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import com.example.kotlinomnicure.R
 
 class CustomSnackBar {
@@ -81,11 +80,11 @@ class CustomSnackBar {
     fun setPatientDetails(id:Long,name:String,status:String)
     {
         if (instance == null) {
-            instance =  CustomSnackBar();
+            instance =  CustomSnackBar()
         }
-        instance!!.patientId = id;
-        instance!!.patientName = name;
-        instance!!.patientStatus = status;
+        instance!!.patientId = id
+        instance!!.patientName = name
+        instance!!.patientStatus = status
     }
     fun isAsDropDown(): Boolean {
         return asDropDown

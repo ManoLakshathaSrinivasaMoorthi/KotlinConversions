@@ -22,17 +22,20 @@ import java.util.regex.Pattern
 
 class ValidationUtil {
     fun isValidate(viewDataBinding: ViewDataBinding): String? {
-      if (viewDataBinding is ActivityAddPatientVitalsBinding) {
-            val binding: ActivityAddPatientVitalsBinding = viewDataBinding
-            return isPatientVitalsValid(binding)
-        }
-      else if (viewDataBinding is ActivityLocalCareProviderSignUpFirstBinding) {
-            return isRegistrationFirstFieldsValid(viewDataBinding)
-        } else if (viewDataBinding is ActivityLocalCareProviderSignUpSecondBinding) {
-            return isRegistrationLocalSecondFieldsValid(viewDataBinding)
+        return when (viewDataBinding) {
+            is ActivityAddPatientVitalsBinding -> {
+                val binding: ActivityAddPatientVitalsBinding = viewDataBinding
+                isPatientVitalsValid(binding)
+            }
+            is ActivityLocalCareProviderSignUpFirstBinding -> {
+                isRegistrationFirstFieldsValid(viewDataBinding)
+            }
+            is ActivityLocalCareProviderSignUpSecondBinding -> {
+                isRegistrationLocalSecondFieldsValid(viewDataBinding)
+            }
+            else -> ""
         }
 
-        return ""
     }
 
     fun passwordVisibility(editText: EditText, imageView: ImageView) {
@@ -192,29 +195,23 @@ class ValidationUtil {
         return specialCharPattern.matcher(str).find()
     }
 
-    fun isPassLowerCaseValid(str: String?): Boolean {
+    private fun isPassLowerCaseValid(str: String?): Boolean {
         val lowerCasePattern = Pattern.compile("[a-z ]")
-        return if (lowerCasePattern.matcher(str).find()) {
-            true
-        } else false
+        return lowerCasePattern.matcher(str).find()
     }
 
-    fun isPassUpperCaseValid(str: String?): Boolean {
+    private fun isPassUpperCaseValid(str: String?): Boolean {
         val UpperCasePattern = Pattern.compile("[A-Z ]")
         return UpperCasePattern.matcher(str).find()
     }
 
-    fun isPassNumberValid(str: String?): Boolean {
+    private fun isPassNumberValid(str: String?): Boolean {
         val digitCasePattern = Pattern.compile("[0-9 ]")
-        return if (digitCasePattern.matcher(str).find()) {
-            true
-        } else false
+        return digitCasePattern.matcher(str).find()
     }
 
-    fun isPassCharsLengthValid(str: String): Boolean {
-        return if (str.length >= 8) {
-            true
-        } else false
+    private fun isPassCharsLengthValid(str: String): Boolean {
+        return str.length >= 8
     }
 
     private fun containsPartOf(pass: String, username: String): Boolean {
@@ -781,7 +778,7 @@ class ValidationUtil {
         var strFirstName = strFirstName
         var strLastName = strLastName
         var strEmail = strEmail
-        val context: Context = binding.root.getContext()
+        val context: Context = binding.root.context
         val specialCharPattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE)
         val UpperCasePattern = Pattern.compile("[A-Z ]")
         val lowerCasePattern = Pattern.compile("[a-z ]")

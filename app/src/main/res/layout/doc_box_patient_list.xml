@@ -16,8 +16,8 @@
             android:id="@+id/imgBack"
             android:layout_width="@dimen/margin_40"
             android:layout_height="match_parent"
-            android:tint="@color/black"
-            app:srcCompat="@drawable/ic_back_arrow" />
+            app:srcCompat="@drawable/ic_back_arrow"
+            app:tint="@color/black" />
 
         <TextView
             android:id="@+id/select_patient"

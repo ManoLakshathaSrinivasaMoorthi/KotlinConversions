@@ -37,7 +37,7 @@ class PrefUtility {
     }
 
 
-    fun getStringInPref(context: Context, key: String?, defaultValue: String?): String {
+    fun getStringInPref(context: Context, key: String?, defaultValue: String?): String? {
         try {
             val prefs = context.getSharedPreferences(key, Context.MODE_PRIVATE)
             return prefs.getString(key, defaultValue)
@@ -281,9 +281,10 @@ class PrefUtility {
     }
 
     fun saveUserData(context: Context, `object`: Any?) {
+        val provider: Provider = `object` as Provider
         if (`object` != null) {
             if (`object` is Provider) {
-                val provider: Provider = `object` as Provider
+
                 Log.e(TAG, "saveUserData:provider--> " + Gson().toJson(provider))
                 provider.getId()?.let {
                     PrefUtility().saveLongInPref(
@@ -576,44 +577,44 @@ class PrefUtility {
         return getLongInPref(context, Constants.SharedPrefConstants.USER_ID_PRIMARY, -1)
     }
 
-    fun getFireBaseUid(context: Context): String {
+    fun getFireBaseUid(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.FIREBASE_UID, "")
     }
 
-    fun getAgoraAppId(context: Context): String {
+    fun getAgoraAppId(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.AGORA_APP_ID, "")
     }
 
-    fun getAgoraCertificateId(context: Context): String {
+    fun getAgoraCertificateId(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.AGORA_CERTIFICATE, "")
     }
 
-    fun getAESKey(context: Context): String {
+    fun getAESKey(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.AES_KEY, "")
     }
 
-    fun getAESAPIKey(context: Context): String {
+    fun getAESAPIKey(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.AES_API_KEY, "")
     }
 
 
-    fun getHeaderIdToken(context: Context): String {
+    fun getHeaderIdToken(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.FIREBASE_IDTOKEN, "")
     }
 
-    fun getProviderStatus(context: Context): String {
+    fun getProviderStatus(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.PROVIDER_STATUS, "")
     }
 
-    fun getProvderPhone(context: Context): String {
+    fun getProvderPhone(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.USER_MOBILE_NO, "")
     }
 
-    fun getRole(context: Context): String {
+    fun getRole(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.ROLE, "")
     }
 
-    fun getToken(context: Context): String {
+    fun getToken(context: Context): String? {
         return getStringInPref(context, Constants.SharedPrefConstants.TOKEN, "")
     }
 

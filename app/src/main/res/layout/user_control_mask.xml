@@ -21,7 +21,7 @@
         android:src="@drawable/icon_default_avatar"
         android:contentDescription="DEFAULT_AVATAR" />
 
-    <com.mvp.omnicure.customview.CircularImageView
+    <com.example.kotlinomnicure.customview.CircularImageView
         android:id="@+id/default_avatar_circular"
         android:layout_width="@dimen/margin_120"
         android:layout_height="@dimen/margin_120"

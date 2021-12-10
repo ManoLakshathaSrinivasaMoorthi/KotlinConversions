@@ -62,8 +62,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:tint="@color/white"
-                                app:srcCompat="@drawable/ic_back" />
+                                app:srcCompat="@drawable/ic_back"
+                                app:tint="@color/white" />
 
                         </LinearLayout>
 
@@ -436,9 +436,9 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="@dimen/margin_5"
                                         android:padding="@dimen/margin_4"
-                                        android:tint="@color/bg_blue"
                                         android:visibility="gone"
-                                        app:srcCompat="@drawable/ic_downward" />
+                                        app:srcCompat="@drawable/ic_downward"
+                                        app:tint="@color/bg_blue" />
 
                                     <ImageView
                                         android:id="@+id/img_detail_up"
@@ -446,9 +446,9 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="@dimen/margin_5"
                                         android:padding="@dimen/margin_4"
-                                        android:tint="@color/bg_blue"
                                         android:visibility="visible"
-                                        app:srcCompat="@drawable/ic_upward" />
+                                        app:srcCompat="@drawable/ic_upward"
+                                        app:tint="@color/bg_blue" />
 
                                 </LinearLayout>
 
@@ -523,9 +523,9 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="@dimen/margin_5"
                                         android:padding="@dimen/margin_4"
-                                        android:tint="@color/bg_blue"
                                         android:visibility="gone"
-                                        app:srcCompat="@drawable/ic_downward" />
+                                        app:srcCompat="@drawable/ic_downward"
+                                        app:tint="@color/bg_blue" />
 
                                     <ImageView
                                         android:id="@+id/img_vital_up"
@@ -533,9 +533,9 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="@dimen/margin_5"
                                         android:padding="@dimen/margin_4"
-                                        android:tint="@color/bg_blue"
                                         android:visibility="visible"
-                                        app:srcCompat="@drawable/ic_upward" />
+                                        app:srcCompat="@drawable/ic_upward"
+                                        app:tint="@color/bg_blue" />
 
                                 </LinearLayout>
 
@@ -571,7 +571,7 @@
                                         android:background="@drawable/ic_timer"
                                         android:gravity="center|start"
                                         android:padding="@dimen/margin_4"
-                                        android:tint="@color/text_ash" />
+                                        app:tint="@color/text_ash" />
 
                                     <TextView
                                         android:layout_width="wrap_content"

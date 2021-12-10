@@ -45,7 +45,7 @@ android:orientation="vertical">
         android:layout_marginTop="@dimen/margin_15"
         android:background="@drawable/ash_border_drawable_bg">
 
-        <com.mvp.omnicure.utils.CustomGroupEditText
+        <com.example.kotlinomnicure.utils.CustomGroupEditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_48"
@@ -78,10 +78,10 @@ android:orientation="vertical">
             android:paddingVertical="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="8dp"
-            android:tint="@color/login_hint_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_visibility" />
+            app:srcCompat="@drawable/ic_visibility"
+            app:tint="@color/login_hint_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

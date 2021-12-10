@@ -11,7 +11,11 @@
             android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/id_appbar_layout">
+            android:layout_below="@+id/id_appbar_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

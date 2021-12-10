@@ -38,7 +38,7 @@
                     android:layout_height="18dp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_urgent"
-                    android:tint="@color/error_color"/>
+                    app:tint="@color/error_color" />
 
                 <TextView
                     android:id="@+id/textUrgent"

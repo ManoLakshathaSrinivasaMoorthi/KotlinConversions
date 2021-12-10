@@ -21,10 +21,12 @@ import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.apiRetrofit.ProviderEndpoints
 import com.example.kotlinomnicure.backend.EndPointBuilder
 import com.example.kotlinomnicure.helper.NotificationHelper
+import com.example.kotlinomnicure.model.CommonResponseRetro
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.example.kotlinomnicure.utils.UtilityMethods
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.example.kotlinomnicure.videocall.openvcall.ui.CallActivity
 import com.example.kotlinomnicure.videocall.openvcall.ui.RingingActivity
 import com.example.kotlinomnicure.videocall.openvcall.ui.layout.VideoViewAdapterUtil
 import com.google.firebase.messaging.FirebaseMessaging
@@ -1407,7 +1409,7 @@ class FirebaseMessageService: FirebaseMessagingService() {
                 try {
                     val providerID: String =
                         java.lang.String.valueOf(PrefUtility().getProviderId(context))
-                    val providerResponse: ProviderEndpoints.SendAuditData =
+                    val providerResponse: ProviderEndpoints?.SendAuditData =
                         EndPointBuilder().getProviderEndpoints()
                             .sendAuditId(auditId, flag, providerID)
                     if (type != null && !TextUtils.isEmpty(type)) {

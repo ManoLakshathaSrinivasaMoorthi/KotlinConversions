@@ -50,8 +50,8 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/margin_5"
                             android:padding="@dimen/margin_4"
-                            android:tint="@color/white"
-                            app:srcCompat="@drawable/ic_back_arrow" />
+                            app:srcCompat="@drawable/ic_back_arrow"
+                            app:tint="@color/white" />
 
                         <TextView
                             android:id="@+id/id_toolbar_title"
@@ -81,8 +81,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:tint="@color/white"
-                                app:srcCompat="@drawable/ic_search_white" />
+                                app:srcCompat="@drawable/ic_search_white"
+                                app:tint="@color/white" />
 
                         </LinearLayout>
 
@@ -128,8 +128,8 @@
                         android:paddingVertical="10dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:tint="@color/bg_blue"
-                        app:srcCompat="@drawable/cross" />
+                        app:srcCompat="@drawable/cross"
+                        app:tint="@color/bg_blue" />
 
                 </LinearLayout>
 

@@ -41,8 +41,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/margin_4"
-                    android:tint="@color/white"
-                    app:srcCompat="@drawable/ic_back" />
+                    app:srcCompat="@drawable/ic_back"
+                    ads:tint="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -288,8 +288,8 @@
                         android:layout_gravity="center"
                         android:background="@drawable/circular_selector_drawable"
                         android:padding="10dp"
-                        android:tint="@color/colorPrimary"
-                        app:srcCompat="@drawable/chat_btn_drawable" />
+                        app:srcCompat="@drawable/chat_btn_drawable"
+                        ads:tint="@color/colorPrimary" />
 
                     <ImageButton
                         android:id="@+id/sendButton"
@@ -301,8 +301,8 @@
                         android:paddingTop="10dp"
                         android:paddingRight="8dp"
                         android:paddingBottom="10dp"
-                        android:tint="@color/colorPrimary"
-                        app:srcCompat="@drawable/chat_send_btn_drawable" />
+                        app:srcCompat="@drawable/chat_send_btn_drawable"
+                        ads:tint="@color/colorPrimary" />
 
                 </LinearLayout>
 

@@ -8,7 +8,7 @@
     android:keepScreenOn="true"
     tools:context=".videocall.openvcall.ui.CallActivity">
 
-    <com.mvp.omnicure.videocall.openvcall.ui.layout.GridVideoViewContainer
+    <com.example.kotlinomnicure.videocall.openvcall.ui.layout.GridVideoViewContainer
         android:id="@+id/grid_video_view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -44,7 +44,7 @@
                 android:layout_width="@dimen/margin_70"
                 android:layout_height="@dimen/margin_70">
 
-                <com.mvp.omnicure.customview.CircularImageView
+                <com.example.kotlinomnicure.customview.CircularImageView
                     android:id="@+id/connecting_profile_pic"
                     android:layout_width="@dimen/margin_70"
                     android:layout_height="@dimen/margin_70"
@@ -153,7 +153,7 @@
         </LinearLayout>
 
 
-        <com.mvp.omnicure.videocall.propeller.ui.AGLinearLayout
+        <com.example.kotlinomnicure.videocall.propeller.ui.AGLinearLayout
             android:id="@+id/extra_ops_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -196,9 +196,9 @@
             <!--                android:visibility="gone"/>-->
 
 
-        </com.mvp.omnicure.videocall.propeller.ui.AGLinearLayout>
+        </com.example.kotlinomnicure.videocall.propeller.ui.AGLinearLayout>
 
-        <com.mvp.omnicure.videocall.propeller.ui.AGLinearLayout
+        <com.example.kotlinomnicure.videocall.propeller.ui.AGLinearLayout
             android:id="@+id/bottom_container"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -307,7 +307,7 @@
 
             </LinearLayout>
 
-        </com.mvp.omnicure.videocall.propeller.ui.AGLinearLayout>
+        </com.example.kotlinomnicure.videocall.propeller.ui.AGLinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/msg_list"

@@ -67,8 +67,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:tint="@color/white"
-                            app:srcCompat="@drawable/ic_menu_icon" />
+                            app:srcCompat="@drawable/ic_menu_icon"
+                            app:tint="@color/white" />
 
                     </LinearLayout>
 
@@ -99,8 +99,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:tint="@color/white"
-                            app:srcCompat="@drawable/ic_search_white" />
+                            app:srcCompat="@drawable/ic_search_white"
+                            app:tint="@color/white" />
 
                     </LinearLayout>
 
@@ -353,8 +353,8 @@
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="6dp"
                                         android:layout_toRightOf="@+id/locationText"
-                                        android:tint="@color/title_color"
-                                        app:srcCompat="@drawable/ic_arrow_drop_down" />
+                                        app:srcCompat="@drawable/ic_arrow_drop_down"
+                                        app:tint="@color/title_color" />
 
                                 </RelativeLayout>
 
@@ -420,8 +420,8 @@
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="6dp"
                                         android:layout_toRightOf="@+id/hospitalText"
-                                        android:tint="@color/title_color"
-                                        app:srcCompat="@drawable/ic_arrow_drop_down" />
+                                        app:srcCompat="@drawable/ic_arrow_drop_down"
+                                        app:tint="@color/title_color" />
 
                                 </RelativeLayout>
 
@@ -485,8 +485,8 @@
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="6dp"
                                         android:layout_toRightOf="@+id/filterText"
-                                        android:tint="@color/title_color"
-                                        app:srcCompat="@drawable/ic_arrow_drop_down" />
+                                        app:srcCompat="@drawable/ic_arrow_drop_down"
+                                        app:tint="@color/title_color" />
 
                                 </RelativeLayout>
 
@@ -543,7 +543,7 @@
 <!--                    app:layout_constraintEnd_toEndOf="parent"-->
 <!--                    app:layout_constraintStart_toStartOf="parent"/>-->
 
-                <com.mvp.omnicure.utils.UnSwipeableViewPager
+                <com.example.kotlinomnicure.utils.UnSwipeableViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

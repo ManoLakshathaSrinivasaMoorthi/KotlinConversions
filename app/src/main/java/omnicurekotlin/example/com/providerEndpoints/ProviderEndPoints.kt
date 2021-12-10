@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class ProviderRetrofit {
+class ProviderEndPoints {
     companion object {
         private const val BASE_URL: String = "https://dev-omnicure.appspot.com/_ah/api/providerEndpoints/v1/"
         val interceptor = HttpLoggingInterceptor().apply {
