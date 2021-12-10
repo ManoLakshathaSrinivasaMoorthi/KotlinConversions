@@ -17,7 +17,7 @@ import java.lang.Exception
 import java.lang.RuntimeException
 import java.util.*
 
-class OmnicureApp : Application() {
+class OmnicureApp : Application() {/*
     private val mVideoSettings: CurrentUserSettings = CurrentUserSettings()
     private val TAG = OmnicureApp::class.java.simpleName
     private val log = LoggerFactory.getLogger(this.javaClass)
@@ -152,10 +152,10 @@ class OmnicureApp : Application() {
     }
 
 
-    /**
+    *//**
      * Changing local of the app when user changed the language
      * @param lang
-     */
+     *//*
     private fun setLocale(lang: String) {
         val resources = resources
         val configuration = resources.configuration
@@ -169,5 +169,5 @@ class OmnicureApp : Application() {
             }
             resources.updateConfiguration(configuration, dm)
         }
-    }
+    }*/
 }

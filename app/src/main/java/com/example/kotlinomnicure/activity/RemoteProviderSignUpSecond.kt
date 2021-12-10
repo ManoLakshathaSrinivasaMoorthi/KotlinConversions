@@ -23,7 +23,6 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.RemoteProviderSignUpSecondBinding
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.utils.*
-import com.google.android.gms.common.config.GservicesValue.value
 import com.google.gson.Gson
 import omnicurekotlin.example.com.userEndpoints.model.*
 

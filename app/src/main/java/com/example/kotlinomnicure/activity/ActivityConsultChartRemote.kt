@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
 import com.example.kotlinomnicure.databinding.ActivityEconsultChartRemoteBinding
+
 import com.example.kotlinomnicure.helper.PBMessageHelper
 import com.example.kotlinomnicure.media.Utils
 import com.example.kotlinomnicure.model.ConsultProvider
@@ -336,7 +337,7 @@ class ActivityConsultChartRemote : BaseActivity() {
                 patientDetails = response
                 populateConsultDetails()
                 if (patID != null) {
-                    getTeamMemberDetails(patID, "Team " + patientDetails!!.patient?.getTeamName())
+                    //getTeamMemberDetails(patID, "Team " + patientDetails!!.patient?.getTeamName())
                 }
             } else {
                 dismissProgressBar()

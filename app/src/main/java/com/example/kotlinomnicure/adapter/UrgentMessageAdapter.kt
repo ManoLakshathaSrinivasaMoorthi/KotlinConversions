@@ -37,7 +37,7 @@ import java.util.ArrayList
 
 class UrgentMessageAdapter(
     context: ViewUrgentMessagesActivity,
-    list: ArrayList<ConsultMessage>,
+    list: ArrayList<ConsultMessage?>,
     key: String,
     sid: String,
     strUID: String,

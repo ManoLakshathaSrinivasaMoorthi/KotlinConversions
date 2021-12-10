@@ -1066,8 +1066,9 @@ class ActivityPatientCensusPatient : BaseActivity(), OnItemClickListener {
         val uid: Long = PrefUtility().getLongInPref(this, Constants.SharedPrefConstants.USER_ID, 0)
         showProgressBar()
         val virtualTeamsViewModel = ViewModelProvider(this).get(MyVirtualViewModel::class.java)
-        virtualTeamsViewModel?.getTeams(uid)?.observe(this, {
-            val response=it.body()
+        virtualTeamsViewModel?.getTeams(uid)?.observe(this,{ response->
+
+          //  val response=it.body()
             dismissProgressBar()
             Log.d(TAG, "Teams Details Response : " + Gson().toJson(response))
             if (response?.status != null && response.status!!) {

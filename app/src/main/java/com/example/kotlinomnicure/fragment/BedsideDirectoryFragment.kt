@@ -19,6 +19,8 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.databinding.ActivityRemoteProviderDirectoryBinding
 import com.example.kotlinomnicure.databinding.FragmentBedsideDirectoryBinding
 import com.example.kotlinomnicure.utils.*
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 import java.util.*
 
 
@@ -29,8 +31,8 @@ class BedsideDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragme
     var ctx: Context? = null
     var hospitalId: String? = null
     var userRole: String? = null
-    var filteredList: List<Provider> = ArrayList<Provider>()
-    var providerList: List<Provider> = ArrayList<Provider>()
+    var filteredList: MutableList<Provider> = ArrayList<Provider>()
+    var providerList: MutableList<Provider> = ArrayList<Provider>()
     var filter = "all"
     var search:kotlin.String? = ""
     var bedsideDirectoryAdapter: BedsideDirectoryAdapter? = null
@@ -59,7 +61,7 @@ class BedsideDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragme
 
 
             override fun sendHospitalId(hospitalId: String?) {
-                hospitalId = id.toString()
+                //hospitalId = id.toString()
                 activityBinding!!.appBar.setExpanded(true, true)
                 fetchDirectory()
             }
@@ -103,7 +105,7 @@ class BedsideDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragme
                     }
                     var erroMsg = ""
                     if (listResponse != null && listResponse.status!= null && listResponse.status!!) {
-                        providerList = listResponse.getProviderList() as List<Provider>
+                        providerList = (listResponse.getProviderList() as List<Provider>).toMutableList()
                     } else {
                         providerList.clear()
                         erroMsg = requireContext().getString(R.string.directory_list_empty)
@@ -212,7 +214,7 @@ class BedsideDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragme
         if (!providers.isEmpty()) {
             Collections.sort(providers, object : Comparator<Provider?> {
                 override fun compare(p0: Provider?, p1: Provider?): Int {
-                    return p1.getName()?.let { p0?.getName()?.compareTo(it,ignoreCase = true) }!!
+                    return p1?.getName()?.let { p0?.getName()?.compareTo(it,ignoreCase = true) }!!
                 }
 
             })
@@ -247,7 +249,7 @@ class BedsideDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragme
         //        text = context.getString(R.string.no_bedside_providers_found);
         binding!!.noRecordsText.text = text
         if (flag) {
-            (activity as RemoteProviderDirectoryActivity?).setAppBarScroll(false)
+            (activity as RemoteProviderDirectoryActivity?)?.setAppBarScroll(false)
             binding!!.recyclerView.visibility = View.GONE
             binding!!.noRecordsLayout.visibility = View.VISIBLE
             if (filter.equals("all", ignoreCase = true) && search!!.length <= 0) {
@@ -257,7 +259,7 @@ class BedsideDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragme
                 activityBinding!!.bedsideFilterLayout.visibility = View.VISIBLE
             }
         } else {
-            (activity as RemoteProviderDirectoryActivity?).setAppBarScroll(true)
+            (activity as RemoteProviderDirectoryActivity?)?.setAppBarScroll(true)
             binding!!.recyclerView.visibility = View.VISIBLE
             binding!!.noRecordsLayout.visibility = View.GONE
             activityBinding!!.bedsideFilterLayout.visibility = View.VISIBLE

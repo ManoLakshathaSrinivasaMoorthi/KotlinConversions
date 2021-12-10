@@ -6,7 +6,7 @@ import java.lang.Exception
 
 object BuildConfigConstants {
     private const val TAG = "BuildConfig"
-    private var credential: GoogleCredential? = null
+  //  private var credential: GoogleCredential? = null
     var backendAppName = "omnicure"
         private set
     var backendRootUrl = "https://omnicure.appspot.com/_ah/api/"
@@ -14,7 +14,7 @@ object BuildConfigConstants {
     var baseUrl = "omnicure.appspot.com"
         private set
 
-    fun authorize(): GoogleCredential? {
+  /*  fun authorize(): GoogleCredential? {
         // load client secrets
         if (credential == null) {
             try {
@@ -28,14 +28,12 @@ object BuildConfigConstants {
             }
         }
         return credential
-    }
+    }*/
 
     init {
         if (BuildConfig.SERVER.equalsIgnoreCase("test")) {
 
-//            BACKEND_APP_NAME = "omnicure-backend";
-//            BACKEND_ROOT_URL = "https://omnicure-backend.appspot.com/_ah/api/";
-//            BASE_URL = "omnicure-backend.appspot.com";
+
             backendAppName = "dev-omnicure"
             backendRootUrl = "https://dev-omnicure.appspot.com/_ah/api/"
             baseUrl = "dev-omnicure.appspot.com"

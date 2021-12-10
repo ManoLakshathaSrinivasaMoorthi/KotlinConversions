@@ -204,7 +204,7 @@ class ActivityPatientCensusWard : BaseActivity() {
         providerId?.let { it ->
             viewModel?.getHospitalList(it)?.observe(this) {
                 val response=it
-                if (response?.getHospitalList() != null && response.getHospitalList()!!.isNotEmpty()) {
+                if (response?.hospitalList != null && response.hospitalList!!.isNotEmpty()) {
                     Log.d(TAG, "getHospitalList response : " + Gson().toJson(response))
                     hospitalListAdapter = strHospitalID?.let { it1 ->
                         CensusHospitalListViewAdapter(object :
@@ -227,15 +227,15 @@ class ActivityPatientCensusWard : BaseActivity() {
                                 dialog!!.dismiss()
                                 getCensusWardList()
                             }
-                        }, response.getHospitalList() as List<Hospital>?, it1)
+                        }, response.hospitalList as List<Hospital>?, it1)
                     }
-                } else if (response?.getErrorMessage() != null) {
-                    val errMsg: String? = ErrorMessages().getErrorMessage(this, response.getErrorMessage(), Constants.API.getHospital)
+                } else if (response?.errorMessage!= null) {
+                    val errMsg: String? = ErrorMessages().getErrorMessage(this, response.errorMessage, Constants.API.getHospital)
                     errMsg?.let { it1 ->
                         CustomSnackBar.make(binding!!.root, this, CustomSnackBar.WARNING,
                             it1, CustomSnackBar.TOP, 3000, 0)?.show()
                     }
-                    Log.d(TAG, "getHospitalList getErrorMessage : " + response.getErrorMessage())
+                    Log.d(TAG, "getHospitalList getErrorMessage : " + response.errorMessage)
                 } else {
                     CustomSnackBar.make(binding?.root, this, CustomSnackBar.WARNING,
                         getString(R.string.no_hospital_list), CustomSnackBar.TOP, 3000, 0

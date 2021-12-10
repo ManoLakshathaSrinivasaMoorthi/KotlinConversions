@@ -452,9 +452,10 @@ class ViewDetailsActivity : BaseActivity() {
                 binding?.imageViewRightLayout?.setVisibility(View.VISIBLE)
                 binding?.messageImageViewRight?.setVisibility(View.VISIBLE)
                 Glide.with(binding?.messageImageViewRight?.getContext())
-                    .load(imageUrl).addListener(object : RequestListener<Drawable?> {
+                    //.load(imageUrl).
+                   // addListener(object : RequestListener<Drawable?> {
 
-                        override fun onLoadFailed(
+                      /*  override fun onLoadFailed(
                             e: GlideException?,
                             model: Any?,
                             target: Target<Drawable?>?,
@@ -480,7 +481,7 @@ class ViewDetailsActivity : BaseActivity() {
                             binding?.messageImageViewRight?.setVisibility(View.VISIBLE)
                             return false
                         }
-                    }).into(binding?.messageImageViewRight)
+                    }).into(binding?.messageImageViewRight)*/
 
 
                 binding?.messengerText?.setVisibility(View.GONE)

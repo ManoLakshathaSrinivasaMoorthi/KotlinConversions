@@ -75,7 +75,7 @@ class ChatMessageStatusListAdapter(
                             context)
                             .load(downloadUrl)
                            // .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
+                            //.skipMemoryCache(true)
                             .listener(object : RequestListener<Drawable?> {
 
 

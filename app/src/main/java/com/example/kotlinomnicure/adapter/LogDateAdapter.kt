@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.model.ENotesList
-import com.example.kotlinomnicure.model.ENotesMessageList
 
 
 class LogDateAdapter : RecyclerView.Adapter<LogDateAdapter.ViewHolder> {
@@ -22,7 +21,7 @@ class LogDateAdapter : RecyclerView.Adapter<LogDateAdapter.ViewHolder> {
     private var iterator: Iterator<ENotesList>? = null
     constructor()
 
-    constructor(context: Context?, list: List<ENotesList>){
+    constructor(context: Context?, list: MutableList<ENotesList?>){
         eNoteslist = list
         iterator = list.iterator()
         this.context = context

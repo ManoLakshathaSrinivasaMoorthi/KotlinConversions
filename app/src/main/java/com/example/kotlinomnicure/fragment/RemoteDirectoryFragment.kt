@@ -12,11 +12,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import com.example.kotlinomnicure.R
 
 import com.example.kotlinomnicure.activity.RemoteProviderDirectoryActivity
+import com.example.kotlinomnicure.adapter.RemoteDirectoryAdapter
+import com.example.kotlinomnicure.databinding.ActivityRemoteProviderDirectoryBinding
+import com.example.kotlinomnicure.databinding.FragmentRemoteDirectoryBinding
 
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
@@ -24,6 +29,9 @@ import com.example.kotlinomnicure.utils.ErrorMessages
 import com.example.kotlinomnicure.utils.PrefUtility
 import com.google.gson.Gson
 import com.example.kotlinomnicure.utils.UtilityMethods
+import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.example.kotlinomnicure.viewmodel.HomeViewModel
+import omnicurekotlin.example.com.providerEndpoints.model.Provider
 
 import java.util.*
 
@@ -62,7 +70,7 @@ class RemoteDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragmen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         fetchDirectory()
         searchListener()
     }
@@ -104,52 +112,56 @@ class RemoteDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragmen
         val providerId: Long? = activity?.let { PrefUtility().getProviderId(it) }
         val token: String? =
             activity?.let { PrefUtility().getStringInPref(it, Constants.SharedPrefConstants.TOKEN, "") }
-        viewModel?.getProviderList(providerId, token, Constants.ProviderRole.RD.toString())
-            ?.observe(viewLifecycleOwner) { listResponse ->
-                (activity as RemoteProviderDirectoryActivity?)?.dismissProgressBar()
+        if (providerId != null) {
+            if (token != null) {
+                viewModel?.getProviderList(providerId, token, Constants.ProviderRole.RD.toString())
+                    ?.observe(viewLifecycleOwner) { listResponse ->
+                        (activity as RemoteProviderDirectoryActivity?)?.dismissProgressBar()
 
-                var erroMsg = ""
-                if (listResponse != null && listResponse.getStatus() != null && listResponse.getStatus()!!) {
-                    providerList = listResponse.getProviderList() as List<Provider>?
-                    search?.let { filterList(it, filter) }
-                } else {
-                    erroMsg = requireContext().getString(R.string.directory_list_empty)
-                }
-                if (!TextUtils.isEmpty(erroMsg)) {
-                    val errMsg: String? = context?.let {
-                        ErrorMessages().getErrorMessage(
-                            it,
-                            listResponse?.getErrorMessage(),
-                            Constants.API.getProviders
-                        )
+                        var erroMsg = ""
+                        if (listResponse != null && listResponse.getStatus() != null && listResponse.getStatus()!!) {
+                            providerList = listResponse.getProviderList() as List<Provider>?
+                            search?.let { filterList(it, filter) }
+                        } else {
+                            erroMsg = requireContext().getString(R.string.directory_list_empty)
+                        }
+                        if (!TextUtils.isEmpty(erroMsg)) {
+                            val errMsg: String? = context?.let {
+                                ErrorMessages().getErrorMessage(
+                                    it,
+                                    listResponse?.getErrorMessage(),
+                                    Constants.API.getProviders
+                                )
+                            }
+                            if (errMsg != null) {
+                                CustomSnackBar.make(
+                                    activityBinding?.container,
+                                    activity,
+                                    CustomSnackBar.WARNING,
+                                    errMsg,
+                                    CustomSnackBar.TOP,
+                                    3000,
+                                    0
+                                )?.show()
+                            }
+                        }
                     }
-                    if (errMsg != null) {
-                        CustomSnackBar.make(
-                            activityBinding?.container,
-                            activity,
-                            CustomSnackBar.WARNING,
-                            errMsg,
-                            CustomSnackBar.TOP,
-                            3000,
-                            0
-                        )?.show()
-                    }
-                }
             }
+        }
     }
 
     fun filterList(searchText: String, filterType: String) {
-        filteredList!!.clear()
+       /* filteredList!!.clear()
         search = searchText
         filter = filterType
         if (providerList == null) {
             providerList = ArrayList<Provider>()
         }
         for (p in providerList!!) {
-            val bean: Provider =
-                Gson().fromJson
-            Gson().toJson(p),
-        Provider::class.java)
+           *//* val bean: Provider =
+                Gson().fromJson()
+            (Gson().toJson(p),
+        Provider::class.java)*//*
             if (bean.getName() != null) {
                 if (bean.getId()?.equals(activity?.let { PrefUtility().getProviderId(it) }) == true) {
                     continue
@@ -181,7 +193,7 @@ class RemoteDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragmen
             setDirectoryList(filteredList!!)
         } else {
             setEmptyScreen(true)
-        }
+        }*/
     }
 
     private fun setDirectoryList(providerList: List<Provider>) {
@@ -286,11 +298,11 @@ class RemoteDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragmen
     fun checkSelfPermissions(): Boolean {
         return checkSelfPermission(
             Manifest.permission.RECORD_AUDIO,
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO
+            ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO
         ) &&
                 checkSelfPermission(
                     Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA
                 )
     }
 
@@ -317,13 +329,13 @@ class RemoteDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragmen
     ) {
 
         when (requestCode) {
-            ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO -> {
+            ConstantApp().PERMISSION_REQ_ID_RECORD_AUDIO -> {
                 checkSelfPermission(
                     Manifest.permission.CAMERA,
-                    ConstantApp.PERMISSION_REQ_ID_CAMERA
+                    ConstantApp().PERMISSION_REQ_ID_CAMERA
                 )
             }
-            ConstantApp.PERMISSION_REQ_ID_CAMERA -> {
+            ConstantApp().PERMISSION_REQ_ID_CAMERA -> {
             }
             else -> {
                 Toast.makeText(context, "Please give permission", Toast.LENGTH_SHORT).show()

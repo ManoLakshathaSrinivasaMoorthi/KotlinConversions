@@ -23,8 +23,8 @@ class CommonResponse {
     private var room: Room? = null
 
     var status: Boolean? = null
-    private var idToken: String? = null
-    private var refreshToken: String? = null
+    var idToken: String? = null
+    var refreshToken: String? = null
 
     var email: String? = null
 

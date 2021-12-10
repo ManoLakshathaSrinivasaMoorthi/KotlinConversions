@@ -31,6 +31,7 @@ import com.example.kotlinomnicure.media.Utils
 import com.example.kotlinomnicure.model.ConsultProvider
 import com.example.kotlinomnicure.utils.*
 import com.example.kotlinomnicure.videocall.openvcall.model.ConstantApp
+import com.example.kotlinomnicure.videocall.openvcall.ui.CallActivity
 import com.example.kotlinomnicure.viewmodel.PatientDetailViewModel
 import com.google.firebase.database.*
 

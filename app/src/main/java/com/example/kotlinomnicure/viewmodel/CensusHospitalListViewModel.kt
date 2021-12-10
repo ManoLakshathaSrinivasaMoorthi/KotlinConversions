@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
-import com.example.kotlinomnicure.backend.EndPointBuilder
+
 import com.example.kotlinomnicure.utils.Constants
 import omnicurekotlin.example.com.userEndpoints.model.HospitalListResponse
 import retrofit2.Call
@@ -88,39 +88,7 @@ class CensusHospitalListViewModel : ViewModel() {
         }
     }
 
-    private fun getHospitals(id: Long) {
-        Thread(object : Runnable {
-            var errMsg = ""
-            override fun run() {
-                try {
-                    val hospitalListResponse: HospitalListResponse =
-                        EndPointBuilder().getHospitalEndpoints()
-                            .getHospitalList(id)
-                            .execute()
-                    Handler(Looper.getMainLooper()).post {
-                        if (hospitalListObservable == null) {
-                            hospitalListObservable = MutableLiveData()
-                        }
-                        hospitalListObservable!!.setValue(hospitalListResponse)
-                    }
-                } catch (e: SocketTimeoutException) {
-                    errMsg = Constants.APIErrorType.SocketTimeoutException.toString()
-                } catch (e: Exception) {
-                    errMsg = Constants.API_ERROR
-                }
-                if (!TextUtils.isEmpty(errMsg)) {
-                    Handler(Looper.getMainLooper()).post {
-                        val response = HospitalListResponse()
-                        response.setErrorMessage(errMsg)
-                        if (hospitalListObservable == null) {
-                            hospitalListObservable = MutableLiveData()
-                        }
-                        hospitalListObservable!!.setValue(response)
-                    }
-                }
-            }
-        }).start()
-    }
+
 
     override fun onCleared() {
         super.onCleared()

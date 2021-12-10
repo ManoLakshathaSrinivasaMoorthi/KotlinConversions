@@ -49,6 +49,7 @@
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_change_password.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_chat.xml" value="0.2265625" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_dashboard.xml" value="0.2265625" />
+        <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_econsult_chart_remote.xml" value="0.11770833333333333" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_email_otp.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_enotes.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_enotes_details.xml" value="0.2265625" />
@@ -57,6 +58,7 @@
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_groups_list.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_home.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_first.xml" value="0.2421875" />
+        <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_first2.xml" value="0.16621376811594202" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_second.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_login.xml" value="0.2421875" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/activity_otp.xml" value="0.2265625" />
@@ -72,6 +74,7 @@
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/item_view_chat_message_status.xml" value="0.22395833333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/remote_directory_child.xml" value="0.22552083333333334" />
         <entry key="..\:/KotlinConversions/app/src/main/res/layout/remote_provider_sign_up_second.xml" value="0.2265625" />
+        <entry key="..\:/KotlinConversions/app/src/main/res/layout/system_alert_child_list.xml" value="0.1" />
         <entry key="..\:/KotlinConversions/app/src/main/res/menu/consult_chart_menu.xml" value="0.2421875" />
       </map>
     </option>

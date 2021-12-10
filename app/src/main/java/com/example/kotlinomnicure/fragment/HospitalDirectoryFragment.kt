@@ -9,11 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dailytasksamplepoc.R
-import com.example.dailytasksamplepoc.databinding.ActivityRemoteProviderDirectoryBinding
-import com.example.dailytasksamplepoc.databinding.FragmentHospitalDirectoryBinding
+
+import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.RemoteProviderDirectoryActivity
 import com.example.kotlinomnicure.adapter.HospitalDirectoryAdapter
+import com.example.kotlinomnicure.databinding.ActivityRemoteProviderDirectoryBinding
+import com.example.kotlinomnicure.databinding.FragmentHospitalDirectoryBinding
 import com.example.kotlinomnicure.viewmodel.HomeViewModel
 import com.example.kotlinomnicure.utils.Constants
 import com.example.kotlinomnicure.utils.CustomSnackBar
@@ -28,7 +29,7 @@ class HospitalDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragm
     var binding: FragmentHospitalDirectoryBinding? = null
     var activityBinding: ActivityRemoteProviderDirectoryBinding? = null
     var ctx: Context? = null
-    var filteredList: List<Hospital> = ArrayList<Hospital>()
+    var filteredList: MutableList<Hospital> = ArrayList<Hospital>()
     var hospitalList: List<Hospital> = ArrayList<Hospital>()
     var addressFilterList = ArrayList<String>()
     var search = ""
@@ -41,8 +42,7 @@ class HospitalDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragm
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
 
 
         // Inflate the layout for this fragment
@@ -97,7 +97,7 @@ class HospitalDirectoryFragment(binding: Any?, applicationContext: Any?) : Fragm
 //            System.out.println("hospitalResponse1--> " + new Gson().toJson(listResponse));
             var erroMsg = ""
             if (listResponse != null && listResponse.getStatus() != null && listResponse.getStatus()!!) {
-                hospitalList = listResponse.getHospitalList() as List<Hospital>
+                hospitalList = listResponse.hospitalList as List<Hospital>
                 filterList(search, filter!!)
             } else {
                 erroMsg = requireContext().getString(R.string.directory_list_empty)

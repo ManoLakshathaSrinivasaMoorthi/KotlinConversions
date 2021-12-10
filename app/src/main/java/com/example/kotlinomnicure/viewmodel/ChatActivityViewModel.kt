@@ -113,7 +113,7 @@ class ChatActivityViewModel: ViewModel() {
         auditId: String?
     ): LiveData<SOSResponse?>? {
         startSOSObservable = MutableLiveData()
-        startSOSAPI(callerId, token, patientId, auditId)
+        //startSOSAPI(callerId, token, patientId, auditId)
         return startSOSObservable
     }
 

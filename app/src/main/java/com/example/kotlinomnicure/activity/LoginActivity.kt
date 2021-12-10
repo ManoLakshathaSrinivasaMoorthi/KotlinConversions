@@ -31,7 +31,6 @@ import androidx.biometric.BiometricConstants.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.biometric.BiometricManager.from
@@ -50,7 +49,6 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 
 import com.google.gson.Gson
-import okhttp3.OkHttpClient
 import omnicurekotlin.example.com.loginEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.loginEndpoints.model.Provider
 import java.security.KeyStore

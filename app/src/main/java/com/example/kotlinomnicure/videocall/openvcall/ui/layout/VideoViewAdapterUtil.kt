@@ -298,19 +298,11 @@ class VideoViewAdapterUtil {
         //Log.d("Volume","user.getmStatus()=" + user.getmStatus());
         //Log.d("Volume","UserStatusData.AUDIO_MUTED" + UserStatusData.AUDIO_MUTED);
         val tag = myHolder.mIndicator!!.tag
-        if (tag != null && System.currentTimeMillis() - tag as Long < 1500) { // workaround for audio volume comes just later than mute
+       /* if (tag != null && System.currentTimeMillis() - tag as Long < 1500) { // workaround for audio volume comes just later than mute
             return
-        }
+        }*/
         val volume = user.getmVolume()
-        //Log.d("Volume","volume=" + volume + "; uid=" + user.getmUid());
-        //Log.d("user data:","user data:" + user.toString());
 
-//        if (volume > 0) {
-//            myHolder.mIndicator.setImageResource(R.drawable.icon_speaker);
-//            myHolder.mIndicator.setVisibility(View.VISIBLE);
-//        } else {
-//            myHolder.mIndicator.setVisibility(View.INVISIBLE);
-//        }
         if (Constant().SHOW_VIDEO_INFO && user.getVideoInfoData() != null) {
             val videoInfo = user.getVideoInfoData()
             myHolder.mMetaData?.setText(context?.let { videoInfo?.let { it1 ->
@@ -318,18 +310,11 @@ class VideoViewAdapterUtil {
                     it1
                 )
             } })
-            //            if(videoInfo.mWidth==0 && videoInfo.mHeight==0) {
-//                Log.d("Volume", "Video Muted by " + "uid=" + user.getmUid());
-//                myHolder.mAvatar.setVisibility(View.VISIBLE);
-//                myHolder.mMaskView.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
-//            } else {
-//                myHolder.mAvatar.setVisibility(View.GONE);
-//                myHolder.mMaskView.setBackgroundColor(Color.TRANSPARENT);
-//            }
+
             myHolder.mVideoInfo!!.visibility = View.VISIBLE
         } else {
             myHolder.mVideoInfo!!.visibility = View.GONE
-            //Log.d("Volume","Video gone=" + "; uid=" + user.getmUid());
+
         }
     }
 

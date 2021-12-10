@@ -9,7 +9,7 @@ import omnicurekotlin.example.com.userEndpoints.UserEndpointsRetrofit
 
 class EndPointBuilder {
 
-  private var providerEndpoints: ProviderEndpoints? = null
+ /* private var providerEndpoints: ProviderEndpoints? = null
   private var userEndpoints: UserEndpoints? = null
   private var loginEndpoints: LoginEndpoints? = null
   private var patientEndpoints: PatientEndpoints? = null
@@ -119,5 +119,5 @@ class EndPointBuilder {
       appointmentEndpoints = builder.build()
     }
     return appointmentEndpoints
-  }
+  }*/
 }

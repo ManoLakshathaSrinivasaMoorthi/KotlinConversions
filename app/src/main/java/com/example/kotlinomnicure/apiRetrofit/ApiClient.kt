@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
 
-    private val BASE_URL: String? = BuildConfigConstants().getBackendRootUrl()
+    private val BASE_URL: String = BuildConfigConstants.backendRootUrl
     private val TAG = "ApiClient"
     private val AUTHORIZATION = "Authorization"
     private val UID = "uid"
