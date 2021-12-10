@@ -1,17 +1,15 @@
 package com.example.kotlinomnicure.viewmodel
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import omnicurekotlin.example.com.userEndpoints.RetrofitService
 import omnicurekotlin.example.com.userEndpoints.UserEndpointsRetrofit
-import omnicurekotlin.example.com.userEndpoints.model.*
-import retrofit2.Call
-import retrofit2.Callback
+import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
+import omnicurekotlin.example.com.userEndpoints.model.HospitalListResponse
+import omnicurekotlin.example.com.userEndpoints.model.Provider
+import omnicurekotlin.example.com.userEndpoints.model.RemoteProviderListResponse
 import retrofit2.Response
 
 class RegistrationViewModel: ViewModel() {

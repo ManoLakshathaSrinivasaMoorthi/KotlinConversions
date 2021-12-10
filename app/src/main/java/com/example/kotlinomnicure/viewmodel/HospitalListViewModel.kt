@@ -40,7 +40,7 @@ class HospitalListViewModel: ViewModel() {
                     call: Call<HospitalListResponse?>,
                     response: Response<HospitalListResponse?>) {
                     Log.d(TAG, "onResponse: hospitalList " + response.code())
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val hospitalListResponse: HospitalListResponse? = response.body()
                         Log.d(TAG, "onResponse: res " + Gson().toJson(response.body()))
                         if (hospitalListObservable == null) {

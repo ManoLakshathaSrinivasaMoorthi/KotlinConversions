@@ -48,14 +48,14 @@ class AppointmentInfoViewModel: ViewModel() {
     private fun patientSignUpRetro(providerId: Long, token: String, patient: Appointment) {
         val errMsg = arrayOfNulls<String>(1)
 
-        ApiClient().getApiPatientEndpoints(true, true)?.registerPatient(patient)
+        ApiClient().getApiPatientEndpoints(encrypt = true, decrypt = true)?.registerPatient(patient)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
                 ) {
                     Log.d(TAG, "onResponse: registerPatient " + response.code())
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val commonResponse: CommonResponse? =
                             response.body()
                         if (patientObservable == null) {
@@ -64,12 +64,16 @@ class AppointmentInfoViewModel: ViewModel() {
                         }
                         patientObservable!!.setValue(commonResponse)
                     } else {
-                        if (response.code() == 705) {
-                            errMsg[0] = "redirect"
-                        } else if (response.code() == 403) {
-                            errMsg[0] = "unauthorized"
-                        } else {
-                            errMsg[0] = Constants.API_ERROR
+                        when {
+                            response.code() == 705 -> {
+                                errMsg[0] = "redirect"
+                            }
+                            response.code() == 403 -> {
+                                errMsg[0] = "unauthorized"
+                            }
+                            else -> {
+                                errMsg[0] = Constants.API_ERROR
+                            }
                         }
                         Handler(Looper.getMainLooper()).post {
                             val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse=
@@ -109,7 +113,7 @@ class AppointmentInfoViewModel: ViewModel() {
                 patientObservable =
                     MutableLiveData<CommonResponse?>()
             }
-            patientObservable!!.setValue(commonResponse)
+            patientObservable!!.value = commonResponse
         }
     }
 
@@ -117,18 +121,18 @@ class AppointmentInfoViewModel: ViewModel() {
 
     private fun addPatientAppointmentRetro(token: String, appointment: Appointment) {
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient().getApi(true, true)?.addAppointment(token, appointment)
+        ApiClient().getApi(true, decrypt = true)?.addAppointment(token, appointment)
             ?.enqueue(object : Callback<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?> {
                 override fun onResponse(
                     call: Call<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>,
                     response: Response<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>
                 ) {
                     Log.d(TAG, "onResponse: addAppointment " + response.code())
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         if (appointmentObservable == null) {
                             appointmentObservable = MutableLiveData<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>()
                         }
-                        appointmentObservable!!.setValue(response.body())
+                        appointmentObservable!!.value = response.body()
                     }
                 }
 
@@ -145,7 +149,7 @@ class AppointmentInfoViewModel: ViewModel() {
             if (appointmentObservable == null) {
                 appointmentObservable = MutableLiveData<omnicurekotlin.example.com.appointmentEndpoints.model.CommonResponse?>()
             }
-            appointmentObservable!!.setValue(commonResponse)
+            appointmentObservable!!.value = commonResponse
         }
     }
 

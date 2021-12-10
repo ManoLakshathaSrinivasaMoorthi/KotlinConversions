@@ -27,13 +27,13 @@ class ChangePasswordViewModel:ViewModel() {
     private fun doChangePassword(resetPasswordRequest: ResetPasswordRequest) {
         val errMsg = arrayOf("")
         val call: Call<CommonResponse?>? =
-            ApiClient().getApiUserEndpoints(true, true)?.changePassword(resetPasswordRequest)
+            ApiClient().getApiUserEndpoints(encrypt = true, decrypt = true)?.changePassword(resetPasswordRequest)
         call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
                 response: Response<CommonResponse?>,
             ) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
 
                     if (commonResponseObservable == null) {
                         commonResponseObservable = MutableLiveData<CommonResponse?>()
@@ -41,12 +41,16 @@ class ChangePasswordViewModel:ViewModel() {
                     commonResponseObservable!!.setValue(response.body())
                 } else {
 
-                    if (response.code() == 705) {
-                        errMsg[0] = "redirect"
-                    } else if (response.code() == 403) {
-                        errMsg[0] = "unauthorized"
-                    } else {
-                        errMsg[0] = Constants.API_ERROR
+                    when {
+                        response.code() == 705 -> {
+                            errMsg[0] = "redirect"
+                        }
+                        response.code() == 403 -> {
+                            errMsg[0] = "unauthorized"
+                        }
+                        else -> {
+                            errMsg[0] = Constants.API_ERROR
+                        }
                     }
                     Handler(Looper.getMainLooper()).post {
                         val commonResponse = CommonResponse()

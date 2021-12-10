@@ -15,8 +15,6 @@ import omnicurekotlin.example.com.userEndpoints.model.RemoteProviderListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
-import java.net.SocketTimeoutException
 
 class RemoteProviderSignUpViewModel: ViewModel() {
     private var providerObservable: MutableLiveData<CommonResponse?>? = null
@@ -47,14 +45,14 @@ class RemoteProviderSignUpViewModel: ViewModel() {
                 try {
 
 
-                    ApiClient().getApiUserEndpoints(true, true)?.registerUser(provider)
+                    ApiClient().getApiUserEndpoints(true, decrypt = true)?.registerUser(provider)
                         ?.enqueue(object : Callback<CommonResponse?> {
                             override fun onResponse(
                                 call: Call<CommonResponse?>,
                                 response: Response<CommonResponse?>,
                             ) {
 
-                                if (response.isSuccessful()) {
+                                if (response.isSuccessful) {
                                     val commonResponse: CommonResponse? = response.body()
                                     Handler(Looper.getMainLooper()).post {
                                         if (providerObservable == null) {
@@ -98,13 +96,13 @@ class RemoteProviderSignUpViewModel: ViewModel() {
             override fun run() {
                 try {
                     val call: Call<RemoteProviderListResponse?>? =
-                        ApiClient().getApiUserEndpoints(true, true)?.getRemoteproviderTypeList()
+                        ApiClient().getApiUserEndpoints(true, decrypt = true)?.getRemoteproviderTypeList()
                     call?.enqueue(object : Callback<RemoteProviderListResponse?> {
                         override fun onResponse(
                             call: Call<RemoteProviderListResponse?>,
                             response: Response<RemoteProviderListResponse?>,
                         ) {
-                            if (response.isSuccessful()) {
+                            if (response.isSuccessful) {
                                 if (remoteProviderListObservable == null) {
                                     remoteProviderListObservable =
                                         MutableLiveData<RemoteProviderListResponse?>()

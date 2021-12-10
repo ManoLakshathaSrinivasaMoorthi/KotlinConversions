@@ -66,7 +66,7 @@ class ChatActivityViewModel: ViewModel() {
     private fun getMembersRetro(patientId: Long, team: String) {
         val errMsg = arrayOfNulls<String>(1)
 
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)
             ?.teamDetailsByName(TeamDetailsByNameRequestBody(patientId, team))
             ?.enqueue(object : Callback<TeamsDetailListResponse?> {
 
@@ -113,7 +113,7 @@ class ChatActivityViewModel: ViewModel() {
         auditId: String?
     ): LiveData<SOSResponse?>? {
         startSOSObservable = MutableLiveData()
-        startSOSAPI(callerId, token, patientId, auditId)
+       // startSOSAPI(callerId, token, patientId, auditId)
         return startSOSObservable
     }
 
@@ -145,7 +145,7 @@ class ChatActivityViewModel: ViewModel() {
         bodyValues["id"] = providerId.toString()
         bodyValues["token"] = token
         bodyValues["patientId"] = patientId.toString()
-        ApiClient().getApiPatientEndpoints(true, true)?.patienthistoryAPI(bodyValues) //        ApiClient.getApiPatientEndpoints(false, false).
+        ApiClient().getApiPatientEndpoints(true, decrypt = true)?.patienthistoryAPI(bodyValues) //        ApiClient.getApiPatientEndpoints(false, false).
 
             ?.enqueue(object : Callback<PatientHistoryResponse?> {
                 override fun onResponse(call: Call<PatientHistoryResponse?>, response: Response<PatientHistoryResponse?>) {
@@ -197,7 +197,7 @@ class ChatActivityViewModel: ViewModel() {
     private fun MultiplecallRetro(content: GroupCall?) {
 
         val call: Call<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>? =
-            ApiClient().getApiProviderEndpoints(true, true)?.Multiplecall(content)
+            ApiClient().getApiProviderEndpoints(true, decrypt = true)?.Multiplecall(content)
         call?.enqueue(object : Callback<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?> {
             override fun onResponse(
                 call: Call<omnicurekotlin.example.com.providerEndpoints.model.CommonResponse?>,
@@ -205,7 +205,7 @@ class ChatActivityViewModel: ViewModel() {
             ) {
 
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
 
                     if (providerObservable == null) {
                         providerObservable = MutableLiveData()
@@ -271,7 +271,7 @@ class ChatActivityViewModel: ViewModel() {
         bodyValues["patientId"] = patientId.toString()
 
         val call: Call<CommonResponse?>? =
-            ApiClient().getApiPatientEndpoints(true, true)?.inviteBroadCast(bodyValues)
+            ApiClient().getApiPatientEndpoints(encrypt = true, decrypt = true)?.inviteBroadCast(bodyValues)
         call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
@@ -315,7 +315,7 @@ class ChatActivityViewModel: ViewModel() {
         //sending body through data class
         val requestBody = CommonPatientIdRequestBody(uid)
 
-        ApiClient().getApiPatientEndpoints(true, true)?.patientdetailsresponse(requestBody)
+        ApiClient().getApiPatientEndpoints(true, decrypt = true)?.patientdetailsresponse(requestBody)
             ?.enqueue(object : Callback<PatientDetail?> {
                 override fun onResponse(
                     call: Call<PatientDetail?>,

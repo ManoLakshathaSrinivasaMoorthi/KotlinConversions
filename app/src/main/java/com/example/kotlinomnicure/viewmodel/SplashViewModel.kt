@@ -56,7 +56,7 @@ class SplashViewModel:ViewModel() {
         val loginRequest = LoginRequest()
         loginRequest.setToken(refreshToken)
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient().getApiUserEndpoints(true, true)?.renewIdToken(loginRequest)
+        ApiClient().getApiUserEndpoints(encrypt = true, decrypt = true)?.renewIdToken(loginRequest)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
@@ -69,7 +69,7 @@ class SplashViewModel:ViewModel() {
                         if (tokenResponseObservable == null) {
                             tokenResponseObservable = MutableLiveData()
                         }
-                        tokenResponseObservable!!.setValue(commonResponse)
+                        tokenResponseObservable!!.value = commonResponse
                     }
                 }
 
@@ -93,13 +93,13 @@ class SplashViewModel:ViewModel() {
         val creds = HashMap<String, String>()
         creds["osType"] = osType
 
-        ApiClient().getApiUserEndpoints(false, false)?.getVersionInfo()
+        ApiClient().getApiUserEndpoints(false, decrypt = false)?.getVersionInfo()
             ?.enqueue(object : Callback<VersionInfoResponse?> {
                 override fun onResponse(
                     call: Call<VersionInfoResponse?>,
                     response: Response<VersionInfoResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         Log.d("loginTags", "onResponse: " + response.code())
                         val versionInfoRes: VersionInfoResponse? =
                             response.body()
@@ -141,7 +141,7 @@ class SplashViewModel:ViewModel() {
 
     private fun setRedirectRequestRetro(redirectRequest: RedirectRequest) {
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient().getApiUserEndpoints(true, true)?.loginStatus(redirectRequest)
+        ApiClient().getApiUserEndpoints(encrypt = true, decrypt = true)?.loginStatus(redirectRequest)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
@@ -153,7 +153,7 @@ class SplashViewModel:ViewModel() {
                         if (tokenResponseObservable == null) {
                             tokenResponseObservable = MutableLiveData<CommonResponse>()
                         }
-                        tokenResponseObservable!!.setValue(commonResponse)
+                        tokenResponseObservable!!.value = commonResponse
                     }
                 }
 

@@ -29,20 +29,20 @@ class TeamGroupChatViewModel: ViewModel() {
         val errMsg = arrayOfNulls<String>(1)
 
 
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)
             ?.teamDetailsByName(TeamDetailsByNameRequestBody(patientId, teamName))
             ?.enqueue(object : Callback<TeamsDetailListResponse?> {
                 override fun onResponse(
                     call: Call<TeamsDetailListResponse?>,
                     response: Response<TeamsDetailListResponse?>, ) {
 
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val listResponse: TeamsDetailListResponse? = response.body()
                         if (commonResponseMutableLiveData == null) {
                             commonResponseMutableLiveData =
                                 MutableLiveData<TeamsDetailListResponse?>()
                         }
-                        commonResponseMutableLiveData!!.setValue(listResponse)
+                        commonResponseMutableLiveData!!.value = listResponse
                     }
                 }
 
@@ -54,12 +54,12 @@ class TeamGroupChatViewModel: ViewModel() {
                     if (commonResponseMutableLiveData == null) {
                         commonResponseMutableLiveData = MutableLiveData<TeamsDetailListResponse?>()
                     }
-                    commonResponseMutableLiveData!!.setValue(response)
+                    commonResponseMutableLiveData!!.value = response
                 }
             })
     }
 
-    protected override fun onCleared() {
+    override fun onCleared() {
         super.onCleared()
         commonResponseMutableLiveData = null
     }

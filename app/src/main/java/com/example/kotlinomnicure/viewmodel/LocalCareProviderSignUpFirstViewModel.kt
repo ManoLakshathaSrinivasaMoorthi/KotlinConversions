@@ -35,7 +35,7 @@ class LocalCareProviderSignUpFirstViewModel:ViewModel() {
     private fun getCountryCodesRetro() {
         val errMsg = arrayOfNulls<String>(1)
 
-        ApiClient().getApiUserEndpoints(true, true)?.getCountryCodes()?.enqueue(object :
+        ApiClient().getApiUserEndpoints(encrypt = true, decrypt = true)?.getCountryCodes()?.enqueue(object :
             Callback<CountryCodeListResponse?> {
             override fun onResponse(
                 call: Call<CountryCodeListResponse?>,

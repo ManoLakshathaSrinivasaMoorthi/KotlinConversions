@@ -1,4 +1,4 @@
-package com.mvp.omnicure.kotlinactivity.viewmodel
+package com.example.kotlinomnicure.viewmodel
 
 import android.text.TextUtils
 import android.util.Log
@@ -27,7 +27,7 @@ class SystemAlertViewModel: ViewModel() {
 
     private fun systemAlertsRetro(providerId: Long) {
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)
             ?.getalertsreponse(CommonProviderIdBody(providerId))
             ?.enqueue(object : Callback<SystemAlerts?> {
                 override fun onResponse(
