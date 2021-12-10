@@ -2,26 +2,24 @@ package omnicurekotlin.example.com.patientsEndpoints.model
 
 class CommonResponse {
 
-    private var activeList: List<Patient?>? = null
-    private var dischargedCount: Int? = null
-    private var dischargedList: List<Patient?>? = null
-    private var errorId: Int? = null
-    private var errorMessage: String? = null
-
-    private var id: Long? = null
-    private var pendingList: List<Patient?>? = null
-    private var provider: Provider? = null
-    private var patient: Provider? = null
-    private var providerList: List<Provider>? = null
-    private var room: Room? = null
-
-    var status: Boolean? = null
-    private var unit: Unit? = null
-    private var ward: Ward? = null
-
-    private var hospitalList: List<HospitalList?>? = null
+     var activeList: List<Patient?>? = null
+     var dischargedCount: Int? = null
+     var dischargedList: List<Patient?>? = null
+     var errorId: Int? = null
+     var errorMessage: String? = null
+     var id: Long? = null
+     var pendingList: List<Patient?>? = null
+     var provider: Provider? = null
+     var patient: Provider? = null
+     var providerList: List<Provider>? = null
+     var room: Room? = null
+     var status: Boolean? = null
+     var unit: Unit? = null
+     var ward: Ward? = null
+     var hospitalList: List<HospitalList?>? = null
 
 
+    @JvmName("getActiveList1")
     fun getActiveList(): List<Patient?>? {
         return activeList
     }
@@ -32,6 +30,7 @@ class CommonResponse {
         return this
     }
 
+    @JvmName("getDischargedCount1")
     fun getDischargedCount(): Int? {
         return dischargedCount
     }
@@ -43,6 +42,7 @@ class CommonResponse {
     }
 
 
+    @JvmName("getDischargedList1")
     fun getDischargedList(): List<Patient?>? {
         return dischargedList
     }
@@ -55,6 +55,7 @@ class CommonResponse {
 
 
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -65,6 +66,7 @@ class CommonResponse {
     }
 
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
@@ -75,19 +77,19 @@ class CommonResponse {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
 
-    /**
-     * @param id id or `null` for none
-     */
+
     fun setId(id: Long?): CommonResponse {
         this.id = id
         return this
     }
 
 
+    @JvmName("getPendingList1")
     fun getPendingList(): List<Patient?>? {
         return pendingList
     }
@@ -98,6 +100,7 @@ class CommonResponse {
         return this
     }
 
+    @JvmName("getProvider1")
     fun getProvider(): Provider? {
         return provider
     }
@@ -108,19 +111,19 @@ class CommonResponse {
     }
 
 
+    @JvmName("getProviderList1")
     fun getProviderList(): List<Provider>? {
         return providerList
     }
 
-    /**
-     * @param providerList providerList or `null` for none
-     */
+
     fun setProviderList(providerList: List<Provider>?):CommonResponse {
         this.providerList = providerList
         return this
     }
 
 
+    @JvmName("getRoom1")
     fun getRoom(): Room? {
         return room
     }
@@ -132,6 +135,7 @@ class CommonResponse {
     }
 
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
@@ -143,6 +147,7 @@ class CommonResponse {
     }
 
 
+    @JvmName("getUnit1")
     fun getUnit(): Unit? {
         return unit
     }
@@ -153,6 +158,7 @@ class CommonResponse {
         return this
     }
 
+    @JvmName("getWard1")
     fun getWard(): Ward? {
         return ward
     }
@@ -163,20 +169,24 @@ class CommonResponse {
         return this
     }
 
+    @JvmName("getHospitalList1")
     fun getHospitalList(): List<HospitalList?>? {
         return hospitalList
     }
 
+    @JvmName("setHospitalList1")
     fun setHospitalList(hospitalList: List<HospitalList?>?) {
         this.hospitalList = hospitalList
     }
 
 
 
+    @JvmName("setPatient1")
     fun setPatient(patient: Provider?) {
         this.patient = patient
     }
 
+    @JvmName("getPatient1")
     fun getPatient(): Provider? {
         return patient
     }

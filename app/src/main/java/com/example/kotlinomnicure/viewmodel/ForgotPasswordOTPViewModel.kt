@@ -52,7 +52,7 @@ class ForgotPasswordOTPViewModel: ViewModel() {
 
     private fun doForgotPassword(forgotPasswordRequest: ForgotPasswordRequest) {
         val call: Call<CommonResponse?>? =
-            ApiClient().getApiUserEndpoints(true, true)?.forgotPassword(forgotPasswordRequest)
+            ApiClient().getApiUserEndpoints(true, decrypt = true)?.forgotPassword(forgotPasswordRequest)
         call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,

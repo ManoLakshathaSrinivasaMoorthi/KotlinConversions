@@ -64,5 +64,9 @@
         <attr name="shadow" format="boolean" />
         <attr name="border_overlay" format="boolean" />
         <attr name="fill_color" format="color" />
+
+    </declare-styleable>
+    <declare-styleable name="MaxHeightScrollView">
+        <attr name="maxHeight" format="dimension" />
     </declare-styleable>
 </resources>

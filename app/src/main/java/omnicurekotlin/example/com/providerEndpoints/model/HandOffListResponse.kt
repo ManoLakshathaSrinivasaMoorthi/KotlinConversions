@@ -27,28 +27,34 @@ class HandOffListResponse {
         return status
     }
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
 
+    @JvmName("setErrorMessage1")
     fun setErrorMessage(errorMessage: String?) {
         this.errorMessage = errorMessage
     }
 
     fun HandOffListResponse() {}
 
+    @JvmName("getCurrentProvider1")
     fun getCurrentProvider(): CurrentProvider? {
         return currentProvider
     }
 
+    @JvmName("setCurrentProvider1")
     fun setCurrentProvider(currentProvider: CurrentProvider?) {
         this.currentProvider = currentProvider
     }
 
+    @JvmName("getOtherBspList1")
     fun getOtherBspList(): ArrayList<OtherBspList?>? {
         return otherBspList
     }
 
+    @JvmName("setOtherBspList1")
     fun setOtherBspList(otherBspList: ArrayList<OtherBspList?>?) {
         this.otherBspList = otherBspList
     }
@@ -61,10 +67,12 @@ class HandOffListResponse {
         this.errorId = errorId
     }
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean {
         return status
     }
 
+    @JvmName("setStatus1")
     fun setStatus(status: Boolean) {
         this.status = status
     }

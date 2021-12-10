@@ -29,8 +29,8 @@
                     android:layout_gravity="start"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:tint="@color/title_color"
-                    app:srcCompat="@drawable/ic_back_arrow" />
+                    app:srcCompat="@drawable/ic_back_arrow"
+                    app:tint="@color/title_color" />
 
             </LinearLayout>
 

@@ -85,13 +85,13 @@ class HomeViewModel : ViewModel() {
         bodyValues["email"] = email
         bodyValues["password"] = password
         bodyValues["token"] = token
-        ApiClient().getApi(true, true)?.loginWithPassword(bodyValues)?.
+        ApiClient().getApi(encrypt = true, decrypt = true)?.loginWithPassword(bodyValues)?.
         enqueue(object : Callback<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse?> {
                 override fun onResponse(
                     call: Call<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse?>,
                     response: Response<omnicurekotlin.example.com.loginEndpoints.model.CommonResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         Log.d("discharge", "onResponse: $response")
                         val commonResponse: omnicurekotlin.example.com.loginEndpoints.model.CommonResponse? =
                             response.body()
@@ -152,13 +152,13 @@ class HomeViewModel : ViewModel() {
         val creds = HashMap<String, String>()
         creds["osType"] = osType
         //        ApiClient.getApiUserEndpoints(false, false).getVersionInfo().enqueue(new Callback<omnicure.mvp.com.userEndpoints.model.VersionInfoResponse>() {
-        ApiClient().getApiUserEndpoints(false, false)?.getVersionInfo()
+        ApiClient().getApiUserEndpoints(encrypt = false, decrypt = false)?.getVersionInfo()
             ?.enqueue(object : Callback<VersionInfoResponse?> {
                 override fun onResponse(
                     call: Call<VersionInfoResponse?>,
                     response: Response<VersionInfoResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         Log.d("loginTags", "onResponse: " + response.code())
                         val versionInfoRes: VersionInfoResponse? =
                             response.body()
@@ -304,13 +304,13 @@ class HomeViewModel : ViewModel() {
         bodyValues["id"] = providerId.toString()
         bodyValues["token"] = token
         bodyValues["patientId"] = patientId.toString()
-        ApiClient().getApiPatientEndpoints(true, true)?.resetAcuityApi(bodyValues)
+        ApiClient().getApiPatientEndpoints(encrypt = true, decrypt = true)?.resetAcuityApi(bodyValues)
            ?.enqueue(object : Callback<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse ?> {
                 override fun onResponse(
                     call: Call<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse ?>,
                     response: Response<omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse ?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         Log.d("reset Acuity", "onResponse: $response")
                         val commonResponse: omnicurekotlin.example.com.patientsEndpoints.model.CommonResponse? =
                             response.body()
@@ -369,7 +369,7 @@ class HomeViewModel : ViewModel() {
         val errMsg = ""
 
         val url = "providerEndpoints/v1/getProviderById"
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)
             ?.getProviderById(url, GetProviderByIdRequestBody(providerId, token, id))
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
@@ -398,7 +398,7 @@ class HomeViewModel : ViewModel() {
             })
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse:CommonResponse =
+                val commonResponse =
                     CommonResponse()
                 commonResponse.errorMessage
                 if (providerObservable == null) {
@@ -416,13 +416,13 @@ class HomeViewModel : ViewModel() {
         val errMsg = ""
         val bodyValues = HashMap<String, String>()
         bodyValues["hospitalId"] = hospitalId
-        ApiClient().getApiHospital(true, true)?.getHospitalById(bodyValues)
+        ApiClient().getApiHospital(true, decrypt = true)?.getHospitalById(bodyValues)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
 
                         val commonResponse: CommonResponse? =
                             response.body()
@@ -444,7 +444,7 @@ class HomeViewModel : ViewModel() {
             })
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: CommonResponse =
+                val commonResponse =
                     CommonResponse()
                 commonResponse.errorMessage
                 if (hospitalObservable == null) {
@@ -466,7 +466,7 @@ class HomeViewModel : ViewModel() {
         //sending body through data class
         val requestBody = CommonIdRequestBody(userid)
 
-        ApiClient().getApiHospital(true, true)?.hospitallistresponse(requestBody)
+        ApiClient().getApiHospital(encrypt = true, decrypt = true)?.hospitallistresponse(requestBody)
             ?.enqueue(object : Callback<HospitalListResponse?> {
                 override fun onResponse(
                     call: Call<HospitalListResponse?>,
@@ -510,7 +510,7 @@ class HomeViewModel : ViewModel() {
         val errMsg = ""
 
         val url = "providerEndpoints/v1/getRemoteProviderRemoteDirectory"
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)
             ?.getProviderList(url, GetProviderListRequestBody(role, token, providerId))
             ?.enqueue(object : Callback<ProviderListResponse?> {
                 override fun onResponse(
@@ -527,7 +527,7 @@ class HomeViewModel : ViewModel() {
                     } else {
 
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: ProviderListResponse =
+                            val commonResponse =
                                 ProviderListResponse()
                             commonResponse.setErrorMessage(Constants.API_ERROR)
                             if (providerListObservable == null) {
@@ -544,7 +544,7 @@ class HomeViewModel : ViewModel() {
                 ) {
 
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: ProviderListResponse =
+                        val commonResponse =
                             ProviderListResponse()
                         commonResponse.setErrorMessage(Constants.API_ERROR)
                         if (providerListObservable == null) {
@@ -558,7 +558,7 @@ class HomeViewModel : ViewModel() {
 
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: ProviderListResponse =
+                val commonResponse =
                     ProviderListResponse()
                 commonResponse.setErrorMessage(errMsg)
                 if (providerListObservable == null) {
@@ -575,14 +575,14 @@ class HomeViewModel : ViewModel() {
         val errMsg = ""
         val url = "providerEndpoints/v1/updateProvider"
 
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)
             ?.updateStatus(provider)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
 
                         val commonResponse: CommonResponse? =
                             response.body()
@@ -593,7 +593,7 @@ class HomeViewModel : ViewModel() {
                     } else {
 
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse:CommonResponse =
+                            val commonResponse =
                                 CommonResponse()
                             commonResponse.errorMessage
                             if (updateProviderObservable == null) {
@@ -610,7 +610,7 @@ class HomeViewModel : ViewModel() {
                 ) {
 
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
+                        val commonResponse =
                             CommonResponse()
                         commonResponse.errorMessage
                         if (updateProviderObservable == null) {
@@ -622,7 +622,7 @@ class HomeViewModel : ViewModel() {
             })
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: CommonResponse =
+                val commonResponse =
                     CommonResponse()
                 commonResponse.errorMessage
                 if (updateProviderObservable == null) {
@@ -641,7 +641,7 @@ class HomeViewModel : ViewModel() {
      */
     private fun addOrUpdateNotificationDetails(addNotificationDataRequest: AddNotificationDataRequest) {
         val errMsg = ""
-        ApiClient().getApi(true, true)?.addOrUpdateNotificationSettings(addNotificationDataRequest)
+        ApiClient().getApi(true, decrypt = true)?.addOrUpdateNotificationSettings(addNotificationDataRequest)
            ?.enqueue(object : Callback<CommonResponseProviderNotification?> {
                 override fun onResponse(
                     call: Call<CommonResponseProviderNotification?>,
@@ -711,7 +711,7 @@ class HomeViewModel : ViewModel() {
 
 
         val call: Call<ProviderNotificationResponse?>? =
-            ApiClient().getApi(true, true)?.getProviderNotificationDetailsApi(requestBody)
+            ApiClient().getApi(encrypt = true, decrypt = true)?.getProviderNotificationDetailsApi(requestBody)
         call?.enqueue(object : Callback<ProviderNotificationResponse?> {
             override fun onResponse(
                 call: Call<ProviderNotificationResponse?>,
@@ -817,7 +817,7 @@ class HomeViewModel : ViewModel() {
 
     private fun RemoteHandOffAccept(handOffAcceptRequest: HandOffAcceptRequest) {
         val errMsg = ""
-        ApiClient().getApiProviderEndpoints(true, true)?.doRDHandOff(handOffAcceptRequest)
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)?.doRDHandOff(handOffAcceptRequest)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
@@ -849,7 +849,7 @@ class HomeViewModel : ViewModel() {
                 ) {
 
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
+                        val commonResponse =
                             CommonResponse()
                         commonResponse.errorMessage
                         if (handOffAcceptObservable == null) {
@@ -861,7 +861,7 @@ class HomeViewModel : ViewModel() {
             })
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: CommonResponse =
+                val commonResponse =
                     CommonResponse()
                 commonResponse.errorMessage
                 if (handOffAcceptObservable == null) {
@@ -900,7 +900,7 @@ class HomeViewModel : ViewModel() {
                     } else {
                         Log.d("Verifytags", "onResponse: " + response.code())
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: CommonResponse =
+                            val commonResponse =
                                 CommonResponse()
                             commonResponse.errorMessage
                             if (startCallObservable == null) {
@@ -918,7 +918,7 @@ class HomeViewModel : ViewModel() {
                 ) {
 
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
+                        val commonResponse =
                             CommonResponse()
                         commonResponse.errorMessage
                         if (startCallObservable == null) {
@@ -931,7 +931,7 @@ class HomeViewModel : ViewModel() {
             })
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: CommonResponse =
+                val commonResponse =
                     CommonResponse()
                 commonResponse.errorMessage
                 if (startCallObservable == null) {

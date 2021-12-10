@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import omnicurekotlin.example.com.hospitalEndpoints.HospitalRetrofit
 import omnicurekotlin.example.com.hospitalEndpoints.model.WardPatientListResponse
-import omnicurekotlin.example.com.providerEndpoints.ProviderRetrofit
+import omnicurekotlin.example.com.providerEndpoints.ProviderEndPoints
 import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.providerEndpoints.model.OtherRebroadcastRequest
 import omnicurekotlin.example.com.userEndpoints.RetrofitService
@@ -39,7 +39,7 @@ class CensusPatientListViewModel : ViewModel(){
     }
 
     fun reconsultOtherPatient(otherRebroadcastRequest: OtherRebroadcastRequest):  LiveData<Response<CommonResponse>> =  liveData  {
-        retService =ProviderRetrofit.getProvider()
+        retService =ProviderEndPoints.getProvider()
                 .create(RetrofitService::class.java)
         sendRebroadcastResponseObservable = MutableLiveData<CommonResponse>()
 

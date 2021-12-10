@@ -22,17 +22,20 @@ import java.util.regex.Pattern
 
 class ValidationUtil {
     fun isValidate(viewDataBinding: ViewDataBinding): String? {
-      if (viewDataBinding is ActivityAddPatientVitalsBinding) {
-            val binding: ActivityAddPatientVitalsBinding = viewDataBinding as ActivityAddPatientVitalsBinding
-            return isPatientVitalsValid(binding)
-        }
-      else if (viewDataBinding is ActivityLocalCareProviderSignUpFirstBinding) {
-            return isRegistrationFirstFieldsValid(viewDataBinding)
-        } else if (viewDataBinding is ActivityLocalCareProviderSignUpSecondBinding) {
-            return isRegistrationLocalSecondFieldsValid(viewDataBinding)
+        return when (viewDataBinding) {
+            is ActivityAddPatientVitalsBinding -> {
+                val binding: ActivityAddPatientVitalsBinding = viewDataBinding
+                isPatientVitalsValid(binding)
+            }
+            is ActivityLocalCareProviderSignUpFirstBinding -> {
+                isRegistrationFirstFieldsValid(viewDataBinding)
+            }
+            is ActivityLocalCareProviderSignUpSecondBinding -> {
+                isRegistrationLocalSecondFieldsValid(viewDataBinding)
+            }
+            else -> ""
         }
 
-        return ""
     }
 
     fun passwordVisibility(editText: EditText, imageView: ImageView) {
@@ -192,29 +195,23 @@ class ValidationUtil {
         return specialCharPattern.matcher(str).find()
     }
 
-    fun isPassLowerCaseValid(str: String?): Boolean {
+    private fun isPassLowerCaseValid(str: String?): Boolean {
         val lowerCasePattern = Pattern.compile("[a-z ]")
-        return if (lowerCasePattern.matcher(str).find()) {
-            true
-        } else false
+        return lowerCasePattern.matcher(str).find()
     }
 
-    fun isPassUpperCaseValid(str: String?): Boolean {
+    private fun isPassUpperCaseValid(str: String?): Boolean {
         val UpperCasePattern = Pattern.compile("[A-Z ]")
         return UpperCasePattern.matcher(str).find()
     }
 
-    fun isPassNumberValid(str: String?): Boolean {
+    private fun isPassNumberValid(str: String?): Boolean {
         val digitCasePattern = Pattern.compile("[0-9 ]")
-        return if (digitCasePattern.matcher(str).find()) {
-            true
-        } else false
+        return digitCasePattern.matcher(str).find()
     }
 
-    fun isPassCharsLengthValid(str: String): Boolean {
-        return if (str.length >= 8) {
-            true
-        } else false
+    private fun isPassCharsLengthValid(str: String): Boolean {
+        return str.length >= 8
     }
 
     private fun containsPartOf(pass: String, username: String): Boolean {
@@ -308,9 +305,9 @@ class ValidationUtil {
             return context?.getString(R.string.invalid_password_try_again)
         }
         if (!TextUtils.isEmpty(strFirstName) || !TextUtils.isEmpty(strLastName)) {
-            strFirstName = strFirstName.toLowerCase()
-            strLastName = strLastName.toLowerCase()
-            str = str.toLowerCase()
+            strFirstName = strFirstName.lowercase(Locale.getDefault())
+            strLastName = strLastName.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             val fnameBool = strFirstName.trim { it <= ' ' }.length >= 3 && (str.startsWith(strFirstName) || str.matches(strFirstName) || str.contains(strFirstName))
             val lnameBool = strLastName.trim { it <= ' ' }.length >= 3 && (str.startsWith(strLastName) || str.matches(strLastName) || str.contains(strLastName))
             if (fnameBool || lnameBool) {
@@ -318,8 +315,8 @@ class ValidationUtil {
             }
         }
         if (!TextUtils.isEmpty(strEmail)) {
-            strEmail = strEmail.toLowerCase()
-            str = str.toLowerCase()
+            strEmail = strEmail.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             val split = strEmail.split("@".toRegex()).toTypedArray()
             if (split.size > 0) {
                 strEmail = split[0]
@@ -381,7 +378,7 @@ class ValidationUtil {
         return null
     }
 
-    fun checkPhoneNo(str: String?): Boolean? {
+    fun checkPhoneNo(str: String?): Boolean {
         if (str == null || TextUtils.isEmpty(str.trim { it <= ' ' })) {
             return false
         } else if (str.startsWith("0")) {
@@ -433,17 +430,17 @@ class ValidationUtil {
             return false
         }
         if (!TextUtils.isEmpty(strFirstName) || !TextUtils.isEmpty(strLastName)) {
-            strFirstName = strFirstName.toLowerCase()
-            strLastName = strLastName.toLowerCase()
-            str = str.toLowerCase()
+            strFirstName = strFirstName.lowercase(Locale.getDefault())
+            strLastName = strLastName.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             if (str.startsWith(strFirstName) || str.matches(strFirstName) || str.contains(strFirstName) ||
                     str.startsWith(strLastName) || str.matches(strLastName) || str.contains(strLastName)) {
                 return false
             }
         }
         if (!TextUtils.isEmpty(strEmail)) {
-            strEmail = strEmail.toLowerCase()
-            str = str.toLowerCase()
+            strEmail = strEmail.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             val split = strEmail.split("@".toRegex()).toTypedArray()
             if (split.size > 0) {
                 strEmail = split[0]
@@ -679,9 +676,9 @@ class ValidationUtil {
             symbolIcon.visibility = View.GONE
         }
         if (!TextUtils.isEmpty(strFirstName) || !TextUtils.isEmpty(strLastName)) {
-            strFirstName = strFirstName.toLowerCase()
-            strLastName = strLastName.toLowerCase()
-            str = str.toLowerCase()
+            strFirstName = strFirstName.lowercase(Locale.getDefault())
+            strLastName = strLastName.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             if (str.startsWith(strFirstName) || str.matches(strFirstName) || str.contains(strFirstName) ||
                     str.startsWith(strLastName) || str.matches(strLastName) || str.contains(strLastName)) {
                 first_last_icon.visibility = View.GONE
@@ -690,8 +687,8 @@ class ValidationUtil {
             }
         }
         if (!TextUtils.isEmpty(strEmail)) {
-            strEmail = strEmail.toLowerCase()
-            str = str.toLowerCase()
+            strEmail = strEmail.lowercase(Locale.getDefault())
+            str = str.lowercase(Locale.getDefault())
             val split = strEmail.split("@".toRegex()).toTypedArray()
             if (split.size > 0) {
                 strEmail = split[0]
@@ -781,7 +778,7 @@ class ValidationUtil {
         var strFirstName = strFirstName
         var strLastName = strLastName
         var strEmail = strEmail
-        val context: Context = binding.root.getContext()
+        val context: Context = binding.root.context
         val specialCharPattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE)
         val UpperCasePattern = Pattern.compile("[A-Z ]")
         val lowerCasePattern = Pattern.compile("[a-z ]")

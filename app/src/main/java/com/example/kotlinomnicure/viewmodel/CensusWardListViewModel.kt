@@ -42,25 +42,29 @@ class CensusWardListViewModel : ViewModel() {
 
         //sending body through data class
         val requestBody = HospitalIdRequestBody(hospitalId)
-        ApiClient().getApiHospital(true, true)?.getWards(requestBody)
+        ApiClient().getApiHospital(encrypt = true, decrypt = true)?.getWards(requestBody)
             ?.enqueue(object : Callback<WardPatientListResponse?> {
                 override fun onResponse(
                     call: Call<WardPatientListResponse?>,
                     response: Response<WardPatientListResponse?>
                 ) {
 
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         if (wardListObservable == null) {
                             wardListObservable = MutableLiveData<WardPatientListResponse?>()
                         }
                         wardListObservable!!.setValue(response.body())
                     } else {
-                        if (response.code() == 705) {
-                            errMsg[0] = "redirect"
-                        } else if (response.code() == 403) {
-                            errMsg[0] = "unauthorized"
-                        } else {
-                            errMsg[0] = Constants.API_ERROR
+                        when {
+                            response.code() == 705 -> {
+                                errMsg[0] = "redirect"
+                            }
+                            response.code() == 403 -> {
+                                errMsg[0] = "unauthorized"
+                            }
+                            else -> {
+                                errMsg[0] = Constants.API_ERROR
+                            }
                         }
                         Handler(Looper.getMainLooper()).post {
                             val commonResponse = WardPatientListResponse()
@@ -91,7 +95,7 @@ class CensusWardListViewModel : ViewModel() {
             if (wardListObservable == null) {
                 wardListObservable = MutableLiveData<WardPatientListResponse?>()
             }
-            wardListObservable!!.setValue(response)
+            wardListObservable!!.value = response
         }
     }
 
@@ -101,23 +105,27 @@ class CensusWardListViewModel : ViewModel() {
         val errMsg = arrayOfNulls<String>(1)
         val bodyValues = HashMap<String, String>()
         bodyValues["id"] = id.toString()
-        ApiClient().getApiHospital(true, true)?.hospitallistresponseUser(bodyValues)?.enqueue(object :Callback<HospitalListResponse?>
+        ApiClient().getApiHospital(encrypt = true, decrypt = true)?.hospitallistresponseUser(bodyValues)?.enqueue(object :Callback<HospitalListResponse?>
         {
 
             override fun onResponse(call: Call<HospitalListResponse?>, response: Response<HospitalListResponse?>) {
     //
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         if (hospitalListObservable == null) {
                             hospitalListObservable = MutableLiveData<HospitalListResponse?>()
                         }
                         hospitalListObservable!!.setValue(response.body())
                     } else {
-                        if (response.code() == 705) {
-                            errMsg[0] = "redirect"
-                        } else if (response.code() == 403) {
-                            errMsg[0] = "unauthorized"
-                        } else {
-                            errMsg[0] = Constants.API_ERROR
+                        when {
+                            response.code() == 705 -> {
+                                errMsg[0] = "redirect"
+                            }
+                            response.code() == 403 -> {
+                                errMsg[0] = "unauthorized"
+                            }
+                            else -> {
+                                errMsg[0] = Constants.API_ERROR
+                            }
                         }
                         Handler(Looper.getMainLooper()).post {
                             val commonResponse = HospitalListResponse()
@@ -149,7 +157,7 @@ class CensusWardListViewModel : ViewModel() {
             if (hospitalListObservable == null) {
                 hospitalListObservable = MutableLiveData<HospitalListResponse?>()
             }
-            hospitalListObservable!!.setValue(response)
+            hospitalListObservable!!.value = response
         }
     }
 

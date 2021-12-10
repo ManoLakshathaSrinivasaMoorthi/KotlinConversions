@@ -26,13 +26,13 @@ class PatientOTPViewModel: ViewModel() {
 
 
         val call: Call<CommonResponse?>? =
-            ApiClient().getApiPatientEndpoints(true, true)?.verifyOtp(otpModel)
+            ApiClient().getApiPatientEndpoints(true, decrypt = true)?.verifyOtp(otpModel)
         call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
                 response: Response<CommonResponse?>
             ) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     if (otpVerifyObservable == null) {
                         otpVerifyObservable = MutableLiveData<CommonResponse?>()
                     }
@@ -53,7 +53,7 @@ class PatientOTPViewModel: ViewModel() {
                 if (otpVerifyObservable == null) {
                     otpVerifyObservable = MutableLiveData<CommonResponse?>()
                 }
-                otpVerifyObservable!!.setValue(commonResponse)
+                otpVerifyObservable!!.value = commonResponse
             }
         })
 

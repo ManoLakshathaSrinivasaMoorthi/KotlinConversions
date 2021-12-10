@@ -39,13 +39,13 @@ class ForgotPasswordViewModel:ViewModel() {
 
     private fun doForgotPassword(forgotPasswordRequest: ForgotPasswordRequest) {
         val call: Call<CommonResponse?>? =
-            ApiClient().getApiUserEndpoints(true, true)?.doForgotPassword(forgotPasswordRequest)
+            ApiClient().getApiUserEndpoints(encrypt = true, decrypt = true)?.doForgotPassword(forgotPasswordRequest)
         call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
                 response: Response<CommonResponse?>,
             ) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     if (commonResponseObservable == null) {
                         commonResponseObservable = MutableLiveData<CommonResponse?>()
                     }
@@ -77,14 +77,14 @@ class ForgotPasswordViewModel:ViewModel() {
 
     private fun getCountryCodesRetro() {
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient().getApiUserEndpoints(true, true)?.getCountryCodes()
+        ApiClient().getApiUserEndpoints(encrypt = true, decrypt = true)?.getCountryCodes()
             ?.enqueue(object : Callback<CountryCodeListResponse?> {
                 override fun onResponse(
                     call: Call<CountryCodeListResponse?>,
                     response: Response<CountryCodeListResponse?>,
                 ) {
 
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val countryCodeListResponse: CountryCodeListResponse? = response.body()
                         if (countryListObservable == null) {
                             countryListObservable = MutableLiveData<CountryCodeListResponse?>()

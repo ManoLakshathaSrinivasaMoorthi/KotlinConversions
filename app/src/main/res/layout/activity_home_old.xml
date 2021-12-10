@@ -282,9 +282,9 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/filterText"
                     android:layout_marginLeft="6dp"
-                    android:tint="@color/title_color"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_arrow_drop_down"/>
+                    app:srcCompat="@drawable/ic_arrow_drop_down"
+                    app:tint="@color/title_color" />
 
             </RelativeLayout>
 

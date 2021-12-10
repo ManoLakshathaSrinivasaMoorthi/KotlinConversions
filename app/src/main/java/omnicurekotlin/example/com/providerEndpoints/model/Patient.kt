@@ -2,50 +2,51 @@ package omnicurekotlin.example.com.providerEndpoints.model
 
 class Patient {
 
-    private var acceptTime: Long? = null
-    private var address: String? = null
-    private var appointmentId: Long? = null
-    private var arterialBloodPressureSystolic: Double? = null
-    private var athenaDeviceId: String? = null
-    private var bdProviderId: Long? = null
-    private var bdProviderName: String? = null
-    private var bed: String? = null
-    private var countryCode: String? = null
-    private var dischargeMessage: String? = null
-    private var dischargeTime: Long? = null
-    private var dob: Long? = null
-    private var dobDay: Int? = null
-    private var dobMonth: String? = null
-    private var dobYear: Int? = null
-    private var docBoxManagerId: String? = null
-    private var docBoxPatientId: String? = null
-    private var email: String? = null
-    private var fname: String? = null
-    private var gender: String? = null
-    private var heartRate: Double? = null
-    private var hospital: String? = null
-    private var hospitalId: Long? = null
-    private var id: Long? = null
-    private var inviteTime: Long? = null
-    private var joiningTime: Long? = null
-    private var lastMessageTime: Long? = null
-    private var lname: String? = null
-    private var name: String? = null
-    private var note: String? = null
-    private var oxygenSupplement: Boolean? = null
-    private var patientCondition: String? = null
-    private var phone: String? = null
-    private var picUrl: String? = null
-    private var rdProviderId: Long? = null
-    private var rdProviderName: String? = null
-    private var respiratoryRate: Double? = null
-    private var score: String? = null
-    private var spO2: Double? = null
-    private var status: String? = null
-    private var urgent: Boolean? = null
-  var wardName: String? = null
-   var recordNumber: String? = null
+     var acceptTime: Long? = null
+     var address: String? = null
+     var appointmentId: Long? = null
+     var arterialBloodPressureSystolic: Double? = null
+     var athenaDeviceId: String? = null
+     var bdProviderId: Long? = null
+     var bdProviderName: String? = null
+     var bed: String? = null
+     var countryCode: String? = null
+     var dischargeMessage: String? = null
+     var dischargeTime: Long? = null
+     var dob: Long? = null
+     var dobDay: Int? = null
+     var dobMonth: String? = null
+     var dobYear: Int? = null
+     var docBoxManagerId: String? = null
+     var docBoxPatientId: String? = null
+     var email: String? = null
+     var fname: String? = null
+     var gender: String? = null
+     var heartRate: Double? = null
+     var hospital: String? = null
+     var hospitalId: Long? = null
+     var id: Long? = null
+     var inviteTime: Long? = null
+     var joiningTime: Long? = null
+     var lastMessageTime: Long? = null
+     var lname: String? = null
+     var name: String? = null
+     var note: String? = null
+     var oxygenSupplement: Boolean? = null
+     var patientCondition: String? = null
+     var phone: String? = null
+     var picUrl: String? = null
+     var rdProviderId: Long? = null
+     var rdProviderName: String? = null
+     var respiratoryRate: Double? = null
+     var score: String? = null
+     var spO2: Double? = null
+     var status: String? = null
+     var urgent: Boolean? = null
+     var wardName: String? = null
+     var recordNumber: String? = null
 
+    @JvmName("getAcceptTime1")
     fun getAcceptTime(): Long? {
         return acceptTime
     }
@@ -57,6 +58,7 @@ class Patient {
     }
 
 
+    @JvmName("getAddress1")
     fun getAddress(): String? {
         return address
     }
@@ -67,6 +69,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getAppointmentId1")
     fun getAppointmentId(): Long? {
         return appointmentId
     }
@@ -78,6 +81,7 @@ class Patient {
     }
 
 
+    @JvmName("getArterialBloodPressureSystolic1")
     fun getArterialBloodPressureSystolic(): Double? {
         return arterialBloodPressureSystolic
     }
@@ -88,6 +92,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getAthenaDeviceId1")
     fun getAthenaDeviceId(): String? {
         return athenaDeviceId
     }
@@ -98,6 +103,7 @@ class Patient {
     }
 
 
+    @JvmName("getBdProviderId1")
     fun getBdProviderId(): Long? {
         return bdProviderId
     }
@@ -109,6 +115,7 @@ class Patient {
     }
 
 
+    @JvmName("getBdProviderName1")
     fun getBdProviderName(): String? {
         return bdProviderName
     }
@@ -120,6 +127,7 @@ class Patient {
     }
 
 
+    @JvmName("getBed1")
     fun getBed(): String? {
         return bed
     }
@@ -131,6 +139,7 @@ class Patient {
     }
 
 
+    @JvmName("getCountryCode1")
     fun getCountryCode(): String? {
         return countryCode
     }
@@ -141,6 +150,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getDischargeMessage1")
     fun getDischargeMessage(): String? {
         return dischargeMessage
     }
@@ -151,6 +161,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getDischargeTime1")
     fun getDischargeTime(): Long? {
         return dischargeTime
     }
@@ -162,6 +173,7 @@ class Patient {
     }
 
 
+    @JvmName("getDob1")
     fun getDob(): Long? {
         return dob
     }
@@ -173,6 +185,7 @@ class Patient {
     }
 
 
+    @JvmName("getDobDay1")
     fun getDobDay(): Int? {
         return dobDay
     }
@@ -182,9 +195,8 @@ class Patient {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDobMonth1")
     fun getDobMonth(): String? {
         return dobMonth
     }
@@ -196,6 +208,7 @@ class Patient {
     }
 
 
+    @JvmName("getDobYear1")
     fun getDobYear(): Int? {
         return dobYear
     }
@@ -206,6 +219,7 @@ class Patient {
     }
 
 
+    @JvmName("getDocBoxManagerId1")
     fun getDocBoxManagerId(): String? {
         return docBoxManagerId
     }
@@ -217,6 +231,7 @@ class Patient {
     }
 
 
+    @JvmName("getDocBoxPatientId1")
     fun getDocBoxPatientId(): String? {
         return docBoxPatientId
     }
@@ -228,6 +243,7 @@ class Patient {
     }
 
 
+    @JvmName("getEmail1")
     fun getEmail(): String? {
         return email
     }
@@ -239,6 +255,7 @@ class Patient {
     }
 
 
+    @JvmName("getFname1")
     fun getFname(): String? {
         return fname
     }
@@ -250,6 +267,7 @@ class Patient {
     }
 
 
+    @JvmName("getGender1")
     fun getGender(): String? {
         return gender
     }
@@ -261,6 +279,7 @@ class Patient {
     }
 
 
+    @JvmName("getHeartRate1")
     fun getHeartRate(): Double? {
         return heartRate
     }
@@ -271,6 +290,7 @@ class Patient {
     }
 
 
+    @JvmName("getHospital1")
     fun getHospital(): String? {
         return hospital
     }
@@ -281,6 +301,7 @@ class Patient {
     }
 
 
+    @JvmName("getHospitalId1")
     fun getHospitalId(): Long? {
         return hospitalId
     }
@@ -292,6 +313,7 @@ class Patient {
     }
 
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -303,6 +325,7 @@ class Patient {
     }
 
 
+    @JvmName("getInviteTime1")
     fun getInviteTime(): Long? {
         return inviteTime
     }
@@ -313,6 +336,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getJoiningTime1")
     fun getJoiningTime(): Long? {
         return joiningTime
     }
@@ -324,6 +348,7 @@ class Patient {
     }
 
 
+    @JvmName("getLastMessageTime1")
     fun getLastMessageTime(): Long? {
         return lastMessageTime
     }
@@ -333,6 +358,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getLname1")
     fun getLname(): String? {
         return lname
     }
@@ -344,6 +370,7 @@ class Patient {
     }
 
 
+    @JvmName("getName1")
     fun getName(): String? {
         return name
     }
@@ -355,6 +382,7 @@ class Patient {
     }
 
 
+    @JvmName("getNote1")
     fun getNote(): String? {
         return note
     }
@@ -366,6 +394,7 @@ class Patient {
     }
 
 
+    @JvmName("getOxygenSupplement1")
     fun getOxygenSupplement(): Boolean? {
         return oxygenSupplement
     }
@@ -376,6 +405,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getPatientCondition1")
     fun getPatientCondition(): String? {
         return patientCondition
     }
@@ -385,6 +415,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getPhone1")
     fun getPhone(): String? {
         return phone
     }
@@ -395,6 +426,7 @@ class Patient {
     }
 
 
+    @JvmName("getPicUrl1")
     fun getPicUrl(): String? {
         return picUrl
     }
@@ -404,6 +436,7 @@ class Patient {
         return this
     }
 
+    @JvmName("getRdProviderId1")
     fun getRdProviderId(): Long? {
         return rdProviderId
     }
@@ -414,6 +447,7 @@ class Patient {
     }
 
 
+    @JvmName("getRdProviderName1")
     fun getRdProviderName(): String? {
         return rdProviderName
     }
@@ -424,6 +458,7 @@ class Patient {
     }
 
 
+    @JvmName("getRespiratoryRate1")
     fun getRespiratoryRate(): Double? {
         return respiratoryRate
     }
@@ -435,45 +470,47 @@ class Patient {
     }
 
 
+    @JvmName("getScore1")
     fun getScore(): String? {
         return score
     }
 
 
-    fun setScore(score: String?): Patient? {
+    fun setScore(score: String?): Patient {
         this.score = score
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getSpO21")
     fun getSpO2(): Double? {
         return spO2
     }
 
 
-    fun setSpO2(spO2: Double?): Patient? {
+    fun setSpO2(spO2: Double?): Patient {
         this.spO2 = spO2
         return this
     }
 
 
+    @JvmName("getStatus1")
     fun getStatus(): String? {
         return status
     }
 
-    fun setStatus(status: String?): Patient? {
+    fun setStatus(status: String?): Patient {
         this.status = status
         return this
     }
 
 
+    @JvmName("getUrgent1")
     fun getUrgent(): Boolean? {
         return urgent
     }
 
-    fun setUrgent(urgent: Boolean?): Patient? {
+    fun setUrgent(urgent: Boolean?): Patient {
         this.urgent = urgent
         return this
     }

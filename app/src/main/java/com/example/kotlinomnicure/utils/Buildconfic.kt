@@ -1,6 +1,6 @@
 package com.example.kotlinomnicure.utils
 
-object Buildconfic {
+class Buildconfic {
     var appname = ""
     fun value(): String {
         if (BuildConfig.SERVER.equalsIgnoreCase("ext_test")) {

@@ -15,8 +15,6 @@ import omnicurekotlin.example.com.providerEndpoints.model.ProviderListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
-import java.net.SocketTimeoutException
 
 class GroupCallViewModel: ViewModel() {
     private var providerListObservable: MutableLiveData<ProviderListResponse?>? = null
@@ -40,13 +38,13 @@ class GroupCallViewModel: ViewModel() {
 
     private fun MultiplecallRetro(content: GroupCall) {
         val call: Call<CommonResponse?>? =
-            ApiClient().getApiProviderEndpoints(true, true)?.Multiplecall(content)
+            ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)?.Multiplecall(content)
         call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
                 response: Response<CommonResponse?>,
             ) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
 
                     if (providerObservable == null) {
                         providerObservable = MutableLiveData<CommonResponse?>()
@@ -82,13 +80,13 @@ class GroupCallViewModel: ViewModel() {
 
         //Backend changed the endpoint.
         val url = "providerEndpoints/v1/getProviderListBackup/"
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)
             ?.getProviderList(url, GetProviderListRequestBody(role, token, providerId))
             ?.enqueue(object : Callback<ProviderListResponse?> {
                 override fun onResponse(
                     call: Call<ProviderListResponse?>,
                     response: Response<ProviderListResponse?>, ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
 
                         val commonResponse: ProviderListResponse? = response.body()
                         if (providerListObservable == null) {
@@ -98,7 +96,7 @@ class GroupCallViewModel: ViewModel() {
                     } else {
 
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse:ProviderListResponse = ProviderListResponse()
+                            val commonResponse = ProviderListResponse()
                             commonResponse.setErrorMessage(Constants.API_ERROR)
                             if (providerListObservable == null) {
                                 providerListObservable = MutableLiveData<ProviderListResponse?>()
@@ -112,7 +110,7 @@ class GroupCallViewModel: ViewModel() {
                     call: Call<ProviderListResponse?>, t: Throwable, ) {
 
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: ProviderListResponse =
+                        val commonResponse =
                             ProviderListResponse()
                         commonResponse.setErrorMessage(Constants.API_ERROR)
                         if (providerListObservable == null) {
@@ -124,7 +122,7 @@ class GroupCallViewModel: ViewModel() {
             })
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: ProviderListResponse =
+                val commonResponse =
                     ProviderListResponse()
                 commonResponse.setErrorMessage(errMsg)
                 if (providerListObservable == null) {

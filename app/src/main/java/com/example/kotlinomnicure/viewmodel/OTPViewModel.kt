@@ -1,8 +1,5 @@
 package com.example.kotlinomnicure.viewmodel
 
-import android.os.Handler
-import android.os.Looper
-import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +8,6 @@ import omnicurekotlin.example.com.userEndpoints.RetrofitService
 import omnicurekotlin.example.com.userEndpoints.UserEndpointsRetrofit
 import omnicurekotlin.example.com.userEndpoints.model.CommonResponse
 import retrofit2.Response
-import java.net.SocketTimeoutException
 
 class OTPViewModel:ViewModel() {
     private var providerObservable: MutableLiveData<CommonResponse>? = null

@@ -38,7 +38,7 @@ class HandOffPatientViewModel:ViewModel() {
     }
 
     private fun getHandOffListRetro(providerId: Long) {
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)
             ?.bSPHandOffList(CommonProviderIdBody(providerId))
             ?.enqueue(object : Callback<HandOffListResponse?> {
                 override fun onResponse(
@@ -71,10 +71,9 @@ class HandOffPatientViewModel:ViewModel() {
 
 
     private fun sendBedSideHandOffPatient(patientHandOffRequest: PatientHandOffRequest) {
-        val call = ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)
             ?.sendBedSideHandOffPatient(patientHandOffRequest)
-        if (call != null) {
-            call.enqueue(object : Callback<CommonResponse?> {
+            ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
@@ -103,13 +102,12 @@ class HandOffPatientViewModel:ViewModel() {
                     sendHandOffResponseObservable!!.value = commonResponse
                 }
             })
-        }
 
 
     }
 
 
-    protected override fun onCleared() {
+    override fun onCleared() {
         super.onCleared()
         commonResponseMutableLiveData = null
     }

@@ -309,7 +309,7 @@ class PinEntryView : ViewGroup {
         return accentColor
     }
 
-    fun getMask(): String? {
+    fun getMask(): String {
         return mask
     }
 

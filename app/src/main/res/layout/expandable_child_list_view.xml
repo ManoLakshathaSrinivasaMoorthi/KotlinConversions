@@ -17,7 +17,7 @@
             android:layout_height="@dimen/margin_25"
             android:layout_gravity="center">
 
-            <com.mvp.omnicure.customview.CircularImageView
+            <com.example.kotlinomnicure.customview.CircularImageView
                 android:id="@+id/id_profile_img"
                 android:layout_width="@dimen/margin_35"
                 android:layout_height="@dimen/margin_35"

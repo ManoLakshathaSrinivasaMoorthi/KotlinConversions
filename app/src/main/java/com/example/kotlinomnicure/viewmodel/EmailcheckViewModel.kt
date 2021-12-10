@@ -26,7 +26,7 @@ class EmailcheckViewModel {
 
     private fun emailcheckRetro(provider: Provider) {
         val errMsg = arrayOfNulls<String>(1)
-        ApiClient().getApiUserEndpoints(true, true)?.emailcheckprovider(provider)
+        ApiClient().getApiUserEndpoints(true, decrypt = true)?.emailcheckprovider(provider)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,

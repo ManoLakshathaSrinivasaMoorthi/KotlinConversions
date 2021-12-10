@@ -1,15 +1,13 @@
 package com.example.kotlinomnicure.backend
 
-//import omnicurekotlin.example.com.providerEndpoints.model.ProviderEndpoints
 import android.util.Log
-import com.example.kotlinomnicure.apiRetrofit.UserEndpoints
-import com.example.kotlinomnicure.utils.BuildConfigConstants
+import omnicurekotlin.example.com.providerEndpoints.ProviderEndPoints
+
 import okhttp3.OkHttpClient
-import omnicurekotlin.example.com.userEndpoints.UserEndpointsRetrofit
 
 class EndPointBuilder {
 
- /* private var providerEndpoints: ProviderEndpoints? = null
+  private var providerEndpoints: ProviderEndPoints?=null
   private var userEndpoints: UserEndpoints? = null
   private var loginEndpoints: LoginEndpoints? = null
   private var patientEndpoints: PatientEndpoints? = null
@@ -119,5 +117,5 @@ class EndPointBuilder {
       appointmentEndpoints = builder.build()
     }
     return appointmentEndpoints
-  }*/
+  }
 }

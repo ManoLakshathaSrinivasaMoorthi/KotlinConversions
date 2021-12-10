@@ -71,12 +71,12 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="0.1"
                                 android:padding="@dimen/margin_4"
-                                android:tint="@color/white"
-                                app:srcCompat="@drawable/ic_menu_icon" />
+                                app:srcCompat="@drawable/ic_menu_icon"
+                                app:tint="@color/white" />
 
                             <TextView
                                 android:id="@+id/id_toolbar_title"
-                                fontPath="fonts/FiraSans-Medium.ttf"
+                                android:fontPath="fonts/FiraSans-Medium.ttf"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -95,8 +95,8 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="0.1"
                                 android:padding="@dimen/margin_4"
-                                android:tint="@color/white"
-                                app:srcCompat="@drawable/ic_search_white" />
+                                app:srcCompat="@drawable/ic_search_white"
+                                app:tint="@color/white" />
 
                             <ImageView
                                 android:id="@+id/id_dot"
@@ -302,8 +302,8 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginLeft="6dp"
                                     android:layout_toRightOf="@+id/filterText"
-                                    android:tint="@color/title_color"
-                                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+                                    app:srcCompat="@drawable/ic_arrow_drop_down"
+                                    app:tint="@color/title_color" />
 
                             </RelativeLayout>
 

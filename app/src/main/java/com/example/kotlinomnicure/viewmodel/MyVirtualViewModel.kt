@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.example.kotlinomnicure.apiRetrofit.ApiClient
 import com.example.kotlinomnicure.utils.Constants
 import com.mvp.omnicure.kotlinactivity.requestbodys.CommonProviderIdBody
-import omnicurekotlin.example.com.providerEndpoints.model.CommonResponse
 import omnicurekotlin.example.com.providerEndpoints.model.ProviderListResponse
 import omnicurekotlin.example.com.providerEndpoints.model.TeamsDetailListResponse
 import omnicurekotlin.example.com.userEndpoints.RetrofitService
@@ -29,7 +28,7 @@ class MyVirtualViewModel:ViewModel() {
     private fun teams(providerId: Long?) {
 
         val call: Call<TeamsDetailListResponse?>? =
-            ApiClient().getApiProviderEndpoints(true, true)?.virtualTeams(providerId?.let {
+            ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)?.virtualTeams(providerId?.let {
                 CommonProviderIdBody(it)
             })
 
@@ -64,7 +63,7 @@ class MyVirtualViewModel:ViewModel() {
                 if (commonResponseMutableLiveData == null) {
                     commonResponseMutableLiveData = MutableLiveData<TeamsDetailListResponse>()
                 }
-                commonResponseMutableLiveData!!.setValue(commonResponse)
+                commonResponseMutableLiveData!!.value = commonResponse
             }
         })
     }

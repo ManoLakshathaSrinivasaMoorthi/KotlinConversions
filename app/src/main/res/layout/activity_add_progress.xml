@@ -52,8 +52,8 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_gravity="center"
-							android:tint="@color/white"
-							app:srcCompat="@drawable/ic_back" />
+							app:srcCompat="@drawable/ic_back"
+							app:tint="@color/white" />
 
 					</LinearLayout>
 
@@ -184,8 +184,8 @@
 					android:layout_height="wrap_content"
 					android:layout_alignParentRight="true"
 					android:layout_alignBottom="@id/eNoteText"
-					android:tint="@color/login_hint_color"
-					android:src="@drawable/ic_info_24"/>
+					android:src="@drawable/ic_info_24"
+					app:tint="@color/login_hint_color" />
 			</RelativeLayout>
 
 

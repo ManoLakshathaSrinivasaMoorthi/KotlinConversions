@@ -26,12 +26,12 @@ class ResetPasswordViewModel : ViewModel(){
     private fun doResetPassword(resetPasswordRequest: ResetPasswordRequest) {
         val errMsg = arrayOfNulls<String>(1)
         val call: Call<CommonResponse?>? =
-            ApiClient().getApiUserEndpoints(true, true)?.resetPassword(resetPasswordRequest)
+            ApiClient().getApiUserEndpoints(encrypt = true, decrypt = true)?.resetPassword(resetPasswordRequest)
         call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
                 response: Response<CommonResponse?>) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     if (commonResponseObservable == null) {
                         commonResponseObservable = MutableLiveData<CommonResponse?>()
                     }

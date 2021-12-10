@@ -5,43 +5,22 @@ import com.example.kotlinomnicure.model.ENotesList
 class CommonResponse {
 
 
-    private var activeList: List<Patient?>? = null
-    private var dischargedCount: Int? = null
-
-    private var dischargedList: List<Patient?>? = null
-
-    private var errorId: Int? = null
-
-    var errorMessage: String? = null
-
-    private val eNotesActivity: List<ENotesList>? = null
-
-    private var title: String? = null
-
-    private var id: Long? = null
-
-
-    private var pendingList: List<Patient?>? = null
-
-
-    private var provider: Provider? = null
-
-
-    private var providerList: List<Provider?>? = null
-
-
-    private var room: Room? = null
-
-
-    var status: Boolean? = null
-
-    var auditId:String?=null
-
-
-    private var unit: Unit? = null
-
-
-    private var ward: Ward? = null
+     var activeList: List<Patient?>? = null
+     var dischargedCount: Int? = null
+     var dischargedList: List<Patient?>? = null
+     var errorId: Int? = null
+     var errorMessage: String? = null
+     val eNotesActivity: List<ENotesList>? = null
+     var title: String? = null
+     var id: Long? = null
+     var pendingList: List<Patient?>? = null
+     var provider: Provider? = null
+     var providerList: List<Provider?>? = null
+     var room: Room? = null
+     var status: Boolean? = null
+     var auditId:String?=null
+     var unit: Unit? = null
+     var ward: Ward? = null
 
 
 
@@ -51,13 +30,12 @@ class CommonResponse {
         return errorMessage
     }
 
-    /**
-     * @param errorMessage errorMessage or `null` for none
-     */
+
     fun setErrorMessage(errorMessage: String?): CommonResponse {
         this.errorMessage = errorMessage
         return this
     }
+    @JvmName("getActiveList1")
     fun getActiveList(): List<Patient?>? {
         return activeList
     }
@@ -69,6 +47,7 @@ class CommonResponse {
     }
 
 
+    @JvmName("getDischargedCount1")
     fun getDischargedCount(): Int? {
         return dischargedCount
     }
@@ -79,9 +58,8 @@ class CommonResponse {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getDischargedList1")
     fun getDischargedList(): List<Patient?>? {
         return dischargedList
     }
@@ -89,24 +67,14 @@ class CommonResponse {
         return eNotesActivity
     }
 
-   /* fun getAuditId(): String? {
-        return auditId
-    }
 
-    fun setAuditId(auditId: String) {
-        auditId = auditId
-    }*/
-    /**
-     * @param dischargedList dischargedList or `null` for none
-     */
     fun setDischargedList(dischargedList: List<Patient?>?): CommonResponse {
         this.dischargedList = dischargedList
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -117,25 +85,18 @@ class CommonResponse {
         return this
     }
 
-/*
-    fun getErrorMessage(): String? {
-        return errorMessage
-    }
 
-
-    fun setErrorMessage(errorMessage: String?):CommonResponse? {
-        this.errorMessage = errorMessage
-        return this
-    }*/
-
+    @JvmName("getTitle1")
     fun getTitle(): String? {
         return title
     }
 
+    @JvmName("setTitle1")
     fun setTitle(title: String?) {
         this.title = title
     }
 
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
@@ -147,6 +108,7 @@ class CommonResponse {
     }
 
 
+    @JvmName("getPendingList1")
     fun getPendingList(): List<Patient?>? {
         return pendingList
     }
@@ -157,6 +119,7 @@ class CommonResponse {
     }
 
 
+    @JvmName("getProvider1")
     fun getProvider(): Provider? {
         return provider
     }
@@ -167,21 +130,19 @@ class CommonResponse {
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getProviderList1")
     fun getProviderList(): List<Provider?>? {
         return providerList
     }
 
-    /**
-     * @param providerList providerList or `null` for none
-     */
+
     fun setProviderList(providerList: List<Provider?>?):CommonResponse {
         this.providerList = providerList
         return this
     }
 
+    @JvmName("getRoom1")
     fun getRoom(): Room? {
         return room
     }
@@ -194,17 +155,9 @@ class CommonResponse {
 
 
 
-  /*  fun getStatus(): Boolean? {
-        return status
-    }
 
 
-    fun setStatus(status: Boolean?):CommonResponse? {
-        this.status = status
-        return this
-    }*/
-
-
+    @JvmName("getUnit1")
     fun getUnit(): Unit? {
         return unit
     }
@@ -216,6 +169,7 @@ class CommonResponse {
     }
 
 
+    @JvmName("getWard1")
     fun getWard(): Ward? {
         return ward
     }

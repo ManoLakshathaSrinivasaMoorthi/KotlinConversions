@@ -36,22 +36,26 @@ class ChatUtils {
 
     }
 
-    fun getStatusDateFormat(milliSeconds: Long): String? {
+    fun getStatusDateFormat(milliSeconds: Long): String {
         try {
             val smsTime = Calendar.getInstance()
             smsTime.timeInMillis = milliSeconds
             val now = Calendar.getInstance()
             val date = Date(milliSeconds)
-            var dateFormat = ""
+            val dateFormat: String
             var prefix = ""
-            if (DateUtils.isToday(date.time)) {
-                prefix = "Today "
-                dateFormat = "hh:mma"
-            } else if (now[Calendar.DATE] - smsTime[Calendar.DATE] == 1) {
-                prefix = "Yesterday "
-                dateFormat = "hh:mma"
-            } else {
-                dateFormat = "MMM dd, yyyy hh:mma"
+            when {
+                DateUtils.isToday(date.time) -> {
+                    prefix = "Today "
+                    dateFormat = "hh:mma"
+                }
+                now[Calendar.DATE] - smsTime[Calendar.DATE] == 1 -> {
+                    prefix = "Yesterday "
+                    dateFormat = "hh:mma"
+                }
+                else -> {
+                    dateFormat = "MMM dd, yyyy hh:mma"
+                }
             }
             val formatter = SimpleDateFormat(dateFormat, Locale.ENGLISH)
             formatter.timeZone = TimeZone.getDefault()
@@ -82,7 +86,7 @@ class ChatUtils {
     fun getDateFormat(milliSeconds: Long): String? {
         return getDateFormat(milliSeconds, "dd MMM yyyy")
     }
-    fun getDateFormatViewDetail(milliSeconds: Long): String? {
+    fun getDateFormatViewDetail(milliSeconds: Long): String {
         try {
             val smsTime = Calendar.getInstance()
             smsTime.timeInMillis = milliSeconds
@@ -90,12 +94,16 @@ class ChatUtils {
             val date = Date(milliSeconds)
             var dateFormat = ""
             var prefix = ""
-            if (DateUtils.isToday(date.time)) {
-                prefix = "Today "
-            } else if (now[Calendar.DATE] - smsTime[Calendar.DATE] == 1) {
-                prefix = "Yesterday"
-            } else {
-                dateFormat = "MMM dd,yyyy"
+            when {
+                DateUtils.isToday(date.time) -> {
+                    prefix = "Today "
+                }
+                now[Calendar.DATE] - smsTime[Calendar.DATE] == 1 -> {
+                    prefix = "Yesterday"
+                }
+                else -> {
+                    dateFormat = "MMM dd,yyyy"
+                }
             }
             val formatter = SimpleDateFormat(dateFormat, Locale.ENGLISH)
             formatter.timeZone = TimeZone.getDefault()

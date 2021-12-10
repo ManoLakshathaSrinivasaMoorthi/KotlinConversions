@@ -4,7 +4,7 @@ package com.example.kotlinomnicure.utils
 import okhttp3.OkHttpClient
 import java.lang.Exception
 
-object BuildConfigConstants {
+class BuildConfigConstants {
     private const val TAG = "BuildConfig"
   //  private var credential: GoogleCredential? = null
     var backendAppName = "omnicure"

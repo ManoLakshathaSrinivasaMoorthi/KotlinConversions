@@ -5,7 +5,7 @@ import com.example.kotlinomnicure.R
 import com.example.kotlinomnicure.activity.*
 
 class ErrorMessages {
-    fun getErrorMessage(`object`: Any, errMsg: String?, api: Constants.API?): String? {
+    fun getErrorMessage(`object`: Any, errMsg: String?, api: Constants.API?): String {
         return if (errMsg == null) {
             ""
         }/* else if (`object` is RegistrationActivity) {
@@ -88,6 +88,7 @@ class ErrorMessages {
                 return context.resources.getString(R.string.api_error)
             }
 
+            else -> return ""
         }
         return errMsg
     }
@@ -194,6 +195,7 @@ class ErrorMessages {
             ) {
                 return context.resources.getString(R.string.api_error)
             }
+            else -> return ""
         }
         return errMsg
     }
@@ -232,6 +234,7 @@ class ErrorMessages {
             ) {
                 return context.resources.getString(R.string.api_error)
             }
+            else -> return ""
         }
         return errMsg
     }
@@ -271,7 +274,7 @@ class ErrorMessages {
                 return context.resources.getString(R.string.api_error)
             }
             Constants.API.dischargePatient -> if (b) {
-                val role: String? = PrefUtility().getRole(context)
+                val role: String = PrefUtility().getRole(context)
                 return if (role.equals(Constants.ProviderRole.RD.toString(), ignoreCase = true)) {
                     context.getString(R.string.consultation_complete_err_mgs)
                 } else {
@@ -293,6 +296,7 @@ class ErrorMessages {
             ) {
                 return context.resources.getString(R.string.api_error)
             }
+            else -> return ""
         }
         return errMsg
     }

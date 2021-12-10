@@ -2,99 +2,94 @@ package omnicurekotlin.example.com.providerEndpoints.model
 
 class Role {
 
-    private var accessType: String? = null
-    private var id: Long? = null
-    private var providerId: Long? = null
-    private var roleType: String? = null
-    private var time: Long? = null
-    private var typeId: String? = null
-    private var typeName: String? = null
+     var accessType: String? = null
+     var id: Long? = null
+     var providerId: Long? = null
+     var roleType: String? = null
+     var time: Long? = null
+     var typeId: String? = null
+     var typeName: String? = null
 
 
+    @JvmName("getAccessType1")
     fun getAccessType(): String? {
         return accessType
     }
 
 
-    fun setAccessType(accessType: String?): Role? {
+    fun setAccessType(accessType: String?): Role {
         this.accessType = accessType
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getId1")
     fun getId(): Long? {
         return id
     }
 
 
-    fun setId(id: Long?):Role? {
+    fun setId(id: Long?): Role {
         this.id = id
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getProviderId1")
     fun getProviderId(): Long? {
         return providerId
     }
 
-    /**
-     * @param providerId providerId or `null` for none
-     */
-    fun setProviderId(providerId: Long?): Role? {
+
+    fun setProviderId(providerId: Long?): Role {
         this.providerId = providerId
         return this
     }
 
 
+    @JvmName("getRoleType1")
     fun getRoleType(): String? {
         return roleType
     }
 
-    /**
-     * @param roleType roleType or `null` for none
-     */
-    fun setRoleType(roleType: String?): Role? {
+
+    fun setRoleType(roleType: String?): Role {
         this.roleType = roleType
         return this
     }
 
-    /**
-     * @return value or `null` for none
-     */
+
+    @JvmName("getTime1")
     fun getTime(): Long? {
         return time
     }
 
-    /**
-     * @param time time or `null` for none
-     */
-    fun setTime(time: Long?): Role? {
+
+    fun setTime(time: Long?): Role {
         this.time = time
         return this
     }
 
 
+    @JvmName("getTypeId1")
     fun getTypeId(): String? {
         return typeId
     }
 
 
-    fun setTypeId(typeId: String?):Role? {
+    fun setTypeId(typeId: String?): Role {
         this.typeId = typeId
         return this
     }
 
 
+    @JvmName("getTypeName1")
     fun getTypeName(): String? {
         return typeName
     }
 
 
-    fun setTypeName(typeName: String?): Role? {
+    fun setTypeName(typeName: String?): Role {
         this.typeName = typeName
         return this
     }

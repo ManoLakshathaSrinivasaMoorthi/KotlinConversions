@@ -69,7 +69,7 @@ class CallActivityViewModel :ViewModel(){
     ) {
         val errMsg = arrayOfNulls<String>(1)
 
-        ApiClient().getApiProviderEndpoints(true, true)?.sendMessageOnTopic(SendMessageOnTopicRequestBody(
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)?.sendMessageOnTopic(SendMessageOnTopicRequestBody(
                 callerId,
                 token,
                 channel,
@@ -79,19 +79,23 @@ class CallActivityViewModel :ViewModel(){
                     response: Response<CommonResponseRetro?>,
                 ) {
 
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val commonResponse: CommonResponseRetro? = response.body()
                         if (sosDismissObservable == null) {
                             sosDismissObservable = MutableLiveData<CommonResponseRetro?>()
                         }
                         sosDismissObservable!!.setValue(commonResponse)
                     } else {
-                        if (response.code() == 705) {
-                            errMsg[0] = "redirect"
-                        } else if (response.code() == 403) {
-                            errMsg[0] = "unauthorized"
-                        } else {
-                            errMsg[0] = Constants.API_ERROR
+                        when {
+                            response.code() == 705 -> {
+                                errMsg[0] = "redirect"
+                            }
+                            response.code() == 403 -> {
+                                errMsg[0] = "unauthorized"
+                            }
+                            else -> {
+                                errMsg[0] = Constants.API_ERROR
+                            }
                         }
                         Handler(Looper.getMainLooper()).post {
                             val commonResponse = CommonResponseRetro()
@@ -134,14 +138,14 @@ class CallActivityViewModel :ViewModel(){
         val errMsg = arrayOf("")
 
         val url = "providerEndpoints/v1/getProviderById"
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)
             ?.getProviderById(url, GetProviderByIdRequestBody(providerId, token, id))
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
 //
                         val commonResponse:CommonResponse? =
                             response.body()
@@ -152,12 +156,16 @@ class CallActivityViewModel :ViewModel(){
                         providerObservable!!.setValue(commonResponse)
                     } else {
 //                            Log.d("Verifytags", "onResponse: " + response.code());
-                        if (response.code() == 705) {
-                            errMsg[0] = "redirect"
-                        } else if (response.code() == 403) {
-                            errMsg[0] = "unauthorized"
-                        } else {
-                            errMsg[0] = Constants.API_ERROR
+                        when {
+                            response.code() == 705 -> {
+                                errMsg[0] = "redirect"
+                            }
+                            response.code() == 403 -> {
+                                errMsg[0] = "unauthorized"
+                            }
+                            else -> {
+                                errMsg[0] = Constants.API_ERROR
+                            }
                         }
                         Handler(Looper.getMainLooper()).post {
                             val commonResponse: CommonResponse =
@@ -193,7 +201,7 @@ class CallActivityViewModel :ViewModel(){
         if (!TextUtils.isEmpty(errMsg[0])) {
             val finalErrMsg = errMsg[0]
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: CommonResponse =
+                val commonResponse =
                     CommonResponse()
                 commonResponse.setErrorMessage(finalErrMsg)
                 if (providerObservable == null) {
@@ -214,26 +222,30 @@ class CallActivityViewModel :ViewModel(){
         val requestBody = SaveAuditCallRequestBody(auditId, callStatus, type, pid)
 
 
-        ApiClient().getApiProviderEndpoints(true, true)?.saveAuditCall(requestBody)
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)?.saveAuditCall(requestBody)
             ?.enqueue(object : Callback<CommonResponseRetro?> {
                 override fun onResponse(
                     call: Call<CommonResponseRetro?>,
                     response: Response<CommonResponseRetro?>,
                 ) {
 
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val providerResponse: CommonResponseRetro? = response.body()
                         if (callAuditObservable == null) {
                             callAuditObservable = MutableLiveData<CommonResponseRetro?>()
                         }
                         callAuditObservable!!.setValue(providerResponse)
                     } else {
-                        if (response.code() == 705) {
-                            errMsg[0] = "redirect"
-                        } else if (response.code() == 403) {
-                            errMsg[0] = "unauthorized"
-                        } else {
-                            errMsg[0] = Constants.API_ERROR
+                        when {
+                            response.code() == 705 -> {
+                                errMsg[0] = "redirect"
+                            }
+                            response.code() == 403 -> {
+                                errMsg[0] = "unauthorized"
+                            }
+                            else -> {
+                                errMsg[0] = Constants.API_ERROR
+                            }
                         }
                         Handler(Looper.getMainLooper()).post {
                             val commonResponse = CommonResponseRetro()
@@ -269,7 +281,7 @@ class CallActivityViewModel :ViewModel(){
         }
     }
 
-    protected override fun onCleared() {
+    override fun onCleared() {
         super.onCleared()
         providerObservable = null
         callAuditObservable = null

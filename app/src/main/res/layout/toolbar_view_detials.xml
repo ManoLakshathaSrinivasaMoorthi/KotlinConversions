@@ -39,8 +39,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/margin_4"
-                    android:tint="@color/white"
-                    app:srcCompat="@drawable/ic_back" />
+                    app:srcCompat="@drawable/ic_back"
+                    ads:tint="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -104,17 +104,17 @@
                                 android:id="@+id/img_detail_down"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:tint="@color/white"
                                 android:visibility="visible"
-                                app:srcCompat="@drawable/ic_downward" />
+                                app:srcCompat="@drawable/ic_downward"
+                                ads:tint="@color/white" />
 
                             <ImageView
                                 android:id="@+id/img_detail_up"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:tint="@color/white"
                                 android:visibility="gone"
-                                app:srcCompat="@drawable/ic_upward" />
+                                app:srcCompat="@drawable/ic_upward"
+                                ads:tint="@color/white" />
                         </LinearLayout>
 
                     </LinearLayout>

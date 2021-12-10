@@ -99,10 +99,12 @@ class CustomDialog(context: Context?) : Dialog(context!!) {
         positive!!.background = getContext().getResources().getDrawable(drawable)
     }
 
+    @JvmName("getPositiveButtonColor1")
     fun getPositiveButtonColor(): Int {
         return positiveButtonColor
     }
 
+    @JvmName("setPositiveButtonColor1")
     fun setPositiveButtonColor(positiveButtonColor: Int) {
         this.positiveButtonColor = positiveButtonColor
     }

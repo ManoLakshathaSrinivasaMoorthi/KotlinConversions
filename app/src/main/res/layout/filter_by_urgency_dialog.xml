@@ -37,8 +37,8 @@
                 android:layout_alignParentLeft="true"
                 android:background="@color/bg_gray"
                 android:padding="@dimen/margin_2"
-                android:tint="@color/sub_title_color"
-                app:srcCompat="@drawable/ic_back_arrow" />
+                app:srcCompat="@drawable/ic_back_arrow"
+                app:tint="@color/sub_title_color" />
 
             <TextView
                 android:id="@+id/txtTitle"

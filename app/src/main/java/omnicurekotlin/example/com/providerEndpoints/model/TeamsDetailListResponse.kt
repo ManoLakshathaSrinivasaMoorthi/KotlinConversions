@@ -2,10 +2,10 @@ package omnicurekotlin.example.com.providerEndpoints.model
 
 class TeamsDetailListResponse {
 
-    var status: Boolean? = null
-    private var errorId: Double? = null
-    private var errorMessage: String? = null
- var teamDetails: TeamMemberResponse? = null
+     var status: Boolean? = null
+     var errorId: Double? = null
+     var errorMessage: String? = null
+     var teamDetails: TeamMemberResponse? = null
 
     @JvmName("getStatus1")
     fun getStatus(): Boolean? {
@@ -17,10 +17,12 @@ class TeamsDetailListResponse {
         this.status = status
     }
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Double? {
         return errorId
     }
 
+    @JvmName("setErrorId1")
     fun setErrorId(errorId: Double?) {
         this.errorId = errorId
     }
@@ -35,10 +37,12 @@ class TeamsDetailListResponse {
         this.teamDetails = teamDetails
     }
 
+    @JvmName("getErrorMessage1")
     fun getErrorMessage(): String? {
         return errorMessage
     }
 
+    @JvmName("setErrorMessage1")
     fun setErrorMessage(errorMessage: String?) {
         this.errorMessage = errorMessage
     }

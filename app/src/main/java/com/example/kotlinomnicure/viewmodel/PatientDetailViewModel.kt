@@ -52,7 +52,7 @@ class PatientDetailViewModel: ViewModel() {
         return startSOSObservable
     }
 
-    fun dischargePatient(providerId: Long, token: String, patientId: Long, notes: String, ): LiveData<CommonResponse?>? {
+    fun dischargePatient(providerId: Long, token: String, patientId: Long, notes: String): LiveData<CommonResponse?>? {
         patientDischargeObservable = MutableLiveData<CommonResponse?>()
         discharge(providerId, token, patientId, notes)
         return patientDischargeObservable
@@ -79,7 +79,7 @@ class PatientDetailViewModel: ViewModel() {
     private fun getMembersRetro(patientId: Long, team: String) {
         val errMsg = arrayOfNulls<String>(1)
 
-        ApiClient().getApiProviderEndpoints(true, true)?.teamDetailsByName(
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)?.teamDetailsByName(
             TeamDetailsByNameRequestBody(patientId, team))
             ?.enqueue(object : Callback<TeamsDetailListResponse?> {
                 override fun onResponse(
@@ -87,12 +87,12 @@ class PatientDetailViewModel: ViewModel() {
                     response: Response<TeamsDetailListResponse?>,
                 ) {
                     Log.d(TAG, "onResponse: " + response.code())
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val providerListResponse: TeamsDetailListResponse? = response.body()
                         if (memberListObservable == null) {
                             memberListObservable = MutableLiveData<TeamsDetailListResponse?>()
                         }
-                        memberListObservable!!.setValue(providerListResponse)
+                        memberListObservable!!.value = providerListResponse
                     }
                 }
 
@@ -104,7 +104,7 @@ class PatientDetailViewModel: ViewModel() {
                     if (memberListObservable == null) {
                         memberListObservable = MutableLiveData<TeamsDetailListResponse?>()
                     }
-                    memberListObservable!!.setValue(response)
+                    memberListObservable!!.value = response
                 }
             })
     }
@@ -123,7 +123,7 @@ class PatientDetailViewModel: ViewModel() {
 
 
         val call: Call<SOSResponse?>? =
-            ApiClient().getApiPatientEndpoints(true, true)?.startSOSAPI(bodyValues)
+            ApiClient().getApiPatientEndpoints(true, decrypt = true)?.startSOSAPI(bodyValues)
 
         call?.enqueue(object : Callback<SOSResponse?> {
             override fun onResponse(call: Call<SOSResponse?>, response: Response<SOSResponse?>) {
@@ -159,19 +159,19 @@ class PatientDetailViewModel: ViewModel() {
     private fun doDischargePatientRetro(dischargePatientRequest: DischargePatientRequest) {
         val errMsg = arrayOfNulls<String>(1)
 
-        ApiClient().getApiPatientEndpoints(true, true)?.doPatientDischarge(dischargePatientRequest)
+        ApiClient().getApiPatientEndpoints(true, decrypt = true)?.doPatientDischarge(dischargePatientRequest)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>,
                 ) {
                     Log.d(TAG, "onResponse: doPatientDischarge " + response.code())
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val commonResponse: CommonResponse? = response.body()
                         if (dischargePatientResponseObservable == null) {
                             dischargePatientResponseObservable = MutableLiveData<CommonResponse?>()
                         }
-                        dischargePatientResponseObservable!!.setValue(commonResponse)
+                        dischargePatientResponseObservable!!.value = commonResponse
                     }
                 }
 
@@ -185,7 +185,7 @@ class PatientDetailViewModel: ViewModel() {
                     if (dischargePatientResponseObservable == null) {
                         dischargePatientResponseObservable = MutableLiveData<CommonResponse?>()
                     }
-                    dischargePatientResponseObservable!!.setValue(response)
+                    dischargePatientResponseObservable!!.value = response
                 }
             })
         if (!TextUtils.isEmpty(errMsg[0])) {
@@ -193,7 +193,7 @@ class PatientDetailViewModel: ViewModel() {
             if (dischargePatientResponseObservable == null) {
                 dischargePatientResponseObservable = MutableLiveData<CommonResponse?>()
             }
-            dischargePatientResponseObservable!!.setValue(response)
+            dischargePatientResponseObservable!!.value = response
         }
     }
 
@@ -205,19 +205,19 @@ class PatientDetailViewModel: ViewModel() {
         //sending body through data class
         val requestBody = CommonPatientIdRequestBody(providerId)
 
-        ApiClient().getApiPatientEndpoints(true, true)?.patientdetailsresponse(requestBody)
+        ApiClient().getApiPatientEndpoints(encrypt = true, decrypt = true)?.patientdetailsresponse(requestBody)
             ?.enqueue(object : Callback<PatientDetail?> {
                 override fun onResponse(
                     call: Call<PatientDetail?>,
                     response: Response<PatientDetail?>,
                 ) {
                     Log.d(TAG, "onResponse: " + response.code())
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         val patientDetail: PatientDetail? = response.body()
                         if (commonResponseMutableLiveData == null) {
                             commonResponseMutableLiveData = MutableLiveData<PatientDetail?>()
                         }
-                        commonResponseMutableLiveData!!.setValue(patientDetail)
+                        commonResponseMutableLiveData!!.value = patientDetail
                     }
                 }
 
@@ -231,7 +231,7 @@ class PatientDetailViewModel: ViewModel() {
                     if (commonResponseMutableLiveData == null) {
                         commonResponseMutableLiveData = MutableLiveData<PatientDetail?>()
                     }
-                    commonResponseMutableLiveData!!.setValue(response)
+                    commonResponseMutableLiveData!!.value = response
                 }
             })
         if (!TextUtils.isEmpty(errMsg[0])) {
@@ -239,7 +239,7 @@ class PatientDetailViewModel: ViewModel() {
             if (commonResponseMutableLiveData == null) {
                 commonResponseMutableLiveData = MutableLiveData<PatientDetail?>()
             }
-            commonResponseMutableLiveData!!.setValue(response)
+            commonResponseMutableLiveData!!.value = response
         }
     }
 
@@ -251,13 +251,13 @@ class PatientDetailViewModel: ViewModel() {
         bodyValues["token"] = token
         bodyValues["patientId"] = patientId.toString()
         bodyValues["score"] = score
-        ApiClient().getApiPatientEndpoints(true, true)?.resetAcuityScoreApi(bodyValues)
+        ApiClient().getApiPatientEndpoints(encrypt = true, decrypt = true)?.resetAcuityScoreApi(bodyValues)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         Log.d("reset Acuity", "onResponse: $response")
                         val commonResponse: CommonResponse? = response.body()
                         if (resetAcuityObservable == null) {
@@ -267,7 +267,7 @@ class PatientDetailViewModel: ViewModel() {
                     } else {
                         Log.d("reset Acuity", "onResponse: $response")
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: CommonResponse =
+                            val commonResponse =
                                 CommonResponse()
                             commonResponse.setErrorMessage(Constants.API_ERROR)
                             if (resetAcuityObservable == null) {
@@ -281,7 +281,7 @@ class PatientDetailViewModel: ViewModel() {
                 override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
                     Log.d("reset Acuity", "onFailure: $t")
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
+                        val commonResponse =
                             CommonResponse()
                         commonResponse.setErrorMessage(Constants.API_ERROR)
                         if (resetAcuityObservable == null) {
@@ -305,13 +305,13 @@ class PatientDetailViewModel: ViewModel() {
         bodyValues["message"] = notes
 
 
-        ApiClient().getApiPatientEndpoints(true, true)?.dischargePatientApi(bodyValues)
+        ApiClient().getApiPatientEndpoints(encrypt = true, decrypt = true)?.dischargePatientApi(bodyValues)
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>,
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         Log.d("discharge", "onResponse: $response")
                         val commonResponse: CommonResponse? =
                             response.body()
@@ -322,7 +322,7 @@ class PatientDetailViewModel: ViewModel() {
                     } else {
                         Log.d("discharge", "onResponse: $response")
                         Handler(Looper.getMainLooper()).post {
-                            val commonResponse: CommonResponse =
+                            val commonResponse =
                                 CommonResponse()
                             commonResponse.setErrorMessage(Constants.API_ERROR)
                             if (patientDischargeObservable == null) {
@@ -339,7 +339,7 @@ class PatientDetailViewModel: ViewModel() {
                 ) {
                     Log.d("discharge", "onFailure: $t")
                     Handler(Looper.getMainLooper()).post {
-                        val commonResponse: CommonResponse =
+                        val commonResponse =
                             CommonResponse()
                         commonResponse.setErrorMessage(Constants.API_ERROR)
                         if (patientDischargeObservable == null) {
@@ -351,7 +351,7 @@ class PatientDetailViewModel: ViewModel() {
             })
         if (!TextUtils.isEmpty(errMsg)) {
             Handler(Looper.getMainLooper()).post {
-                val commonResponse: CommonResponse =
+                val commonResponse =
                     CommonResponse()
                 commonResponse.setErrorMessage(errMsg)
                 if (patientDischargeObservable == null) {

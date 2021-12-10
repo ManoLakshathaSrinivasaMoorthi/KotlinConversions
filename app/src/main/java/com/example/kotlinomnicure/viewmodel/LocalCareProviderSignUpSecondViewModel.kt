@@ -37,7 +37,7 @@ class LocalCareProviderSignUpSecondViewModel:ViewModel() {
         var errMsg = ""
         try {
 
-            ApiClient().getApiUserEndpoints(true, true)?.registerUser(provider)
+            ApiClient().getApiUserEndpoints(encrypt = true, decrypt = true)?.registerUser(provider)
                 ?.enqueue(object : Callback<CommonResponse?> {
                     override fun onResponse(
                         call: Call<CommonResponse?>,

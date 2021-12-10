@@ -29,23 +29,23 @@ class TermsAndConditionsViewModel:ViewModel(){
 
 
 
-        ApiClient().getApiUserEndpoints(true, true)?.getTermsAndConditions()
+        ApiClient().getApiUserEndpoints(true, decrypt = true)?.getTermsAndConditions()
             ?.enqueue(object : Callback<TermsAndConditionsResponse?> {
                 override fun onResponse(
                     call: Call<TermsAndConditionsResponse?>,
                     response: Response<TermsAndConditionsResponse?>
                 ) {
-                    Log.e(TAG, "onResponse: hi" + response.isSuccessful())
+                    Log.e(TAG, "onResponse: hi" + response.isSuccessful)
                     Log.e(TAG, "onResponse: hi" + response.code())
                     Log.e(TAG, "onResponse: hi" + response.body())
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         Log.i(TAG, "onResponse: SUCCESS")
                         Log.e(TAG, "onResponse data: " + Gson().toJson(response.body()))
                         if (termsConditionsObervable == null) {
                             termsConditionsObervable =
                                 MutableLiveData<TermsAndConditionsResponse?>()
                         }
-                        termsConditionsObervable!!.setValue(response.body())
+                        termsConditionsObervable!!.value = response.body()
                         Handler(Looper.getMainLooper()).post {
                             if (termsConditionsObervable == null) {
                                 termsConditionsObervable =

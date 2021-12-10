@@ -8,16 +8,196 @@
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/drawable-v24/ic_tick_mark_blue.xml" value="0.20277777777777778" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/drawable-v24/ic_warning.xml" value="0.20277777777777778" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/drawable-v24/ic_warning_close.xml" value="0.20277777777777778" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/action_layout_menu_my_consults.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activites_log_date_item.xml" value="0.22" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activites_log_logs_item.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_add_patient.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_add_patient_information.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_add_progress.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_appointment_success.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_attachment.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_attachment_filter.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_base.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_bedside_transfer_patient.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_call.xml" value="0.1" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_call_options.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_census_consult_chart.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_census_econsult_chart.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_change_password.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_chat.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_chat2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_chat3.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_chat_old.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_consult_chart.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_consult_chart_remote.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_contact_admin.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_custom_notification.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_dashboard_bkp.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_discharge_patient.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_drawer.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_econsult_chart.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_econsult_chart_remote.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_email_otp.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_enotes.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_enotes2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_enotes_details.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_expire_password.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_filter.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_fingerprint.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_forgot_password.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_forgot_password2.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_forgot_password_otp.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_forgot_password_otpactivity.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_hand_off_patients.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_home2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_home_old.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_home_scroll.xml" value="0.1" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_hospital_list.xml" value="0.15833333333333333" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_image_capture.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_init_video_call.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_list.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_first.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_first2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_first3.xml" value="0.1921875" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_second.xml" value="0.15648148148148147" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_local_care_provider_sign_up_second2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_log.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_login.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_main.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_my_dash_board.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_my_dashboard.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_my_virtual_ward.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_network_test.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_notification.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_notification2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_otp.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_otp_old.xml" value="0.16470588235294117" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_patient_appointment.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_patient_appointment_info.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_patient_census_hospital.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_patient_census_hospital2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_patient_census_ward.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_patient_detail.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_patient_otp.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_pdf_viewer.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_profile.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_registration.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_registration_success.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_remote_hand_off.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_remote_provider_directory.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_remote_provider_sign_up_second.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_reset_password2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_reset_success.xml" value="0.1921875" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_ringing.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_ringing2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_settings.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_sign_up.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_signup.xml" value="0.1921875" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_splash.xml" value="0.16018518518518518" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_splash2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_system_alert.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_system_alert2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_team_group_chat.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_team_group_chat2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_terms_and_conditions.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_toolbar.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_training_material.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_video_player.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_view_detials.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_view_message_details_layout.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_view_urgent_messages.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_view_urgent_messages2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/activity_view_urgent_messages_layout.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/alert_custom_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/app_bar_drawer.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/ard_agora_actionbar.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/ard_agora_actionbar_with_back_btn.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/ard_agora_actionbar_with_title.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/bp_more_option_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/census_econsult_detail_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/census_hospital_name_child.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/change_language_dialog.xml" value="0.1921875" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/chat_bottom_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/country_list_view.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/custom_alert_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/custom_alert_dialogs.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/custom_progress.xml" value="0.1921875" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/custom_snackbar_error_layout.xml" value="0.1921875" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/custom_snackbar_layout.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/dialog_bottom_list.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/doc_box_list_view.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/download_progress.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/econsult_detail_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/enotes_details_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/enotes_details_item.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/enotes_handoff_item.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/expandable_child_list_view.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/expandable_group_list_view.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_acuity_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_location.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_location_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_patient.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_rp_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_status_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_time.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_type_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_urgency_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_by_ward_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/filter_directory_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/fingerprint_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/fingerprint_dialognew.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/fragment_bedside_directory.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/fragment_handoff2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/fragment_hospital_directory.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/fragment_progress.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/fragment_progress2.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/fragment_remote_directory.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/hand_off_child_list.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/hand_off_patients.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/hospital_directory_child.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/in_channel_message.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/include_chart_view.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_attachment.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_census_list.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_child_census_list.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_consult_list.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_group_members.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_layout.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_message.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_patient_history_chat.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_team_members.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_teams.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_urgent_messages.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/item_view_chat_message_status.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_appointment_list.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_chat_header.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_custom_notification.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_dashboard_bp.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_dashboard_rp.xml" value="0.1" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_dashboard_rp_others.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_nav_drawer_menu.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/layout_selected_chat_history.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/left_nav_drawer_header.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/location_list_child.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/mark_complete_dialog.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/members_dialog_item.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/notification_ringing.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/notification_ringing_small.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/password_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/password_validation.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/password_validation_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/patient_status_component.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/radiobutton.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/remote_directory_child.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/remote_provider_sign_up_second.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/reset_acuity_dialog.xml" value="0.1" />
         <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/right_drawer_container_layout.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/right_nav_drawer_header.xml" value="0.1921875" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/rp_more_option_dialog.xml" value="0.1" />
+        <entry key="..\:/Data/KotlinConversions/app/src/main/res/layout/simple_spinner_item.xml" value="0.1921875" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/black_border_drawable_bg.xml" value="0.20512820512820512" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/error_edittext_bg.xml" value="0.20833333333333334" />
         <entry key="..\:/Data/OmniCureKotlinPrj/app/src/main/res/drawable/ic_back_arrow.xml" value="0.20833333333333334" />
@@ -79,7 +259,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

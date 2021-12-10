@@ -26,7 +26,7 @@
             android:layout_height="@dimen/margin_70">
 
 
-            <com.mvp.omnicure.customview.CircularImageView
+            <com.example.kotlinomnicure.customview.CircularImageView
                 android:id="@+id/caller_image_view"
                 android:layout_width="@dimen/margin_70"
                 android:layout_height="@dimen/margin_70"

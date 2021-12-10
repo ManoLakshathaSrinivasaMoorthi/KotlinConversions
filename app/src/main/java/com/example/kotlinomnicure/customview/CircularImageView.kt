@@ -116,7 +116,7 @@ class CircularImageView : AppCompatImageView  {
 
 
     fun setBorderColorResource(@ColorRes borderColorRes: Int) {
-        setBorderColor(getContext().resources.getColor(borderColorRes))
+        setBorderColor(context.resources.getColor(borderColorRes))
     }
 
     fun getFillColor(): Int {
@@ -133,7 +133,7 @@ class CircularImageView : AppCompatImageView  {
     }
 
     fun setFillColorResource(@ColorRes fillColorRes: Int) {
-        setFillColor(getContext().getResources().getColor(fillColorRes))
+        setFillColor(context.resources.getColor(fillColorRes))
     }
 
     fun getBorderWidth(): Int {

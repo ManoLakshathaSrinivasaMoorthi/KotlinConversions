@@ -43,7 +43,7 @@ class CustomGroupEditText:androidx.appcompat.widget.AppCompatEditText {
     }
 
     fun setErrorMessage(str: Any) {
-        error = str.toString()!!
+        error = str.toString()
         if (str != "") {
             setPadding(paddingLeft, newPadding, paddingRight, paddingBottom)
         } else {

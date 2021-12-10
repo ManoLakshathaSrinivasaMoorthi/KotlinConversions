@@ -3,34 +3,39 @@ package omnicurekotlin.example.com.userEndpoints.model
 import omnicurekotlin.example.com.providerEndpoints.model.TermsConditions
 
 class TermsAndConditionsResponse {
-    private var status: Boolean? = null
 
+    var status: Boolean? = null
+    var errorId: Int? = null
+    var errorMessage: String? = null
 
-    private var errorId: Int? = null
-   var errorMessage: String? = null
-
+    @JvmName("getConfiguration1")
     fun getConfiguration(): TermsConditions? {
         return configuration
     }
 
+    @JvmName("setConfiguration1")
     fun setConfiguration(configuration: TermsConditions?) {
         this.configuration = configuration
     }
 
-    private var configuration: TermsConditions? = null
+     var configuration: TermsConditions? = null
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
 
+    @JvmName("setStatus1")
     fun setStatus(status: Boolean?) {
         this.status = status
     }
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
 
+    @JvmName("setErrorId1")
     fun setErrorId(errorId: Int?) {
         this.errorId = errorId
     }
@@ -39,12 +44,6 @@ class TermsAndConditionsResponse {
         //errorMessage = errorMessage
     }
 
-   /* operator fun set(fieldName: String?, value: Any?): TermsAndConditionsResponse? {
-        return super.set(fieldName, value) as TermsAndConditionsResponse?
-    }
 
-    fun clone(): TermsAndConditionsResponse? {
-        return super.clone() as TermsAndConditionsResponse?
-    }*/
 
 }

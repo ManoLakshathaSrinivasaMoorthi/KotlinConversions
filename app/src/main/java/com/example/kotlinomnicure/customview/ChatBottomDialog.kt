@@ -1,6 +1,6 @@
 package com.example.kotlinomnicure.customview
 
-import android.R
+
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Dialog
@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
+import com.example.kotlinomnicure.R
 
 class ChatBottomDialog: Dialog {
 
@@ -26,7 +27,7 @@ class ChatBottomDialog: Dialog {
         super.onCreate(savedInstanceState)
         dialogView = View.inflate(context, R.layout.chat_bottom_dialog, null)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(dialogView)
+        setContentView(dialogView!!)
         window!!.setBackgroundDrawableResource(R.color.transparent)
         val width = (context.resources.displayMetrics.widthPixels * 0.95).toInt()
         val wlp = window!!.attributes
@@ -35,7 +36,7 @@ class ChatBottomDialog: Dialog {
         val docLayout = findViewById<LinearLayout>(R.id.id_document_layout)
         val cameraLayout = findViewById<LinearLayout>(R.id.id_camera_layout)
         val GalleryLayout = findViewById<LinearLayout>(R.id.id_gallery_layout)
-        dialogView.setOnClickListener(View.OnClickListener { dismiss() })
+        dialogView?.setOnClickListener({ dismiss() })
         docLayout.setOnClickListener(documentClickListener)
         cameraLayout.setOnClickListener(cameraClickListener)
         GalleryLayout.setOnClickListener(galleryClickListener)
@@ -56,12 +57,12 @@ class ChatBottomDialog: Dialog {
     }
 
 
-    var onShowListener = OnShowListener {
+    private  var onShowListener = OnShowListener {
         val view = dialogView!!.findViewById<View>(R.id.root_view)
         revealShow(view, dialogView, true)
     }
 
-    var onDismissListener = DialogInterface.OnDismissListener {
+    private  var onDismissListener = DialogInterface.OnDismissListener {
         val view = dialogView!!.findViewById<View>(R.id.root_view)
         revealShow(view, dialogView, false)
     }

@@ -4,14 +4,15 @@ import omnicurekotlin.example.com.hospitalEndpoints.model.Hospital
 
 class HospitalListResponse {
 
-    private var count: Int? = null
-    private var errorId: Int? = null
+    var count: Int? = null
+    var errorId: Int? = null
     var errorMessage: String? = null
     var hospitalList: List<Hospital?>? = null
     var id: Long? = null
-    private var status: Boolean? = null
+    var status: Boolean? = null
 
 
+    @JvmName("getCount1")
     fun getCount(): Int? {
         return count
     }
@@ -23,6 +24,7 @@ class HospitalListResponse {
     }
 
 
+    @JvmName("getErrorId1")
     fun getErrorId(): Int? {
         return errorId
     }
@@ -66,6 +68,7 @@ class HospitalListResponse {
     }
 
 
+    @JvmName("getStatus1")
     fun getStatus(): Boolean? {
         return status
     }
@@ -75,12 +78,5 @@ class HospitalListResponse {
         return this
     }
 
- /*   operator fun set(fieldName: String?, value: Any?): omnicure.mvp.com.userEndpoints.model.HospitalListResponse? {
-        return super.set(fieldName, value) as omnicure.mvp.com.userEndpoints.model.HospitalListResponse?
-    }
-
-    fun clone(): omnicure.mvp.com.userEndpoints.model.HospitalListResponse? {
-        return super.clone() as omnicure.mvp.com.userEndpoints.model.HospitalListResponse?
-    }*/
 
 }

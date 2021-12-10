@@ -23,13 +23,13 @@ class RemoteHandOffViewModel : ViewModel() {
     private fun remoteHandOff(remoteHandOffRequest: RemoteHandOffRequest) {
         val errMsg = arrayOfNulls<String>(1)
         val call: Call<CommonResponse?>? =
-            ApiClient().getApiProviderEndpoints(true, true)?.remoteHandOff(remoteHandOffRequest)
+            ApiClient().getApiProviderEndpoints(true, decrypt = true)?.remoteHandOff(remoteHandOffRequest)
         call?.enqueue(object : Callback<CommonResponse?> {
             override fun onResponse(
                 call: Call<CommonResponse?>,
                 response: Response<CommonResponse?>,
             ) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     if (handOffRequestObservalbe == null) {
                         handOffRequestObservalbe = MutableLiveData<CommonResponse?>()
                     }
@@ -50,7 +50,7 @@ class RemoteHandOffViewModel : ViewModel() {
                 if (handOffRequestObservalbe == null) {
                     handOffRequestObservalbe = MutableLiveData<CommonResponse?>()
                 }
-                handOffRequestObservalbe!!.setValue(commonResponse)
+                handOffRequestObservalbe!!.value = commonResponse
             }
         })
 

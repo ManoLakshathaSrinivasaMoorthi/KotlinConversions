@@ -47,13 +47,13 @@ class ENotesViewModel: ViewModel() {
 
         //Backend changed the endpoint.
         val url = "providerEndpoints/v1/getEnotes"
-        ApiClient().getApiProviderEndpoints(true, true)?.getHandoffList(url, GetHandoffListRequestBody(providerId, patientId))
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)?.getHandoffList(url, GetHandoffListRequestBody(providerId, patientId))
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
                         Log.d(TAG, "HandoffList-onResponse: $response")
                         Log.d(TAG, "HandoffList-onResponse: " + Gson().toJson(response.body()))
                         val commonResponse: CommonResponse? = response.body()
@@ -98,14 +98,11 @@ class ENotesViewModel: ViewModel() {
 
         //Backend changed the endpoint.
         val url = "providerEndpoints/v1/getEnotesActivityLog"
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(true, decrypt = true)
             ?.getHandoffList(url, GetHandoffListRequestBody(0L, patientId))
             ?.enqueue(object : Callback<CommonResponse?> {
-                override fun onResponse(
-                    call: Call<CommonResponse?>,
-                    response: Response<CommonResponse?>
-                ) {
-                    if (response.isSuccessful()) {
+                override fun onResponse(call: Call<CommonResponse?>, response: Response<CommonResponse?>) {
+                    if (response.isSuccessful) {
                         Log.d(TAG, "logList-onResponse: $response")
                         Log.d(TAG, "logList-onResponse: " + Gson().toJson(response.body()))
                         val commonResponse: CommonResponse? = response.body()
@@ -151,14 +148,14 @@ class ENotesViewModel: ViewModel() {
 
         //Backend changed the endpoint.
         val url = "providerEndpoints/v1/updateMessageRead"
-        ApiClient().getApiProviderEndpoints(true, true)
+        ApiClient().getApiProviderEndpoints(encrypt = true, decrypt = true)
             ?.setReadStatus(url, GetReadStatusRequestBody(providerId, patientId, messageId))
             ?.enqueue(object : Callback<CommonResponse?> {
                 override fun onResponse(
                     call: Call<CommonResponse?>,
                     response: Response<CommonResponse?>
                 ) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful) {
 //                            Log.d(TAG, "read-onResponse: " + response);
 //                            Log.d(TAG, "read-onResponse: " + new Gson().toJson(response.body()));
                         val commonResponse: CommonResponse? = response.body()
